@@ -34,7 +34,7 @@
 #include "../RemoteControl/RCReceive.h"
 #include "../_FIR_Filter/FIR_Filter.h"
 #include "../Sensors/DPS310/DPS310.h"
-#include "../Sensors/MPU9X50/MPU9150.h"
+#include "../Sensors/MPU9X50/MPU9250.h"
 #include "../_HAL/I2C/I2Cdev.h"
 #include "../Attitude_Control/AttitudeController.h"
 

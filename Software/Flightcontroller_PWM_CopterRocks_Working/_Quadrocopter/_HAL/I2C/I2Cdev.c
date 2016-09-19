@@ -14,8 +14,9 @@
 **                      Revision Control History                              **
 *******************************************************************************/
 /*
- * V0.0: 28-04-2016, RT:  Initial Version
- * V0.1: 21-07-2016, DW:  Port of SW from DAVE3 to DAVE4
+ * V0.0: 28-04-2016, RT:  	Initial Version
+ * V0.1: 21-07-2016, DW:  	Port of SW from DAVE3 to DAVE4
+ * V0.2: 15-09-2016, RT:	Added Time Out for Reading/Writing
  */
 
 
@@ -140,16 +141,46 @@ void setupI2CInterface(XMC_USIC_CH_t *const i2c_channel,const uint8_t usic_sda_o
  */
 bool I2Cdev_writeByte(XMC_USIC_CH_t* handle,uint8_t devAddr, uint8_t regAddr, uint8_t data)
 {
+	uint16_t time_out_cnt = 0u;
 	XMC_I2C_CH_MasterStart(handle, devAddr, XMC_I2C_CH_CMD_WRITE);
-	while ((XMC_I2C_CH_GetStatusFlag(handle) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U);
+	while ((XMC_I2C_CH_GetStatusFlag(handle) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U)
+	{
+		time_out_cnt++;
+		if (time_out_cnt > 200u)
+		{
+			XMC_I2C_CH_ClearStatusFlag(handle,XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
+			XMC_I2C_CH_MasterStop(handle);
+			return false;
+		}
+	}
 	XMC_I2C_CH_ClearStatusFlag(handle,XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
 	//---------------------------------------------------------------------------------------------------------------------------------
+	time_out_cnt = 0u;
 	XMC_I2C_CH_MasterTransmit(handle, regAddr);
-	while ((XMC_I2C_CH_GetStatusFlag(handle) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U);
+	while ((XMC_I2C_CH_GetStatusFlag(handle) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U)
+	{
+		time_out_cnt++;
+		if (time_out_cnt > 200u)
+		{
+			XMC_I2C_CH_ClearStatusFlag(handle,XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
+			XMC_I2C_CH_MasterStop(handle);
+			return false;
+		}
+	}
 	XMC_I2C_CH_ClearStatusFlag(handle,XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
 
+	time_out_cnt = 0u;
 	XMC_I2C_CH_MasterTransmit(handle, data);
-	while ((XMC_I2C_CH_GetStatusFlag(handle) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U);
+	while ((XMC_I2C_CH_GetStatusFlag(handle) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U)
+	{
+		time_out_cnt++;
+		if (time_out_cnt > 200u)
+		{
+			XMC_I2C_CH_ClearStatusFlag(handle,XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
+			XMC_I2C_CH_MasterStop(handle);
+			return false;
+		}
+	}
 	XMC_I2C_CH_ClearStatusFlag(handle,XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
 
 	XMC_I2C_CH_MasterStop(handle);
@@ -169,18 +200,47 @@ bool I2Cdev_writeByte(XMC_USIC_CH_t* handle,uint8_t devAddr, uint8_t regAddr, ui
  */
 int16_t I2Cdev_readByte(XMC_USIC_CH_t* handle, uint8_t devAddr, uint8_t regAddr)
 {
+	uint16_t time_out_cnt = 0u;
 	XMC_I2C_CH_MasterStart(handle, devAddr, XMC_I2C_CH_CMD_WRITE);
-	while ((XMC_I2C_CH_GetStatusFlag(handle) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U);
+	while ((XMC_I2C_CH_GetStatusFlag(handle) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U)
+	{
+		time_out_cnt++;
+		if (time_out_cnt > 200u)
+		{
+			XMC_I2C_CH_ClearStatusFlag(handle,XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
+			XMC_I2C_CH_MasterStop(handle);
+			return -1;
+		}
+	}
 	XMC_I2C_CH_ClearStatusFlag(handle,XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
 	//---------------------------------------------------------------------------------------------------------------------------------
+	time_out_cnt = 0u;
 	XMC_I2C_CH_MasterTransmit(handle, regAddr);
-
 	XMC_I2C_CH_MasterRepeatedStart(handle, devAddr,XMC_I2C_CH_CMD_READ);
-	while ((XMC_I2C_CH_GetStatusFlag(handle) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U);
+	while ((XMC_I2C_CH_GetStatusFlag(handle) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U)
+	{
+		time_out_cnt++;
+		if (time_out_cnt > 200u)
+		{
+			XMC_I2C_CH_ClearStatusFlag(handle,XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
+			XMC_I2C_CH_MasterStop(handle);
+			return -1;
+		}
+	}
 	XMC_I2C_CH_ClearStatusFlag(handle,XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
 
+	time_out_cnt = 0u;
 	XMC_I2C_CH_MasterReceiveNack(handle);
-	while ((XMC_I2C_CH_GetStatusFlag(handle) & (XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION)) == 0U);
+	while ((XMC_I2C_CH_GetStatusFlag(handle) & (XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION)) == 0U)
+	{
+		time_out_cnt++;
+		if (time_out_cnt > 200u)
+		{
+			XMC_I2C_CH_ClearStatusFlag(handle,XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
+			XMC_I2C_CH_MasterStop(handle);
+			return -1;
+		}
+	}
 	XMC_I2C_CH_ClearStatusFlag(handle,XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION);
 
 	uint8_t received_data = 0;
@@ -207,17 +267,47 @@ int16_t I2Cdev_readByte(XMC_USIC_CH_t* handle, uint8_t devAddr, uint8_t regAddr)
  */
 int16_t I2Cdev_readBytes(XMC_USIC_CH_t* handle,uint8_t devAddr, uint8_t regAddr, uint8_t length, uint8_t* data)
 {
+	uint16_t time_out_cnt = 0u;
 	XMC_I2C_CH_MasterStart(handle, devAddr, XMC_I2C_CH_CMD_WRITE);
-	while ((XMC_I2C_CH_GetStatusFlag(handle) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U);
+	while ((XMC_I2C_CH_GetStatusFlag(handle) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U)
+	{
+		time_out_cnt++;
+		if (time_out_cnt > 200u)
+		{
+			XMC_I2C_CH_ClearStatusFlag(handle,XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
+			XMC_I2C_CH_MasterStop(handle);
+			return -1;
+		}
+	}
 	XMC_I2C_CH_ClearStatusFlag(handle,XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
 
+	time_out_cnt = 0u;
 	XMC_I2C_CH_MasterTransmit(handle, regAddr);
-	while ((XMC_I2C_CH_GetStatusFlag(handle) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U);
+	while ((XMC_I2C_CH_GetStatusFlag(handle) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U)
+	{
+		time_out_cnt++;
+		if (time_out_cnt > 200u)
+		{
+			XMC_I2C_CH_ClearStatusFlag(handle,XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
+			XMC_I2C_CH_MasterStop(handle);
+			return -1;
+		}
+	}
 	XMC_I2C_CH_ClearStatusFlag(handle,XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
 
 	//---------------------------------------------------------------------------------------------------------------------------------
+	time_out_cnt = 0u;
 	XMC_I2C_CH_MasterRepeatedStart(handle, devAddr,XMC_I2C_CH_CMD_READ);
-	while ((XMC_I2C_CH_GetStatusFlag(handle) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U);
+	while ((XMC_I2C_CH_GetStatusFlag(handle) & XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED) == 0U)
+	{
+		time_out_cnt++;
+		if (time_out_cnt > 200u)
+		{
+			XMC_I2C_CH_ClearStatusFlag(handle,XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
+			XMC_I2C_CH_MasterStop(handle);
+			return -1;
+		}
+	}
 	XMC_I2C_CH_ClearStatusFlag(handle,XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
 
 	int16_t fifo_bytes;
@@ -227,7 +317,17 @@ int16_t I2Cdev_readBytes(XMC_USIC_CH_t* handle,uint8_t devAddr, uint8_t regAddr,
 			XMC_I2C_CH_MasterReceiveAck(handle);
 		else
 			XMC_I2C_CH_MasterReceiveNack(handle);
-		while ((XMC_I2C_CH_GetStatusFlag(handle) & (XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION)) == 0U);
+			time_out_cnt = 0u;
+			while ((XMC_I2C_CH_GetStatusFlag(handle) & (XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION)) == 0U)
+			{
+				time_out_cnt++;
+				if (time_out_cnt > 200u)
+				{
+					XMC_I2C_CH_ClearStatusFlag(handle,XMC_I2C_CH_STATUS_FLAG_ACK_RECEIVED);
+					XMC_I2C_CH_MasterStop(handle);
+					return -1;
+				}
+			}
 		XMC_I2C_CH_ClearStatusFlag(handle,XMC_I2C_CH_STATUS_FLAG_RECEIVE_INDICATION | XMC_I2C_CH_STATUS_FLAG_ALTERNATIVE_RECEIVE_INDICATION);
 	}
 

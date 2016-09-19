@@ -6,18 +6,19 @@
 ** ---------------------------------------------------------------------------**
 ** AM           Andreas Mark                                                  **
 ** DW           Dominik Wieland                                               **
-** ES           Elias Steurer                                                 **
-**                                                                            **
-**                                                                            **
+** ES           Elias Steurer  												  **
+** ML           Michael Lamp                                                  **
+** RT			Raffael Tschinder                                             **
 *******************************************************************************/
-
 /*******************************************************************************
 **                      Revision Control History                              **
 *******************************************************************************/
 /*
- * V0.0 : 25-12-2014, AM:  Initial Version
- * V0.0*: 15-08-2015, ES:  Minor Code-Changes
- * V0.1 : 21-07-2016, DW:  Port of SW from DAVE3 to DAVE4
+ * V0.01 : 25-12-2014, AM:  Initial Version
+ * V0.01*: 15-08-2015, ES:  Minor Code-Changes
+ * V0.02 : 21-07-2016, DW:  Port of SW from DAVE3 to DAVE4
+ * V0.03 : 14-09-2016, ML:  New MPU Files (MPU9250) + Micrium Debug Interface
+ * V0.04 : 16-09-2016, RL:  Added I2C-TimeOut Counter
  */
 /*******************************************************************************
 **                      Includes                                              **

@@ -15,6 +15,7 @@ ARM_GCC_FOR_XMC_LINKER_OUTPUT_TYPE_OUTPUTS :=
 S_DEPS := 
 S_UPPER_DEPS := 
 C_DEPS := 
+TOOLCHAIN_ROOT := 
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \

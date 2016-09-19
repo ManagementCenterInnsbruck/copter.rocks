@@ -9,7 +9,7 @@
 **                                                                            **
 **                                                                            **
 *******************************************************************************/
-
+ 
 /*******************************************************************************
 **                      Revision Control History                              **
 *******************************************************************************/
@@ -286,10 +286,9 @@ void setup(void)
 	setup_UART_Trigger_limits();//setup Trigger-Limits of UART-FIFO
 	PressureFIR = Initialize_FIR_Filter(PressureFIR, MOVING_AVERAGE);//initialize FIR Filter
 
-//  Uncomment to activate PressureSensor
-//	setupDPS310I2C();//initialize DPS310
-//  setupDPS310();//setup DPS Hardware
-//  getCoefficients();//get Coefficients of DPS310
+	//setupDPS310I2C();//initialize DPS310
+	//setupDPS310();//setup DPS Hardware
+	//getCoefficients();//get Coefficients of DPS310
 
 	MPU9150_Setup();//configures the IMU
 	delay(3000);//wait 3000ms to wait for ESC's to startup
