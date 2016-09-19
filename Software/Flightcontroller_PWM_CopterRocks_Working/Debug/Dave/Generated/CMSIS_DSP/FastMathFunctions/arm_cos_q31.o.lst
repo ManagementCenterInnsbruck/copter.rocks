@@ -1,0 +1,252 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_cos_q31.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.arm_cos_q31,"ax",%progbits
+  20              	 .align 2
+  21              	 .global arm_cos_q31
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	arm_cos_q31:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c"
+   1:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** /* ----------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * $Date:        12. March 2014
+   5:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * $Revision: 	V1.4.4
+   6:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * Title:		arm_cos_q31.c    
+   9:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * Description:	Fast cosine calculation for Q31 values.   
+  11:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** *
+  27:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * POSSIBILITY OF SUCH DAMAGE.   
+  39:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** * -------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** 
+  41:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** #include "CMSIS_DSP/arm_common_tables.h"
+  43:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** 
+  44:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** /**    
+  45:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****  * @ingroup groupFastMath    
+  46:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****  */
+  47:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** 
+  48:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****  /**    
+  49:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****  * @addtogroup cos    
+  50:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****  * @{    
+  51:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****  */
+  52:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** 
+  53:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** /**   
+  54:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****  * @brief Fast approximation to the trigonometric cosine function for Q31 data.   
+  55:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****  * @param[in] x Scaled input value in radians.   
+  56:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****  * @return  cos(x).   
+  57:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****  *   
+  58:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****  * The Q31 input value is in the range [0 +0.9999] and is mapped to a radian
+  59:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****  * value in the range [0 2*pi).
+  60:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****  */
+  61:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** 
+  62:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** q31_t arm_cos_q31(
+  63:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   q31_t x)
+  64:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** {
+  28              	 .loc 1 64 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32 0000 2DE9F04F 	 push {r4,r5,r6,r7,r8,r9,r10,fp,lr}
+  33              	.LCFI0:
+  34              	 .cfi_def_cfa_offset 36
+  35              	 .cfi_offset 4,-36
+  36              	 .cfi_offset 5,-32
+  37              	 .cfi_offset 6,-28
+  38              	 .cfi_offset 7,-24
+  39              	 .cfi_offset 8,-20
+  40              	 .cfi_offset 9,-16
+  41              	 .cfi_offset 10,-12
+  42              	 .cfi_offset 11,-8
+  43              	 .cfi_offset 14,-4
+  44 0004 89B0     	 sub sp,sp,#36
+  45              	.LCFI1:
+  46              	 .cfi_def_cfa_offset 72
+  47 0006 00AF     	 add r7,sp,#0
+  48              	.LCFI2:
+  49              	 .cfi_def_cfa_register 7
+  50 0008 7860     	 str r0,[r7,#4]
+  65:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   q31_t cosVal;                                  /* Temporary variables for input, output */
+  66:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   int32_t index;                                 /* Index variables */
+  67:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   q31_t a, b;                                    /* Four nearest output values */
+  68:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   q31_t fract;                                   /* Temporary values for fractional values */
+  69:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** 
+  70:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   /* add 0.25 (pi/2) to read sine table */
+  71:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   x += 0x20000000;
+  51              	 .loc 1 71 0
+  52 000a 7B68     	 ldr r3,[r7,#4]
+  53 000c 03F10053 	 add r3,r3,#536870912
+  54 0010 7B60     	 str r3,[r7,#4]
+  72:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   if(x < 0)
+  55              	 .loc 1 72 0
+  56 0012 7B68     	 ldr r3,[r7,#4]
+  57 0014 002B     	 cmp r3,#0
+  58 0016 03DA     	 bge .L2
+  73:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   {   /* convert negative numbers to corresponding positive ones */
+  74:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****       x = x + 0x80000000;
+  59              	 .loc 1 74 0
+  60 0018 7B68     	 ldr r3,[r7,#4]
+  61 001a 03F10043 	 add r3,r3,#-2147483648
+  62 001e 7B60     	 str r3,[r7,#4]
+  63              	.L2:
+  75:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   }
+  76:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   
+  77:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   /* Calculate the nearest index */
+  78:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   index = (uint32_t)x >> FAST_MATH_Q31_SHIFT;
+  64              	 .loc 1 78 0
+  65 0020 7B68     	 ldr r3,[r7,#4]
+  66 0022 9B0D     	 lsrs r3,r3,#22
+  67 0024 FB61     	 str r3,[r7,#28]
+  79:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** 
+  80:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   /* Calculation of fractional value */
+  81:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   fract = (x - (index << FAST_MATH_Q31_SHIFT)) << 9;
+  68              	 .loc 1 81 0
+  69 0026 FB69     	 ldr r3,[r7,#28]
+  70 0028 9B05     	 lsls r3,r3,#22
+  71 002a 7A68     	 ldr r2,[r7,#4]
+  72 002c D31A     	 subs r3,r2,r3
+  73 002e 5B02     	 lsls r3,r3,#9
+  74 0030 BB61     	 str r3,[r7,#24]
+  82:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** 
+  83:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   /* Read two nearest values of input value from the sin table */
+  84:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   a = sinTable_q31[index];
+  75              	 .loc 1 84 0
+  76 0032 244A     	 ldr r2,.L4
+  77 0034 FB69     	 ldr r3,[r7,#28]
+  78 0036 52F82330 	 ldr r3,[r2,r3,lsl#2]
+  79 003a 7B61     	 str r3,[r7,#20]
+  85:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   b = sinTable_q31[index+1];
+  80              	 .loc 1 85 0
+  81 003c FB69     	 ldr r3,[r7,#28]
+  82 003e 0133     	 adds r3,r3,#1
+  83 0040 204A     	 ldr r2,.L4
+  84 0042 52F82330 	 ldr r3,[r2,r3,lsl#2]
+  85 0046 3B61     	 str r3,[r7,#16]
+  86:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** 
+  87:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   /* Linear interpolation process */
+  88:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   cosVal = (q63_t)(0x80000000-fract)*a >> 32;
+  86              	 .loc 1 88 0
+  87 0048 BB69     	 ldr r3,[r7,#24]
+  88 004a C3F10043 	 rsb r3,r3,#-2147483648
+  89 004e 1846     	 mov r0,r3
+  90 0050 4FF00001 	 mov r1,#0
+  91 0054 7B69     	 ldr r3,[r7,#20]
+  92 0056 1A46     	 mov r2,r3
+  93 0058 4FEAE273 	 asr r3,r2,#31
+  94 005c 02FB01FE 	 mul lr,r2,r1
+  95 0060 00FB03F6 	 mul r6,r0,r3
+  96 0064 7644     	 add r6,r6,lr
+  97 0066 A0FB0223 	 umull r2,r3,r0,r2
+  98 006a F118     	 adds r1,r6,r3
+  99 006c 0B46     	 mov r3,r1
+ 100 006e 9A46     	 mov r10,r3
+ 101 0070 4FEAE37B 	 asr fp,r3,#31
+ 102 0074 5346     	 mov r3,r10
+ 103 0076 FB60     	 str r3,[r7,#12]
+  89:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   cosVal = (q31_t)((((q63_t)cosVal << 32) + ((q63_t)fract*b)) >> 32);
+ 104              	 .loc 1 89 0
+ 105 0078 FB68     	 ldr r3,[r7,#12]
+ 106 007a 1A46     	 mov r2,r3
+ 107 007c 4FEAE273 	 asr r3,r2,#31
+ 108 0080 1500     	 movs r5,r2
+ 109 0082 0024     	 movs r4,#0
+ 110 0084 BB69     	 ldr r3,[r7,#24]
+ 111 0086 1846     	 mov r0,r3
+ 112 0088 4FEAE071 	 asr r1,r0,#31
+ 113 008c 3B69     	 ldr r3,[r7,#16]
+ 114 008e 1A46     	 mov r2,r3
+ 115 0090 4FEAE273 	 asr r3,r2,#31
+ 116 0094 02FB01FE 	 mul lr,r2,r1
+ 117 0098 00FB03F6 	 mul r6,r0,r3
+ 118 009c 7644     	 add r6,r6,lr
+ 119 009e A0FB0223 	 umull r2,r3,r0,r2
+ 120 00a2 F118     	 adds r1,r6,r3
+ 121 00a4 0B46     	 mov r3,r1
+ 122 00a6 1219     	 adds r2,r2,r4
+ 123 00a8 43EB0503 	 adc r3,r3,r5
+ 124 00ac 9846     	 mov r8,r3
+ 125 00ae 4FEAE379 	 asr r9,r3,#31
+ 126 00b2 4346     	 mov r3,r8
+ 127 00b4 FB60     	 str r3,[r7,#12]
+  90:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** 
+  91:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c ****   return cosVal << 1;
+ 128              	 .loc 1 91 0
+ 129 00b6 FB68     	 ldr r3,[r7,#12]
+ 130 00b8 5B00     	 lsls r3,r3,#1
+  92:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_cos_q31.c **** }
+ 131              	 .loc 1 92 0
+ 132 00ba 1846     	 mov r0,r3
+ 133 00bc 2437     	 adds r7,r7,#36
+ 134              	.LCFI3:
+ 135              	 .cfi_def_cfa_offset 36
+ 136 00be BD46     	 mov sp,r7
+ 137              	.LCFI4:
+ 138              	 .cfi_def_cfa_register 13
+ 139              	 
+ 140 00c0 BDE8F08F 	 pop {r4,r5,r6,r7,r8,r9,r10,fp,pc}
+ 141              	.L5:
+ 142              	 .align 2
+ 143              	.L4:
+ 144 00c4 00000000 	 .word sinTable_q31
+ 145              	 .cfi_endproc
+ 146              	.LFE139:
+ 148              	 .text
+ 149              	.Letext0:
+ 150              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 151              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 152              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+ 153              	 .file 5 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_common_tables.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_cos_q31.c
+    {standard input}:20     .text.arm_cos_q31:00000000 $t
+    {standard input}:25     .text.arm_cos_q31:00000000 arm_cos_q31
+    {standard input}:144    .text.arm_cos_q31:000000c4 $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+sinTable_q31

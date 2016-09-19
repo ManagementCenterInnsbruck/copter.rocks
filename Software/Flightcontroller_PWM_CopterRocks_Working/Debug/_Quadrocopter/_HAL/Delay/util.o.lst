@@ -1,0 +1,297 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "util.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .global timer_cnt
+  20              	 .section .bss.timer_cnt,"aw",%nobits
+  21              	 .align 2
+  24              	timer_cnt:
+  25 0000 00000000 	 .space 4
+  26              	 .section .text.delay,"ax",%progbits
+  27              	 .align 2
+  28              	 .global delay
+  29              	 .thumb
+  30              	 .thumb_func
+  32              	delay:
+  33              	.LFB440:
+  34              	 .file 1 "../_Quadrocopter/_HAL/Delay/util.c"
+   1:../_Quadrocopter/_HAL/Delay/util.c **** /*******************************************************************************
+   2:../_Quadrocopter/_HAL/Delay/util.c **** **                      Author(s) Identity                                    **
+   3:../_Quadrocopter/_HAL/Delay/util.c **** ********************************************************************************
+   4:../_Quadrocopter/_HAL/Delay/util.c **** **                                                                            **
+   5:../_Quadrocopter/_HAL/Delay/util.c **** ** Initials     Name                                                          **
+   6:../_Quadrocopter/_HAL/Delay/util.c **** ** ---------------------------------------------------------------------------**
+   7:../_Quadrocopter/_HAL/Delay/util.c **** ** AM           Andreas Mark                                                  **
+   8:../_Quadrocopter/_HAL/Delay/util.c **** ** DW           Dominik Wieland                                               **
+   9:../_Quadrocopter/_HAL/Delay/util.c **** **                                                                            **
+  10:../_Quadrocopter/_HAL/Delay/util.c **** **                                                                            **
+  11:../_Quadrocopter/_HAL/Delay/util.c **** *******************************************************************************/
+  12:../_Quadrocopter/_HAL/Delay/util.c **** 
+  13:../_Quadrocopter/_HAL/Delay/util.c **** /*******************************************************************************
+  14:../_Quadrocopter/_HAL/Delay/util.c **** **                      Revision Control History                              **
+  15:../_Quadrocopter/_HAL/Delay/util.c **** *******************************************************************************/
+  16:../_Quadrocopter/_HAL/Delay/util.c **** /*
+  17:../_Quadrocopter/_HAL/Delay/util.c ****  * V0.0: 04-04-2015, AM:  Initial Version
+  18:../_Quadrocopter/_HAL/Delay/util.c ****  * V0.1: 21-07-2016, DW:  Port of SW from DAVE3 to DAVE4
+  19:../_Quadrocopter/_HAL/Delay/util.c ****  */
+  20:../_Quadrocopter/_HAL/Delay/util.c **** 
+  21:../_Quadrocopter/_HAL/Delay/util.c **** 
+  22:../_Quadrocopter/_HAL/Delay/util.c **** /*******************************************************************************
+  23:../_Quadrocopter/_HAL/Delay/util.c **** **                      Includes                                              **
+  24:../_Quadrocopter/_HAL/Delay/util.c **** *******************************************************************************/
+  25:../_Quadrocopter/_HAL/Delay/util.c **** #include "util.h"
+  26:../_Quadrocopter/_HAL/Delay/util.c **** 
+  27:../_Quadrocopter/_HAL/Delay/util.c **** /*******************************************************************************
+  28:../_Quadrocopter/_HAL/Delay/util.c **** **                      Private Constant Definitions to be changed            **
+  29:../_Quadrocopter/_HAL/Delay/util.c **** *******************************************************************************/
+  30:../_Quadrocopter/_HAL/Delay/util.c **** 
+  31:../_Quadrocopter/_HAL/Delay/util.c **** /*******************************************************************************
+  32:../_Quadrocopter/_HAL/Delay/util.c **** **                      Private Macro Definitions                             **
+  33:../_Quadrocopter/_HAL/Delay/util.c **** *******************************************************************************/
+  34:../_Quadrocopter/_HAL/Delay/util.c **** 
+  35:../_Quadrocopter/_HAL/Delay/util.c **** /*******************************************************************************
+  36:../_Quadrocopter/_HAL/Delay/util.c **** **                      Global Type Definitions                               **
+  37:../_Quadrocopter/_HAL/Delay/util.c **** *******************************************************************************/
+  38:../_Quadrocopter/_HAL/Delay/util.c **** 
+  39:../_Quadrocopter/_HAL/Delay/util.c **** /*******************************************************************************
+  40:../_Quadrocopter/_HAL/Delay/util.c **** **                      Private Type Definitions                              **
+  41:../_Quadrocopter/_HAL/Delay/util.c **** *******************************************************************************/
+  42:../_Quadrocopter/_HAL/Delay/util.c **** 
+  43:../_Quadrocopter/_HAL/Delay/util.c **** /*******************************************************************************
+  44:../_Quadrocopter/_HAL/Delay/util.c **** **                      Global Function Declarations                          **
+  45:../_Quadrocopter/_HAL/Delay/util.c **** *******************************************************************************/
+  46:../_Quadrocopter/_HAL/Delay/util.c **** 
+  47:../_Quadrocopter/_HAL/Delay/util.c **** /*******************************************************************************
+  48:../_Quadrocopter/_HAL/Delay/util.c **** **                      Private Function Declarations                         **
+  49:../_Quadrocopter/_HAL/Delay/util.c **** *******************************************************************************/
+  50:../_Quadrocopter/_HAL/Delay/util.c **** 
+  51:../_Quadrocopter/_HAL/Delay/util.c **** /*******************************************************************************
+  52:../_Quadrocopter/_HAL/Delay/util.c **** **                      Global Constant Definitions                           **
+  53:../_Quadrocopter/_HAL/Delay/util.c **** *******************************************************************************/
+  54:../_Quadrocopter/_HAL/Delay/util.c **** 
+  55:../_Quadrocopter/_HAL/Delay/util.c **** /*******************************************************************************
+  56:../_Quadrocopter/_HAL/Delay/util.c **** **                      Private Constant Definitions                          **
+  57:../_Quadrocopter/_HAL/Delay/util.c **** *******************************************************************************/
+  58:../_Quadrocopter/_HAL/Delay/util.c **** 
+  59:../_Quadrocopter/_HAL/Delay/util.c **** /*******************************************************************************
+  60:../_Quadrocopter/_HAL/Delay/util.c **** **                      Global Variable Definitions                           **
+  61:../_Quadrocopter/_HAL/Delay/util.c **** *******************************************************************************/
+  62:../_Quadrocopter/_HAL/Delay/util.c **** 
+  63:../_Quadrocopter/_HAL/Delay/util.c **** /*******************************************************************************
+  64:../_Quadrocopter/_HAL/Delay/util.c **** **                      Private Variable Definitions                          **
+  65:../_Quadrocopter/_HAL/Delay/util.c **** *******************************************************************************/
+  66:../_Quadrocopter/_HAL/Delay/util.c **** volatile uint32_t timer_cnt = 0U; /**< Counts up every millisecond - is used for the delay function
+  67:../_Quadrocopter/_HAL/Delay/util.c **** 
+  68:../_Quadrocopter/_HAL/Delay/util.c **** /*******************************************************************************
+  69:../_Quadrocopter/_HAL/Delay/util.c **** **                      Global Function Definitions                           **
+  70:../_Quadrocopter/_HAL/Delay/util.c **** *******************************************************************************/
+  71:../_Quadrocopter/_HAL/Delay/util.c **** /**
+  72:../_Quadrocopter/_HAL/Delay/util.c ****  *  \brief Simple delay function
+  73:../_Quadrocopter/_HAL/Delay/util.c ****  *  
+  74:../_Quadrocopter/_HAL/Delay/util.c ****  *  \param [in] delayTimeInMillis delay length in milliseconds
+  75:../_Quadrocopter/_HAL/Delay/util.c ****  *  
+  76:../_Quadrocopter/_HAL/Delay/util.c ****  *  \details Lets the program wait for the desired time
+  77:../_Quadrocopter/_HAL/Delay/util.c ****  */
+  78:../_Quadrocopter/_HAL/Delay/util.c **** void delay(uint32_t delayTimeInMillis)
+  79:../_Quadrocopter/_HAL/Delay/util.c **** {
+  35              	 .loc 1 79 0
+  36              	 .cfi_startproc
+  37              	 
+  38              	 
+  39              	 
+  40 0000 80B4     	 push {r7}
+  41              	.LCFI0:
+  42              	 .cfi_def_cfa_offset 4
+  43              	 .cfi_offset 7,-4
+  44 0002 85B0     	 sub sp,sp,#20
+  45              	.LCFI1:
+  46              	 .cfi_def_cfa_offset 24
+  47 0004 00AF     	 add r7,sp,#0
+  48              	.LCFI2:
+  49              	 .cfi_def_cfa_register 7
+  50 0006 7860     	 str r0,[r7,#4]
+  80:../_Quadrocopter/_HAL/Delay/util.c **** 	uint32_t now = timer_cnt;
+  51              	 .loc 1 80 0
+  52 0008 074B     	 ldr r3,.L3
+  53 000a 1B68     	 ldr r3,[r3]
+  54 000c FB60     	 str r3,[r7,#12]
+  81:../_Quadrocopter/_HAL/Delay/util.c **** 	while((now+delayTimeInMillis)>timer_cnt);
+  55              	 .loc 1 81 0
+  56 000e 00BF     	 nop
+  57              	.L2:
+  58              	 .loc 1 81 0 is_stmt 0 discriminator 1
+  59 0010 FA68     	 ldr r2,[r7,#12]
+  60 0012 7B68     	 ldr r3,[r7,#4]
+  61 0014 1A44     	 add r2,r2,r3
+  62 0016 044B     	 ldr r3,.L3
+  63 0018 1B68     	 ldr r3,[r3]
+  64 001a 9A42     	 cmp r2,r3
+  65 001c F8D8     	 bhi .L2
+  82:../_Quadrocopter/_HAL/Delay/util.c **** }
+  66              	 .loc 1 82 0 is_stmt 1
+  67 001e 1437     	 adds r7,r7,#20
+  68              	.LCFI3:
+  69              	 .cfi_def_cfa_offset 4
+  70 0020 BD46     	 mov sp,r7
+  71              	.LCFI4:
+  72              	 .cfi_def_cfa_register 13
+  73              	 
+  74 0022 5DF8047B 	 ldr r7,[sp],#4
+  75              	.LCFI5:
+  76              	 .cfi_restore 7
+  77              	 .cfi_def_cfa_offset 0
+  78 0026 7047     	 bx lr
+  79              	.L4:
+  80              	 .align 2
+  81              	.L3:
+  82 0028 00000000 	 .word timer_cnt
+  83              	 .cfi_endproc
+  84              	.LFE440:
+  86              	 .section .text.getDelaymillis,"ax",%progbits
+  87              	 .align 2
+  88              	 .global getDelaymillis
+  89              	 .thumb
+  90              	 .thumb_func
+  92              	getDelaymillis:
+  93              	.LFB441:
+  83:../_Quadrocopter/_HAL/Delay/util.c **** /**
+  84:../_Quadrocopter/_HAL/Delay/util.c ****  *  \brief Getter for timer_cnt
+  85:../_Quadrocopter/_HAL/Delay/util.c ****  *  
+  86:../_Quadrocopter/_HAL/Delay/util.c ****  *  \return The current value of timer_cnt
+  87:../_Quadrocopter/_HAL/Delay/util.c ****  *  
+  88:../_Quadrocopter/_HAL/Delay/util.c ****  *  \details returns the current value of the delay timer
+  89:../_Quadrocopter/_HAL/Delay/util.c ****  */
+  90:../_Quadrocopter/_HAL/Delay/util.c **** uint32_t getDelaymillis(void)
+  91:../_Quadrocopter/_HAL/Delay/util.c **** {
+  94              	 .loc 1 91 0
+  95              	 .cfi_startproc
+  96              	 
+  97              	 
+  98              	 
+  99 0000 80B4     	 push {r7}
+ 100              	.LCFI6:
+ 101              	 .cfi_def_cfa_offset 4
+ 102              	 .cfi_offset 7,-4
+ 103 0002 00AF     	 add r7,sp,#0
+ 104              	.LCFI7:
+ 105              	 .cfi_def_cfa_register 7
+  92:../_Quadrocopter/_HAL/Delay/util.c **** 	return timer_cnt;
+ 106              	 .loc 1 92 0
+ 107 0004 034B     	 ldr r3,.L7
+ 108 0006 1B68     	 ldr r3,[r3]
+  93:../_Quadrocopter/_HAL/Delay/util.c **** }
+ 109              	 .loc 1 93 0
+ 110 0008 1846     	 mov r0,r3
+ 111 000a BD46     	 mov sp,r7
+ 112              	.LCFI8:
+ 113              	 .cfi_def_cfa_register 13
+ 114              	 
+ 115 000c 5DF8047B 	 ldr r7,[sp],#4
+ 116              	.LCFI9:
+ 117              	 .cfi_restore 7
+ 118              	 .cfi_def_cfa_offset 0
+ 119 0010 7047     	 bx lr
+ 120              	.L8:
+ 121 0012 00BF     	 .align 2
+ 122              	.L7:
+ 123 0014 00000000 	 .word timer_cnt
+ 124              	 .cfi_endproc
+ 125              	.LFE441:
+ 127              	 .section .text.CCU43_0_IRQHandler,"ax",%progbits
+ 128              	 .align 2
+ 129              	 .global CCU43_0_IRQHandler
+ 130              	 .thumb
+ 131              	 .thumb_func
+ 133              	CCU43_0_IRQHandler:
+ 134              	.LFB442:
+  94:../_Quadrocopter/_HAL/Delay/util.c **** 
+  95:../_Quadrocopter/_HAL/Delay/util.c **** 
+  96:../_Quadrocopter/_HAL/Delay/util.c **** /*******************************************************************************
+  97:../_Quadrocopter/_HAL/Delay/util.c **** **                      Private Function Definitions                          **
+  98:../_Quadrocopter/_HAL/Delay/util.c **** *******************************************************************************/
+  99:../_Quadrocopter/_HAL/Delay/util.c **** /**
+ 100:../_Quadrocopter/_HAL/Delay/util.c ****  *  \brief Interrupt Service Routine of the Util_Timer
+ 101:../_Quadrocopter/_HAL/Delay/util.c ****  *  
+ 102:../_Quadrocopter/_HAL/Delay/util.c ****  *  
+ 103:../_Quadrocopter/_HAL/Delay/util.c ****  *  \details elevates the timer count variable by 1
+ 104:../_Quadrocopter/_HAL/Delay/util.c ****  */
+ 105:../_Quadrocopter/_HAL/Delay/util.c **** void Util_Timer_ISR(void)
+ 106:../_Quadrocopter/_HAL/Delay/util.c **** {
+ 135              	 .loc 1 106 0
+ 136              	 .cfi_startproc
+ 137              	 
+ 138              	 
+ 139              	 
+ 140 0000 80B4     	 push {r7}
+ 141              	.LCFI10:
+ 142              	 .cfi_def_cfa_offset 4
+ 143              	 .cfi_offset 7,-4
+ 144 0002 00AF     	 add r7,sp,#0
+ 145              	.LCFI11:
+ 146              	 .cfi_def_cfa_register 7
+ 107:../_Quadrocopter/_HAL/Delay/util.c **** 	timer_cnt++;
+ 147              	 .loc 1 107 0
+ 148 0004 044B     	 ldr r3,.L10
+ 149 0006 1B68     	 ldr r3,[r3]
+ 150 0008 0133     	 adds r3,r3,#1
+ 151 000a 034A     	 ldr r2,.L10
+ 152 000c 1360     	 str r3,[r2]
+ 108:../_Quadrocopter/_HAL/Delay/util.c **** }
+ 153              	 .loc 1 108 0
+ 154 000e BD46     	 mov sp,r7
+ 155              	.LCFI12:
+ 156              	 .cfi_def_cfa_register 13
+ 157              	 
+ 158 0010 5DF8047B 	 ldr r7,[sp],#4
+ 159              	.LCFI13:
+ 160              	 .cfi_restore 7
+ 161              	 .cfi_def_cfa_offset 0
+ 162 0014 7047     	 bx lr
+ 163              	.L11:
+ 164 0016 00BF     	 .align 2
+ 165              	.L10:
+ 166 0018 00000000 	 .word timer_cnt
+ 167              	 .cfi_endproc
+ 168              	.LFE442:
+ 170              	 .text
+ 171              	.Letext0:
+ 172              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 173              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 174              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working/Libraries/CMSIS/Infineon/XMC4500_series/Include/XMC4500.h"
+ 175              	 .file 5 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Libraries\\XMCLib\\inc/xmc_usic.h"
+ 176              	 .file 6 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Libraries\\XMCLib\\inc/xmc_usbd_regs.h"
+ 177              	 .file 7 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Libraries\\XMCLib\\inc/xmc_usbd.h"
+ 178              	 .file 8 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/USBD/usbd.h"
+ 179              	 .file 9 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working/Libraries/CMSIS/Include/core_cm4.h"
+ 180              	 .file 10 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working/Libraries/CMSIS/Infineon/XMC4500_series/Include/system_XMC4500.h"
+ 181              	 .file 11 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/USBD/usbd_extern.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 util.c
+    {standard input}:24     .bss.timer_cnt:00000000 timer_cnt
+    {standard input}:21     .bss.timer_cnt:00000000 $d
+    {standard input}:27     .text.delay:00000000 $t
+    {standard input}:32     .text.delay:00000000 delay
+    {standard input}:82     .text.delay:00000028 $d
+    {standard input}:87     .text.getDelaymillis:00000000 $t
+    {standard input}:92     .text.getDelaymillis:00000000 getDelaymillis
+    {standard input}:123    .text.getDelaymillis:00000014 $d
+    {standard input}:128    .text.CCU43_0_IRQHandler:00000000 $t
+    {standard input}:133    .text.CCU43_0_IRQHandler:00000000 CCU43_0_IRQHandler
+    {standard input}:166    .text.CCU43_0_IRQHandler:00000018 $d
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

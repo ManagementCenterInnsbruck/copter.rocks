@@ -1,0 +1,520 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_std_q31.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .global __aeabi_ldivmod
+  20              	 .section .text.arm_std_q31,"ax",%progbits
+  21              	 .align 2
+  22              	 .global arm_std_q31
+  23              	 .thumb
+  24              	 .thumb_func
+  26              	arm_std_q31:
+  27              	.LFB139:
+  28              	 .file 1 "../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c"
+   1:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** /* ----------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * $Date:        12. March 2014
+   5:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * $Revision: 	V1.4.4  
+   6:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * Title:		arm_std_q31.c    
+   9:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * Description:	Standard deviation of an array of Q31 type.    
+  11:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** *
+  27:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * POSSIBILITY OF SUCH DAMAGE.    
+  39:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** * -------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+  41:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+  43:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** /**    
+  44:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  * @ingroup groupStats    
+  45:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  */
+  46:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+  47:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** /**    
+  48:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  * @addtogroup STD    
+  49:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  * @{    
+  50:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  */
+  51:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+  52:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+  53:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** /**    
+  54:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  * @brief Standard deviation of the elements of a Q31 vector.    
+  55:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  * @param[in]       *pSrc points to the input vector    
+  56:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  * @param[in]       blockSize length of the input vector    
+  57:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  * @param[out]      *pResult standard deviation value returned here    
+  58:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  * @return none.    
+  59:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  * @details    
+  60:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  * <b>Scaling and Overflow Behavior:</b>    
+  61:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  *    
+  62:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  *\par    
+  63:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  * The function is implemented using an internal 64-bit accumulator.        
+  64:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  * The input is represented in 1.31 format, which is then downshifted by 8 bits
+  65:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  * which yields 1.23, and intermediate multiplication yields a 2.46 format.        
+  66:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  * The accumulator maintains full precision of the intermediate multiplication results,         
+  67:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  * but provides only a 16 guard bits.        
+  68:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  * There is no saturation on intermediate additions.        
+  69:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  * If the accumulator overflows it wraps around and distorts the result.        
+  70:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  * In order to avoid overflows completely the input signal must be scaled down by         
+  71:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  * log2(blockSize)-8 bits, as a total of blockSize additions are performed internally.  
+  72:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  * After division, internal variables should be Q18.46 
+  73:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  * Finally, the 18.46 accumulator is right shifted by 15 bits to yield a 1.31 format value. 
+  74:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  *    
+  75:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****  */
+  76:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+  77:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+  78:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** void arm_std_q31(
+  79:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   q31_t * pSrc,
+  80:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   uint32_t blockSize,
+  81:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   q31_t * pResult)
+  82:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** {
+  29              	 .loc 1 82 0
+  30              	 .cfi_startproc
+  31              	 
+  32              	 
+  33 0000 2DE9F043 	 push {r4,r5,r6,r7,r8,r9,lr}
+  34              	.LCFI0:
+  35              	 .cfi_def_cfa_offset 28
+  36              	 .cfi_offset 4,-28
+  37              	 .cfi_offset 5,-24
+  38              	 .cfi_offset 6,-20
+  39              	 .cfi_offset 7,-16
+  40              	 .cfi_offset 8,-12
+  41              	 .cfi_offset 9,-8
+  42              	 .cfi_offset 14,-4
+  43 0004 91B0     	 sub sp,sp,#68
+  44              	.LCFI1:
+  45              	 .cfi_def_cfa_offset 96
+  46 0006 00AF     	 add r7,sp,#0
+  47              	.LCFI2:
+  48              	 .cfi_def_cfa_register 7
+  49 0008 F860     	 str r0,[r7,#12]
+  50 000a B960     	 str r1,[r7,#8]
+  51 000c 7A60     	 str r2,[r7,#4]
+  83:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   q63_t sum = 0;                                 /* Accumulator */
+  52              	 .loc 1 83 0
+  53 000e 4FF00002 	 mov r2,#0
+  54 0012 4FF00003 	 mov r3,#0
+  55 0016 C7E90E23 	 strd r2,[r7,#56]
+  84:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   q63_t meanOfSquares, squareOfMean;             /* square of mean and mean of square */
+  85:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   q31_t in;                                      /* input value */
+  86:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   uint32_t blkCnt;                               /* loop counter */
+  87:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   q63_t sumOfSquares = 0;                        /* Accumulator */
+  56              	 .loc 1 87 0
+  57 001a 4FF00002 	 mov r2,#0
+  58 001e 4FF00003 	 mov r3,#0
+  59 0022 C7E90A23 	 strd r2,[r7,#40]
+  88:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+  89:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 	if(blockSize == 1)
+  60              	 .loc 1 89 0
+  61 0026 BB68     	 ldr r3,[r7,#8]
+  62 0028 012B     	 cmp r3,#1
+  63 002a 03D1     	 bne .L2
+  90:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 	{
+  91:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 		*pResult = 0;
+  64              	 .loc 1 91 0
+  65 002c 7B68     	 ldr r3,[r7,#4]
+  66 002e 0022     	 movs r2,#0
+  67 0030 1A60     	 str r2,[r3]
+  92:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 		return;
+  68              	 .loc 1 92 0
+  69 0032 20E1     	 b .L1
+  70              	.L2:
+  93:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 	}
+  94:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****    
+  95:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** #ifndef ARM_MATH_CM0_FAMILY
+  96:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+  97:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   /* Run the below code for Cortex-M4 and Cortex-M3 */
+  98:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+  99:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   /*loop Unrolling */
+ 100:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   blkCnt = blockSize >> 2u;
+  71              	 .loc 1 100 0
+  72 0034 BB68     	 ldr r3,[r7,#8]
+  73 0036 9B08     	 lsrs r3,r3,#2
+  74 0038 7B63     	 str r3,[r7,#52]
+ 101:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+ 102:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
+ 103:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****    ** a second loop below computes the remaining 1 to 3 samples. */
+ 104:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   while(blkCnt > 0u)
+  75              	 .loc 1 104 0
+  76 003a A6E0     	 b .L4
+  77              	.L5:
+ 105:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   {
+ 106:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     /* C = (A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1])  */
+ 107:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     /* Compute Sum of squares of the input samples    
+ 108:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****      * and then store the result in a temporary variable, sum. */
+ 109:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     in = *pSrc++ >> 8;
+  78              	 .loc 1 109 0
+  79 003c FB68     	 ldr r3,[r7,#12]
+  80 003e 1A1D     	 adds r2,r3,#4
+  81 0040 FA60     	 str r2,[r7,#12]
+  82 0042 1B68     	 ldr r3,[r3]
+  83 0044 1B12     	 asrs r3,r3,#8
+  84 0046 7B62     	 str r3,[r7,#36]
+ 110:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     sum += in;
+  85              	 .loc 1 110 0
+  86 0048 7B6A     	 ldr r3,[r7,#36]
+  87 004a 1A46     	 mov r2,r3
+  88 004c 4FEAE273 	 asr r3,r2,#31
+  89 0050 D7E90E01 	 ldrd r0,[r7,#56]
+  90 0054 1218     	 adds r2,r2,r0
+  91 0056 43EB0103 	 adc r3,r3,r1
+  92 005a C7E90E23 	 strd r2,[r7,#56]
+ 111:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     sumOfSquares += ((q63_t) (in) * (in));
+  93              	 .loc 1 111 0
+  94 005e 7B6A     	 ldr r3,[r7,#36]
+  95 0060 1846     	 mov r0,r3
+  96 0062 4FEAE071 	 asr r1,r0,#31
+  97 0066 7B6A     	 ldr r3,[r7,#36]
+  98 0068 1A46     	 mov r2,r3
+  99 006a 4FEAE273 	 asr r3,r2,#31
+ 100 006e 02FB01FE 	 mul lr,r2,r1
+ 101 0072 00FB03F6 	 mul r6,r0,r3
+ 102 0076 7644     	 add r6,r6,lr
+ 103 0078 A0FB0223 	 umull r2,r3,r0,r2
+ 104 007c F118     	 adds r1,r6,r3
+ 105 007e 0B46     	 mov r3,r1
+ 106 0080 D7E90A01 	 ldrd r0,[r7,#40]
+ 107 0084 1218     	 adds r2,r2,r0
+ 108 0086 43EB0103 	 adc r3,r3,r1
+ 109 008a C7E90A23 	 strd r2,[r7,#40]
+ 112:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     in = *pSrc++ >> 8;
+ 110              	 .loc 1 112 0
+ 111 008e FB68     	 ldr r3,[r7,#12]
+ 112 0090 1A1D     	 adds r2,r3,#4
+ 113 0092 FA60     	 str r2,[r7,#12]
+ 114 0094 1B68     	 ldr r3,[r3]
+ 115 0096 1B12     	 asrs r3,r3,#8
+ 116 0098 7B62     	 str r3,[r7,#36]
+ 113:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     sum += in;
+ 117              	 .loc 1 113 0
+ 118 009a 7B6A     	 ldr r3,[r7,#36]
+ 119 009c 1A46     	 mov r2,r3
+ 120 009e 4FEAE273 	 asr r3,r2,#31
+ 121 00a2 D7E90E01 	 ldrd r0,[r7,#56]
+ 122 00a6 1218     	 adds r2,r2,r0
+ 123 00a8 43EB0103 	 adc r3,r3,r1
+ 124 00ac C7E90E23 	 strd r2,[r7,#56]
+ 114:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     sumOfSquares += ((q63_t) (in) * (in));
+ 125              	 .loc 1 114 0
+ 126 00b0 7B6A     	 ldr r3,[r7,#36]
+ 127 00b2 1846     	 mov r0,r3
+ 128 00b4 4FEAE071 	 asr r1,r0,#31
+ 129 00b8 7B6A     	 ldr r3,[r7,#36]
+ 130 00ba 1A46     	 mov r2,r3
+ 131 00bc 4FEAE273 	 asr r3,r2,#31
+ 132 00c0 02FB01FE 	 mul lr,r2,r1
+ 133 00c4 00FB03F6 	 mul r6,r0,r3
+ 134 00c8 7644     	 add r6,r6,lr
+ 135 00ca A0FB0223 	 umull r2,r3,r0,r2
+ 136 00ce F118     	 adds r1,r6,r3
+ 137 00d0 0B46     	 mov r3,r1
+ 138 00d2 D7E90A01 	 ldrd r0,[r7,#40]
+ 139 00d6 1218     	 adds r2,r2,r0
+ 140 00d8 43EB0103 	 adc r3,r3,r1
+ 141 00dc C7E90A23 	 strd r2,[r7,#40]
+ 115:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     in = *pSrc++ >> 8;
+ 142              	 .loc 1 115 0
+ 143 00e0 FB68     	 ldr r3,[r7,#12]
+ 144 00e2 1A1D     	 adds r2,r3,#4
+ 145 00e4 FA60     	 str r2,[r7,#12]
+ 146 00e6 1B68     	 ldr r3,[r3]
+ 147 00e8 1B12     	 asrs r3,r3,#8
+ 148 00ea 7B62     	 str r3,[r7,#36]
+ 116:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     sum += in;
+ 149              	 .loc 1 116 0
+ 150 00ec 7B6A     	 ldr r3,[r7,#36]
+ 151 00ee 1A46     	 mov r2,r3
+ 152 00f0 4FEAE273 	 asr r3,r2,#31
+ 153 00f4 D7E90E01 	 ldrd r0,[r7,#56]
+ 154 00f8 1218     	 adds r2,r2,r0
+ 155 00fa 43EB0103 	 adc r3,r3,r1
+ 156 00fe C7E90E23 	 strd r2,[r7,#56]
+ 117:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     sumOfSquares += ((q63_t) (in) * (in));
+ 157              	 .loc 1 117 0
+ 158 0102 7B6A     	 ldr r3,[r7,#36]
+ 159 0104 1846     	 mov r0,r3
+ 160 0106 4FEAE071 	 asr r1,r0,#31
+ 161 010a 7B6A     	 ldr r3,[r7,#36]
+ 162 010c 1A46     	 mov r2,r3
+ 163 010e 4FEAE273 	 asr r3,r2,#31
+ 164 0112 02FB01FE 	 mul lr,r2,r1
+ 165 0116 00FB03F6 	 mul r6,r0,r3
+ 166 011a 7644     	 add r6,r6,lr
+ 167 011c A0FB0223 	 umull r2,r3,r0,r2
+ 168 0120 F118     	 adds r1,r6,r3
+ 169 0122 0B46     	 mov r3,r1
+ 170 0124 D7E90A01 	 ldrd r0,[r7,#40]
+ 171 0128 1218     	 adds r2,r2,r0
+ 172 012a 43EB0103 	 adc r3,r3,r1
+ 173 012e C7E90A23 	 strd r2,[r7,#40]
+ 118:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     in = *pSrc++ >> 8;
+ 174              	 .loc 1 118 0
+ 175 0132 FB68     	 ldr r3,[r7,#12]
+ 176 0134 1A1D     	 adds r2,r3,#4
+ 177 0136 FA60     	 str r2,[r7,#12]
+ 178 0138 1B68     	 ldr r3,[r3]
+ 179 013a 1B12     	 asrs r3,r3,#8
+ 180 013c 7B62     	 str r3,[r7,#36]
+ 119:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     sum += in;
+ 181              	 .loc 1 119 0
+ 182 013e 7B6A     	 ldr r3,[r7,#36]
+ 183 0140 1A46     	 mov r2,r3
+ 184 0142 4FEAE273 	 asr r3,r2,#31
+ 185 0146 D7E90E01 	 ldrd r0,[r7,#56]
+ 186 014a 1218     	 adds r2,r2,r0
+ 187 014c 43EB0103 	 adc r3,r3,r1
+ 188 0150 C7E90E23 	 strd r2,[r7,#56]
+ 120:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     sumOfSquares += ((q63_t) (in) * (in));
+ 189              	 .loc 1 120 0
+ 190 0154 7B6A     	 ldr r3,[r7,#36]
+ 191 0156 1846     	 mov r0,r3
+ 192 0158 4FEAE071 	 asr r1,r0,#31
+ 193 015c 7B6A     	 ldr r3,[r7,#36]
+ 194 015e 1A46     	 mov r2,r3
+ 195 0160 4FEAE273 	 asr r3,r2,#31
+ 196 0164 02FB01FE 	 mul lr,r2,r1
+ 197 0168 00FB03F6 	 mul r6,r0,r3
+ 198 016c 7644     	 add r6,r6,lr
+ 199 016e A0FB0223 	 umull r2,r3,r0,r2
+ 200 0172 F118     	 adds r1,r6,r3
+ 201 0174 0B46     	 mov r3,r1
+ 202 0176 D7E90A01 	 ldrd r0,[r7,#40]
+ 203 017a 1218     	 adds r2,r2,r0
+ 204 017c 43EB0103 	 adc r3,r3,r1
+ 205 0180 C7E90A23 	 strd r2,[r7,#40]
+ 121:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+ 122:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     /* Decrement the loop counter */
+ 123:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     blkCnt--;
+ 206              	 .loc 1 123 0
+ 207 0184 7B6B     	 ldr r3,[r7,#52]
+ 208 0186 013B     	 subs r3,r3,#1
+ 209 0188 7B63     	 str r3,[r7,#52]
+ 210              	.L4:
+ 104:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   {
+ 211              	 .loc 1 104 0
+ 212 018a 7B6B     	 ldr r3,[r7,#52]
+ 213 018c 002B     	 cmp r3,#0
+ 214 018e 7FF455AF 	 bne .L5
+ 124:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   }
+ 125:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+ 126:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.    
+ 127:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****    ** No loop unrolling is used. */
+ 128:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   blkCnt = blockSize % 0x4u;
+ 215              	 .loc 1 128 0
+ 216 0192 BB68     	 ldr r3,[r7,#8]
+ 217 0194 03F00303 	 and r3,r3,#3
+ 218 0198 7B63     	 str r3,[r7,#52]
+ 129:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+ 130:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   while(blkCnt > 0u)
+ 219              	 .loc 1 130 0
+ 220 019a 2BE0     	 b .L6
+ 221              	.L7:
+ 131:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   {
+ 132:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     /* C = (A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1]) */
+ 133:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     /* Compute Sum of squares of the input samples    
+ 134:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****      * and then store the result in a temporary variable, sum. */
+ 135:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     in = *pSrc++ >> 8;
+ 222              	 .loc 1 135 0
+ 223 019c FB68     	 ldr r3,[r7,#12]
+ 224 019e 1A1D     	 adds r2,r3,#4
+ 225 01a0 FA60     	 str r2,[r7,#12]
+ 226 01a2 1B68     	 ldr r3,[r3]
+ 227 01a4 1B12     	 asrs r3,r3,#8
+ 228 01a6 7B62     	 str r3,[r7,#36]
+ 136:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     sum += in;
+ 229              	 .loc 1 136 0
+ 230 01a8 7B6A     	 ldr r3,[r7,#36]
+ 231 01aa 1A46     	 mov r2,r3
+ 232 01ac 4FEAE273 	 asr r3,r2,#31
+ 233 01b0 D7E90E01 	 ldrd r0,[r7,#56]
+ 234 01b4 1218     	 adds r2,r2,r0
+ 235 01b6 43EB0103 	 adc r3,r3,r1
+ 236 01ba C7E90E23 	 strd r2,[r7,#56]
+ 137:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     sumOfSquares += ((q63_t) (in) * (in));
+ 237              	 .loc 1 137 0
+ 238 01be 7B6A     	 ldr r3,[r7,#36]
+ 239 01c0 1846     	 mov r0,r3
+ 240 01c2 4FEAE071 	 asr r1,r0,#31
+ 241 01c6 7B6A     	 ldr r3,[r7,#36]
+ 242 01c8 1A46     	 mov r2,r3
+ 243 01ca 4FEAE273 	 asr r3,r2,#31
+ 244 01ce 02FB01FE 	 mul lr,r2,r1
+ 245 01d2 00FB03F6 	 mul r6,r0,r3
+ 246 01d6 7644     	 add r6,r6,lr
+ 247 01d8 A0FB0223 	 umull r2,r3,r0,r2
+ 248 01dc F118     	 adds r1,r6,r3
+ 249 01de 0B46     	 mov r3,r1
+ 250 01e0 D7E90A01 	 ldrd r0,[r7,#40]
+ 251 01e4 1218     	 adds r2,r2,r0
+ 252 01e6 43EB0103 	 adc r3,r3,r1
+ 253 01ea C7E90A23 	 strd r2,[r7,#40]
+ 138:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+ 139:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     /* Decrement the loop counter */
+ 140:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     blkCnt--;
+ 254              	 .loc 1 140 0
+ 255 01ee 7B6B     	 ldr r3,[r7,#52]
+ 256 01f0 013B     	 subs r3,r3,#1
+ 257 01f2 7B63     	 str r3,[r7,#52]
+ 258              	.L6:
+ 130:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   {
+ 259              	 .loc 1 130 0
+ 260 01f4 7B6B     	 ldr r3,[r7,#52]
+ 261 01f6 002B     	 cmp r3,#0
+ 262 01f8 D0D1     	 bne .L7
+ 141:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   }
+ 142:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+ 143:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   /* Compute Mean of squares of the input samples    
+ 144:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****    * and then store the result in a temporary variable, meanOfSquares. */
+ 145:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   meanOfSquares = sumOfSquares / (q63_t)(blockSize - 1);
+ 263              	 .loc 1 145 0
+ 264 01fa BB68     	 ldr r3,[r7,#8]
+ 265 01fc 013B     	 subs r3,r3,#1
+ 266 01fe 1A46     	 mov r2,r3
+ 267 0200 4FF00003 	 mov r3,#0
+ 268 0204 D7E90A01 	 ldrd r0,[r7,#40]
+ 269 0208 FFF7FEFF 	 bl __aeabi_ldivmod
+ 270 020c 0246     	 mov r2,r0
+ 271 020e 0B46     	 mov r3,r1
+ 272 0210 C7E90623 	 strd r2,[r7,#24]
+ 146:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+ 147:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** #else
+ 148:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+ 149:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   /* Run the below code for Cortex-M0 */
+ 150:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+ 151:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   /* Loop over blockSize number of values */
+ 152:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   blkCnt = blockSize;
+ 153:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+ 154:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   while(blkCnt > 0u)
+ 155:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   {
+ 156:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     /* C = (A[0] * A[0] + A[1] * A[1] + ... + A[blockSize-1] * A[blockSize-1]) */
+ 157:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     /* Compute Sum of squares of the input samples     
+ 158:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****      * and then store the result in a temporary variable, sumOfSquares. */
+ 159:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     in = *pSrc++ >> 8;
+ 160:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     sumOfSquares += ((q63_t) (in) * (in));
+ 161:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+ 162:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     /* C = (A[0] + A[1] + A[2] + ... + A[blockSize-1]) */
+ 163:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     /* Compute sum of all input values and then store the result in a temporary variable, sum. */
+ 164:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     sum += in;
+ 165:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+ 166:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     /* Decrement the loop counter */
+ 167:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****     blkCnt--;
+ 168:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   }
+ 169:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+ 170:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   /* Compute Mean of squares of the input samples     
+ 171:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****    * and then store the result in a temporary variable, meanOfSquares. */
+ 172:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   meanOfSquares = sumOfSquares / (q63_t)(blockSize - 1);
+ 173:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+ 174:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** #endif /* #ifndef ARM_MATH_CM0_FAMILY */
+ 175:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+ 176:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   /* Compute square of mean */
+ 177:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   squareOfMean = sum * sum / (q63_t)(blockSize * (blockSize - 1u));
+ 273              	 .loc 1 177 0
+ 274 0214 FB6B     	 ldr r3,[r7,#60]
+ 275 0216 BA6B     	 ldr r2,[r7,#56]
+ 276 0218 02FB03F2 	 mul r2,r2,r3
+ 277 021c FB6B     	 ldr r3,[r7,#60]
+ 278 021e B96B     	 ldr r1,[r7,#56]
+ 279 0220 01FB03F3 	 mul r3,r1,r3
+ 280 0224 D118     	 adds r1,r2,r3
+ 281 0226 BA6B     	 ldr r2,[r7,#56]
+ 282 0228 BB6B     	 ldr r3,[r7,#56]
+ 283 022a A2FB0323 	 umull r2,r3,r2,r3
+ 284 022e 1944     	 add r1,r1,r3
+ 285 0230 0B46     	 mov r3,r1
+ 286 0232 B968     	 ldr r1,[r7,#8]
+ 287 0234 0139     	 subs r1,r1,#1
+ 288 0236 B868     	 ldr r0,[r7,#8]
+ 289 0238 00FB01F1 	 mul r1,r0,r1
+ 290 023c 8846     	 mov r8,r1
+ 291 023e 4FF00009 	 mov r9,#0
+ 292 0242 1046     	 mov r0,r2
+ 293 0244 1946     	 mov r1,r3
+ 294 0246 4246     	 mov r2,r8
+ 295 0248 4B46     	 mov r3,r9
+ 296 024a FFF7FEFF 	 bl __aeabi_ldivmod
+ 297 024e 0246     	 mov r2,r0
+ 298 0250 0B46     	 mov r3,r1
+ 299 0252 C7E90423 	 strd r2,[r7,#16]
+ 178:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+ 179:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   /* Compute standard deviation and then store the result to the destination */
+ 180:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c ****   arm_sqrt_q31((meanOfSquares - squareOfMean) >> 15, pResult);
+ 300              	 .loc 1 180 0
+ 301 0256 D7E90601 	 ldrd r0,[r7,#24]
+ 302 025a D7E90423 	 ldrd r2,[r7,#16]
+ 303 025e 821A     	 subs r2,r0,r2
+ 304 0260 61EB0303 	 sbc r3,r1,r3
+ 305 0264 D40B     	 lsrs r4,r2,#15
+ 306 0266 44EA4344 	 orr r4,r4,r3,lsl#17
+ 307 026a DD13     	 asrs r5,r3,#15
+ 308 026c 2346     	 mov r3,r4
+ 309 026e 1846     	 mov r0,r3
+ 310 0270 7968     	 ldr r1,[r7,#4]
+ 311 0272 FFF7FEFF 	 bl arm_sqrt_q31
+ 312              	.L1:
+ 181:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** 
+ 182:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_std_q31.c **** }
+ 313              	 .loc 1 182 0
+ 314 0276 4437     	 adds r7,r7,#68
+ 315              	.LCFI3:
+ 316              	 .cfi_def_cfa_offset 28
+ 317 0278 BD46     	 mov sp,r7
+ 318              	.LCFI4:
+ 319              	 .cfi_def_cfa_register 13
+ 320              	 
+ 321 027a BDE8F083 	 pop {r4,r5,r6,r7,r8,r9,pc}
+ 322              	 .cfi_endproc
+ 323              	.LFE139:
+ 325 027e 00BF     	 .text
+ 326              	.Letext0:
+ 327              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 328              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 329              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_std_q31.c
+    {standard input}:21     .text.arm_std_q31:00000000 $t
+    {standard input}:26     .text.arm_std_q31:00000000 arm_std_q31
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+__aeabi_ldivmod
+arm_sqrt_q31

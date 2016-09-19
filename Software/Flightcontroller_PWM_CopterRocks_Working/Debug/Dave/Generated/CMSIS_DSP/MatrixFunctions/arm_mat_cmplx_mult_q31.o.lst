@@ -1,0 +1,1593 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_mat_cmplx_mult_q31.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.clip_q63_to_q31,"ax",%progbits
+  20              	 .align 2
+  21              	 .thumb
+  22              	 .thumb_func
+  24              	clip_q63_to_q31:
+  25              	.LFB106:
+  26              	 .file 1 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+   1:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /* ----------------------------------------------------------------------
+   2:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * Copyright (C) 2010-2015 ARM Limited. All rights reserved.
+   3:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *
+   4:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * $Date:        20. October 2015
+   5:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * $Revision:    V1.4.5 b
+   6:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *
+   7:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * Project:      CMSIS DSP Library
+   8:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * Title:        arm_math.h
+   9:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *
+  10:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * Description:  Public header file for CMSIS DSP Library
+  11:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *
+  12:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * Target Processor: Cortex-M7/Cortex-M4/Cortex-M3/Cortex-M0
+  13:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *
+  14:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * Redistribution and use in source and binary forms, with or without
+  15:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * modification, are permitted provided that the following conditions
+  16:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * are met:
+  17:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *   - Redistributions of source code must retain the above copyright
+  18:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *     notice, this list of conditions and the following disclaimer.
+  19:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *   - Redistributions in binary form must reproduce the above copyright
+  20:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *     notice, this list of conditions and the following disclaimer in
+  21:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *     the documentation and/or other materials provided with the
+  22:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *     distribution.
+  23:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *     may be used to endorse or promote products derived from this
+  25:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *     software without specific prior written permission.
+  26:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *
+  27:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+  31:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * POSSIBILITY OF SUCH DAMAGE.
+  39:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * -------------------------------------------------------------------- */
+  40:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+  41:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+  42:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    \mainpage CMSIS DSP Software Library
+  43:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  44:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Introduction
+  45:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ------------
+  46:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  47:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * This user manual describes the CMSIS DSP software library,
+  48:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * a suite of common signal processing functions for use on Cortex-M processor based devices.
+  49:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  50:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library is divided into a number of functions each covering a specific category:
+  51:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Basic math functions
+  52:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Fast math functions
+  53:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Complex math functions
+  54:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Filters
+  55:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Matrix functions
+  56:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Transforms
+  57:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Motor control functions
+  58:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Statistical functions
+  59:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Support functions
+  60:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Interpolation functions
+  61:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  62:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library has separate functions for operating on 8-bit integers, 16-bit integers,
+  63:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * 32-bit integer and 32-bit floating-point values.
+  64:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  65:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Using the Library
+  66:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ------------
+  67:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  68:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library installer contains prebuilt versions of the libraries in the <code>Lib</code> fold
+  69:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM7lfdp_math.lib (Little endian and Double Precision Floating Point Unit on Cortex-
+  70:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM7bfdp_math.lib (Big endian and Double Precision Floating Point Unit on Cortex-M7)
+  71:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM7lfsp_math.lib (Little endian and Single Precision Floating Point Unit on Cortex-
+  72:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM7bfsp_math.lib (Big endian and Single Precision Floating Point Unit on Cortex-M7)
+  73:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM7l_math.lib (Little endian on Cortex-M7)
+  74:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM7b_math.lib (Big endian on Cortex-M7)
+  75:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM4lf_math.lib (Little endian and Floating Point Unit on Cortex-M4)
+  76:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM4bf_math.lib (Big endian and Floating Point Unit on Cortex-M4)
+  77:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM4l_math.lib (Little endian on Cortex-M4)
+  78:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM4b_math.lib (Big endian on Cortex-M4)
+  79:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM3l_math.lib (Little endian on Cortex-M3)
+  80:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM3b_math.lib (Big endian on Cortex-M3)
+  81:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM0l_math.lib (Little endian on Cortex-M0 / CortexM0+)
+  82:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM0b_math.lib (Big endian on Cortex-M0 / CortexM0+)
+  83:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  84:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library functions are declared in the public file <code>arm_math.h</code> which is placed 
+  85:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Simply include this file and link the appropriate library in the application and begin calling
+  86:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * public header file <code> arm_math.h</code> for Cortex-M7/M4/M3/M0/M0+ with little endian and 
+  87:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Define the appropriate pre processor MACRO ARM_MATH_CM7 or ARM_MATH_CM4 or  ARM_MATH_CM3 or
+  88:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ARM_MATH_CM0 or ARM_MATH_CM0PLUS depending on the target processor in the application.
+  89:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  90:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Examples
+  91:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * --------
+  92:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  93:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library ships with a number of examples which demonstrate how to use the library functions
+  94:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  95:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Toolchain Support
+  96:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ------------
+  97:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  98:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library has been developed and tested with MDK-ARM version 5.14.0.0
+  99:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library is being tested in GCC and IAR toolchains and updates on this activity will be mad
+ 100:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 101:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Building the Library
+ 102:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ------------
+ 103:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 104:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library installer contains a project file to re build libraries on MDK-ARM Tool chain in t
+ 105:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM_math.uvprojx
+ 106:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 107:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 108:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The libraries can be built by opening the arm_cortexM_math.uvprojx project in MDK-ARM, selecti
+ 109:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 110:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Pre-processor Macros
+ 111:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ------------
+ 112:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 113:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Each library project have differant pre-processor macros.
+ 114:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 115:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - UNALIGNED_SUPPORT_DISABLE:
+ 116:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 117:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Define macro UNALIGNED_SUPPORT_DISABLE, If the silicon does not support unaligned memory acces
+ 118:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 119:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - ARM_MATH_BIG_ENDIAN:
+ 120:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 121:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Define macro ARM_MATH_BIG_ENDIAN to build the library for big endian targets. By default libra
+ 122:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 123:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - ARM_MATH_MATRIX_CHECK:
+ 124:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 125:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Define macro ARM_MATH_MATRIX_CHECK for checking on the input and output sizes of matrices
+ 126:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 127:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - ARM_MATH_ROUNDING:
+ 128:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 129:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Define macro ARM_MATH_ROUNDING for rounding on support functions
+ 130:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 131:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - ARM_MATH_CMx:
+ 132:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 133:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Define macro ARM_MATH_CM4 for building the library on Cortex-M4 target, ARM_MATH_CM3 for build
+ 134:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * and ARM_MATH_CM0 for building library on Cortex-M0 target, ARM_MATH_CM0PLUS for building libra
+ 135:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ARM_MATH_CM7 for building the library on cortex-M7.
+ 136:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 137:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - __FPU_PRESENT:
+ 138:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 139:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Initialize macro __FPU_PRESENT = 1 when building on FPU supported Targets. Enable this macro f
+ 140:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 141:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * <hr>
+ 142:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * CMSIS-DSP in ARM::CMSIS Pack
+ 143:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * -----------------------------
+ 144:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 145:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The following files relevant to CMSIS-DSP are present in the <b>ARM::CMSIS</b> Pack directorie
+ 146:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * |File/Folder                   |Content                                                       
+ 147:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * |------------------------------|--------------------------------------------------------------
+ 148:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * |\b CMSIS\\Documentation\\DSP  | This documentation                                           
+ 149:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * |\b CMSIS\\DSP_Lib             | Software license agreement (license.txt)                     
+ 150:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * |\b CMSIS\\DSP_Lib\\Examples   | Example projects demonstrating the usage of the library funct
+ 151:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * |\b CMSIS\\DSP_Lib\\Source     | Source files for rebuilding the library                      
+ 152:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 153:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * <hr>
+ 154:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Revision History of CMSIS-DSP
+ 155:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ------------
+ 156:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Please refer to \ref ChangeLog_pg.
+ 157:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 158:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Copyright Notice
+ 159:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ------------
+ 160:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 161:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Copyright (C) 2010-2015 ARM Limited. All rights reserved.
+ 162:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 163:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 164:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 165:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 166:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupMath Basic Math Functions
+ 167:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 168:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 169:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 170:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupFastMath Fast Math Functions
+ 171:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * This set of functions provides a fast approximation to sine, cosine, and square root.
+ 172:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * As compared to most of the other functions in the CMSIS math library, the fast math functions
+ 173:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * operate on individual values and not arrays.
+ 174:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * There are separate functions for Q15, Q31, and floating-point data.
+ 175:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *
+ 176:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 177:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 178:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 179:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupCmplxMath Complex Math Functions
+ 180:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * This set of functions operates on complex data vectors.
+ 181:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * The data in the complex arrays is stored in an interleaved fashion
+ 182:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * (real, imag, real, imag, ...).
+ 183:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * In the API functions, the number of samples in a complex array refers
+ 184:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * to the number of complex values; the array contains twice this number of
+ 185:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * real values.
+ 186:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 187:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 188:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 189:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupFilters Filtering Functions
+ 190:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 191:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 192:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 193:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupMatrix Matrix Functions
+ 194:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *
+ 195:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * This set of functions provides basic matrix math operations.
+ 196:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * The functions operate on matrix data structures.  For example,
+ 197:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * the type
+ 198:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * definition for the floating-point matrix structure is shown
+ 199:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * below:
+ 200:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <pre>
+ 201:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *     typedef struct
+ 202:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *     {
+ 203:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *       uint16_t numRows;     // number of rows of the matrix.
+ 204:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *       uint16_t numCols;     // number of columns of the matrix.
+ 205:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *       float32_t *pData;     // points to the data of the matrix.
+ 206:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *     } arm_matrix_instance_f32;
+ 207:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * </pre>
+ 208:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * There are similar definitions for Q15 and Q31 data types.
+ 209:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *
+ 210:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * The structure specifies the size of the matrix and then points to
+ 211:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * an array of data.  The array is of size <code>numRows X numCols</code>
+ 212:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * and the values are arranged in row order.  That is, the
+ 213:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * matrix element (i, j) is stored at:
+ 214:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <pre>
+ 215:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *     pData[i*numCols + j]
+ 216:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * </pre>
+ 217:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *
+ 218:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * \par Init Functions
+ 219:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * There is an associated initialization function for each type of matrix
+ 220:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * data structure.
+ 221:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * The initialization function sets the values of the internal structure fields.
+ 222:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * Refer to the function <code>arm_mat_init_f32()</code>, <code>arm_mat_init_q31()</code>
+ 223:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * and <code>arm_mat_init_q15()</code> for floating-point, Q31 and Q15 types,  respectively.
+ 224:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *
+ 225:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * \par
+ 226:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * Use of the initialization function is optional. However, if initialization function is used
+ 227:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * then the instance structure cannot be placed into a const data section.
+ 228:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * To place the instance structure in a const data
+ 229:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * section, manually initialize the data structure.  For example:
+ 230:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <pre>
+ 231:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <code>arm_matrix_instance_f32 S = {nRows, nColumns, pData};</code>
+ 232:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <code>arm_matrix_instance_q31 S = {nRows, nColumns, pData};</code>
+ 233:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <code>arm_matrix_instance_q15 S = {nRows, nColumns, pData};</code>
+ 234:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * </pre>
+ 235:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * where <code>nRows</code> specifies the number of rows, <code>nColumns</code>
+ 236:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * specifies the number of columns, and <code>pData</code> points to the
+ 237:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * data array.
+ 238:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *
+ 239:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * \par Size Checking
+ 240:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * By default all of the matrix functions perform size checking on the input and
+ 241:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * output matrices.  For example, the matrix addition function verifies that the
+ 242:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * two input matrices and the output matrix all have the same number of rows and
+ 243:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * columns.  If the size check fails the functions return:
+ 244:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <pre>
+ 245:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *     ARM_MATH_SIZE_MISMATCH
+ 246:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * </pre>
+ 247:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * Otherwise the functions return
+ 248:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <pre>
+ 249:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *     ARM_MATH_SUCCESS
+ 250:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * </pre>
+ 251:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * There is some overhead associated with this matrix size checking.
+ 252:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * The matrix size checking is enabled via the \#define
+ 253:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <pre>
+ 254:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *     ARM_MATH_MATRIX_CHECK
+ 255:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * </pre>
+ 256:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * within the library project settings.  By default this macro is defined
+ 257:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * and size checking is enabled.  By changing the project settings and
+ 258:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * undefining this macro size checking is eliminated and the functions
+ 259:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * run a bit faster.  With size checking disabled the functions always
+ 260:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * return <code>ARM_MATH_SUCCESS</code>.
+ 261:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 262:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 263:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 264:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupTransforms Transform Functions
+ 265:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 266:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 267:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 268:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupController Controller Functions
+ 269:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 270:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 271:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 272:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupStats Statistics Functions
+ 273:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 274:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 275:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupSupport Support Functions
+ 276:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 277:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 278:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 279:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupInterpolation Interpolation Functions
+ 280:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * These functions perform 1- and 2-dimensional interpolation of data.
+ 281:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * Linear interpolation is used for 1-dimensional data and
+ 282:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * bilinear interpolation is used for 2-dimensional data.
+ 283:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 284:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 285:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 286:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupExamples Examples
+ 287:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 288:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #ifndef _ARM_MATH_H
+ 289:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define _ARM_MATH_H
+ 290:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 291:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /* ignore some GCC warnings */
+ 292:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #if defined ( __GNUC__ )
+ 293:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #pragma GCC diagnostic push
+ 294:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #pragma GCC diagnostic ignored "-Wsign-conversion"
+ 295:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #pragma GCC diagnostic ignored "-Wconversion"
+ 296:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #pragma GCC diagnostic ignored "-Wunused-parameter"
+ 297:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 298:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 299:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __CMSIS_GENERIC         /* disable NVIC and Systick functions */
+ 300:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 301:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #if defined(ARM_MATH_CM7)
+ 302:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #include "core_cm7.h"
+ 303:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined (ARM_MATH_CM4)
+ 304:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #include "core_cm4.h"
+ 305:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined (ARM_MATH_CM3)
+ 306:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #include "core_cm3.h"
+ 307:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined (ARM_MATH_CM0)
+ 308:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #include "core_cm0.h"
+ 309:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define ARM_MATH_CM0_FAMILY
+ 310:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined (ARM_MATH_CM0PLUS)
+ 311:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #include "core_cm0plus.h"
+ 312:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define ARM_MATH_CM0_FAMILY
+ 313:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #else
+ 314:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #error "Define according the used Cortex core ARM_MATH_CM7, ARM_MATH_CM4, ARM_MATH_CM3, ARM_MATH_
+ 315:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 316:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 317:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #undef  __CMSIS_GENERIC         /* enable NVIC and Systick functions */
+ 318:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #include "string.h"
+ 319:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #include "math.h"
+ 320:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #ifdef   __cplusplus
+ 321:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** extern "C"
+ 322:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** {
+ 323:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 324:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 325:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 326:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 327:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Macros required for reciprocal calculation in Normalized LMS
+ 328:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 329:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 330:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define DELTA_Q31          (0x100)
+ 331:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define DELTA_Q15          0x5
+ 332:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define INDEX_MASK         0x0000003F
+ 333:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #ifndef PI
+ 334:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define PI                 3.14159265358979f
+ 335:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 336:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 337:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 338:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Macros required for SINE and COSINE Fast math approximations
+ 339:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 340:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 341:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define FAST_MATH_TABLE_SIZE  512
+ 342:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define FAST_MATH_Q31_SHIFT   (32 - 10)
+ 343:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define FAST_MATH_Q15_SHIFT   (16 - 10)
+ 344:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define CONTROLLER_Q31_SHIFT  (32 - 9)
+ 345:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define TABLE_SIZE  256
+ 346:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define TABLE_SPACING_Q31     0x400000
+ 347:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define TABLE_SPACING_Q15     0x80
+ 348:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 349:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 350:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Macros required for SINE and COSINE Controller functions
+ 351:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 352:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /* 1.31(q31) Fixed value of 2/360 */
+ 353:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /* -1 to +1 is divided into 360 values so total spacing is (2/360) */
+ 354:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define INPUT_SPACING         0xB60B61
+ 355:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 356:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 357:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Macro for Unaligned Support
+ 358:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 359:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #ifndef UNALIGNED_SUPPORT_DISABLE
+ 360:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     #define ALIGN4
+ 361:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #else
+ 362:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #if defined  (__GNUC__)
+ 363:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     #define ALIGN4 __attribute__((aligned(4)))
+ 364:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #else
+ 365:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     #define ALIGN4 __align(4)
+ 366:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #endif
+ 367:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif   /* #ifndef UNALIGNED_SUPPORT_DISABLE */
+ 368:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 369:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 370:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Error status returned by some functions in the library.
+ 371:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 372:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 373:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   typedef enum
+ 374:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   {
+ 375:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     ARM_MATH_SUCCESS = 0,                /**< No error */
+ 376:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     ARM_MATH_ARGUMENT_ERROR = -1,        /**< One or more arguments are incorrect */
+ 377:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     ARM_MATH_LENGTH_ERROR = -2,          /**< Length of data buffer is incorrect */
+ 378:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     ARM_MATH_SIZE_MISMATCH = -3,         /**< Size of matrices is not compatible with the operation
+ 379:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     ARM_MATH_NANINF = -4,                /**< Not-a-number (NaN) or infinity is generated */
+ 380:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     ARM_MATH_SINGULAR = -5,              /**< Generated by matrix inversion if the input matrix is 
+ 381:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     ARM_MATH_TEST_FAILURE = -6           /**< Test Failed  */
+ 382:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   } arm_status;
+ 383:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 384:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 385:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief 8-bit fractional data type in 1.7 format.
+ 386:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 387:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   typedef int8_t q7_t;
+ 388:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 389:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 390:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief 16-bit fractional data type in 1.15 format.
+ 391:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 392:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   typedef int16_t q15_t;
+ 393:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 394:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 395:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief 32-bit fractional data type in 1.31 format.
+ 396:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 397:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   typedef int32_t q31_t;
+ 398:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 399:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 400:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief 64-bit fractional data type in 1.63 format.
+ 401:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 402:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   typedef int64_t q63_t;
+ 403:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 404:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 405:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief 32-bit floating-point type definition.
+ 406:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 407:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   typedef float float32_t;
+ 408:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 409:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 410:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief 64-bit floating-point type definition.
+ 411:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 412:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   typedef double float64_t;
+ 413:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 414:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 415:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief definition to read/write two 16 bit values.
+ 416:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 417:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #if defined __CC_ARM
+ 418:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define __SIMD32_TYPE int32_t __packed
+ 419:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define CMSIS_UNUSED __attribute__((unused))
+ 420:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 421:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+ 422:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define __SIMD32_TYPE int32_t
+ 423:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define CMSIS_UNUSED __attribute__((unused))
+ 424:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 425:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined __GNUC__
+ 426:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define __SIMD32_TYPE int32_t
+ 427:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define CMSIS_UNUSED __attribute__((unused))
+ 428:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 429:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined __ICCARM__
+ 430:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define __SIMD32_TYPE int32_t __packed
+ 431:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define CMSIS_UNUSED
+ 432:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 433:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined __CSMC__
+ 434:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define __SIMD32_TYPE int32_t
+ 435:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define CMSIS_UNUSED
+ 436:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 437:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined __TASKING__
+ 438:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define __SIMD32_TYPE __unaligned int32_t
+ 439:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define CMSIS_UNUSED
+ 440:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 441:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #else
+ 442:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #error Unknown compiler
+ 443:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 444:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 445:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __SIMD32(addr)        (*(__SIMD32_TYPE **) & (addr))
+ 446:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __SIMD32_CONST(addr)  ((__SIMD32_TYPE *)(addr))
+ 447:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define _SIMD32_OFFSET(addr)  (*(__SIMD32_TYPE *)  (addr))
+ 448:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __SIMD64(addr)        (*(int64_t **) & (addr))
+ 449:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 450:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #if defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY)
+ 451:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 452:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief definition to pack two 16 bit values.
+ 453:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 454:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __PKHBT(ARG1, ARG2, ARG3)      ( (((int32_t)(ARG1) <<  0) & (int32_t)0x0000FFFF) | \
+ 455:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                          (((int32_t)(ARG2) << ARG3) & (int32_t)0xFFFF0000)  )
+ 456:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __PKHTB(ARG1, ARG2, ARG3)      ( (((int32_t)(ARG1) <<  0) & (int32_t)0xFFFF0000) | \
+ 457:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                          (((int32_t)(ARG2) >> ARG3) & (int32_t)0x0000FFFF)  )
+ 458:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 459:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 460:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 461:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 462:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    /**
+ 463:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief definition to pack four 8 bit values.
+ 464:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 465:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #ifndef ARM_MATH_BIG_ENDIAN
+ 466:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 467:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __PACKq7(v0,v1,v2,v3) ( (((int32_t)(v0) <<  0) & (int32_t)0x000000FF) | \
+ 468:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                 (((int32_t)(v1) <<  8) & (int32_t)0x0000FF00) | \
+ 469:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                 (((int32_t)(v2) << 16) & (int32_t)0x00FF0000) | \
+ 470:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                 (((int32_t)(v3) << 24) & (int32_t)0xFF000000)  )
+ 471:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #else
+ 472:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 473:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __PACKq7(v0,v1,v2,v3) ( (((int32_t)(v3) <<  0) & (int32_t)0x000000FF) | \
+ 474:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                 (((int32_t)(v2) <<  8) & (int32_t)0x0000FF00) | \
+ 475:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                 (((int32_t)(v1) << 16) & (int32_t)0x00FF0000) | \
+ 476:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                 (((int32_t)(v0) << 24) & (int32_t)0xFF000000)  )
+ 477:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 478:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 479:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 480:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 481:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 482:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Clips Q63 to Q31 values.
+ 483:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 484:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   static __INLINE q31_t clip_q63_to_q31(
+ 485:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   q63_t x)
+ 486:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   {
+  27              	 .loc 1 486 0
+  28              	 .cfi_startproc
+  29              	 
+  30              	 
+  31              	 
+  32 0000 2DE9B003 	 push {r4,r5,r7,r8,r9}
+  33              	.LCFI0:
+  34              	 .cfi_def_cfa_offset 20
+  35              	 .cfi_offset 4,-20
+  36              	 .cfi_offset 5,-16
+  37              	 .cfi_offset 7,-12
+  38              	 .cfi_offset 8,-8
+  39              	 .cfi_offset 9,-4
+  40 0004 83B0     	 sub sp,sp,#12
+  41              	.LCFI1:
+  42              	 .cfi_def_cfa_offset 32
+  43 0006 00AF     	 add r7,sp,#0
+  44              	.LCFI2:
+  45              	 .cfi_def_cfa_register 7
+  46 0008 C7E90001 	 strd r0,[r7]
+ 487:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     return ((q31_t) (x >> 32) != ((q31_t) x >> 31)) ?
+  47              	 .loc 1 487 0
+  48 000c D7E90023 	 ldrd r2,[r7]
+  49 0010 9846     	 mov r8,r3
+  50 0012 4FEAE379 	 asr r9,r3,#31
+  51 0016 4246     	 mov r2,r8
+  52 0018 3B68     	 ldr r3,[r7]
+  53 001a DB17     	 asrs r3,r3,#31
+ 488:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****       ((0x7FFFFFFF ^ ((q31_t) (x >> 63)))) : (q31_t) x;
+  54              	 .loc 1 488 0
+  55 001c 9A42     	 cmp r2,r3
+  56 001e 08D0     	 beq .L2
+  57              	 .loc 1 488 0 is_stmt 0 discriminator 1
+  58 0020 D7E90023 	 ldrd r2,[r7]
+  59 0024 DC17     	 asrs r4,r3,#31
+  60 0026 DD17     	 asrs r5,r3,#31
+  61 0028 2346     	 mov r3,r4
+  62 002a 83F00043 	 eor r3,r3,#-2147483648
+  63 002e DB43     	 mvns r3,r3
+  64 0030 00E0     	 b .L3
+  65              	.L2:
+  66              	 .loc 1 488 0 discriminator 2
+  67 0032 3B68     	 ldr r3,[r7]
+  68              	.L3:
+ 489:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   }
+  69              	 .loc 1 489 0 is_stmt 1
+  70 0034 1846     	 mov r0,r3
+  71 0036 0C37     	 adds r7,r7,#12
+  72              	.LCFI3:
+  73              	 .cfi_def_cfa_offset 20
+  74 0038 BD46     	 mov sp,r7
+  75              	.LCFI4:
+  76              	 .cfi_def_cfa_register 13
+  77              	 
+  78 003a BDE8B003 	 pop {r4,r5,r7,r8,r9}
+  79              	.LCFI5:
+  80              	 .cfi_restore 9
+  81              	 .cfi_restore 8
+  82              	 .cfi_restore 7
+  83              	 .cfi_restore 5
+  84              	 .cfi_restore 4
+  85              	 .cfi_def_cfa_offset 0
+  86 003e 7047     	 bx lr
+  87              	 .cfi_endproc
+  88              	.LFE106:
+  90              	 .section .text.arm_mat_cmplx_mult_q31,"ax",%progbits
+  91              	 .align 2
+  92              	 .global arm_mat_cmplx_mult_q31
+  93              	 .thumb
+  94              	 .thumb_func
+  96              	arm_mat_cmplx_mult_q31:
+  97              	.LFB139:
+  98              	 .file 2 "../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c"
+   1:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** /* ----------------------------------------------------------------------      
+   2:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved. 
+   3:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** *      
+   4:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * $Date:        12. March 2014
+   5:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * $Revision: 	V1.4.4
+   6:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** *      
+   7:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * Project:      CMSIS DSP Library 
+   8:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * Title:	    arm_mat_cmplx_mult_q31.c      
+   9:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** *      
+  10:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * Description:  Floating-point matrix multiplication.      
+  11:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** *      
+  12:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * Target Processor:          Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** *
+  14:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** *
+  27:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * POSSIBILITY OF SUCH DAMAGE.     
+  39:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** * -------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  41:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+  42:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** /**     
+  43:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  * @ingroup groupMatrix     
+  44:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  */
+  45:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+  46:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** /**      
+  47:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  * @addtogroup CmplxMatrixMult      
+  48:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  * @{      
+  49:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  */
+  50:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+  51:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** /**      
+  52:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  * @brief Q31 Complex matrix multiplication      
+  53:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  * @param[in]       *pSrcA points to the first input complex matrix structure      
+  54:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  * @param[in]       *pSrcB points to the second input complex matrix structure      
+  55:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  * @param[out]      *pDst points to output complex matrix structure      
+  56:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  * @return     		The function returns either      
+  57:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of siz
+  58:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  *      
+  59:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  * @details      
+  60:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  * <b>Scaling and Overflow Behavior:</b>      
+  61:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  *      
+  62:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  * \par      
+  63:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  * The function is implemented using an internal 64-bit accumulator.      
+  64:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  * The accumulator has a 2.62 format and maintains full precision of the intermediate      
+  65:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  * multiplication results but provides only a single guard bit. There is no saturation      
+  66:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  * on intermediate additions. Thus, if the accumulator overflows it wraps around and      
+  67:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  * distorts the result. The input signals should be scaled down to avoid intermediate      
+  68:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  * overflows. The input is thus scaled down by log2(numColsA) bits      
+  69:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  * to avoid overflows, as a total of numColsA additions are performed internally.      
+  70:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  * The 2.62 accumulator is right shifted by 31 bits and saturated to 1.31 format to yield the final
+  71:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  *      
+  72:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  *      
+  73:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****  */
+  74:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+  75:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** arm_status arm_mat_cmplx_mult_q31(
+  76:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   const arm_matrix_instance_q31 * pSrcA,
+  77:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   const arm_matrix_instance_q31 * pSrcB,
+  78:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   arm_matrix_instance_q31 * pDst)
+  79:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** {
+  99              	 .loc 2 79 0
+ 100              	 .cfi_startproc
+ 101              	 
+ 102              	 
+ 103 0000 2DE9F043 	 push {r4,r5,r6,r7,r8,r9,lr}
+ 104              	.LCFI6:
+ 105              	 .cfi_def_cfa_offset 28
+ 106              	 .cfi_offset 4,-28
+ 107              	 .cfi_offset 5,-24
+ 108              	 .cfi_offset 6,-20
+ 109              	 .cfi_offset 7,-16
+ 110              	 .cfi_offset 8,-12
+ 111              	 .cfi_offset 9,-8
+ 112              	 .cfi_offset 14,-4
+ 113 0004 9BB0     	 sub sp,sp,#108
+ 114              	.LCFI7:
+ 115              	 .cfi_def_cfa_offset 136
+ 116 0006 00AF     	 add r7,sp,#0
+ 117              	.LCFI8:
+ 118              	 .cfi_def_cfa_register 7
+ 119 0008 F860     	 str r0,[r7,#12]
+ 120 000a B960     	 str r1,[r7,#8]
+ 121 000c 7A60     	 str r2,[r7,#4]
+  80:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   q31_t *pIn1 = pSrcA->pData;                    /* input data matrix pointer A */
+ 122              	 .loc 2 80 0
+ 123 000e FB68     	 ldr r3,[r7,#12]
+ 124 0010 5B68     	 ldr r3,[r3,#4]
+ 125 0012 7B66     	 str r3,[r7,#100]
+  81:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   q31_t *pIn2 = pSrcB->pData;                    /* input data matrix pointer B */
+ 126              	 .loc 2 81 0
+ 127 0014 BB68     	 ldr r3,[r7,#8]
+ 128 0016 5B68     	 ldr r3,[r3,#4]
+ 129 0018 3B66     	 str r3,[r7,#96]
+  82:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   q31_t *pInA = pSrcA->pData;                    /* input data matrix pointer A  */
+ 130              	 .loc 2 82 0
+ 131 001a FB68     	 ldr r3,[r7,#12]
+ 132 001c 5B68     	 ldr r3,[r3,#4]
+ 133 001e FB65     	 str r3,[r7,#92]
+  83:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   q31_t *pOut = pDst->pData;                     /* output data matrix pointer */
+ 134              	 .loc 2 83 0
+ 135 0020 7B68     	 ldr r3,[r7,#4]
+ 136 0022 5B68     	 ldr r3,[r3,#4]
+ 137 0024 BB63     	 str r3,[r7,#56]
+  84:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   q31_t *px;                                     /* Temporary output data matrix pointer */
+  85:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   uint16_t numRowsA = pSrcA->numRows;            /* number of rows of input matrix A */
+ 138              	 .loc 2 85 0
+ 139 0026 FB68     	 ldr r3,[r7,#12]
+ 140 0028 1B88     	 ldrh r3,[r3]
+ 141 002a FB86     	 strh r3,[r7,#54]
+  86:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   uint16_t numColsB = pSrcB->numCols;            /* number of columns of input matrix B */
+ 142              	 .loc 2 86 0
+ 143 002c BB68     	 ldr r3,[r7,#8]
+ 144 002e 5B88     	 ldrh r3,[r3,#2]
+ 145 0030 BB86     	 strh r3,[r7,#52]
+  87:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   uint16_t numColsA = pSrcA->numCols;            /* number of columns of input matrix A */
+ 146              	 .loc 2 87 0
+ 147 0032 FB68     	 ldr r3,[r7,#12]
+ 148 0034 5B88     	 ldrh r3,[r3,#2]
+ 149 0036 7B86     	 strh r3,[r7,#50]
+  88:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   q63_t sumReal1, sumImag1;                      /* accumulator */
+  89:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   q31_t a0, b0, c0, d0;
+  90:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   q31_t a1, b1, c1, d1;
+  91:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+  92:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+  93:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   /* Run the below code for Cortex-M4 and Cortex-M3 */
+  94:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+  95:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   uint16_t col, i = 0u, j, row = numRowsA, colCnt;      /* loop counters */
+ 150              	 .loc 2 95 0
+ 151 0038 0023     	 movs r3,#0
+ 152 003a A7F84430 	 strh r3,[r7,#68]
+ 153 003e FB8E     	 ldrh r3,[r7,#54]
+ 154 0040 A7F84030 	 strh r3,[r7,#64]
+  96:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   arm_status status;                             /* status of matrix multiplication */
+  97:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+  98:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** #ifdef ARM_MATH_MATRIX_CHECK
+  99:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 100:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 101:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   /* Check for matrix mismatch condition */
+ 102:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   if((pSrcA->numCols != pSrcB->numRows) ||
+ 155              	 .loc 2 102 0
+ 156 0044 FB68     	 ldr r3,[r7,#12]
+ 157 0046 5A88     	 ldrh r2,[r3,#2]
+ 158 0048 BB68     	 ldr r3,[r7,#8]
+ 159 004a 1B88     	 ldrh r3,[r3]
+ 160 004c 9A42     	 cmp r2,r3
+ 161 004e 0BD1     	 bne .L6
+ 103:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****      (pSrcA->numRows != pDst->numRows) || (pSrcB->numCols != pDst->numCols))
+ 162              	 .loc 2 103 0 discriminator 1
+ 163 0050 FB68     	 ldr r3,[r7,#12]
+ 164 0052 1A88     	 ldrh r2,[r3]
+ 165 0054 7B68     	 ldr r3,[r7,#4]
+ 166 0056 1B88     	 ldrh r3,[r3]
+ 102:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****      (pSrcA->numRows != pDst->numRows) || (pSrcB->numCols != pDst->numCols))
+ 167              	 .loc 2 102 0 discriminator 1
+ 168 0058 9A42     	 cmp r2,r3
+ 169 005a 05D1     	 bne .L6
+ 170              	 .loc 2 103 0
+ 171 005c BB68     	 ldr r3,[r7,#8]
+ 172 005e 5A88     	 ldrh r2,[r3,#2]
+ 173 0060 7B68     	 ldr r3,[r7,#4]
+ 174 0062 5B88     	 ldrh r3,[r3,#2]
+ 175 0064 9A42     	 cmp r2,r3
+ 176 0066 03D0     	 beq .L7
+ 177              	.L6:
+ 104:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   {
+ 105:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 106:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****     /* Set status as ARM_MATH_SIZE_MISMATCH */
+ 107:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****     status = ARM_MATH_SIZE_MISMATCH;
+ 178              	 .loc 2 107 0
+ 179 0068 FD23     	 movs r3,#253
+ 180 006a 87F83D30 	 strb r3,[r7,#61]
+ 181 006e CBE2     	 b .L8
+ 182              	.L7:
+ 108:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   }
+ 109:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   else
+ 110:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** #endif /*      #ifdef ARM_MATH_MATRIX_CHECK    */
+ 111:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 112:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   {
+ 113:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****     /* The following loop performs the dot-product of each row in pSrcA with each column in pSrcB *
+ 114:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****     /* row loop */
+ 115:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****     do
+ 116:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****     {
+ 117:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****       /* Output pointer is set to starting address of the row being processed */
+ 118:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****       px = pOut + 2 * i;
+ 183              	 .loc 2 118 0
+ 184 0070 B7F84430 	 ldrh r3,[r7,#68]
+ 185 0074 DB00     	 lsls r3,r3,#3
+ 186 0076 1A46     	 mov r2,r3
+ 187 0078 BB6B     	 ldr r3,[r7,#56]
+ 188 007a 1344     	 add r3,r3,r2
+ 189 007c BB65     	 str r3,[r7,#88]
+ 119:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 120:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****       /* For every row wise process, the column loop counter is to be initiated */
+ 121:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****       col = numColsB;
+ 190              	 .loc 2 121 0
+ 191 007e BB8E     	 ldrh r3,[r7,#52]
+ 192 0080 A7F84630 	 strh r3,[r7,#70]
+ 122:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 123:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****       /* For every row wise process, the pIn2 pointer is set     
+ 124:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****        ** to the starting address of the pSrcB data */
+ 125:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****       pIn2 = pSrcB->pData;
+ 193              	 .loc 2 125 0
+ 194 0084 BB68     	 ldr r3,[r7,#8]
+ 195 0086 5B68     	 ldr r3,[r3,#4]
+ 196 0088 3B66     	 str r3,[r7,#96]
+ 126:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 127:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****       j = 0u;
+ 197              	 .loc 2 127 0
+ 198 008a 0023     	 movs r3,#0
+ 199 008c A7F84230 	 strh r3,[r7,#66]
+ 200              	.L13:
+ 128:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 129:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****       /* column loop */
+ 130:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****       do
+ 131:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****       {
+ 132:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         /* Set the variable sum, that acts as accumulator, to zero */
+ 133:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         sumReal1 = 0.0;
+ 201              	 .loc 2 133 0
+ 202 0090 4FF00002 	 mov r2,#0
+ 203 0094 4FF00003 	 mov r3,#0
+ 204 0098 C7E91423 	 strd r2,[r7,#80]
+ 134:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         sumImag1 = 0.0;
+ 205              	 .loc 2 134 0
+ 206 009c 4FF00002 	 mov r2,#0
+ 207 00a0 4FF00003 	 mov r3,#0
+ 208 00a4 C7E91223 	 strd r2,[r7,#72]
+ 135:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 136:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         /* Initiate the pointer pIn1 to point to the starting address of the column being processed
+ 137:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         pIn1 = pInA;
+ 209              	 .loc 2 137 0
+ 210 00a8 FB6D     	 ldr r3,[r7,#92]
+ 211 00aa 7B66     	 str r3,[r7,#100]
+ 138:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 139:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         /* Apply loop unrolling and compute 4 MACs simultaneously. */
+ 140:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         colCnt = numColsA >> 2;
+ 212              	 .loc 2 140 0
+ 213 00ac 7B8E     	 ldrh r3,[r7,#50]
+ 214 00ae 9B08     	 lsrs r3,r3,#2
+ 215 00b0 FB87     	 strh r3,[r7,#62]
+ 141:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 142:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         /* matrix multiplication        */
+ 143:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         while(colCnt > 0u)
+ 216              	 .loc 2 143 0
+ 217 00b2 D6E1     	 b .L9
+ 218              	.L10:
+ 144:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         {
+ 145:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 146:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* Reading real part of complex matrix A */
+ 147:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           a0 = *pIn1;
+ 219              	 .loc 2 147 0
+ 220 00b4 7B6E     	 ldr r3,[r7,#100]
+ 221 00b6 1B68     	 ldr r3,[r3]
+ 222 00b8 FB62     	 str r3,[r7,#44]
+ 148:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 149:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* Reading real part of complex matrix B */
+ 150:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           c0 = *pIn2;
+ 223              	 .loc 2 150 0
+ 224 00ba 3B6E     	 ldr r3,[r7,#96]
+ 225 00bc 1B68     	 ldr r3,[r3]
+ 226 00be BB62     	 str r3,[r7,#40]
+ 151:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 152:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* Reading imaginary part of complex matrix A */
+ 153:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           b0 = *(pIn1 + 1u);
+ 227              	 .loc 2 153 0
+ 228 00c0 7B6E     	 ldr r3,[r7,#100]
+ 229 00c2 5B68     	 ldr r3,[r3,#4]
+ 230 00c4 7B62     	 str r3,[r7,#36]
+ 154:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 155:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* Reading imaginary part of complex matrix B */
+ 156:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           d0 = *(pIn2 + 1u);
+ 231              	 .loc 2 156 0
+ 232 00c6 3B6E     	 ldr r3,[r7,#96]
+ 233 00c8 5B68     	 ldr r3,[r3,#4]
+ 234 00ca 3B62     	 str r3,[r7,#32]
+ 157:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 158:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* Multiply and Accumlates */
+ 159:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           sumReal1 += (q63_t) a0 *c0;
+ 235              	 .loc 2 159 0
+ 236 00cc FB6A     	 ldr r3,[r7,#44]
+ 237 00ce 1846     	 mov r0,r3
+ 238 00d0 4FEAE071 	 asr r1,r0,#31
+ 239 00d4 BB6A     	 ldr r3,[r7,#40]
+ 240 00d6 1A46     	 mov r2,r3
+ 241 00d8 4FEAE273 	 asr r3,r2,#31
+ 242 00dc 02FB01FE 	 mul lr,r2,r1
+ 243 00e0 00FB03F6 	 mul r6,r0,r3
+ 244 00e4 7644     	 add r6,r6,lr
+ 245 00e6 A0FB0223 	 umull r2,r3,r0,r2
+ 246 00ea F118     	 adds r1,r6,r3
+ 247 00ec 0B46     	 mov r3,r1
+ 248 00ee D7E91401 	 ldrd r0,[r7,#80]
+ 249 00f2 1218     	 adds r2,r2,r0
+ 250 00f4 43EB0103 	 adc r3,r3,r1
+ 251 00f8 C7E91423 	 strd r2,[r7,#80]
+ 160:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           sumImag1 += (q63_t) b0 *c0;
+ 252              	 .loc 2 160 0
+ 253 00fc 7B6A     	 ldr r3,[r7,#36]
+ 254 00fe 1846     	 mov r0,r3
+ 255 0100 4FEAE071 	 asr r1,r0,#31
+ 256 0104 BB6A     	 ldr r3,[r7,#40]
+ 257 0106 1A46     	 mov r2,r3
+ 258 0108 4FEAE273 	 asr r3,r2,#31
+ 259 010c 02FB01FE 	 mul lr,r2,r1
+ 260 0110 00FB03F6 	 mul r6,r0,r3
+ 261 0114 7644     	 add r6,r6,lr
+ 262 0116 A0FB0223 	 umull r2,r3,r0,r2
+ 263 011a F118     	 adds r1,r6,r3
+ 264 011c 0B46     	 mov r3,r1
+ 265 011e D7E91201 	 ldrd r0,[r7,#72]
+ 266 0122 1218     	 adds r2,r2,r0
+ 267 0124 43EB0103 	 adc r3,r3,r1
+ 268 0128 C7E91223 	 strd r2,[r7,#72]
+ 161:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 162:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* update pointers */
+ 163:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           pIn1 += 2u;
+ 269              	 .loc 2 163 0
+ 270 012c 7B6E     	 ldr r3,[r7,#100]
+ 271 012e 0833     	 adds r3,r3,#8
+ 272 0130 7B66     	 str r3,[r7,#100]
+ 164:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           pIn2 += 2 * numColsB;
+ 273              	 .loc 2 164 0
+ 274 0132 BB8E     	 ldrh r3,[r7,#52]
+ 275 0134 DB00     	 lsls r3,r3,#3
+ 276 0136 1A46     	 mov r2,r3
+ 277 0138 3B6E     	 ldr r3,[r7,#96]
+ 278 013a 1344     	 add r3,r3,r2
+ 279 013c 3B66     	 str r3,[r7,#96]
+ 165:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 166:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* Multiply and Accumlates */
+ 167:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           sumReal1 -= (q63_t) b0 *d0;
+ 280              	 .loc 2 167 0
+ 281 013e 7B6A     	 ldr r3,[r7,#36]
+ 282 0140 1846     	 mov r0,r3
+ 283 0142 4FEAE071 	 asr r1,r0,#31
+ 284 0146 3B6A     	 ldr r3,[r7,#32]
+ 285 0148 1A46     	 mov r2,r3
+ 286 014a 4FEAE273 	 asr r3,r2,#31
+ 287 014e 02FB01FE 	 mul lr,r2,r1
+ 288 0152 00FB03F6 	 mul r6,r0,r3
+ 289 0156 7644     	 add r6,r6,lr
+ 290 0158 A0FB0223 	 umull r2,r3,r0,r2
+ 291 015c F118     	 adds r1,r6,r3
+ 292 015e 0B46     	 mov r3,r1
+ 293 0160 D7E91401 	 ldrd r0,[r7,#80]
+ 294 0164 821A     	 subs r2,r0,r2
+ 295 0166 61EB0303 	 sbc r3,r1,r3
+ 296 016a C7E91423 	 strd r2,[r7,#80]
+ 168:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           sumImag1 += (q63_t) a0 *d0;
+ 297              	 .loc 2 168 0
+ 298 016e FB6A     	 ldr r3,[r7,#44]
+ 299 0170 1846     	 mov r0,r3
+ 300 0172 4FEAE071 	 asr r1,r0,#31
+ 301 0176 3B6A     	 ldr r3,[r7,#32]
+ 302 0178 1A46     	 mov r2,r3
+ 303 017a 4FEAE273 	 asr r3,r2,#31
+ 304 017e 02FB01FE 	 mul lr,r2,r1
+ 305 0182 00FB03F6 	 mul r6,r0,r3
+ 306 0186 7644     	 add r6,r6,lr
+ 307 0188 A0FB0223 	 umull r2,r3,r0,r2
+ 308 018c F118     	 adds r1,r6,r3
+ 309 018e 0B46     	 mov r3,r1
+ 310 0190 D7E91201 	 ldrd r0,[r7,#72]
+ 311 0194 1218     	 adds r2,r2,r0
+ 312 0196 43EB0103 	 adc r3,r3,r1
+ 313 019a C7E91223 	 strd r2,[r7,#72]
+ 169:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 170:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
+ 171:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 172:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* read real and imag values from pSrcA and pSrcB buffer */
+ 173:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           a1 = *pIn1;
+ 314              	 .loc 2 173 0
+ 315 019e 7B6E     	 ldr r3,[r7,#100]
+ 316 01a0 1B68     	 ldr r3,[r3]
+ 317 01a2 FB61     	 str r3,[r7,#28]
+ 174:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           c1 = *pIn2;
+ 318              	 .loc 2 174 0
+ 319 01a4 3B6E     	 ldr r3,[r7,#96]
+ 320 01a6 1B68     	 ldr r3,[r3]
+ 321 01a8 BB61     	 str r3,[r7,#24]
+ 175:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           b1 = *(pIn1 + 1u);
+ 322              	 .loc 2 175 0
+ 323 01aa 7B6E     	 ldr r3,[r7,#100]
+ 324 01ac 5B68     	 ldr r3,[r3,#4]
+ 325 01ae 7B61     	 str r3,[r7,#20]
+ 176:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           d1 = *(pIn2 + 1u);
+ 326              	 .loc 2 176 0
+ 327 01b0 3B6E     	 ldr r3,[r7,#96]
+ 328 01b2 5B68     	 ldr r3,[r3,#4]
+ 329 01b4 3B61     	 str r3,[r7,#16]
+ 177:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 178:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* Multiply and Accumlates */
+ 179:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           sumReal1 += (q63_t) a1 *c1;
+ 330              	 .loc 2 179 0
+ 331 01b6 FB69     	 ldr r3,[r7,#28]
+ 332 01b8 1846     	 mov r0,r3
+ 333 01ba 4FEAE071 	 asr r1,r0,#31
+ 334 01be BB69     	 ldr r3,[r7,#24]
+ 335 01c0 1A46     	 mov r2,r3
+ 336 01c2 4FEAE273 	 asr r3,r2,#31
+ 337 01c6 02FB01FE 	 mul lr,r2,r1
+ 338 01ca 00FB03F6 	 mul r6,r0,r3
+ 339 01ce 7644     	 add r6,r6,lr
+ 340 01d0 A0FB0223 	 umull r2,r3,r0,r2
+ 341 01d4 F118     	 adds r1,r6,r3
+ 342 01d6 0B46     	 mov r3,r1
+ 343 01d8 D7E91401 	 ldrd r0,[r7,#80]
+ 344 01dc 1218     	 adds r2,r2,r0
+ 345 01de 43EB0103 	 adc r3,r3,r1
+ 346 01e2 C7E91423 	 strd r2,[r7,#80]
+ 180:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           sumImag1 += (q63_t) b1 *c1;
+ 347              	 .loc 2 180 0
+ 348 01e6 7B69     	 ldr r3,[r7,#20]
+ 349 01e8 1846     	 mov r0,r3
+ 350 01ea 4FEAE071 	 asr r1,r0,#31
+ 351 01ee BB69     	 ldr r3,[r7,#24]
+ 352 01f0 1A46     	 mov r2,r3
+ 353 01f2 4FEAE273 	 asr r3,r2,#31
+ 354 01f6 02FB01FE 	 mul lr,r2,r1
+ 355 01fa 00FB03F6 	 mul r6,r0,r3
+ 356 01fe 7644     	 add r6,r6,lr
+ 357 0200 A0FB0223 	 umull r2,r3,r0,r2
+ 358 0204 F118     	 adds r1,r6,r3
+ 359 0206 0B46     	 mov r3,r1
+ 360 0208 D7E91201 	 ldrd r0,[r7,#72]
+ 361 020c 1218     	 adds r2,r2,r0
+ 362 020e 43EB0103 	 adc r3,r3,r1
+ 363 0212 C7E91223 	 strd r2,[r7,#72]
+ 181:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 182:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* update pointers */
+ 183:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           pIn1 += 2u;
+ 364              	 .loc 2 183 0
+ 365 0216 7B6E     	 ldr r3,[r7,#100]
+ 366 0218 0833     	 adds r3,r3,#8
+ 367 021a 7B66     	 str r3,[r7,#100]
+ 184:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           pIn2 += 2 * numColsB;
+ 368              	 .loc 2 184 0
+ 369 021c BB8E     	 ldrh r3,[r7,#52]
+ 370 021e DB00     	 lsls r3,r3,#3
+ 371 0220 1A46     	 mov r2,r3
+ 372 0222 3B6E     	 ldr r3,[r7,#96]
+ 373 0224 1344     	 add r3,r3,r2
+ 374 0226 3B66     	 str r3,[r7,#96]
+ 185:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 186:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* Multiply and Accumlates */
+ 187:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           sumReal1 -= (q63_t) b1 *d1;
+ 375              	 .loc 2 187 0
+ 376 0228 7B69     	 ldr r3,[r7,#20]
+ 377 022a 1846     	 mov r0,r3
+ 378 022c 4FEAE071 	 asr r1,r0,#31
+ 379 0230 3B69     	 ldr r3,[r7,#16]
+ 380 0232 1A46     	 mov r2,r3
+ 381 0234 4FEAE273 	 asr r3,r2,#31
+ 382 0238 02FB01FE 	 mul lr,r2,r1
+ 383 023c 00FB03F6 	 mul r6,r0,r3
+ 384 0240 7644     	 add r6,r6,lr
+ 385 0242 A0FB0223 	 umull r2,r3,r0,r2
+ 386 0246 F118     	 adds r1,r6,r3
+ 387 0248 0B46     	 mov r3,r1
+ 388 024a D7E91401 	 ldrd r0,[r7,#80]
+ 389 024e 821A     	 subs r2,r0,r2
+ 390 0250 61EB0303 	 sbc r3,r1,r3
+ 391 0254 C7E91423 	 strd r2,[r7,#80]
+ 188:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           sumImag1 += (q63_t) a1 *d1;
+ 392              	 .loc 2 188 0
+ 393 0258 FB69     	 ldr r3,[r7,#28]
+ 394 025a 1846     	 mov r0,r3
+ 395 025c 4FEAE071 	 asr r1,r0,#31
+ 396 0260 3B69     	 ldr r3,[r7,#16]
+ 397 0262 1A46     	 mov r2,r3
+ 398 0264 4FEAE273 	 asr r3,r2,#31
+ 399 0268 02FB01FE 	 mul lr,r2,r1
+ 400 026c 00FB03F6 	 mul r6,r0,r3
+ 401 0270 7644     	 add r6,r6,lr
+ 402 0272 A0FB0223 	 umull r2,r3,r0,r2
+ 403 0276 F118     	 adds r1,r6,r3
+ 404 0278 0B46     	 mov r3,r1
+ 405 027a D7E91201 	 ldrd r0,[r7,#72]
+ 406 027e 1218     	 adds r2,r2,r0
+ 407 0280 43EB0103 	 adc r3,r3,r1
+ 408 0284 C7E91223 	 strd r2,[r7,#72]
+ 189:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 190:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           a0 = *pIn1;
+ 409              	 .loc 2 190 0
+ 410 0288 7B6E     	 ldr r3,[r7,#100]
+ 411 028a 1B68     	 ldr r3,[r3]
+ 412 028c FB62     	 str r3,[r7,#44]
+ 191:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           c0 = *pIn2;
+ 413              	 .loc 2 191 0
+ 414 028e 3B6E     	 ldr r3,[r7,#96]
+ 415 0290 1B68     	 ldr r3,[r3]
+ 416 0292 BB62     	 str r3,[r7,#40]
+ 192:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 193:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           b0 = *(pIn1 + 1u);
+ 417              	 .loc 2 193 0
+ 418 0294 7B6E     	 ldr r3,[r7,#100]
+ 419 0296 5B68     	 ldr r3,[r3,#4]
+ 420 0298 7B62     	 str r3,[r7,#36]
+ 194:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           d0 = *(pIn2 + 1u);
+ 421              	 .loc 2 194 0
+ 422 029a 3B6E     	 ldr r3,[r7,#96]
+ 423 029c 5B68     	 ldr r3,[r3,#4]
+ 424 029e 3B62     	 str r3,[r7,#32]
+ 195:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 196:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* Multiply and Accumlates */
+ 197:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           sumReal1 += (q63_t) a0 *c0;
+ 425              	 .loc 2 197 0
+ 426 02a0 FB6A     	 ldr r3,[r7,#44]
+ 427 02a2 1846     	 mov r0,r3
+ 428 02a4 4FEAE071 	 asr r1,r0,#31
+ 429 02a8 BB6A     	 ldr r3,[r7,#40]
+ 430 02aa 1A46     	 mov r2,r3
+ 431 02ac 4FEAE273 	 asr r3,r2,#31
+ 432 02b0 02FB01FE 	 mul lr,r2,r1
+ 433 02b4 00FB03F6 	 mul r6,r0,r3
+ 434 02b8 7644     	 add r6,r6,lr
+ 435 02ba A0FB0223 	 umull r2,r3,r0,r2
+ 436 02be F118     	 adds r1,r6,r3
+ 437 02c0 0B46     	 mov r3,r1
+ 438 02c2 D7E91401 	 ldrd r0,[r7,#80]
+ 439 02c6 1218     	 adds r2,r2,r0
+ 440 02c8 43EB0103 	 adc r3,r3,r1
+ 441 02cc C7E91423 	 strd r2,[r7,#80]
+ 198:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           sumImag1 += (q63_t) b0 *c0;
+ 442              	 .loc 2 198 0
+ 443 02d0 7B6A     	 ldr r3,[r7,#36]
+ 444 02d2 1846     	 mov r0,r3
+ 445 02d4 4FEAE071 	 asr r1,r0,#31
+ 446 02d8 BB6A     	 ldr r3,[r7,#40]
+ 447 02da 1A46     	 mov r2,r3
+ 448 02dc 4FEAE273 	 asr r3,r2,#31
+ 449 02e0 02FB01FE 	 mul lr,r2,r1
+ 450 02e4 00FB03F6 	 mul r6,r0,r3
+ 451 02e8 7644     	 add r6,r6,lr
+ 452 02ea A0FB0223 	 umull r2,r3,r0,r2
+ 453 02ee F118     	 adds r1,r6,r3
+ 454 02f0 0B46     	 mov r3,r1
+ 455 02f2 D7E91201 	 ldrd r0,[r7,#72]
+ 456 02f6 1218     	 adds r2,r2,r0
+ 457 02f8 43EB0103 	 adc r3,r3,r1
+ 458 02fc C7E91223 	 strd r2,[r7,#72]
+ 199:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 200:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* update pointers */
+ 201:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           pIn1 += 2u;
+ 459              	 .loc 2 201 0
+ 460 0300 7B6E     	 ldr r3,[r7,#100]
+ 461 0302 0833     	 adds r3,r3,#8
+ 462 0304 7B66     	 str r3,[r7,#100]
+ 202:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           pIn2 += 2 * numColsB;
+ 463              	 .loc 2 202 0
+ 464 0306 BB8E     	 ldrh r3,[r7,#52]
+ 465 0308 DB00     	 lsls r3,r3,#3
+ 466 030a 1A46     	 mov r2,r3
+ 467 030c 3B6E     	 ldr r3,[r7,#96]
+ 468 030e 1344     	 add r3,r3,r2
+ 469 0310 3B66     	 str r3,[r7,#96]
+ 203:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 204:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* Multiply and Accumlates */
+ 205:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           sumReal1 -= (q63_t) b0 *d0;
+ 470              	 .loc 2 205 0
+ 471 0312 7B6A     	 ldr r3,[r7,#36]
+ 472 0314 1846     	 mov r0,r3
+ 473 0316 4FEAE071 	 asr r1,r0,#31
+ 474 031a 3B6A     	 ldr r3,[r7,#32]
+ 475 031c 1A46     	 mov r2,r3
+ 476 031e 4FEAE273 	 asr r3,r2,#31
+ 477 0322 02FB01FE 	 mul lr,r2,r1
+ 478 0326 00FB03F6 	 mul r6,r0,r3
+ 479 032a 7644     	 add r6,r6,lr
+ 480 032c A0FB0223 	 umull r2,r3,r0,r2
+ 481 0330 F118     	 adds r1,r6,r3
+ 482 0332 0B46     	 mov r3,r1
+ 483 0334 D7E91401 	 ldrd r0,[r7,#80]
+ 484 0338 821A     	 subs r2,r0,r2
+ 485 033a 61EB0303 	 sbc r3,r1,r3
+ 486 033e C7E91423 	 strd r2,[r7,#80]
+ 206:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           sumImag1 += (q63_t) a0 *d0;
+ 487              	 .loc 2 206 0
+ 488 0342 FB6A     	 ldr r3,[r7,#44]
+ 489 0344 1846     	 mov r0,r3
+ 490 0346 4FEAE071 	 asr r1,r0,#31
+ 491 034a 3B6A     	 ldr r3,[r7,#32]
+ 492 034c 1A46     	 mov r2,r3
+ 493 034e 4FEAE273 	 asr r3,r2,#31
+ 494 0352 02FB01FE 	 mul lr,r2,r1
+ 495 0356 00FB03F6 	 mul r6,r0,r3
+ 496 035a 7644     	 add r6,r6,lr
+ 497 035c A0FB0223 	 umull r2,r3,r0,r2
+ 498 0360 F118     	 adds r1,r6,r3
+ 499 0362 0B46     	 mov r3,r1
+ 500 0364 D7E91201 	 ldrd r0,[r7,#72]
+ 501 0368 1218     	 adds r2,r2,r0
+ 502 036a 43EB0103 	 adc r3,r3,r1
+ 503 036e C7E91223 	 strd r2,[r7,#72]
+ 207:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 208:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
+ 209:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 210:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           a1 = *pIn1;
+ 504              	 .loc 2 210 0
+ 505 0372 7B6E     	 ldr r3,[r7,#100]
+ 506 0374 1B68     	 ldr r3,[r3]
+ 507 0376 FB61     	 str r3,[r7,#28]
+ 211:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           c1 = *pIn2;
+ 508              	 .loc 2 211 0
+ 509 0378 3B6E     	 ldr r3,[r7,#96]
+ 510 037a 1B68     	 ldr r3,[r3]
+ 511 037c BB61     	 str r3,[r7,#24]
+ 212:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 213:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           b1 = *(pIn1 + 1u);
+ 512              	 .loc 2 213 0
+ 513 037e 7B6E     	 ldr r3,[r7,#100]
+ 514 0380 5B68     	 ldr r3,[r3,#4]
+ 515 0382 7B61     	 str r3,[r7,#20]
+ 214:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           d1 = *(pIn2 + 1u);
+ 516              	 .loc 2 214 0
+ 517 0384 3B6E     	 ldr r3,[r7,#96]
+ 518 0386 5B68     	 ldr r3,[r3,#4]
+ 519 0388 3B61     	 str r3,[r7,#16]
+ 215:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 216:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* Multiply and Accumlates */
+ 217:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           sumReal1 += (q63_t) a1 *c1;
+ 520              	 .loc 2 217 0
+ 521 038a FB69     	 ldr r3,[r7,#28]
+ 522 038c 1846     	 mov r0,r3
+ 523 038e 4FEAE071 	 asr r1,r0,#31
+ 524 0392 BB69     	 ldr r3,[r7,#24]
+ 525 0394 1A46     	 mov r2,r3
+ 526 0396 4FEAE273 	 asr r3,r2,#31
+ 527 039a 02FB01FE 	 mul lr,r2,r1
+ 528 039e 00FB03F6 	 mul r6,r0,r3
+ 529 03a2 7644     	 add r6,r6,lr
+ 530 03a4 A0FB0223 	 umull r2,r3,r0,r2
+ 531 03a8 F118     	 adds r1,r6,r3
+ 532 03aa 0B46     	 mov r3,r1
+ 533 03ac D7E91401 	 ldrd r0,[r7,#80]
+ 534 03b0 1218     	 adds r2,r2,r0
+ 535 03b2 43EB0103 	 adc r3,r3,r1
+ 536 03b6 C7E91423 	 strd r2,[r7,#80]
+ 218:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           sumImag1 += (q63_t) b1 *c1;
+ 537              	 .loc 2 218 0
+ 538 03ba 7B69     	 ldr r3,[r7,#20]
+ 539 03bc 1846     	 mov r0,r3
+ 540 03be 4FEAE071 	 asr r1,r0,#31
+ 541 03c2 BB69     	 ldr r3,[r7,#24]
+ 542 03c4 1A46     	 mov r2,r3
+ 543 03c6 4FEAE273 	 asr r3,r2,#31
+ 544 03ca 02FB01FE 	 mul lr,r2,r1
+ 545 03ce 00FB03F6 	 mul r6,r0,r3
+ 546 03d2 7644     	 add r6,r6,lr
+ 547 03d4 A0FB0223 	 umull r2,r3,r0,r2
+ 548 03d8 F118     	 adds r1,r6,r3
+ 549 03da 0B46     	 mov r3,r1
+ 550 03dc D7E91201 	 ldrd r0,[r7,#72]
+ 551 03e0 1218     	 adds r2,r2,r0
+ 552 03e2 43EB0103 	 adc r3,r3,r1
+ 553 03e6 C7E91223 	 strd r2,[r7,#72]
+ 219:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 220:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* update pointers */
+ 221:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           pIn1 += 2u;
+ 554              	 .loc 2 221 0
+ 555 03ea 7B6E     	 ldr r3,[r7,#100]
+ 556 03ec 0833     	 adds r3,r3,#8
+ 557 03ee 7B66     	 str r3,[r7,#100]
+ 222:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           pIn2 += 2 * numColsB;
+ 558              	 .loc 2 222 0
+ 559 03f0 BB8E     	 ldrh r3,[r7,#52]
+ 560 03f2 DB00     	 lsls r3,r3,#3
+ 561 03f4 1A46     	 mov r2,r3
+ 562 03f6 3B6E     	 ldr r3,[r7,#96]
+ 563 03f8 1344     	 add r3,r3,r2
+ 564 03fa 3B66     	 str r3,[r7,#96]
+ 223:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 224:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* Multiply and Accumlates */
+ 225:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           sumReal1 -= (q63_t) b1 *d1;
+ 565              	 .loc 2 225 0
+ 566 03fc 7B69     	 ldr r3,[r7,#20]
+ 567 03fe 1846     	 mov r0,r3
+ 568 0400 4FEAE071 	 asr r1,r0,#31
+ 569 0404 3B69     	 ldr r3,[r7,#16]
+ 570 0406 1A46     	 mov r2,r3
+ 571 0408 4FEAE273 	 asr r3,r2,#31
+ 572 040c 02FB01FE 	 mul lr,r2,r1
+ 573 0410 00FB03F6 	 mul r6,r0,r3
+ 574 0414 7644     	 add r6,r6,lr
+ 575 0416 A0FB0223 	 umull r2,r3,r0,r2
+ 576 041a F118     	 adds r1,r6,r3
+ 577 041c 0B46     	 mov r3,r1
+ 578 041e D7E91401 	 ldrd r0,[r7,#80]
+ 579 0422 821A     	 subs r2,r0,r2
+ 580 0424 61EB0303 	 sbc r3,r1,r3
+ 581 0428 C7E91423 	 strd r2,[r7,#80]
+ 226:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           sumImag1 += (q63_t) a1 *d1;
+ 582              	 .loc 2 226 0
+ 583 042c FB69     	 ldr r3,[r7,#28]
+ 584 042e 1846     	 mov r0,r3
+ 585 0430 4FEAE071 	 asr r1,r0,#31
+ 586 0434 3B69     	 ldr r3,[r7,#16]
+ 587 0436 1A46     	 mov r2,r3
+ 588 0438 4FEAE273 	 asr r3,r2,#31
+ 589 043c 02FB01FE 	 mul lr,r2,r1
+ 590 0440 00FB03F6 	 mul r6,r0,r3
+ 591 0444 7644     	 add r6,r6,lr
+ 592 0446 A0FB0223 	 umull r2,r3,r0,r2
+ 593 044a F118     	 adds r1,r6,r3
+ 594 044c 0B46     	 mov r3,r1
+ 595 044e D7E91201 	 ldrd r0,[r7,#72]
+ 596 0452 1218     	 adds r2,r2,r0
+ 597 0454 43EB0103 	 adc r3,r3,r1
+ 598 0458 C7E91223 	 strd r2,[r7,#72]
+ 227:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 228:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* Decrement the loop count */
+ 229:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           colCnt--;
+ 599              	 .loc 2 229 0
+ 600 045c FB8F     	 ldrh r3,[r7,#62]
+ 601 045e 013B     	 subs r3,r3,#1
+ 602 0460 FB87     	 strh r3,[r7,#62]
+ 603              	.L9:
+ 143:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         {
+ 604              	 .loc 2 143 0
+ 605 0462 FB8F     	 ldrh r3,[r7,#62]
+ 606 0464 002B     	 cmp r3,#0
+ 607 0466 7FF425AE 	 bne .L10
+ 230:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         }
+ 231:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 232:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         /* If the columns of pSrcA is not a multiple of 4, compute any remaining MACs here.     
+ 233:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****          ** No loop unrolling is used. */
+ 234:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         colCnt = numColsA % 0x4u;
+ 608              	 .loc 2 234 0
+ 609 046a 7B8E     	 ldrh r3,[r7,#50]
+ 610 046c 03F00303 	 and r3,r3,#3
+ 611 0470 FB87     	 strh r3,[r7,#62]
+ 235:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 236:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         while(colCnt > 0u)
+ 612              	 .loc 2 236 0
+ 613 0472 77E0     	 b .L11
+ 614              	.L12:
+ 237:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         {
+ 238:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
+ 239:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           a1 = *pIn1;
+ 615              	 .loc 2 239 0
+ 616 0474 7B6E     	 ldr r3,[r7,#100]
+ 617 0476 1B68     	 ldr r3,[r3]
+ 618 0478 FB61     	 str r3,[r7,#28]
+ 240:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           c1 = *pIn2;
+ 619              	 .loc 2 240 0
+ 620 047a 3B6E     	 ldr r3,[r7,#96]
+ 621 047c 1B68     	 ldr r3,[r3]
+ 622 047e BB61     	 str r3,[r7,#24]
+ 241:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 242:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           b1 = *(pIn1 + 1u);
+ 623              	 .loc 2 242 0
+ 624 0480 7B6E     	 ldr r3,[r7,#100]
+ 625 0482 5B68     	 ldr r3,[r3,#4]
+ 626 0484 7B61     	 str r3,[r7,#20]
+ 243:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           d1 = *(pIn2 + 1u);
+ 627              	 .loc 2 243 0
+ 628 0486 3B6E     	 ldr r3,[r7,#96]
+ 629 0488 5B68     	 ldr r3,[r3,#4]
+ 630 048a 3B61     	 str r3,[r7,#16]
+ 244:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 245:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* Multiply and Accumlates */
+ 246:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           sumReal1 += (q63_t) a1 *c1;
+ 631              	 .loc 2 246 0
+ 632 048c FB69     	 ldr r3,[r7,#28]
+ 633 048e 1846     	 mov r0,r3
+ 634 0490 4FEAE071 	 asr r1,r0,#31
+ 635 0494 BB69     	 ldr r3,[r7,#24]
+ 636 0496 1A46     	 mov r2,r3
+ 637 0498 4FEAE273 	 asr r3,r2,#31
+ 638 049c 02FB01FE 	 mul lr,r2,r1
+ 639 04a0 00FB03F6 	 mul r6,r0,r3
+ 640 04a4 7644     	 add r6,r6,lr
+ 641 04a6 A0FB0223 	 umull r2,r3,r0,r2
+ 642 04aa F118     	 adds r1,r6,r3
+ 643 04ac 0B46     	 mov r3,r1
+ 644 04ae D7E91401 	 ldrd r0,[r7,#80]
+ 645 04b2 1218     	 adds r2,r2,r0
+ 646 04b4 43EB0103 	 adc r3,r3,r1
+ 647 04b8 C7E91423 	 strd r2,[r7,#80]
+ 247:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           sumImag1 += (q63_t) b1 *c1;
+ 648              	 .loc 2 247 0
+ 649 04bc 7B69     	 ldr r3,[r7,#20]
+ 650 04be 1846     	 mov r0,r3
+ 651 04c0 4FEAE071 	 asr r1,r0,#31
+ 652 04c4 BB69     	 ldr r3,[r7,#24]
+ 653 04c6 1A46     	 mov r2,r3
+ 654 04c8 4FEAE273 	 asr r3,r2,#31
+ 655 04cc 02FB01FE 	 mul lr,r2,r1
+ 656 04d0 00FB03F6 	 mul r6,r0,r3
+ 657 04d4 7644     	 add r6,r6,lr
+ 658 04d6 A0FB0223 	 umull r2,r3,r0,r2
+ 659 04da F118     	 adds r1,r6,r3
+ 660 04dc 0B46     	 mov r3,r1
+ 661 04de D7E91201 	 ldrd r0,[r7,#72]
+ 662 04e2 1218     	 adds r2,r2,r0
+ 663 04e4 43EB0103 	 adc r3,r3,r1
+ 664 04e8 C7E91223 	 strd r2,[r7,#72]
+ 248:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 249:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* update pointers */
+ 250:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           pIn1 += 2u;
+ 665              	 .loc 2 250 0
+ 666 04ec 7B6E     	 ldr r3,[r7,#100]
+ 667 04ee 0833     	 adds r3,r3,#8
+ 668 04f0 7B66     	 str r3,[r7,#100]
+ 251:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           pIn2 += 2 * numColsB;
+ 669              	 .loc 2 251 0
+ 670 04f2 BB8E     	 ldrh r3,[r7,#52]
+ 671 04f4 DB00     	 lsls r3,r3,#3
+ 672 04f6 1A46     	 mov r2,r3
+ 673 04f8 3B6E     	 ldr r3,[r7,#96]
+ 674 04fa 1344     	 add r3,r3,r2
+ 675 04fc 3B66     	 str r3,[r7,#96]
+ 252:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 253:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* Multiply and Accumlates */
+ 254:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           sumReal1 -= (q63_t) b1 *d1;
+ 676              	 .loc 2 254 0
+ 677 04fe 7B69     	 ldr r3,[r7,#20]
+ 678 0500 1846     	 mov r0,r3
+ 679 0502 4FEAE071 	 asr r1,r0,#31
+ 680 0506 3B69     	 ldr r3,[r7,#16]
+ 681 0508 1A46     	 mov r2,r3
+ 682 050a 4FEAE273 	 asr r3,r2,#31
+ 683 050e 02FB01FE 	 mul lr,r2,r1
+ 684 0512 00FB03F6 	 mul r6,r0,r3
+ 685 0516 7644     	 add r6,r6,lr
+ 686 0518 A0FB0223 	 umull r2,r3,r0,r2
+ 687 051c F118     	 adds r1,r6,r3
+ 688 051e 0B46     	 mov r3,r1
+ 689 0520 D7E91401 	 ldrd r0,[r7,#80]
+ 690 0524 821A     	 subs r2,r0,r2
+ 691 0526 61EB0303 	 sbc r3,r1,r3
+ 692 052a C7E91423 	 strd r2,[r7,#80]
+ 255:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           sumImag1 += (q63_t) a1 *d1;
+ 693              	 .loc 2 255 0
+ 694 052e FB69     	 ldr r3,[r7,#28]
+ 695 0530 1846     	 mov r0,r3
+ 696 0532 4FEAE071 	 asr r1,r0,#31
+ 697 0536 3B69     	 ldr r3,[r7,#16]
+ 698 0538 1A46     	 mov r2,r3
+ 699 053a 4FEAE273 	 asr r3,r2,#31
+ 700 053e 02FB01FE 	 mul lr,r2,r1
+ 701 0542 00FB03F6 	 mul r6,r0,r3
+ 702 0546 7644     	 add r6,r6,lr
+ 703 0548 A0FB0223 	 umull r2,r3,r0,r2
+ 704 054c F118     	 adds r1,r6,r3
+ 705 054e 0B46     	 mov r3,r1
+ 706 0550 D7E91201 	 ldrd r0,[r7,#72]
+ 707 0554 1218     	 adds r2,r2,r0
+ 708 0556 43EB0103 	 adc r3,r3,r1
+ 709 055a C7E91223 	 strd r2,[r7,#72]
+ 256:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 257:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           /* Decrement the loop counter */
+ 258:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****           colCnt--;
+ 710              	 .loc 2 258 0
+ 711 055e FB8F     	 ldrh r3,[r7,#62]
+ 712 0560 013B     	 subs r3,r3,#1
+ 713 0562 FB87     	 strh r3,[r7,#62]
+ 714              	.L11:
+ 236:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         {
+ 715              	 .loc 2 236 0
+ 716 0564 FB8F     	 ldrh r3,[r7,#62]
+ 717 0566 002B     	 cmp r3,#0
+ 718 0568 84D1     	 bne .L12
+ 259:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         }
+ 260:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 261:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         /* Store the result in the destination buffer */
+ 262:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         *px++ = (q31_t) clip_q63_to_q31(sumReal1 >> 31);
+ 719              	 .loc 2 262 0
+ 720 056a BE6D     	 ldr r6,[r7,#88]
+ 721 056c 331D     	 adds r3,r6,#4
+ 722 056e BB65     	 str r3,[r7,#88]
+ 723 0570 D7E91423 	 ldrd r2,[r7,#80]
+ 724 0574 D40F     	 lsrs r4,r2,#31
+ 725 0576 44EA4304 	 orr r4,r4,r3,lsl#1
+ 726 057a DD17     	 asrs r5,r3,#31
+ 727 057c 2046     	 mov r0,r4
+ 728 057e 2946     	 mov r1,r5
+ 729 0580 FFF7FEFF 	 bl clip_q63_to_q31
+ 730 0584 0346     	 mov r3,r0
+ 731 0586 3360     	 str r3,[r6]
+ 263:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         *px++ = (q31_t) clip_q63_to_q31(sumImag1 >> 31);
+ 732              	 .loc 2 263 0
+ 733 0588 BE6D     	 ldr r6,[r7,#88]
+ 734 058a 331D     	 adds r3,r6,#4
+ 735 058c BB65     	 str r3,[r7,#88]
+ 736 058e D7E91223 	 ldrd r2,[r7,#72]
+ 737 0592 4FEAD278 	 lsr r8,r2,#31
+ 738 0596 48EA4308 	 orr r8,r8,r3,lsl#1
+ 739 059a 4FEAE379 	 asr r9,r3,#31
+ 740 059e 4046     	 mov r0,r8
+ 741 05a0 4946     	 mov r1,r9
+ 742 05a2 FFF7FEFF 	 bl clip_q63_to_q31
+ 743 05a6 0346     	 mov r3,r0
+ 744 05a8 3360     	 str r3,[r6]
+ 264:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         
+ 265:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         /* Update the pointer pIn2 to point to the  starting address of the next column */
+ 266:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         j++;
+ 745              	 .loc 2 266 0
+ 746 05aa B7F84230 	 ldrh r3,[r7,#66]
+ 747 05ae 0133     	 adds r3,r3,#1
+ 748 05b0 A7F84230 	 strh r3,[r7,#66]
+ 267:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         pIn2 = pSrcB->pData + 2u * j;
+ 749              	 .loc 2 267 0
+ 750 05b4 BB68     	 ldr r3,[r7,#8]
+ 751 05b6 5A68     	 ldr r2,[r3,#4]
+ 752 05b8 B7F84230 	 ldrh r3,[r7,#66]
+ 753 05bc DB00     	 lsls r3,r3,#3
+ 754 05be 1344     	 add r3,r3,r2
+ 755 05c0 3B66     	 str r3,[r7,#96]
+ 268:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 269:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         /* Decrement the column loop counter */
+ 270:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****         col--;
+ 756              	 .loc 2 270 0
+ 757 05c2 B7F84630 	 ldrh r3,[r7,#70]
+ 758 05c6 013B     	 subs r3,r3,#1
+ 759 05c8 A7F84630 	 strh r3,[r7,#70]
+ 271:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 272:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****       } while(col > 0u);
+ 760              	 .loc 2 272 0
+ 761 05cc B7F84630 	 ldrh r3,[r7,#70]
+ 762 05d0 002B     	 cmp r3,#0
+ 763 05d2 7FF45DAD 	 bne .L13
+ 273:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 274:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****       /* Update the pointer pInA to point to the  starting address of the next row */
+ 275:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****       i = i + numColsB;
+ 764              	 .loc 2 275 0
+ 765 05d6 B7F84420 	 ldrh r2,[r7,#68]
+ 766 05da BB8E     	 ldrh r3,[r7,#52]
+ 767 05dc 1344     	 add r3,r3,r2
+ 768 05de A7F84430 	 strh r3,[r7,#68]
+ 276:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****       pInA = pInA + 2 * numColsA;
+ 769              	 .loc 2 276 0
+ 770 05e2 7B8E     	 ldrh r3,[r7,#50]
+ 771 05e4 DB00     	 lsls r3,r3,#3
+ 772 05e6 1A46     	 mov r2,r3
+ 773 05e8 FB6D     	 ldr r3,[r7,#92]
+ 774 05ea 1344     	 add r3,r3,r2
+ 775 05ec FB65     	 str r3,[r7,#92]
+ 277:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 278:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****       /* Decrement the row loop counter */
+ 279:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****       row--;
+ 776              	 .loc 2 279 0
+ 777 05ee B7F84030 	 ldrh r3,[r7,#64]
+ 778 05f2 013B     	 subs r3,r3,#1
+ 779 05f4 A7F84030 	 strh r3,[r7,#64]
+ 280:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 281:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****     } while(row > 0u);
+ 780              	 .loc 2 281 0
+ 781 05f8 B7F84030 	 ldrh r3,[r7,#64]
+ 782 05fc 002B     	 cmp r3,#0
+ 783 05fe 7FF437AD 	 bne .L7
+ 282:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 283:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****     /* Set status as ARM_MATH_SUCCESS */
+ 284:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****     status = ARM_MATH_SUCCESS;
+ 784              	 .loc 2 284 0
+ 785 0602 0023     	 movs r3,#0
+ 786 0604 87F83D30 	 strb r3,[r7,#61]
+ 787              	.L8:
+ 285:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   }
+ 286:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** 
+ 287:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   /* Return to application */
+ 288:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c ****   return (status);
+ 788              	 .loc 2 288 0
+ 789 0608 97F83D30 	 ldrb r3,[r7,#61]
+ 790 060c 5BB2     	 sxtb r3,r3
+ 289:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_cmplx_mult_q31.c **** }
+ 791              	 .loc 2 289 0
+ 792 060e 1846     	 mov r0,r3
+ 793 0610 6C37     	 adds r7,r7,#108
+ 794              	.LCFI9:
+ 795              	 .cfi_def_cfa_offset 28
+ 796 0612 BD46     	 mov sp,r7
+ 797              	.LCFI10:
+ 798              	 .cfi_def_cfa_register 13
+ 799              	 
+ 800 0614 BDE8F083 	 pop {r4,r5,r6,r7,r8,r9,pc}
+ 801              	 .cfi_endproc
+ 802              	.LFE139:
+ 804              	 .text
+ 805              	.Letext0:
+ 806              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 807              	 .file 4 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_mat_cmplx_mult_q31.c
+    {standard input}:20     .text.clip_q63_to_q31:00000000 $t
+    {standard input}:24     .text.clip_q63_to_q31:00000000 clip_q63_to_q31
+    {standard input}:91     .text.arm_mat_cmplx_mult_q31:00000000 $t
+    {standard input}:96     .text.arm_mat_cmplx_mult_q31:00000000 arm_mat_cmplx_mult_q31
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

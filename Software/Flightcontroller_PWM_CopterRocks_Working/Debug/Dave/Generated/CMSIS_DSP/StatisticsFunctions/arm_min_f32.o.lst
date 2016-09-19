@@ -1,0 +1,412 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_min_f32.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.arm_min_f32,"ax",%progbits
+  20              	 .align 2
+  21              	 .global arm_min_f32
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	arm_min_f32:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c"
+   1:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** /* ----------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * $Date:        12. March 2014
+   5:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * $Revision: 	V1.4.4  
+   6:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * Title:		arm_min_f32.c    
+   9:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * Description:	Minimum value of a floating-point vector.    
+  11:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** *
+  27:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * POSSIBILITY OF SUCH DAMAGE.     
+  39:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** * ---------------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+  41:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+  43:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** /**    
+  44:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****  * @ingroup groupStats    
+  45:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****  */
+  46:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+  47:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** /**    
+  48:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****  * @defgroup Min Minimum    
+  49:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****  *    
+  50:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****  * Computes the minimum value of an array of data.     
+  51:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****  * The function returns both the minimum value and its position within the array.     
+  52:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****  * There are separate functions for floating-point, Q31, Q15, and Q7 data types.    
+  53:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****  */
+  54:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+  55:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** /**    
+  56:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****  * @addtogroup Min    
+  57:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****  * @{    
+  58:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****  */
+  59:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+  60:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+  61:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** /**    
+  62:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****  * @brief Minimum value of a floating-point vector.    
+  63:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****  * @param[in]       *pSrc points to the input vector    
+  64:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****  * @param[in]       blockSize length of the input vector    
+  65:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****  * @param[out]      *pResult minimum value returned here    
+  66:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****  * @param[out]      *pIndex index of minimum value returned here    
+  67:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   * @return none.    
+  68:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****  *    
+  69:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****  */
+  70:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+  71:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** void arm_min_f32(
+  72:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   float32_t * pSrc,
+  73:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   uint32_t blockSize,
+  74:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   float32_t * pResult,
+  75:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   uint32_t * pIndex)
+  76:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** {
+  28              	 .loc 1 76 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	 
+  33 0000 80B4     	 push {r7}
+  34              	.LCFI0:
+  35              	 .cfi_def_cfa_offset 4
+  36              	 .cfi_offset 7,-4
+  37 0002 8BB0     	 sub sp,sp,#44
+  38              	.LCFI1:
+  39              	 .cfi_def_cfa_offset 48
+  40 0004 00AF     	 add r7,sp,#0
+  41              	.LCFI2:
+  42              	 .cfi_def_cfa_register 7
+  43 0006 F860     	 str r0,[r7,#12]
+  44 0008 B960     	 str r1,[r7,#8]
+  45 000a 7A60     	 str r2,[r7,#4]
+  46 000c 3B60     	 str r3,[r7]
+  77:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** #ifndef ARM_MATH_CM0_FAMILY
+  78:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+  79:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   /* Run the below code for Cortex-M4 and Cortex-M3 */
+  80:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+  81:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   float32_t minVal1, minVal2, out;               /* Temporary variables to store the output value. 
+  82:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   uint32_t blkCnt, outIndex, count;              /* loop counter */
+  83:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+  84:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   /* Initialise the count value. */
+  85:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   count = 0u;
+  47              	 .loc 1 85 0
+  48 000e 0023     	 movs r3,#0
+  49 0010 BB61     	 str r3,[r7,#24]
+  86:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   /* Initialise the index value to zero. */
+  87:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   outIndex = 0u;
+  50              	 .loc 1 87 0
+  51 0012 0023     	 movs r3,#0
+  52 0014 FB61     	 str r3,[r7,#28]
+  88:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   /* Load first input value that act as reference value for comparision */
+  89:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   out = *pSrc++;
+  53              	 .loc 1 89 0
+  54 0016 FB68     	 ldr r3,[r7,#12]
+  55 0018 1A1D     	 adds r2,r3,#4
+  56 001a FA60     	 str r2,[r7,#12]
+  57 001c 1B68     	 ldr r3,[r3]
+  58 001e 7B62     	 str r3,[r7,#36]
+  90:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+  91:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   /* Loop unrolling */
+  92:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   blkCnt = (blockSize - 1u) >> 2u;
+  59              	 .loc 1 92 0
+  60 0020 BB68     	 ldr r3,[r7,#8]
+  61 0022 013B     	 subs r3,r3,#1
+  62 0024 9B08     	 lsrs r3,r3,#2
+  63 0026 3B62     	 str r3,[r7,#32]
+  93:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+  94:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   while(blkCnt > 0)
+  64              	 .loc 1 94 0
+  65 0028 51E0     	 b .L2
+  66              	.L11:
+  95:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   {
+  96:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     /* Initialize minVal to the next consecutive values one by one */
+  97:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     minVal1 = *pSrc++;
+  67              	 .loc 1 97 0
+  68 002a FB68     	 ldr r3,[r7,#12]
+  69 002c 1A1D     	 adds r2,r3,#4
+  70 002e FA60     	 str r2,[r7,#12]
+  71 0030 1B68     	 ldr r3,[r3]
+  72 0032 7B61     	 str r3,[r7,#20]
+  98:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     minVal2 = *pSrc++;
+  73              	 .loc 1 98 0
+  74 0034 FB68     	 ldr r3,[r7,#12]
+  75 0036 1A1D     	 adds r2,r3,#4
+  76 0038 FA60     	 str r2,[r7,#12]
+  77 003a 1B68     	 ldr r3,[r3]
+  78 003c 3B61     	 str r3,[r7,#16]
+  99:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+ 100:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     /* compare for the minimum value */
+ 101:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     if(out > minVal1)
+  79              	 .loc 1 101 0
+  80 003e 97ED097A 	 flds s14,[r7,#36]
+  81 0042 D7ED057A 	 flds s15,[r7,#20]
+  82 0046 B4EEE77A 	 fcmpes s14,s15
+  83 004a F1EE10FA 	 fmstat
+  84 004e 04DD     	 ble .L3
+ 102:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     {
+ 103:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****       /* Update the minimum value and its index */
+ 104:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****       out = minVal1;
+  85              	 .loc 1 104 0
+  86 0050 7B69     	 ldr r3,[r7,#20]
+  87 0052 7B62     	 str r3,[r7,#36]
+ 105:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****       outIndex = count + 1u;
+  88              	 .loc 1 105 0
+  89 0054 BB69     	 ldr r3,[r7,#24]
+  90 0056 0133     	 adds r3,r3,#1
+  91 0058 FB61     	 str r3,[r7,#28]
+  92              	.L3:
+ 106:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     }
+ 107:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+ 108:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     minVal1 = *pSrc++;
+  93              	 .loc 1 108 0
+  94 005a FB68     	 ldr r3,[r7,#12]
+  95 005c 1A1D     	 adds r2,r3,#4
+  96 005e FA60     	 str r2,[r7,#12]
+  97 0060 1B68     	 ldr r3,[r3]
+  98 0062 7B61     	 str r3,[r7,#20]
+ 109:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+ 110:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     /* compare for the minimum value */
+ 111:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     if(out > minVal2)
+  99              	 .loc 1 111 0
+ 100 0064 97ED097A 	 flds s14,[r7,#36]
+ 101 0068 D7ED047A 	 flds s15,[r7,#16]
+ 102 006c B4EEE77A 	 fcmpes s14,s15
+ 103 0070 F1EE10FA 	 fmstat
+ 104 0074 04DD     	 ble .L5
+ 112:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     {
+ 113:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****       /* Update the minimum value and its index */
+ 114:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****       out = minVal2;
+ 105              	 .loc 1 114 0
+ 106 0076 3B69     	 ldr r3,[r7,#16]
+ 107 0078 7B62     	 str r3,[r7,#36]
+ 115:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****       outIndex = count + 2u;
+ 108              	 .loc 1 115 0
+ 109 007a BB69     	 ldr r3,[r7,#24]
+ 110 007c 0233     	 adds r3,r3,#2
+ 111 007e FB61     	 str r3,[r7,#28]
+ 112              	.L5:
+ 116:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     }
+ 117:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+ 118:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     minVal2 = *pSrc++;
+ 113              	 .loc 1 118 0
+ 114 0080 FB68     	 ldr r3,[r7,#12]
+ 115 0082 1A1D     	 adds r2,r3,#4
+ 116 0084 FA60     	 str r2,[r7,#12]
+ 117 0086 1B68     	 ldr r3,[r3]
+ 118 0088 3B61     	 str r3,[r7,#16]
+ 119:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+ 120:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     /* compare for the minimum value */
+ 121:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     if(out > minVal1)
+ 119              	 .loc 1 121 0
+ 120 008a 97ED097A 	 flds s14,[r7,#36]
+ 121 008e D7ED057A 	 flds s15,[r7,#20]
+ 122 0092 B4EEE77A 	 fcmpes s14,s15
+ 123 0096 F1EE10FA 	 fmstat
+ 124 009a 04DD     	 ble .L7
+ 122:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     {
+ 123:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****       /* Update the minimum value and its index */
+ 124:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****       out = minVal1;
+ 125              	 .loc 1 124 0
+ 126 009c 7B69     	 ldr r3,[r7,#20]
+ 127 009e 7B62     	 str r3,[r7,#36]
+ 125:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****       outIndex = count + 3u;
+ 128              	 .loc 1 125 0
+ 129 00a0 BB69     	 ldr r3,[r7,#24]
+ 130 00a2 0333     	 adds r3,r3,#3
+ 131 00a4 FB61     	 str r3,[r7,#28]
+ 132              	.L7:
+ 126:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     }
+ 127:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+ 128:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     /* compare for the minimum value */
+ 129:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     if(out > minVal2)
+ 133              	 .loc 1 129 0
+ 134 00a6 97ED097A 	 flds s14,[r7,#36]
+ 135 00aa D7ED047A 	 flds s15,[r7,#16]
+ 136 00ae B4EEE77A 	 fcmpes s14,s15
+ 137 00b2 F1EE10FA 	 fmstat
+ 138 00b6 04DD     	 ble .L9
+ 130:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     {
+ 131:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****       /* Update the minimum value and its index */
+ 132:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****       out = minVal2;
+ 139              	 .loc 1 132 0
+ 140 00b8 3B69     	 ldr r3,[r7,#16]
+ 141 00ba 7B62     	 str r3,[r7,#36]
+ 133:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****       outIndex = count + 4u;
+ 142              	 .loc 1 133 0
+ 143 00bc BB69     	 ldr r3,[r7,#24]
+ 144 00be 0433     	 adds r3,r3,#4
+ 145 00c0 FB61     	 str r3,[r7,#28]
+ 146              	.L9:
+ 134:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     }
+ 135:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+ 136:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     count += 4u;
+ 147              	 .loc 1 136 0
+ 148 00c2 BB69     	 ldr r3,[r7,#24]
+ 149 00c4 0433     	 adds r3,r3,#4
+ 150 00c6 BB61     	 str r3,[r7,#24]
+ 137:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+ 138:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     blkCnt--;
+ 151              	 .loc 1 138 0
+ 152 00c8 3B6A     	 ldr r3,[r7,#32]
+ 153 00ca 013B     	 subs r3,r3,#1
+ 154 00cc 3B62     	 str r3,[r7,#32]
+ 155              	.L2:
+  94:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   {
+ 156              	 .loc 1 94 0
+ 157 00ce 3B6A     	 ldr r3,[r7,#32]
+ 158 00d0 002B     	 cmp r3,#0
+ 159 00d2 AAD1     	 bne .L11
+ 139:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   }
+ 140:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+ 141:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   /* if (blockSize - 1u ) is not multiple of 4 */
+ 142:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   blkCnt = (blockSize - 1u) % 4u;
+ 160              	 .loc 1 142 0
+ 161 00d4 BB68     	 ldr r3,[r7,#8]
+ 162 00d6 013B     	 subs r3,r3,#1
+ 163 00d8 03F00303 	 and r3,r3,#3
+ 164 00dc 3B62     	 str r3,[r7,#32]
+ 143:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+ 144:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** #else
+ 145:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+ 146:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   /* Run the below code for Cortex-M0 */
+ 147:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   float32_t minVal1, out;                        /* Temporary variables to store the output value. 
+ 148:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   uint32_t blkCnt, outIndex;                     /* loop counter */
+ 149:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+ 150:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   /* Initialise the index value to zero. */
+ 151:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   outIndex = 0u;
+ 152:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   /* Load first input value that act as reference value for comparision */
+ 153:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   out = *pSrc++;
+ 154:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+ 155:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   blkCnt = (blockSize - 1u);
+ 156:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+ 157:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** #endif //      #ifndef ARM_MATH_CM0_FAMILY
+ 158:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+ 159:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   while(blkCnt > 0)
+ 165              	 .loc 1 159 0
+ 166 00de 16E0     	 b .L12
+ 167              	.L15:
+ 160:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   {
+ 161:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     /* Initialize minVal to the next consecutive values one by one */
+ 162:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     minVal1 = *pSrc++;
+ 168              	 .loc 1 162 0
+ 169 00e0 FB68     	 ldr r3,[r7,#12]
+ 170 00e2 1A1D     	 adds r2,r3,#4
+ 171 00e4 FA60     	 str r2,[r7,#12]
+ 172 00e6 1B68     	 ldr r3,[r3]
+ 173 00e8 7B61     	 str r3,[r7,#20]
+ 163:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+ 164:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     /* compare for the minimum value */
+ 165:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     if(out > minVal1)
+ 174              	 .loc 1 165 0
+ 175 00ea 97ED097A 	 flds s14,[r7,#36]
+ 176 00ee D7ED057A 	 flds s15,[r7,#20]
+ 177 00f2 B4EEE77A 	 fcmpes s14,s15
+ 178 00f6 F1EE10FA 	 fmstat
+ 179 00fa 05DD     	 ble .L13
+ 166:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     {
+ 167:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****       /* Update the minimum value and it's index */
+ 168:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****       out = minVal1;
+ 180              	 .loc 1 168 0
+ 181 00fc 7B69     	 ldr r3,[r7,#20]
+ 182 00fe 7B62     	 str r3,[r7,#36]
+ 169:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****       outIndex = blockSize - blkCnt;
+ 183              	 .loc 1 169 0
+ 184 0100 BA68     	 ldr r2,[r7,#8]
+ 185 0102 3B6A     	 ldr r3,[r7,#32]
+ 186 0104 D31A     	 subs r3,r2,r3
+ 187 0106 FB61     	 str r3,[r7,#28]
+ 188              	.L13:
+ 170:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     }
+ 171:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+ 172:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****     blkCnt--;
+ 189              	 .loc 1 172 0
+ 190 0108 3B6A     	 ldr r3,[r7,#32]
+ 191 010a 013B     	 subs r3,r3,#1
+ 192 010c 3B62     	 str r3,[r7,#32]
+ 193              	.L12:
+ 159:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   {
+ 194              	 .loc 1 159 0
+ 195 010e 3B6A     	 ldr r3,[r7,#32]
+ 196 0110 002B     	 cmp r3,#0
+ 197 0112 E5D1     	 bne .L15
+ 173:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+ 174:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   }
+ 175:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** 
+ 176:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   /* Store the minimum value and it's index into destination pointers */
+ 177:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   *pResult = out;
+ 198              	 .loc 1 177 0
+ 199 0114 7B68     	 ldr r3,[r7,#4]
+ 200 0116 7A6A     	 ldr r2,[r7,#36]
+ 201 0118 1A60     	 str r2,[r3]
+ 178:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c ****   *pIndex = outIndex;
+ 202              	 .loc 1 178 0
+ 203 011a 3B68     	 ldr r3,[r7]
+ 204 011c FA69     	 ldr r2,[r7,#28]
+ 205 011e 1A60     	 str r2,[r3]
+ 179:../Dave/Generated/CMSIS_DSP/StatisticsFunctions/arm_min_f32.c **** }
+ 206              	 .loc 1 179 0
+ 207 0120 2C37     	 adds r7,r7,#44
+ 208              	.LCFI3:
+ 209              	 .cfi_def_cfa_offset 4
+ 210 0122 BD46     	 mov sp,r7
+ 211              	.LCFI4:
+ 212              	 .cfi_def_cfa_register 13
+ 213              	 
+ 214 0124 5DF8047B 	 ldr r7,[sp],#4
+ 215              	.LCFI5:
+ 216              	 .cfi_restore 7
+ 217              	 .cfi_def_cfa_offset 0
+ 218 0128 7047     	 bx lr
+ 219              	 .cfi_endproc
+ 220              	.LFE139:
+ 222 012a 00BF     	 .text
+ 223              	.Letext0:
+ 224              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 225              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 226              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_min_f32.c
+    {standard input}:20     .text.arm_min_f32:00000000 $t
+    {standard input}:25     .text.arm_min_f32:00000000 arm_min_f32
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

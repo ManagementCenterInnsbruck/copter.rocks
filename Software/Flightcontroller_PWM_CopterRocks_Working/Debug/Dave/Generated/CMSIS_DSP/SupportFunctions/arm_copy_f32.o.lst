@@ -1,0 +1,293 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_copy_f32.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.arm_copy_f32,"ax",%progbits
+  20              	 .align 2
+  21              	 .global arm_copy_f32
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	arm_copy_f32:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c"
+   1:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** /* ----------------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * $Date:        31. July 2014
+   5:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * $Revision: 	V1.4.4  
+   6:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * Title:		arm_copy_f32.c    
+   9:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * Description:	Copies the elements of a floating-point vector.  
+  11:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** *
+  27:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * POSSIBILITY OF SUCH DAMAGE.  
+  39:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** * ---------------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** 
+  41:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** 
+  43:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** /**    
+  44:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  * @ingroup groupSupport    
+  45:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  */
+  46:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** 
+  47:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** /**    
+  48:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  * @defgroup copy Vector Copy    
+  49:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  *    
+  50:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  * Copies sample by sample from source vector to destination vector.    
+  51:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  *    
+  52:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  * <pre>    
+  53:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  * 	pDst[n] = pSrc[n];   0 <= n < blockSize.    
+  54:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  * </pre>    
+  55:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  *   
+  56:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  * There are separate functions for floating point, Q31, Q15, and Q7 data types.     
+  57:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  */
+  58:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** 
+  59:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** /**    
+  60:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  * @addtogroup copy    
+  61:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  * @{    
+  62:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  */
+  63:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** 
+  64:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** /**    
+  65:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  * @brief Copies the elements of a floating-point vector.     
+  66:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  * @param[in]       *pSrc points to input vector    
+  67:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  * @param[out]      *pDst points to output vector    
+  68:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  * @param[in]       blockSize length of the input vector   
+  69:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  * @return none.    
+  70:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  *    
+  71:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****  */
+  72:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** 
+  73:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** 
+  74:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** void arm_copy_f32(
+  75:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   float32_t * pSrc,
+  76:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   float32_t * pDst,
+  77:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   uint32_t blockSize)
+  78:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** {
+  28              	 .loc 1 78 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	 
+  33 0000 80B4     	 push {r7}
+  34              	.LCFI0:
+  35              	 .cfi_def_cfa_offset 4
+  36              	 .cfi_offset 7,-4
+  37 0002 8BB0     	 sub sp,sp,#44
+  38              	.LCFI1:
+  39              	 .cfi_def_cfa_offset 48
+  40 0004 00AF     	 add r7,sp,#0
+  41              	.LCFI2:
+  42              	 .cfi_def_cfa_register 7
+  43 0006 F860     	 str r0,[r7,#12]
+  44 0008 B960     	 str r1,[r7,#8]
+  45 000a 7A60     	 str r2,[r7,#4]
+  79:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   uint32_t blkCnt;                               /* loop counter */
+  80:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** 
+  81:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** #ifndef ARM_MATH_CM0_FAMILY
+  82:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** 
+  83:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   /* Run the below code for Cortex-M4 and Cortex-M3 */
+  84:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   float32_t in1, in2, in3, in4;
+  85:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** 
+  86:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   /*loop Unrolling */
+  87:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   blkCnt = blockSize >> 2u;
+  46              	 .loc 1 87 0
+  47 000c 7B68     	 ldr r3,[r7,#4]
+  48 000e 9B08     	 lsrs r3,r3,#2
+  49 0010 7B62     	 str r3,[r7,#36]
+  88:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** 
+  89:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
+  90:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****    ** a second loop below computes the remaining 1 to 3 samples. */
+  91:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   while(blkCnt > 0u)
+  50              	 .loc 1 91 0
+  51 0012 2AE0     	 b .L2
+  52              	.L3:
+  92:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   {
+  93:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****     /* C = A */
+  94:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****     /* Copy and then store the results in the destination buffer */
+  95:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****     in1 = *pSrc++;
+  53              	 .loc 1 95 0
+  54 0014 FB68     	 ldr r3,[r7,#12]
+  55 0016 1A1D     	 adds r2,r3,#4
+  56 0018 FA60     	 str r2,[r7,#12]
+  57 001a 1B68     	 ldr r3,[r3]
+  58 001c 3B62     	 str r3,[r7,#32]
+  96:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****     in2 = *pSrc++;
+  59              	 .loc 1 96 0
+  60 001e FB68     	 ldr r3,[r7,#12]
+  61 0020 1A1D     	 adds r2,r3,#4
+  62 0022 FA60     	 str r2,[r7,#12]
+  63 0024 1B68     	 ldr r3,[r3]
+  64 0026 FB61     	 str r3,[r7,#28]
+  97:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****     in3 = *pSrc++;
+  65              	 .loc 1 97 0
+  66 0028 FB68     	 ldr r3,[r7,#12]
+  67 002a 1A1D     	 adds r2,r3,#4
+  68 002c FA60     	 str r2,[r7,#12]
+  69 002e 1B68     	 ldr r3,[r3]
+  70 0030 BB61     	 str r3,[r7,#24]
+  98:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****     in4 = *pSrc++;
+  71              	 .loc 1 98 0
+  72 0032 FB68     	 ldr r3,[r7,#12]
+  73 0034 1A1D     	 adds r2,r3,#4
+  74 0036 FA60     	 str r2,[r7,#12]
+  75 0038 1B68     	 ldr r3,[r3]
+  76 003a 7B61     	 str r3,[r7,#20]
+  99:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** 
+ 100:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****     *pDst++ = in1;
+  77              	 .loc 1 100 0
+  78 003c BB68     	 ldr r3,[r7,#8]
+  79 003e 1A1D     	 adds r2,r3,#4
+  80 0040 BA60     	 str r2,[r7,#8]
+  81 0042 3A6A     	 ldr r2,[r7,#32]
+  82 0044 1A60     	 str r2,[r3]
+ 101:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****     *pDst++ = in2;
+  83              	 .loc 1 101 0
+  84 0046 BB68     	 ldr r3,[r7,#8]
+  85 0048 1A1D     	 adds r2,r3,#4
+  86 004a BA60     	 str r2,[r7,#8]
+  87 004c FA69     	 ldr r2,[r7,#28]
+  88 004e 1A60     	 str r2,[r3]
+ 102:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****     *pDst++ = in3;
+  89              	 .loc 1 102 0
+  90 0050 BB68     	 ldr r3,[r7,#8]
+  91 0052 1A1D     	 adds r2,r3,#4
+  92 0054 BA60     	 str r2,[r7,#8]
+  93 0056 BA69     	 ldr r2,[r7,#24]
+  94 0058 1A60     	 str r2,[r3]
+ 103:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****     *pDst++ = in4;
+  95              	 .loc 1 103 0
+  96 005a BB68     	 ldr r3,[r7,#8]
+  97 005c 1A1D     	 adds r2,r3,#4
+  98 005e BA60     	 str r2,[r7,#8]
+  99 0060 7A69     	 ldr r2,[r7,#20]
+ 100 0062 1A60     	 str r2,[r3]
+ 104:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** 
+ 105:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****     /* Decrement the loop counter */
+ 106:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****     blkCnt--;
+ 101              	 .loc 1 106 0
+ 102 0064 7B6A     	 ldr r3,[r7,#36]
+ 103 0066 013B     	 subs r3,r3,#1
+ 104 0068 7B62     	 str r3,[r7,#36]
+ 105              	.L2:
+  91:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   {
+ 106              	 .loc 1 91 0
+ 107 006a 7B6A     	 ldr r3,[r7,#36]
+ 108 006c 002B     	 cmp r3,#0
+ 109 006e D1D1     	 bne .L3
+ 107:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   }
+ 108:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** 
+ 109:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.    
+ 110:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****    ** No loop unrolling is used. */
+ 111:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   blkCnt = blockSize % 0x4u;
+ 110              	 .loc 1 111 0
+ 111 0070 7B68     	 ldr r3,[r7,#4]
+ 112 0072 03F00303 	 and r3,r3,#3
+ 113 0076 7B62     	 str r3,[r7,#36]
+ 112:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** 
+ 113:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** #else
+ 114:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** 
+ 115:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   /* Run the below code for Cortex-M0 */
+ 116:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** 
+ 117:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   /* Loop over blockSize number of values */
+ 118:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   blkCnt = blockSize;
+ 119:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** 
+ 120:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** #endif /* #ifndef ARM_MATH_CM0_FAMILY */
+ 121:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** 
+ 122:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   while(blkCnt > 0u)
+ 114              	 .loc 1 122 0
+ 115 0078 0AE0     	 b .L4
+ 116              	.L5:
+ 123:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   {
+ 124:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****     /* C = A */
+ 125:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****     /* Copy and then store the results in the destination buffer */
+ 126:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****     *pDst++ = *pSrc++;
+ 117              	 .loc 1 126 0
+ 118 007a BB68     	 ldr r3,[r7,#8]
+ 119 007c 1A1D     	 adds r2,r3,#4
+ 120 007e BA60     	 str r2,[r7,#8]
+ 121 0080 FA68     	 ldr r2,[r7,#12]
+ 122 0082 111D     	 adds r1,r2,#4
+ 123 0084 F960     	 str r1,[r7,#12]
+ 124 0086 1268     	 ldr r2,[r2]
+ 125 0088 1A60     	 str r2,[r3]
+ 127:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** 
+ 128:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****     /* Decrement the loop counter */
+ 129:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****     blkCnt--;
+ 126              	 .loc 1 129 0
+ 127 008a 7B6A     	 ldr r3,[r7,#36]
+ 128 008c 013B     	 subs r3,r3,#1
+ 129 008e 7B62     	 str r3,[r7,#36]
+ 130              	.L4:
+ 122:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   {
+ 131              	 .loc 1 122 0
+ 132 0090 7B6A     	 ldr r3,[r7,#36]
+ 133 0092 002B     	 cmp r3,#0
+ 134 0094 F1D1     	 bne .L5
+ 130:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c ****   }
+ 131:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_copy_f32.c **** }
+ 135              	 .loc 1 131 0
+ 136 0096 2C37     	 adds r7,r7,#44
+ 137              	.LCFI3:
+ 138              	 .cfi_def_cfa_offset 4
+ 139 0098 BD46     	 mov sp,r7
+ 140              	.LCFI4:
+ 141              	 .cfi_def_cfa_register 13
+ 142              	 
+ 143 009a 5DF8047B 	 ldr r7,[sp],#4
+ 144              	.LCFI5:
+ 145              	 .cfi_restore 7
+ 146              	 .cfi_def_cfa_offset 0
+ 147 009e 7047     	 bx lr
+ 148              	 .cfi_endproc
+ 149              	.LFE139:
+ 151              	 .text
+ 152              	.Letext0:
+ 153              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 154              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 155              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_copy_f32.c
+    {standard input}:20     .text.arm_copy_f32:00000000 $t
+    {standard input}:25     .text.arm_copy_f32:00000000 arm_copy_f32
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

@@ -1,0 +1,1797 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu vfp
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "QuaternionFilters.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.MadgwickQuaternionUpdate,"ax",%progbits
+  20              	 .align 2
+  21              	 .global MadgwickQuaternionUpdate
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	MadgwickQuaternionUpdate:
+  26              	.LFB440:
+  27              	 .file 1 "../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c"
+   1:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** /* *****************************************************************************
+   2:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** **                      Author(s) Identity                                    **
+   3:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** ********************************************************************************
+   4:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** **                                                                            **
+   5:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** ** Initials     Name                                                          **
+   6:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** ** ---------------------------------------------------------------------------**
+   7:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** ** MAAN         				                                              **
+   8:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** **                                                                            **
+   9:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** **                                                                            **
+  10:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** ***************************************************************************** */
+  11:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+  12:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** /* *****************************************************************************
+  13:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** **                      Revision Control History                              **
+  14:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** ***************************************************************************** */
+  15:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** /* 
+  16:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  * V0.0: 06.05.2015,MAAN:  Initial Version
+  17:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  */
+  18:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  
+  19:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** // Implementation of Sebastian Madgwick's "...efficient orientation filter for... inertial/magnetic
+  20:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** // (see http://www.x-io.co.uk/category/open-source/ for examples and more details)
+  21:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** // which fuses acceleration, rotation rate, and magnetic moments to produce a quaternion-based esti
+  22:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** // device orientation -- which can be converted to yaw, pitch, and roll. Useful for stabilizing qua
+  23:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** // The performance of the orientation filter is at least as good as conventional Kalman-based filte
+  24:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** // but is much less computationally intensive---it can be performed on a 3.3 V Pro Mini operating a
+  25:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** /* *****************************************************************************
+  26:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** **                      Includes                                              **
+  27:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** ***************************************************************************** */
+  28:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** #include "QuaternionFilters.h"
+  29:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** /* *****************************************************************************
+  30:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** **                      Private Constant Definitions to be changed            **
+  31:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** ***************************************************************************** */
+  32:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+  33:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** /* *****************************************************************************
+  34:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** **                      Private Macro Definitions                             **
+  35:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** ***************************************************************************** */
+  36:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+  37:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** /* *****************************************************************************
+  38:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** **                      Global Type Definitions                               **
+  39:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** ***************************************************************************** */
+  40:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+  41:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** /* *****************************************************************************
+  42:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** **                      Private Type Definitions                              **
+  43:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** ***************************************************************************** */
+  44:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+  45:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** /* *****************************************************************************
+  46:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** **                      Global Function Declarations                          **
+  47:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** ***************************************************************************** */
+  48:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+  49:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** /* *****************************************************************************
+  50:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** **                      Private Function Declarations                         **
+  51:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** ***************************************************************************** */
+  52:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+  53:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** /* *****************************************************************************
+  54:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** **                      Global Constant Definitions                           **
+  55:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** ***************************************************************************** */
+  56:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+  57:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** /* *****************************************************************************
+  58:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** **                      Private Constant Definitions                          **
+  59:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** ***************************************************************************** */
+  60:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+  61:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** /* *****************************************************************************
+  62:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** **                      Global Variable Definitions                           **
+  63:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** ***************************************************************************** */
+  64:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+  65:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** /* *****************************************************************************
+  66:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** **                      Private Variable Definitions                          **
+  67:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** ***************************************************************************** */
+  68:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+  69:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** /* *****************************************************************************
+  70:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** **                      Global Function Definitions                           **
+  71:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** ***************************************************************************** */
+  72:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** /**
+  73:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  *  \brief Brief
+  74:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  *  
+  75:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  *  \param [in] q Parameter_Description
+  76:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  *  \param [in] deltat Parameter_Description
+  77:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  *  \param [in] ax Parameter_Description
+  78:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  *  \param [in] ay Parameter_Description
+  79:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  *  \param [in] az Parameter_Description
+  80:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  *  \param [in] gx Parameter_Description
+  81:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  *  \param [in] gy Parameter_Description
+  82:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  *  \param [in] gz Parameter_Description
+  83:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  *  \param [in] mx Parameter_Description
+  84:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  *  \param [in] my Parameter_Description
+  85:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  *  \param [in] mz Parameter_Description
+  86:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  *  \return Return_Description
+  87:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  *  
+  88:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  *  \details Details
+  89:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  */
+  90:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** void MadgwickQuaternionUpdate(float* q, float deltat, float ax, float ay, float az, float gx, float
+  91:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** {
+  28              	 .loc 1 91 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32 0000 80B5     	 push {r7,lr}
+  33              	.LCFI0:
+  34              	 .cfi_def_cfa_offset 8
+  35              	 .cfi_offset 7,-8
+  36              	 .cfi_offset 14,-4
+  37 0002 ACB0     	 sub sp,sp,#176
+  38              	.LCFI1:
+  39              	 .cfi_def_cfa_offset 184
+  40 0004 00AF     	 add r7,sp,#0
+  41              	.LCFI2:
+  42              	 .cfi_def_cfa_register 7
+  43 0006 F860     	 str r0,[r7,#12]
+  44 0008 B960     	 str r1,[r7,#8]
+  45 000a 7A60     	 str r2,[r7,#4]
+  46 000c 3B60     	 str r3,[r7]
+  92:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float q1 = q[0], q2 = q[1], q3 = q[2], q4 = q[3];   /**<short name local variable for readability 
+  47              	 .loc 1 92 0
+  48 000e FB68     	 ldr r3,[r7,#12]
+  49 0010 1B68     	 ldr r3,[r3]
+  50 0012 C7F8AC30 	 str r3,[r7,#172]
+  51 0016 FB68     	 ldr r3,[r7,#12]
+  52 0018 5B68     	 ldr r3,[r3,#4]
+  53 001a C7F8A830 	 str r3,[r7,#168]
+  54 001e FB68     	 ldr r3,[r7,#12]
+  55 0020 9B68     	 ldr r3,[r3,#8]
+  56 0022 C7F8A430 	 str r3,[r7,#164]
+  57 0026 FB68     	 ldr r3,[r7,#12]
+  58 0028 DB68     	 ldr r3,[r3,#12]
+  59 002a C7F8A030 	 str r3,[r7,#160]
+  93:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float norm;
+  94:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float hx, hy, _2bx, _2bz;
+  95:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float s1, s2, s3, s4;
+  96:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float qDot1, qDot2, qDot3, qDot4;
+  97:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+  98:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float beta = sqrtf(3.0f / 4.0f) * GYROMEASERROR;
+  60              	 .loc 1 98 0
+  61 002e 734B     	 ldr r3,.L5
+  62 0030 C7F89C30 	 str r3,[r7,#156]
+  99:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+ 100:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	// Auxiliary variables to avoid repeated arithmetic
+ 101:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float _2q1mx;
+ 102:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float _2q1my;
+ 103:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float _2q1mz;
+ 104:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float _2q2mx;
+ 105:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float _4bx;
+ 106:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float _4bz;
+ 107:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float _2q1 = 2.0f * q1;
+  63              	 .loc 1 107 0
+  64 0034 D7ED2B7A 	 flds s15,[r7,#172]
+  65 0038 77EEA77A 	 fadds s15,s15,s15
+  66 003c C7ED267A 	 fsts s15,[r7,#152]
+ 108:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float _2q2 = 2.0f * q2;
+  67              	 .loc 1 108 0
+  68 0040 D7ED2A7A 	 flds s15,[r7,#168]
+  69 0044 77EEA77A 	 fadds s15,s15,s15
+  70 0048 C7ED257A 	 fsts s15,[r7,#148]
+ 109:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float _2q3 = 2.0f * q3;
+  71              	 .loc 1 109 0
+  72 004c D7ED297A 	 flds s15,[r7,#164]
+  73 0050 77EEA77A 	 fadds s15,s15,s15
+  74 0054 C7ED247A 	 fsts s15,[r7,#144]
+ 110:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float _2q4 = 2.0f * q4;
+  75              	 .loc 1 110 0
+  76 0058 D7ED287A 	 flds s15,[r7,#160]
+  77 005c 77EEA77A 	 fadds s15,s15,s15
+  78 0060 C7ED237A 	 fsts s15,[r7,#140]
+ 111:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float _2q1q3 = 2.0f * q1 * q3;
+  79              	 .loc 1 111 0
+  80 0064 D7ED2B7A 	 flds s15,[r7,#172]
+  81 0068 37EEA77A 	 fadds s14,s15,s15
+  82 006c D7ED297A 	 flds s15,[r7,#164]
+  83 0070 67EE277A 	 fmuls s15,s14,s15
+  84 0074 C7ED227A 	 fsts s15,[r7,#136]
+ 112:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float _2q3q4 = 2.0f * q3 * q4;
+  85              	 .loc 1 112 0
+  86 0078 D7ED297A 	 flds s15,[r7,#164]
+  87 007c 37EEA77A 	 fadds s14,s15,s15
+  88 0080 D7ED287A 	 flds s15,[r7,#160]
+  89 0084 67EE277A 	 fmuls s15,s14,s15
+  90 0088 C7ED217A 	 fsts s15,[r7,#132]
+ 113:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float q1q1 = q1 * q1;
+  91              	 .loc 1 113 0
+  92 008c 97ED2B7A 	 flds s14,[r7,#172]
+  93 0090 D7ED2B7A 	 flds s15,[r7,#172]
+  94 0094 67EE277A 	 fmuls s15,s14,s15
+  95 0098 C7ED207A 	 fsts s15,[r7,#128]
+ 114:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float q1q2 = q1 * q2;
+  96              	 .loc 1 114 0
+  97 009c 97ED2B7A 	 flds s14,[r7,#172]
+  98 00a0 D7ED2A7A 	 flds s15,[r7,#168]
+  99 00a4 67EE277A 	 fmuls s15,s14,s15
+ 100 00a8 C7ED1F7A 	 fsts s15,[r7,#124]
+ 115:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float q1q3 = q1 * q3;
+ 101              	 .loc 1 115 0
+ 102 00ac 97ED2B7A 	 flds s14,[r7,#172]
+ 103 00b0 D7ED297A 	 flds s15,[r7,#164]
+ 104 00b4 67EE277A 	 fmuls s15,s14,s15
+ 105 00b8 C7ED1E7A 	 fsts s15,[r7,#120]
+ 116:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float q1q4 = q1 * q4;
+ 106              	 .loc 1 116 0
+ 107 00bc 97ED2B7A 	 flds s14,[r7,#172]
+ 108 00c0 D7ED287A 	 flds s15,[r7,#160]
+ 109 00c4 67EE277A 	 fmuls s15,s14,s15
+ 110 00c8 C7ED1D7A 	 fsts s15,[r7,#116]
+ 117:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float q2q2 = q2 * q2;
+ 111              	 .loc 1 117 0
+ 112 00cc 97ED2A7A 	 flds s14,[r7,#168]
+ 113 00d0 D7ED2A7A 	 flds s15,[r7,#168]
+ 114 00d4 67EE277A 	 fmuls s15,s14,s15
+ 115 00d8 C7ED1C7A 	 fsts s15,[r7,#112]
+ 118:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float q2q3 = q2 * q3;
+ 116              	 .loc 1 118 0
+ 117 00dc 97ED2A7A 	 flds s14,[r7,#168]
+ 118 00e0 D7ED297A 	 flds s15,[r7,#164]
+ 119 00e4 67EE277A 	 fmuls s15,s14,s15
+ 120 00e8 C7ED1B7A 	 fsts s15,[r7,#108]
+ 119:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float q2q4 = q2 * q4;
+ 121              	 .loc 1 119 0
+ 122 00ec 97ED2A7A 	 flds s14,[r7,#168]
+ 123 00f0 D7ED287A 	 flds s15,[r7,#160]
+ 124 00f4 67EE277A 	 fmuls s15,s14,s15
+ 125 00f8 C7ED1A7A 	 fsts s15,[r7,#104]
+ 120:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float q3q3 = q3 * q3;
+ 126              	 .loc 1 120 0
+ 127 00fc 97ED297A 	 flds s14,[r7,#164]
+ 128 0100 D7ED297A 	 flds s15,[r7,#164]
+ 129 0104 67EE277A 	 fmuls s15,s14,s15
+ 130 0108 C7ED197A 	 fsts s15,[r7,#100]
+ 121:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float q3q4 = q3 * q4;
+ 131              	 .loc 1 121 0
+ 132 010c 97ED297A 	 flds s14,[r7,#164]
+ 133 0110 D7ED287A 	 flds s15,[r7,#160]
+ 134 0114 67EE277A 	 fmuls s15,s14,s15
+ 135 0118 C7ED187A 	 fsts s15,[r7,#96]
+ 122:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float q4q4 = q4 * q4;
+ 136              	 .loc 1 122 0
+ 137 011c 97ED287A 	 flds s14,[r7,#160]
+ 138 0120 D7ED287A 	 flds s15,[r7,#160]
+ 139 0124 67EE277A 	 fmuls s15,s14,s15
+ 140 0128 C7ED177A 	 fsts s15,[r7,#92]
+ 123:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+ 124:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	// Normalise accelerometer measurement
+ 125:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	norm = sqrtf(ax * ax + ay * ay + az * az);
+ 141              	 .loc 1 125 0
+ 142 012c 97ED017A 	 flds s14,[r7,#4]
+ 143 0130 D7ED017A 	 flds s15,[r7,#4]
+ 144 0134 27EE277A 	 fmuls s14,s14,s15
+ 145 0138 D7ED006A 	 flds s13,[r7]
+ 146 013c D7ED007A 	 flds s15,[r7]
+ 147 0140 66EEA77A 	 fmuls s15,s13,s15
+ 148 0144 37EE277A 	 fadds s14,s14,s15
+ 149 0148 D7ED2E6A 	 flds s13,[r7,#184]
+ 150 014c D7ED2E7A 	 flds s15,[r7,#184]
+ 151 0150 66EEA77A 	 fmuls s15,s13,s15
+ 152 0154 77EE277A 	 fadds s15,s14,s15
+ 153 0158 17EE900A 	 fmrs r0,s15
+ 154 015c FFF7FEFF 	 bl sqrtf
+ 155 0160 B865     	 str r0,[r7,#88]
+ 126:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	if (norm == 0.0f) return; // handle NaN
+ 156              	 .loc 1 126 0
+ 157 0162 D7ED167A 	 flds s15,[r7,#88]
+ 158 0166 F5EE407A 	 fcmpzs s15
+ 159 016a F1EE10FA 	 fmstat
+ 160 016e 01D1     	 bne .L2
+ 161 0170 00F0CFBD 	 b .L1
+ 162              	.L2:
+ 127:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	norm = 0.1f/norm;
+ 163              	 .loc 1 127 0
+ 164 0174 9FED227A 	 flds s14,.L5+4
+ 165 0178 D7ED167A 	 flds s15,[r7,#88]
+ 166 017c C7EE277A 	 fdivs s15,s14,s15
+ 167 0180 C7ED167A 	 fsts s15,[r7,#88]
+ 128:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	ax *= norm;
+ 168              	 .loc 1 128 0
+ 169 0184 97ED017A 	 flds s14,[r7,#4]
+ 170 0188 D7ED167A 	 flds s15,[r7,#88]
+ 171 018c 67EE277A 	 fmuls s15,s14,s15
+ 172 0190 C7ED017A 	 fsts s15,[r7,#4]
+ 129:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	ay *= norm;
+ 173              	 .loc 1 129 0
+ 174 0194 97ED007A 	 flds s14,[r7]
+ 175 0198 D7ED167A 	 flds s15,[r7,#88]
+ 176 019c 67EE277A 	 fmuls s15,s14,s15
+ 177 01a0 C7ED007A 	 fsts s15,[r7]
+ 130:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	az *= norm;
+ 178              	 .loc 1 130 0
+ 179 01a4 97ED2E7A 	 flds s14,[r7,#184]
+ 180 01a8 D7ED167A 	 flds s15,[r7,#88]
+ 181 01ac 67EE277A 	 fmuls s15,s14,s15
+ 182 01b0 C7ED2E7A 	 fsts s15,[r7,#184]
+ 131:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+ 132:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	// Normalise magnetometer measurement
+ 133:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	norm = sqrtf(mx * mx + my * my + mz * mz);
+ 183              	 .loc 1 133 0
+ 184 01b4 97ED327A 	 flds s14,[r7,#200]
+ 185 01b8 D7ED327A 	 flds s15,[r7,#200]
+ 186 01bc 27EE277A 	 fmuls s14,s14,s15
+ 187 01c0 D7ED336A 	 flds s13,[r7,#204]
+ 188 01c4 D7ED337A 	 flds s15,[r7,#204]
+ 189 01c8 66EEA77A 	 fmuls s15,s13,s15
+ 190 01cc 37EE277A 	 fadds s14,s14,s15
+ 191 01d0 D7ED346A 	 flds s13,[r7,#208]
+ 192 01d4 D7ED347A 	 flds s15,[r7,#208]
+ 193 01d8 66EEA77A 	 fmuls s15,s13,s15
+ 194 01dc 77EE277A 	 fadds s15,s14,s15
+ 195 01e0 17EE900A 	 fmrs r0,s15
+ 196 01e4 FFF7FEFF 	 bl sqrtf
+ 197 01e8 B865     	 str r0,[r7,#88]
+ 134:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	if (norm == 0.0f) return; // handle NaN
+ 198              	 .loc 1 134 0
+ 199 01ea D7ED167A 	 flds s15,[r7,#88]
+ 200 01ee F5EE407A 	 fcmpzs s15
+ 201 01f2 F1EE10FA 	 fmstat
+ 202 01f6 09D1     	 bne .L4
+ 203              	 .loc 1 134 0 is_stmt 0 discriminator 2
+ 204 01f8 00F08BBD 	 b .L1
+ 205              	.L6:
+ 206              	 .align 2
+ 207              	.L5:
+ 208 01fc 0DC71A3F 	 .word 1058719501
+ 209 0200 CDCCCC3D 	 .word 1036831949
+ 210 0204 6F12833A 	 .word 981668463
+ 211 0208 0000003F 	 .word 1056964608
+ 212              	.L4:
+ 135:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	norm = 0.001f/norm;
+ 213              	 .loc 1 135 0 is_stmt 1
+ 214 020c 1FED037A 	 flds s14,.L5+8
+ 215 0210 D7ED167A 	 flds s15,[r7,#88]
+ 216 0214 C7EE277A 	 fdivs s15,s14,s15
+ 217 0218 C7ED167A 	 fsts s15,[r7,#88]
+ 136:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	mx *= norm;
+ 218              	 .loc 1 136 0
+ 219 021c 97ED327A 	 flds s14,[r7,#200]
+ 220 0220 D7ED167A 	 flds s15,[r7,#88]
+ 221 0224 67EE277A 	 fmuls s15,s14,s15
+ 222 0228 C7ED327A 	 fsts s15,[r7,#200]
+ 137:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	my *= norm;
+ 223              	 .loc 1 137 0
+ 224 022c 97ED337A 	 flds s14,[r7,#204]
+ 225 0230 D7ED167A 	 flds s15,[r7,#88]
+ 226 0234 67EE277A 	 fmuls s15,s14,s15
+ 227 0238 C7ED337A 	 fsts s15,[r7,#204]
+ 138:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	mz *= norm;
+ 228              	 .loc 1 138 0
+ 229 023c 97ED347A 	 flds s14,[r7,#208]
+ 230 0240 D7ED167A 	 flds s15,[r7,#88]
+ 231 0244 67EE277A 	 fmuls s15,s14,s15
+ 232 0248 C7ED347A 	 fsts s15,[r7,#208]
+ 139:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+ 140:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	// Reference direction of Earth's magnetic field
+ 141:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	_2q1mx = 2.0f * q1 * mx;
+ 233              	 .loc 1 141 0
+ 234 024c D7ED2B7A 	 flds s15,[r7,#172]
+ 235 0250 37EEA77A 	 fadds s14,s15,s15
+ 236 0254 D7ED327A 	 flds s15,[r7,#200]
+ 237 0258 67EE277A 	 fmuls s15,s14,s15
+ 238 025c C7ED157A 	 fsts s15,[r7,#84]
+ 142:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	_2q1my = 2.0f * q1 * my;
+ 239              	 .loc 1 142 0
+ 240 0260 D7ED2B7A 	 flds s15,[r7,#172]
+ 241 0264 37EEA77A 	 fadds s14,s15,s15
+ 242 0268 D7ED337A 	 flds s15,[r7,#204]
+ 243 026c 67EE277A 	 fmuls s15,s14,s15
+ 244 0270 C7ED147A 	 fsts s15,[r7,#80]
+ 143:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	_2q1mz = 2.0f * q1 * mz;
+ 245              	 .loc 1 143 0
+ 246 0274 D7ED2B7A 	 flds s15,[r7,#172]
+ 247 0278 37EEA77A 	 fadds s14,s15,s15
+ 248 027c D7ED347A 	 flds s15,[r7,#208]
+ 249 0280 67EE277A 	 fmuls s15,s14,s15
+ 250 0284 C7ED137A 	 fsts s15,[r7,#76]
+ 144:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	_2q2mx = 2.0f * q2 * mx;
+ 251              	 .loc 1 144 0
+ 252 0288 D7ED2A7A 	 flds s15,[r7,#168]
+ 253 028c 37EEA77A 	 fadds s14,s15,s15
+ 254 0290 D7ED327A 	 flds s15,[r7,#200]
+ 255 0294 67EE277A 	 fmuls s15,s14,s15
+ 256 0298 C7ED127A 	 fsts s15,[r7,#72]
+ 145:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	hx = mx * q1q1 - _2q1my * q4 + _2q1mz * q3 + mx * q2q2 + _2q2 * my * q3 + _2q2 * mz * q4 - mx * q3
+ 257              	 .loc 1 145 0
+ 258 029c 97ED327A 	 flds s14,[r7,#200]
+ 259 02a0 D7ED207A 	 flds s15,[r7,#128]
+ 260 02a4 27EE277A 	 fmuls s14,s14,s15
+ 261 02a8 D7ED146A 	 flds s13,[r7,#80]
+ 262 02ac D7ED287A 	 flds s15,[r7,#160]
+ 263 02b0 66EEA77A 	 fmuls s15,s13,s15
+ 264 02b4 37EE677A 	 fsubs s14,s14,s15
+ 265 02b8 D7ED136A 	 flds s13,[r7,#76]
+ 266 02bc D7ED297A 	 flds s15,[r7,#164]
+ 267 02c0 66EEA77A 	 fmuls s15,s13,s15
+ 268 02c4 37EE277A 	 fadds s14,s14,s15
+ 269 02c8 D7ED326A 	 flds s13,[r7,#200]
+ 270 02cc D7ED1C7A 	 flds s15,[r7,#112]
+ 271 02d0 66EEA77A 	 fmuls s15,s13,s15
+ 272 02d4 37EE277A 	 fadds s14,s14,s15
+ 273 02d8 D7ED256A 	 flds s13,[r7,#148]
+ 274 02dc D7ED337A 	 flds s15,[r7,#204]
+ 275 02e0 66EEA76A 	 fmuls s13,s13,s15
+ 276 02e4 D7ED297A 	 flds s15,[r7,#164]
+ 277 02e8 66EEA77A 	 fmuls s15,s13,s15
+ 278 02ec 37EE277A 	 fadds s14,s14,s15
+ 279 02f0 D7ED256A 	 flds s13,[r7,#148]
+ 280 02f4 D7ED347A 	 flds s15,[r7,#208]
+ 281 02f8 66EEA76A 	 fmuls s13,s13,s15
+ 282 02fc D7ED287A 	 flds s15,[r7,#160]
+ 283 0300 66EEA77A 	 fmuls s15,s13,s15
+ 284 0304 37EE277A 	 fadds s14,s14,s15
+ 285 0308 D7ED326A 	 flds s13,[r7,#200]
+ 286 030c D7ED197A 	 flds s15,[r7,#100]
+ 287 0310 66EEA77A 	 fmuls s15,s13,s15
+ 288 0314 37EE677A 	 fsubs s14,s14,s15
+ 289 0318 D7ED326A 	 flds s13,[r7,#200]
+ 290 031c D7ED177A 	 flds s15,[r7,#92]
+ 291 0320 66EEA77A 	 fmuls s15,s13,s15
+ 292 0324 77EE677A 	 fsubs s15,s14,s15
+ 293 0328 C7ED117A 	 fsts s15,[r7,#68]
+ 146:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	hy = _2q1mx * q4 + my * q1q1 - _2q1mz * q2 + _2q2mx * q3 - my * q2q2 + my * q3q3 + _2q3 * mz * q4 
+ 294              	 .loc 1 146 0
+ 295 032c 97ED157A 	 flds s14,[r7,#84]
+ 296 0330 D7ED287A 	 flds s15,[r7,#160]
+ 297 0334 27EE277A 	 fmuls s14,s14,s15
+ 298 0338 D7ED336A 	 flds s13,[r7,#204]
+ 299 033c D7ED207A 	 flds s15,[r7,#128]
+ 300 0340 66EEA77A 	 fmuls s15,s13,s15
+ 301 0344 37EE277A 	 fadds s14,s14,s15
+ 302 0348 D7ED136A 	 flds s13,[r7,#76]
+ 303 034c D7ED2A7A 	 flds s15,[r7,#168]
+ 304 0350 66EEA77A 	 fmuls s15,s13,s15
+ 305 0354 37EE677A 	 fsubs s14,s14,s15
+ 306 0358 D7ED126A 	 flds s13,[r7,#72]
+ 307 035c D7ED297A 	 flds s15,[r7,#164]
+ 308 0360 66EEA77A 	 fmuls s15,s13,s15
+ 309 0364 37EE277A 	 fadds s14,s14,s15
+ 310 0368 D7ED336A 	 flds s13,[r7,#204]
+ 311 036c D7ED1C7A 	 flds s15,[r7,#112]
+ 312 0370 66EEA77A 	 fmuls s15,s13,s15
+ 313 0374 37EE677A 	 fsubs s14,s14,s15
+ 314 0378 D7ED336A 	 flds s13,[r7,#204]
+ 315 037c D7ED197A 	 flds s15,[r7,#100]
+ 316 0380 66EEA77A 	 fmuls s15,s13,s15
+ 317 0384 37EE277A 	 fadds s14,s14,s15
+ 318 0388 D7ED246A 	 flds s13,[r7,#144]
+ 319 038c D7ED347A 	 flds s15,[r7,#208]
+ 320 0390 66EEA76A 	 fmuls s13,s13,s15
+ 321 0394 D7ED287A 	 flds s15,[r7,#160]
+ 322 0398 66EEA77A 	 fmuls s15,s13,s15
+ 323 039c 37EE277A 	 fadds s14,s14,s15
+ 324 03a0 D7ED336A 	 flds s13,[r7,#204]
+ 325 03a4 D7ED177A 	 flds s15,[r7,#92]
+ 326 03a8 66EEA77A 	 fmuls s15,s13,s15
+ 327 03ac 77EE677A 	 fsubs s15,s14,s15
+ 328 03b0 C7ED107A 	 fsts s15,[r7,#64]
+ 147:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	_2bx = sqrtf(hx * hx + hy * hy);
+ 329              	 .loc 1 147 0
+ 330 03b4 97ED117A 	 flds s14,[r7,#68]
+ 331 03b8 D7ED117A 	 flds s15,[r7,#68]
+ 332 03bc 27EE277A 	 fmuls s14,s14,s15
+ 333 03c0 D7ED106A 	 flds s13,[r7,#64]
+ 334 03c4 D7ED107A 	 flds s15,[r7,#64]
+ 335 03c8 66EEA77A 	 fmuls s15,s13,s15
+ 336 03cc 77EE277A 	 fadds s15,s14,s15
+ 337 03d0 17EE900A 	 fmrs r0,s15
+ 338 03d4 FFF7FEFF 	 bl sqrtf
+ 339 03d8 F863     	 str r0,[r7,#60]
+ 148:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	_2bz = -_2q1mx * q3 + _2q1my * q2 + mz * q1q1 + _2q2mx * q4 - mz * q2q2 + _2q3 * my * q4 - mz * q3
+ 340              	 .loc 1 148 0
+ 341 03da D7ED157A 	 flds s15,[r7,#84]
+ 342 03de B1EE677A 	 fnegs s14,s15
+ 343 03e2 D7ED297A 	 flds s15,[r7,#164]
+ 344 03e6 27EE277A 	 fmuls s14,s14,s15
+ 345 03ea D7ED146A 	 flds s13,[r7,#80]
+ 346 03ee D7ED2A7A 	 flds s15,[r7,#168]
+ 347 03f2 66EEA77A 	 fmuls s15,s13,s15
+ 348 03f6 37EE277A 	 fadds s14,s14,s15
+ 349 03fa D7ED346A 	 flds s13,[r7,#208]
+ 350 03fe D7ED207A 	 flds s15,[r7,#128]
+ 351 0402 66EEA77A 	 fmuls s15,s13,s15
+ 352 0406 37EE277A 	 fadds s14,s14,s15
+ 353 040a D7ED126A 	 flds s13,[r7,#72]
+ 354 040e D7ED287A 	 flds s15,[r7,#160]
+ 355 0412 66EEA77A 	 fmuls s15,s13,s15
+ 356 0416 37EE277A 	 fadds s14,s14,s15
+ 357 041a D7ED346A 	 flds s13,[r7,#208]
+ 358 041e D7ED1C7A 	 flds s15,[r7,#112]
+ 359 0422 66EEA77A 	 fmuls s15,s13,s15
+ 360 0426 37EE677A 	 fsubs s14,s14,s15
+ 361 042a D7ED246A 	 flds s13,[r7,#144]
+ 362 042e D7ED337A 	 flds s15,[r7,#204]
+ 363 0432 66EEA76A 	 fmuls s13,s13,s15
+ 364 0436 D7ED287A 	 flds s15,[r7,#160]
+ 365 043a 66EEA77A 	 fmuls s15,s13,s15
+ 366 043e 37EE277A 	 fadds s14,s14,s15
+ 367 0442 D7ED346A 	 flds s13,[r7,#208]
+ 368 0446 D7ED197A 	 flds s15,[r7,#100]
+ 369 044a 66EEA77A 	 fmuls s15,s13,s15
+ 370 044e 37EE677A 	 fsubs s14,s14,s15
+ 371 0452 D7ED346A 	 flds s13,[r7,#208]
+ 372 0456 D7ED177A 	 flds s15,[r7,#92]
+ 373 045a 66EEA77A 	 fmuls s15,s13,s15
+ 374 045e 77EE277A 	 fadds s15,s14,s15
+ 375 0462 C7ED0E7A 	 fsts s15,[r7,#56]
+ 149:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	_4bx = 2.0f * _2bx;
+ 376              	 .loc 1 149 0
+ 377 0466 D7ED0F7A 	 flds s15,[r7,#60]
+ 378 046a 77EEA77A 	 fadds s15,s15,s15
+ 379 046e C7ED0D7A 	 fsts s15,[r7,#52]
+ 150:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	_4bz = 2.0f * _2bz;
+ 380              	 .loc 1 150 0
+ 381 0472 D7ED0E7A 	 flds s15,[r7,#56]
+ 382 0476 77EEA77A 	 fadds s15,s15,s15
+ 383 047a C7ED0C7A 	 fsts s15,[r7,#48]
+ 151:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+ 152:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	// Gradient decent algorithm corrective step
+ 153:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	s1 = -_2q3 * (2.0f * q2q4 - _2q1q3 - ax) + _2q2 * (2.0f * q1q2 + _2q3q4 - ay) - _2bz * q3 * (_2bx 
+ 384              	 .loc 1 153 0
+ 385 047e D7ED247A 	 flds s15,[r7,#144]
+ 386 0482 B1EE677A 	 fnegs s14,s15
+ 387 0486 D7ED1A7A 	 flds s15,[r7,#104]
+ 388 048a 77EEA76A 	 fadds s13,s15,s15
+ 389 048e D7ED227A 	 flds s15,[r7,#136]
+ 390 0492 76EEE76A 	 fsubs s13,s13,s15
+ 391 0496 D7ED017A 	 flds s15,[r7,#4]
+ 392 049a 76EEE77A 	 fsubs s15,s13,s15
+ 393 049e 27EE277A 	 fmuls s14,s14,s15
+ 394 04a2 D7ED1F7A 	 flds s15,[r7,#124]
+ 395 04a6 77EEA76A 	 fadds s13,s15,s15
+ 396 04aa D7ED217A 	 flds s15,[r7,#132]
+ 397 04ae 76EEA76A 	 fadds s13,s13,s15
+ 398 04b2 D7ED007A 	 flds s15,[r7]
+ 399 04b6 76EEE76A 	 fsubs s13,s13,s15
+ 400 04ba D7ED257A 	 flds s15,[r7,#148]
+ 401 04be 66EEA77A 	 fmuls s15,s13,s15
+ 402 04c2 37EE277A 	 fadds s14,s14,s15
+ 403 04c6 D7ED0E6A 	 flds s13,[r7,#56]
+ 404 04ca D7ED297A 	 flds s15,[r7,#164]
+ 405 04ce 66EEA76A 	 fmuls s13,s13,s15
+ 406 04d2 1FEDB36A 	 flds s12,.L5+12
+ 407 04d6 D7ED197A 	 flds s15,[r7,#100]
+ 408 04da 36EE676A 	 fsubs s12,s12,s15
+ 409 04de D7ED177A 	 flds s15,[r7,#92]
+ 410 04e2 36EE676A 	 fsubs s12,s12,s15
+ 411 04e6 D7ED0F7A 	 flds s15,[r7,#60]
+ 412 04ea 26EE276A 	 fmuls s12,s12,s15
+ 413 04ee D7ED1A5A 	 flds s11,[r7,#104]
+ 414 04f2 D7ED1E7A 	 flds s15,[r7,#120]
+ 415 04f6 75EEE75A 	 fsubs s11,s11,s15
+ 416 04fa D7ED0E7A 	 flds s15,[r7,#56]
+ 417 04fe 65EEA77A 	 fmuls s15,s11,s15
+ 418 0502 36EE276A 	 fadds s12,s12,s15
+ 419 0506 D7ED327A 	 flds s15,[r7,#200]
+ 420 050a 76EE677A 	 fsubs s15,s12,s15
+ 421 050e 66EEA77A 	 fmuls s15,s13,s15
+ 422 0512 37EE677A 	 fsubs s14,s14,s15
+ 423 0516 D7ED0F7A 	 flds s15,[r7,#60]
+ 424 051a F1EE676A 	 fnegs s13,s15
+ 425 051e D7ED287A 	 flds s15,[r7,#160]
+ 426 0522 66EEA76A 	 fmuls s13,s13,s15
+ 427 0526 97ED0E6A 	 flds s12,[r7,#56]
+ 428 052a D7ED2A7A 	 flds s15,[r7,#168]
+ 429 052e 66EE277A 	 fmuls s15,s12,s15
+ 430 0532 76EEA76A 	 fadds s13,s13,s15
+ 431 0536 97ED1B6A 	 flds s12,[r7,#108]
+ 432 053a D7ED1D7A 	 flds s15,[r7,#116]
+ 433 053e 36EE676A 	 fsubs s12,s12,s15
+ 434 0542 D7ED0F7A 	 flds s15,[r7,#60]
+ 435 0546 26EE276A 	 fmuls s12,s12,s15
+ 436 054a D7ED1F5A 	 flds s11,[r7,#124]
+ 437 054e D7ED187A 	 flds s15,[r7,#96]
+ 438 0552 75EEA75A 	 fadds s11,s11,s15
+ 439 0556 D7ED0E7A 	 flds s15,[r7,#56]
+ 440 055a 65EEA77A 	 fmuls s15,s11,s15
+ 441 055e 36EE276A 	 fadds s12,s12,s15
+ 442 0562 D7ED337A 	 flds s15,[r7,#204]
+ 443 0566 76EE677A 	 fsubs s15,s12,s15
+ 444 056a 66EEA77A 	 fmuls s15,s13,s15
+ 445 056e 37EE277A 	 fadds s14,s14,s15
+ 446 0572 D7ED0F6A 	 flds s13,[r7,#60]
+ 447 0576 D7ED297A 	 flds s15,[r7,#164]
+ 448 057a 66EEA76A 	 fmuls s13,s13,s15
+ 449 057e 97ED1E6A 	 flds s12,[r7,#120]
+ 450 0582 D7ED1A7A 	 flds s15,[r7,#104]
+ 451 0586 36EE276A 	 fadds s12,s12,s15
+ 452 058a D7ED0F7A 	 flds s15,[r7,#60]
+ 453 058e 26EE276A 	 fmuls s12,s12,s15
+ 454 0592 5FEDE35A 	 flds s11,.L5+12
+ 455 0596 D7ED1C7A 	 flds s15,[r7,#112]
+ 456 059a 75EEE75A 	 fsubs s11,s11,s15
+ 457 059e D7ED197A 	 flds s15,[r7,#100]
+ 458 05a2 75EEE75A 	 fsubs s11,s11,s15
+ 459 05a6 D7ED0E7A 	 flds s15,[r7,#56]
+ 460 05aa 65EEA77A 	 fmuls s15,s11,s15
+ 461 05ae 36EE276A 	 fadds s12,s12,s15
+ 462 05b2 D7ED347A 	 flds s15,[r7,#208]
+ 463 05b6 76EE677A 	 fsubs s15,s12,s15
+ 464 05ba 66EEA77A 	 fmuls s15,s13,s15
+ 465 05be 77EE277A 	 fadds s15,s14,s15
+ 466 05c2 C7ED0B7A 	 fsts s15,[r7,#44]
+ 154:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	s2 = _2q4 * (2.0f * q2q4 - _2q1q3 - ax) + _2q1 * (2.0f * q1q2 + _2q3q4 - ay) - 4.0f * q2 * (1.0f -
+ 467              	 .loc 1 154 0
+ 468 05c6 D7ED1A7A 	 flds s15,[r7,#104]
+ 469 05ca 37EEA77A 	 fadds s14,s15,s15
+ 470 05ce D7ED227A 	 flds s15,[r7,#136]
+ 471 05d2 37EE677A 	 fsubs s14,s14,s15
+ 472 05d6 D7ED017A 	 flds s15,[r7,#4]
+ 473 05da 37EE677A 	 fsubs s14,s14,s15
+ 474 05de D7ED237A 	 flds s15,[r7,#140]
+ 475 05e2 27EE277A 	 fmuls s14,s14,s15
+ 476 05e6 D7ED1F7A 	 flds s15,[r7,#124]
+ 477 05ea 77EEA76A 	 fadds s13,s15,s15
+ 478 05ee D7ED217A 	 flds s15,[r7,#132]
+ 479 05f2 76EEA76A 	 fadds s13,s13,s15
+ 480 05f6 D7ED007A 	 flds s15,[r7]
+ 481 05fa 76EEE76A 	 fsubs s13,s13,s15
+ 482 05fe D7ED267A 	 flds s15,[r7,#152]
+ 483 0602 66EEA77A 	 fmuls s15,s13,s15
+ 484 0606 37EE277A 	 fadds s14,s14,s15
+ 485 060a D7ED2A7A 	 flds s15,[r7,#168]
+ 486 060e DFEDFE6A 	 flds s13,.L7
+ 487 0612 67EEA66A 	 fmuls s13,s15,s13
+ 488 0616 D7ED1C7A 	 flds s15,[r7,#112]
+ 489 061a 77EEA77A 	 fadds s15,s15,s15
+ 490 061e 9FEDFC6A 	 flds s12,.L7+8
+ 491 0622 36EE676A 	 fsubs s12,s12,s15
+ 492 0626 D7ED197A 	 flds s15,[r7,#100]
+ 493 062a 77EEA77A 	 fadds s15,s15,s15
+ 494 062e 36EE676A 	 fsubs s12,s12,s15
+ 495 0632 D7ED2E7A 	 flds s15,[r7,#184]
+ 496 0636 76EE677A 	 fsubs s15,s12,s15
+ 497 063a 66EEA77A 	 fmuls s15,s13,s15
+ 498 063e 37EE677A 	 fsubs s14,s14,s15
+ 499 0642 D7ED0E6A 	 flds s13,[r7,#56]
+ 500 0646 D7ED287A 	 flds s15,[r7,#160]
+ 501 064a 66EEA76A 	 fmuls s13,s13,s15
+ 502 064e 9FEDEF6A 	 flds s12,.L7+4
+ 503 0652 D7ED197A 	 flds s15,[r7,#100]
+ 504 0656 36EE676A 	 fsubs s12,s12,s15
+ 505 065a D7ED177A 	 flds s15,[r7,#92]
+ 506 065e 36EE676A 	 fsubs s12,s12,s15
+ 507 0662 D7ED0F7A 	 flds s15,[r7,#60]
+ 508 0666 26EE276A 	 fmuls s12,s12,s15
+ 509 066a D7ED1A5A 	 flds s11,[r7,#104]
+ 510 066e D7ED1E7A 	 flds s15,[r7,#120]
+ 511 0672 75EEE75A 	 fsubs s11,s11,s15
+ 512 0676 D7ED0E7A 	 flds s15,[r7,#56]
+ 513 067a 65EEA77A 	 fmuls s15,s11,s15
+ 514 067e 36EE276A 	 fadds s12,s12,s15
+ 515 0682 D7ED327A 	 flds s15,[r7,#200]
+ 516 0686 76EE677A 	 fsubs s15,s12,s15
+ 517 068a 66EEA77A 	 fmuls s15,s13,s15
+ 518 068e 37EE277A 	 fadds s14,s14,s15
+ 519 0692 D7ED0F6A 	 flds s13,[r7,#60]
+ 520 0696 D7ED297A 	 flds s15,[r7,#164]
+ 521 069a 66EEA76A 	 fmuls s13,s13,s15
+ 522 069e 97ED0E6A 	 flds s12,[r7,#56]
+ 523 06a2 D7ED2B7A 	 flds s15,[r7,#172]
+ 524 06a6 66EE277A 	 fmuls s15,s12,s15
+ 525 06aa 76EEA76A 	 fadds s13,s13,s15
+ 526 06ae 97ED1B6A 	 flds s12,[r7,#108]
+ 527 06b2 D7ED1D7A 	 flds s15,[r7,#116]
+ 528 06b6 36EE676A 	 fsubs s12,s12,s15
+ 529 06ba D7ED0F7A 	 flds s15,[r7,#60]
+ 530 06be 26EE276A 	 fmuls s12,s12,s15
+ 531 06c2 D7ED1F5A 	 flds s11,[r7,#124]
+ 532 06c6 D7ED187A 	 flds s15,[r7,#96]
+ 533 06ca 75EEA75A 	 fadds s11,s11,s15
+ 534 06ce D7ED0E7A 	 flds s15,[r7,#56]
+ 535 06d2 65EEA77A 	 fmuls s15,s11,s15
+ 536 06d6 36EE276A 	 fadds s12,s12,s15
+ 537 06da D7ED337A 	 flds s15,[r7,#204]
+ 538 06de 76EE677A 	 fsubs s15,s12,s15
+ 539 06e2 66EEA77A 	 fmuls s15,s13,s15
+ 540 06e6 37EE277A 	 fadds s14,s14,s15
+ 541 06ea D7ED0F6A 	 flds s13,[r7,#60]
+ 542 06ee D7ED287A 	 flds s15,[r7,#160]
+ 543 06f2 66EEA76A 	 fmuls s13,s13,s15
+ 544 06f6 97ED0C6A 	 flds s12,[r7,#48]
+ 545 06fa D7ED2A7A 	 flds s15,[r7,#168]
+ 546 06fe 66EE277A 	 fmuls s15,s12,s15
+ 547 0702 76EEE76A 	 fsubs s13,s13,s15
+ 548 0706 97ED1E6A 	 flds s12,[r7,#120]
+ 549 070a D7ED1A7A 	 flds s15,[r7,#104]
+ 550 070e 36EE276A 	 fadds s12,s12,s15
+ 551 0712 D7ED0F7A 	 flds s15,[r7,#60]
+ 552 0716 26EE276A 	 fmuls s12,s12,s15
+ 553 071a DFEDBC5A 	 flds s11,.L7+4
+ 554 071e D7ED1C7A 	 flds s15,[r7,#112]
+ 555 0722 75EEE75A 	 fsubs s11,s11,s15
+ 556 0726 D7ED197A 	 flds s15,[r7,#100]
+ 557 072a 75EEE75A 	 fsubs s11,s11,s15
+ 558 072e D7ED0E7A 	 flds s15,[r7,#56]
+ 559 0732 65EEA77A 	 fmuls s15,s11,s15
+ 560 0736 36EE276A 	 fadds s12,s12,s15
+ 561 073a D7ED347A 	 flds s15,[r7,#208]
+ 562 073e 76EE677A 	 fsubs s15,s12,s15
+ 563 0742 66EEA77A 	 fmuls s15,s13,s15
+ 564 0746 77EE277A 	 fadds s15,s14,s15
+ 565 074a C7ED0A7A 	 fsts s15,[r7,#40]
+ 155:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	s3 = -_2q1 * (2.0f * q2q4 - _2q1q3 - ax) + _2q4 * (2.0f * q1q2 + _2q3q4 - ay) - 4.0f * q3 * (1.0f 
+ 566              	 .loc 1 155 0
+ 567 074e D7ED267A 	 flds s15,[r7,#152]
+ 568 0752 B1EE677A 	 fnegs s14,s15
+ 569 0756 D7ED1A7A 	 flds s15,[r7,#104]
+ 570 075a 77EEA76A 	 fadds s13,s15,s15
+ 571 075e D7ED227A 	 flds s15,[r7,#136]
+ 572 0762 76EEE76A 	 fsubs s13,s13,s15
+ 573 0766 D7ED017A 	 flds s15,[r7,#4]
+ 574 076a 76EEE77A 	 fsubs s15,s13,s15
+ 575 076e 27EE277A 	 fmuls s14,s14,s15
+ 576 0772 D7ED1F7A 	 flds s15,[r7,#124]
+ 577 0776 77EEA76A 	 fadds s13,s15,s15
+ 578 077a D7ED217A 	 flds s15,[r7,#132]
+ 579 077e 76EEA76A 	 fadds s13,s13,s15
+ 580 0782 D7ED007A 	 flds s15,[r7]
+ 581 0786 76EEE76A 	 fsubs s13,s13,s15
+ 582 078a D7ED237A 	 flds s15,[r7,#140]
+ 583 078e 66EEA77A 	 fmuls s15,s13,s15
+ 584 0792 37EE277A 	 fadds s14,s14,s15
+ 585 0796 D7ED297A 	 flds s15,[r7,#164]
+ 586 079a DFED9B6A 	 flds s13,.L7
+ 587 079e 67EEA66A 	 fmuls s13,s15,s13
+ 588 07a2 D7ED1C7A 	 flds s15,[r7,#112]
+ 589 07a6 77EEA77A 	 fadds s15,s15,s15
+ 590 07aa 9FED996A 	 flds s12,.L7+8
+ 591 07ae 36EE676A 	 fsubs s12,s12,s15
+ 592 07b2 D7ED197A 	 flds s15,[r7,#100]
+ 593 07b6 77EEA77A 	 fadds s15,s15,s15
+ 594 07ba 36EE676A 	 fsubs s12,s12,s15
+ 595 07be D7ED2E7A 	 flds s15,[r7,#184]
+ 596 07c2 76EE677A 	 fsubs s15,s12,s15
+ 597 07c6 66EEA77A 	 fmuls s15,s13,s15
+ 598 07ca 37EE677A 	 fsubs s14,s14,s15
+ 599 07ce D7ED0D7A 	 flds s15,[r7,#52]
+ 600 07d2 F1EE676A 	 fnegs s13,s15
+ 601 07d6 D7ED297A 	 flds s15,[r7,#164]
+ 602 07da 66EEA76A 	 fmuls s13,s13,s15
+ 603 07de 97ED0E6A 	 flds s12,[r7,#56]
+ 604 07e2 D7ED2B7A 	 flds s15,[r7,#172]
+ 605 07e6 66EE277A 	 fmuls s15,s12,s15
+ 606 07ea 76EEE76A 	 fsubs s13,s13,s15
+ 607 07ee 9FED876A 	 flds s12,.L7+4
+ 608 07f2 D7ED197A 	 flds s15,[r7,#100]
+ 609 07f6 36EE676A 	 fsubs s12,s12,s15
+ 610 07fa D7ED177A 	 flds s15,[r7,#92]
+ 611 07fe 36EE676A 	 fsubs s12,s12,s15
+ 612 0802 D7ED0F7A 	 flds s15,[r7,#60]
+ 613 0806 26EE276A 	 fmuls s12,s12,s15
+ 614 080a D7ED1A5A 	 flds s11,[r7,#104]
+ 615 080e D7ED1E7A 	 flds s15,[r7,#120]
+ 616 0812 75EEE75A 	 fsubs s11,s11,s15
+ 617 0816 D7ED0E7A 	 flds s15,[r7,#56]
+ 618 081a 65EEA77A 	 fmuls s15,s11,s15
+ 619 081e 36EE276A 	 fadds s12,s12,s15
+ 620 0822 D7ED327A 	 flds s15,[r7,#200]
+ 621 0826 76EE677A 	 fsubs s15,s12,s15
+ 622 082a 66EEA77A 	 fmuls s15,s13,s15
+ 623 082e 37EE277A 	 fadds s14,s14,s15
+ 624 0832 D7ED0F6A 	 flds s13,[r7,#60]
+ 625 0836 D7ED2A7A 	 flds s15,[r7,#168]
+ 626 083a 66EEA76A 	 fmuls s13,s13,s15
+ 627 083e 97ED0E6A 	 flds s12,[r7,#56]
+ 628 0842 D7ED287A 	 flds s15,[r7,#160]
+ 629 0846 66EE277A 	 fmuls s15,s12,s15
+ 630 084a 76EEA76A 	 fadds s13,s13,s15
+ 631 084e 97ED1B6A 	 flds s12,[r7,#108]
+ 632 0852 D7ED1D7A 	 flds s15,[r7,#116]
+ 633 0856 36EE676A 	 fsubs s12,s12,s15
+ 634 085a D7ED0F7A 	 flds s15,[r7,#60]
+ 635 085e 26EE276A 	 fmuls s12,s12,s15
+ 636 0862 D7ED1F5A 	 flds s11,[r7,#124]
+ 637 0866 D7ED187A 	 flds s15,[r7,#96]
+ 638 086a 75EEA75A 	 fadds s11,s11,s15
+ 639 086e D7ED0E7A 	 flds s15,[r7,#56]
+ 640 0872 65EEA77A 	 fmuls s15,s11,s15
+ 641 0876 36EE276A 	 fadds s12,s12,s15
+ 642 087a D7ED337A 	 flds s15,[r7,#204]
+ 643 087e 76EE677A 	 fsubs s15,s12,s15
+ 644 0882 66EEA77A 	 fmuls s15,s13,s15
+ 645 0886 37EE277A 	 fadds s14,s14,s15
+ 646 088a D7ED0F6A 	 flds s13,[r7,#60]
+ 647 088e D7ED2B7A 	 flds s15,[r7,#172]
+ 648 0892 66EEA76A 	 fmuls s13,s13,s15
+ 649 0896 97ED0C6A 	 flds s12,[r7,#48]
+ 650 089a D7ED297A 	 flds s15,[r7,#164]
+ 651 089e 66EE277A 	 fmuls s15,s12,s15
+ 652 08a2 76EEE76A 	 fsubs s13,s13,s15
+ 653 08a6 97ED1E6A 	 flds s12,[r7,#120]
+ 654 08aa D7ED1A7A 	 flds s15,[r7,#104]
+ 655 08ae 36EE276A 	 fadds s12,s12,s15
+ 656 08b2 D7ED0F7A 	 flds s15,[r7,#60]
+ 657 08b6 26EE276A 	 fmuls s12,s12,s15
+ 658 08ba DFED545A 	 flds s11,.L7+4
+ 659 08be D7ED1C7A 	 flds s15,[r7,#112]
+ 660 08c2 75EEE75A 	 fsubs s11,s11,s15
+ 661 08c6 D7ED197A 	 flds s15,[r7,#100]
+ 662 08ca 75EEE75A 	 fsubs s11,s11,s15
+ 663 08ce D7ED0E7A 	 flds s15,[r7,#56]
+ 664 08d2 65EEA77A 	 fmuls s15,s11,s15
+ 665 08d6 36EE276A 	 fadds s12,s12,s15
+ 666 08da D7ED347A 	 flds s15,[r7,#208]
+ 667 08de 76EE677A 	 fsubs s15,s12,s15
+ 668 08e2 66EEA77A 	 fmuls s15,s13,s15
+ 669 08e6 77EE277A 	 fadds s15,s14,s15
+ 670 08ea C7ED097A 	 fsts s15,[r7,#36]
+ 156:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	s4 = _2q2 * (2.0f * q2q4 - _2q1q3 - ax) + _2q3 * (2.0f * q1q2 + _2q3q4 - ay) + (-_4bx * q4 + _2bz 
+ 671              	 .loc 1 156 0
+ 672 08ee D7ED1A7A 	 flds s15,[r7,#104]
+ 673 08f2 37EEA77A 	 fadds s14,s15,s15
+ 674 08f6 D7ED227A 	 flds s15,[r7,#136]
+ 675 08fa 37EE677A 	 fsubs s14,s14,s15
+ 676 08fe D7ED017A 	 flds s15,[r7,#4]
+ 677 0902 37EE677A 	 fsubs s14,s14,s15
+ 678 0906 D7ED257A 	 flds s15,[r7,#148]
+ 679 090a 27EE277A 	 fmuls s14,s14,s15
+ 680 090e D7ED1F7A 	 flds s15,[r7,#124]
+ 681 0912 77EEA76A 	 fadds s13,s15,s15
+ 682 0916 D7ED217A 	 flds s15,[r7,#132]
+ 683 091a 76EEA76A 	 fadds s13,s13,s15
+ 684 091e D7ED007A 	 flds s15,[r7]
+ 685 0922 76EEE76A 	 fsubs s13,s13,s15
+ 686 0926 D7ED247A 	 flds s15,[r7,#144]
+ 687 092a 66EEA77A 	 fmuls s15,s13,s15
+ 688 092e 37EE277A 	 fadds s14,s14,s15
+ 689 0932 D7ED0D7A 	 flds s15,[r7,#52]
+ 690 0936 F1EE676A 	 fnegs s13,s15
+ 691 093a D7ED287A 	 flds s15,[r7,#160]
+ 692 093e 66EEA76A 	 fmuls s13,s13,s15
+ 693 0942 97ED0E6A 	 flds s12,[r7,#56]
+ 694 0946 D7ED2A7A 	 flds s15,[r7,#168]
+ 695 094a 66EE277A 	 fmuls s15,s12,s15
+ 696 094e 76EEA76A 	 fadds s13,s13,s15
+ 697 0952 9FED2E6A 	 flds s12,.L7+4
+ 698 0956 D7ED197A 	 flds s15,[r7,#100]
+ 699 095a 36EE676A 	 fsubs s12,s12,s15
+ 700 095e D7ED177A 	 flds s15,[r7,#92]
+ 701 0962 36EE676A 	 fsubs s12,s12,s15
+ 702 0966 D7ED0F7A 	 flds s15,[r7,#60]
+ 703 096a 26EE276A 	 fmuls s12,s12,s15
+ 704 096e D7ED1A5A 	 flds s11,[r7,#104]
+ 705 0972 D7ED1E7A 	 flds s15,[r7,#120]
+ 706 0976 75EEE75A 	 fsubs s11,s11,s15
+ 707 097a D7ED0E7A 	 flds s15,[r7,#56]
+ 708 097e 65EEA77A 	 fmuls s15,s11,s15
+ 709 0982 36EE276A 	 fadds s12,s12,s15
+ 710 0986 D7ED327A 	 flds s15,[r7,#200]
+ 711 098a 76EE677A 	 fsubs s15,s12,s15
+ 712 098e 66EEA77A 	 fmuls s15,s13,s15
+ 713 0992 37EE277A 	 fadds s14,s14,s15
+ 714 0996 D7ED0F7A 	 flds s15,[r7,#60]
+ 715 099a F1EE676A 	 fnegs s13,s15
+ 716 099e D7ED2B7A 	 flds s15,[r7,#172]
+ 717 09a2 66EEA76A 	 fmuls s13,s13,s15
+ 718 09a6 97ED0E6A 	 flds s12,[r7,#56]
+ 719 09aa D7ED297A 	 flds s15,[r7,#164]
+ 720 09ae 66EE277A 	 fmuls s15,s12,s15
+ 721 09b2 76EEA76A 	 fadds s13,s13,s15
+ 722 09b6 97ED1B6A 	 flds s12,[r7,#108]
+ 723 09ba D7ED1D7A 	 flds s15,[r7,#116]
+ 724 09be 36EE676A 	 fsubs s12,s12,s15
+ 725 09c2 D7ED0F7A 	 flds s15,[r7,#60]
+ 726 09c6 26EE276A 	 fmuls s12,s12,s15
+ 727 09ca D7ED1F5A 	 flds s11,[r7,#124]
+ 728 09ce D7ED187A 	 flds s15,[r7,#96]
+ 729 09d2 75EEA75A 	 fadds s11,s11,s15
+ 730 09d6 D7ED0E7A 	 flds s15,[r7,#56]
+ 731 09da 65EEA77A 	 fmuls s15,s11,s15
+ 732 09de 36EE276A 	 fadds s12,s12,s15
+ 733 09e2 D7ED337A 	 flds s15,[r7,#204]
+ 734 09e6 76EE677A 	 fsubs s15,s12,s15
+ 735 09ea 66EEA77A 	 fmuls s15,s13,s15
+ 736 09ee 37EE277A 	 fadds s14,s14,s15
+ 737 09f2 D7ED0F6A 	 flds s13,[r7,#60]
+ 738 09f6 D7ED2A7A 	 flds s15,[r7,#168]
+ 739 09fa 66EEA76A 	 fmuls s13,s13,s15
+ 740 09fe 97ED1E6A 	 flds s12,[r7,#120]
+ 741 0a02 D7ED1A7A 	 flds s15,[r7,#104]
+ 742 0a06 05E0     	 b .L8
+ 743              	.L9:
+ 744              	 .align 2
+ 745              	.L7:
+ 746 0a08 00008040 	 .word 1082130432
+ 747 0a0c 0000003F 	 .word 1056964608
+ 748 0a10 0000803F 	 .word 1065353216
+ 749              	.L8:
+ 750 0a14 36EE276A 	 fadds s12,s12,s15
+ 751 0a18 D7ED0F7A 	 flds s15,[r7,#60]
+ 752 0a1c 26EE276A 	 fmuls s12,s12,s15
+ 753 0a20 5FED065A 	 flds s11,.L7+4
+ 754 0a24 D7ED1C7A 	 flds s15,[r7,#112]
+ 755 0a28 75EEE75A 	 fsubs s11,s11,s15
+ 756 0a2c D7ED197A 	 flds s15,[r7,#100]
+ 757 0a30 75EEE75A 	 fsubs s11,s11,s15
+ 758 0a34 D7ED0E7A 	 flds s15,[r7,#56]
+ 759 0a38 65EEA77A 	 fmuls s15,s11,s15
+ 760 0a3c 36EE276A 	 fadds s12,s12,s15
+ 761 0a40 D7ED347A 	 flds s15,[r7,#208]
+ 762 0a44 76EE677A 	 fsubs s15,s12,s15
+ 763 0a48 66EEA77A 	 fmuls s15,s13,s15
+ 764 0a4c 77EE277A 	 fadds s15,s14,s15
+ 765 0a50 C7ED087A 	 fsts s15,[r7,#32]
+ 157:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	norm = sqrtf(s1 * s1 + s2 * s2 + s3 * s3 + s4 * s4);    // normalise step magnitude
+ 766              	 .loc 1 157 0
+ 767 0a54 97ED0B7A 	 flds s14,[r7,#44]
+ 768 0a58 D7ED0B7A 	 flds s15,[r7,#44]
+ 769 0a5c 27EE277A 	 fmuls s14,s14,s15
+ 770 0a60 D7ED0A6A 	 flds s13,[r7,#40]
+ 771 0a64 D7ED0A7A 	 flds s15,[r7,#40]
+ 772 0a68 66EEA77A 	 fmuls s15,s13,s15
+ 773 0a6c 37EE277A 	 fadds s14,s14,s15
+ 774 0a70 D7ED096A 	 flds s13,[r7,#36]
+ 775 0a74 D7ED097A 	 flds s15,[r7,#36]
+ 776 0a78 66EEA77A 	 fmuls s15,s13,s15
+ 777 0a7c 37EE277A 	 fadds s14,s14,s15
+ 778 0a80 D7ED086A 	 flds s13,[r7,#32]
+ 779 0a84 D7ED087A 	 flds s15,[r7,#32]
+ 780 0a88 66EEA77A 	 fmuls s15,s13,s15
+ 781 0a8c 77EE277A 	 fadds s15,s14,s15
+ 782 0a90 17EE900A 	 fmrs r0,s15
+ 783 0a94 FFF7FEFF 	 bl sqrtf
+ 784 0a98 B865     	 str r0,[r7,#88]
+ 158:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	norm = 1.0f/norm;
+ 785              	 .loc 1 158 0
+ 786 0a9a 1FED237A 	 flds s14,.L7+8
+ 787 0a9e D7ED167A 	 flds s15,[r7,#88]
+ 788 0aa2 C7EE277A 	 fdivs s15,s14,s15
+ 789 0aa6 C7ED167A 	 fsts s15,[r7,#88]
+ 159:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	s1 *= norm;
+ 790              	 .loc 1 159 0
+ 791 0aaa 97ED0B7A 	 flds s14,[r7,#44]
+ 792 0aae D7ED167A 	 flds s15,[r7,#88]
+ 793 0ab2 67EE277A 	 fmuls s15,s14,s15
+ 794 0ab6 C7ED0B7A 	 fsts s15,[r7,#44]
+ 160:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	s2 *= norm;
+ 795              	 .loc 1 160 0
+ 796 0aba 97ED0A7A 	 flds s14,[r7,#40]
+ 797 0abe D7ED167A 	 flds s15,[r7,#88]
+ 798 0ac2 67EE277A 	 fmuls s15,s14,s15
+ 799 0ac6 C7ED0A7A 	 fsts s15,[r7,#40]
+ 161:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	s3 *= norm;
+ 800              	 .loc 1 161 0
+ 801 0aca 97ED097A 	 flds s14,[r7,#36]
+ 802 0ace D7ED167A 	 flds s15,[r7,#88]
+ 803 0ad2 67EE277A 	 fmuls s15,s14,s15
+ 804 0ad6 C7ED097A 	 fsts s15,[r7,#36]
+ 162:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	s4 *= norm;
+ 805              	 .loc 1 162 0
+ 806 0ada 97ED087A 	 flds s14,[r7,#32]
+ 807 0ade D7ED167A 	 flds s15,[r7,#88]
+ 808 0ae2 67EE277A 	 fmuls s15,s14,s15
+ 809 0ae6 C7ED087A 	 fsts s15,[r7,#32]
+ 163:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+ 164:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	// Compute rate of change of quaternion
+ 165:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	qDot1 = 0.5f * (-q2 * gx - q3 * gy - q4 * gz) - beta * s1;
+ 810              	 .loc 1 165 0
+ 811 0aea D7ED2A7A 	 flds s15,[r7,#168]
+ 812 0aee B1EE677A 	 fnegs s14,s15
+ 813 0af2 D7ED2F7A 	 flds s15,[r7,#188]
+ 814 0af6 27EE277A 	 fmuls s14,s14,s15
+ 815 0afa D7ED296A 	 flds s13,[r7,#164]
+ 816 0afe D7ED307A 	 flds s15,[r7,#192]
+ 817 0b02 66EEA77A 	 fmuls s15,s13,s15
+ 818 0b06 37EE677A 	 fsubs s14,s14,s15
+ 819 0b0a D7ED286A 	 flds s13,[r7,#160]
+ 820 0b0e D7ED317A 	 flds s15,[r7,#196]
+ 821 0b12 66EEA77A 	 fmuls s15,s13,s15
+ 822 0b16 77EE677A 	 fsubs s15,s14,s15
+ 823 0b1a 1FED447A 	 flds s14,.L7+4
+ 824 0b1e 27EE877A 	 fmuls s14,s15,s14
+ 825 0b22 D7ED276A 	 flds s13,[r7,#156]
+ 826 0b26 D7ED0B7A 	 flds s15,[r7,#44]
+ 827 0b2a 66EEA77A 	 fmuls s15,s13,s15
+ 828 0b2e 77EE677A 	 fsubs s15,s14,s15
+ 829 0b32 C7ED077A 	 fsts s15,[r7,#28]
+ 166:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	qDot2 = 0.5f * ( q1 * gx + q3 * gz - q4 * gy) - beta * s2;
+ 830              	 .loc 1 166 0
+ 831 0b36 97ED2B7A 	 flds s14,[r7,#172]
+ 832 0b3a D7ED2F7A 	 flds s15,[r7,#188]
+ 833 0b3e 27EE277A 	 fmuls s14,s14,s15
+ 834 0b42 D7ED296A 	 flds s13,[r7,#164]
+ 835 0b46 D7ED317A 	 flds s15,[r7,#196]
+ 836 0b4a 66EEA77A 	 fmuls s15,s13,s15
+ 837 0b4e 37EE277A 	 fadds s14,s14,s15
+ 838 0b52 D7ED286A 	 flds s13,[r7,#160]
+ 839 0b56 D7ED307A 	 flds s15,[r7,#192]
+ 840 0b5a 66EEA77A 	 fmuls s15,s13,s15
+ 841 0b5e 77EE677A 	 fsubs s15,s14,s15
+ 842 0b62 1FED567A 	 flds s14,.L7+4
+ 843 0b66 27EE877A 	 fmuls s14,s15,s14
+ 844 0b6a D7ED276A 	 flds s13,[r7,#156]
+ 845 0b6e D7ED0A7A 	 flds s15,[r7,#40]
+ 846 0b72 66EEA77A 	 fmuls s15,s13,s15
+ 847 0b76 77EE677A 	 fsubs s15,s14,s15
+ 848 0b7a C7ED067A 	 fsts s15,[r7,#24]
+ 167:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	qDot3 = 0.5f * ( q1 * gy - q2 * gz + q4 * gx) - beta * s3;
+ 849              	 .loc 1 167 0
+ 850 0b7e 97ED2B7A 	 flds s14,[r7,#172]
+ 851 0b82 D7ED307A 	 flds s15,[r7,#192]
+ 852 0b86 27EE277A 	 fmuls s14,s14,s15
+ 853 0b8a D7ED2A6A 	 flds s13,[r7,#168]
+ 854 0b8e D7ED317A 	 flds s15,[r7,#196]
+ 855 0b92 66EEA77A 	 fmuls s15,s13,s15
+ 856 0b96 37EE677A 	 fsubs s14,s14,s15
+ 857 0b9a D7ED286A 	 flds s13,[r7,#160]
+ 858 0b9e D7ED2F7A 	 flds s15,[r7,#188]
+ 859 0ba2 66EEA77A 	 fmuls s15,s13,s15
+ 860 0ba6 77EE277A 	 fadds s15,s14,s15
+ 861 0baa 1FED687A 	 flds s14,.L7+4
+ 862 0bae 27EE877A 	 fmuls s14,s15,s14
+ 863 0bb2 D7ED276A 	 flds s13,[r7,#156]
+ 864 0bb6 D7ED097A 	 flds s15,[r7,#36]
+ 865 0bba 66EEA77A 	 fmuls s15,s13,s15
+ 866 0bbe 77EE677A 	 fsubs s15,s14,s15
+ 867 0bc2 C7ED057A 	 fsts s15,[r7,#20]
+ 168:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	qDot4 = 0.5f * ( q1 * gz + q2 * gy - q3 * gx) - beta * s4;
+ 868              	 .loc 1 168 0
+ 869 0bc6 97ED2B7A 	 flds s14,[r7,#172]
+ 870 0bca D7ED317A 	 flds s15,[r7,#196]
+ 871 0bce 27EE277A 	 fmuls s14,s14,s15
+ 872 0bd2 D7ED2A6A 	 flds s13,[r7,#168]
+ 873 0bd6 D7ED307A 	 flds s15,[r7,#192]
+ 874 0bda 66EEA77A 	 fmuls s15,s13,s15
+ 875 0bde 37EE277A 	 fadds s14,s14,s15
+ 876 0be2 D7ED296A 	 flds s13,[r7,#164]
+ 877 0be6 D7ED2F7A 	 flds s15,[r7,#188]
+ 878 0bea 66EEA77A 	 fmuls s15,s13,s15
+ 879 0bee 77EE677A 	 fsubs s15,s14,s15
+ 880 0bf2 1FED7A7A 	 flds s14,.L7+4
+ 881 0bf6 27EE877A 	 fmuls s14,s15,s14
+ 882 0bfa D7ED276A 	 flds s13,[r7,#156]
+ 883 0bfe D7ED087A 	 flds s15,[r7,#32]
+ 884 0c02 66EEA77A 	 fmuls s15,s13,s15
+ 885 0c06 77EE677A 	 fsubs s15,s14,s15
+ 886 0c0a C7ED047A 	 fsts s15,[r7,#16]
+ 169:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+ 170:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	// Integrate to yield quaternion
+ 171:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	q1 += qDot1 * deltat;
+ 887              	 .loc 1 171 0
+ 888 0c0e 97ED077A 	 flds s14,[r7,#28]
+ 889 0c12 D7ED027A 	 flds s15,[r7,#8]
+ 890 0c16 67EE277A 	 fmuls s15,s14,s15
+ 891 0c1a 97ED2B7A 	 flds s14,[r7,#172]
+ 892 0c1e 77EE277A 	 fadds s15,s14,s15
+ 893 0c22 C7ED2B7A 	 fsts s15,[r7,#172]
+ 172:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	q2 += qDot2 * deltat;
+ 894              	 .loc 1 172 0
+ 895 0c26 97ED067A 	 flds s14,[r7,#24]
+ 896 0c2a D7ED027A 	 flds s15,[r7,#8]
+ 897 0c2e 67EE277A 	 fmuls s15,s14,s15
+ 898 0c32 97ED2A7A 	 flds s14,[r7,#168]
+ 899 0c36 77EE277A 	 fadds s15,s14,s15
+ 900 0c3a C7ED2A7A 	 fsts s15,[r7,#168]
+ 173:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	q3 += qDot3 * deltat;
+ 901              	 .loc 1 173 0
+ 902 0c3e 97ED057A 	 flds s14,[r7,#20]
+ 903 0c42 D7ED027A 	 flds s15,[r7,#8]
+ 904 0c46 67EE277A 	 fmuls s15,s14,s15
+ 905 0c4a 97ED297A 	 flds s14,[r7,#164]
+ 906 0c4e 77EE277A 	 fadds s15,s14,s15
+ 907 0c52 C7ED297A 	 fsts s15,[r7,#164]
+ 174:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	q4 += qDot4 * deltat;
+ 908              	 .loc 1 174 0
+ 909 0c56 97ED047A 	 flds s14,[r7,#16]
+ 910 0c5a D7ED027A 	 flds s15,[r7,#8]
+ 911 0c5e 67EE277A 	 fmuls s15,s14,s15
+ 912 0c62 97ED287A 	 flds s14,[r7,#160]
+ 913 0c66 77EE277A 	 fadds s15,s14,s15
+ 914 0c6a C7ED287A 	 fsts s15,[r7,#160]
+ 175:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	norm = sqrtf(q1 * q1 + q2 * q2 + q3 * q3 + q4 * q4);    // normalise quaternion
+ 915              	 .loc 1 175 0
+ 916 0c6e 97ED2B7A 	 flds s14,[r7,#172]
+ 917 0c72 D7ED2B7A 	 flds s15,[r7,#172]
+ 918 0c76 27EE277A 	 fmuls s14,s14,s15
+ 919 0c7a D7ED2A6A 	 flds s13,[r7,#168]
+ 920 0c7e D7ED2A7A 	 flds s15,[r7,#168]
+ 921 0c82 66EEA77A 	 fmuls s15,s13,s15
+ 922 0c86 37EE277A 	 fadds s14,s14,s15
+ 923 0c8a D7ED296A 	 flds s13,[r7,#164]
+ 924 0c8e D7ED297A 	 flds s15,[r7,#164]
+ 925 0c92 66EEA77A 	 fmuls s15,s13,s15
+ 926 0c96 37EE277A 	 fadds s14,s14,s15
+ 927 0c9a D7ED286A 	 flds s13,[r7,#160]
+ 928 0c9e D7ED287A 	 flds s15,[r7,#160]
+ 929 0ca2 66EEA77A 	 fmuls s15,s13,s15
+ 930 0ca6 77EE277A 	 fadds s15,s14,s15
+ 931 0caa 17EE900A 	 fmrs r0,s15
+ 932 0cae FFF7FEFF 	 bl sqrtf
+ 933 0cb2 B865     	 str r0,[r7,#88]
+ 176:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	norm = 1.0f/norm;
+ 934              	 .loc 1 176 0
+ 935 0cb4 1FEDAA7A 	 flds s14,.L7+8
+ 936 0cb8 D7ED167A 	 flds s15,[r7,#88]
+ 937 0cbc C7EE277A 	 fdivs s15,s14,s15
+ 938 0cc0 C7ED167A 	 fsts s15,[r7,#88]
+ 177:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	q[0] = q1 * norm;
+ 939              	 .loc 1 177 0
+ 940 0cc4 97ED2B7A 	 flds s14,[r7,#172]
+ 941 0cc8 D7ED167A 	 flds s15,[r7,#88]
+ 942 0ccc 67EE277A 	 fmuls s15,s14,s15
+ 943 0cd0 FB68     	 ldr r3,[r7,#12]
+ 944 0cd2 C3ED007A 	 fsts s15,[r3]
+ 178:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	q[1] = q2 * norm;
+ 945              	 .loc 1 178 0
+ 946 0cd6 FB68     	 ldr r3,[r7,#12]
+ 947 0cd8 0433     	 adds r3,r3,#4
+ 948 0cda 97ED2A7A 	 flds s14,[r7,#168]
+ 949 0cde D7ED167A 	 flds s15,[r7,#88]
+ 950 0ce2 67EE277A 	 fmuls s15,s14,s15
+ 951 0ce6 C3ED007A 	 fsts s15,[r3]
+ 179:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	q[2] = q3 * norm;
+ 952              	 .loc 1 179 0
+ 953 0cea FB68     	 ldr r3,[r7,#12]
+ 954 0cec 0833     	 adds r3,r3,#8
+ 955 0cee 97ED297A 	 flds s14,[r7,#164]
+ 956 0cf2 D7ED167A 	 flds s15,[r7,#88]
+ 957 0cf6 67EE277A 	 fmuls s15,s14,s15
+ 958 0cfa C3ED007A 	 fsts s15,[r3]
+ 180:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	q[3] = q4 * norm;
+ 959              	 .loc 1 180 0
+ 960 0cfe FB68     	 ldr r3,[r7,#12]
+ 961 0d00 0C33     	 adds r3,r3,#12
+ 962 0d02 97ED287A 	 flds s14,[r7,#160]
+ 963 0d06 D7ED167A 	 flds s15,[r7,#88]
+ 964 0d0a 67EE277A 	 fmuls s15,s14,s15
+ 965 0d0e C3ED007A 	 fsts s15,[r3]
+ 966              	.L1:
+ 181:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** }
+ 967              	 .loc 1 181 0
+ 968 0d12 B037     	 adds r7,r7,#176
+ 969              	.LCFI3:
+ 970              	 .cfi_def_cfa_offset 8
+ 971 0d14 BD46     	 mov sp,r7
+ 972              	.LCFI4:
+ 973              	 .cfi_def_cfa_register 13
+ 974              	 
+ 975 0d16 80BD     	 pop {r7,pc}
+ 976              	 .cfi_endproc
+ 977              	.LFE440:
+ 979              	 .section .text.MadgwickQuaternionUpdateWithouMag,"ax",%progbits
+ 980              	 .align 2
+ 981              	 .global MadgwickQuaternionUpdateWithouMag
+ 982              	 .thumb
+ 983              	 .thumb_func
+ 985              	MadgwickQuaternionUpdateWithouMag:
+ 986              	.LFB441:
+ 182:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+ 183:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** /* *****************************************************************************
+ 184:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** **                      Private Function Definitions                          **
+ 185:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** ***************************************************************************** */
+ 186:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+ 187:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  // Similar to Madgwick scheme but uses proportional and integral filtering on the error between es
+ 188:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c ****  // measured ones.
+ 189:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //void MahonyQuaternionUpdate(float* q, float* eInt, float deltat, float ax, float ay, float az, fl
+ 190:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //{
+ 191:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	float q1 = q[0], q2 = q[1], q3 = q[2], q4 = q[3];   // short name local variable for readability
+ 192:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	float norm;
+ 193:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	float hx, hy, bx, bz;
+ 194:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	float vx, vy, vz, wx, wy, wz;
+ 195:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	float ex, ey, ez;
+ 196:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	float pa, pb, pc;
+ 197:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //
+ 198:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	// Auxiliary variables to avoid repeated arithmetic
+ 199:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	float q1q1 = q1 * q1;
+ 200:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	float q1q2 = q1 * q2;
+ 201:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	float q1q3 = q1 * q3;
+ 202:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	float q1q4 = q1 * q4;
+ 203:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	float q2q2 = q2 * q2;
+ 204:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	float q2q3 = q2 * q3;
+ 205:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	float q2q4 = q2 * q4;
+ 206:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	float q3q3 = q3 * q3;
+ 207:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	float q3q4 = q3 * q4;
+ 208:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	float q4q4 = q4 * q4;
+ 209:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //
+ 210:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	// Normalise accelerometer measurement
+ 211:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	norm = sqrt(ax * ax + ay * ay + az * az);
+ 212:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	if (norm == 0.0f) return; // handle NaN
+ 213:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	norm = 1.0f / norm;        // use reciprocal for division
+ 214:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	ax *= norm;
+ 215:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	ay *= norm;
+ 216:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	az *= norm;
+ 217:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //
+ 218:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	// Normalise magnetometer measurement
+ 219:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	norm = sqrt(mx * mx + my * my + mz * mz);
+ 220:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	if (norm == 0.0f) return; // handle NaN
+ 221:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	norm = 1.0f / norm;        // use reciprocal for division
+ 222:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	mx *= norm;
+ 223:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	my *= norm;
+ 224:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	mz *= norm;
+ 225:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //
+ 226:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	// Reference direction of Earth's magnetic field
+ 227:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	hx = 2.0f * mx * (0.5f - q3q3 - q4q4) + 2.0f * my * (q2q3 - q1q4) + 2.0f * mz * (q2q4 + q1q3);
+ 228:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	hy = 2.0f * mx * (q2q3 + q1q4) + 2.0f * my * (0.5f - q2q2 - q4q4) + 2.0f * mz * (q3q4 - q1q2);
+ 229:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	bx = sqrt((hx * hx) + (hy * hy));
+ 230:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	bz = 2.0f * mx * (q2q4 - q1q3) + 2.0f * my * (q3q4 + q1q2) + 2.0f * mz * (0.5f - q2q2 - q3q3);
+ 231:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //
+ 232:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	// Estimated direction of gravity and magnetic field
+ 233:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	vx = 2.0f * (q2q4 - q1q3);
+ 234:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	vy = 2.0f * (q1q2 + q3q4);
+ 235:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	vz = q1q1 - q2q2 - q3q3 + q4q4;
+ 236:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	wx = 2.0f * bx * (0.5f - q3q3 - q4q4) + 2.0f * bz * (q2q4 - q1q3);
+ 237:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	wy = 2.0f * bx * (q2q3 - q1q4) + 2.0f * bz * (q1q2 + q3q4);
+ 238:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	wz = 2.0f * bx * (q1q3 + q2q4) + 2.0f * bz * (0.5f - q2q2 - q3q3);
+ 239:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //
+ 240:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	// Error is cross product between estimated direction and measured direction of gravity
+ 241:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	ex = (ay * vz - az * vy) + (my * wz - mz * wy);
+ 242:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	ey = (az * vx - ax * vz) + (mz * wx - mx * wz);
+ 243:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	ez = (ax * vy - ay * vx) + (mx * wy - my * wx);
+ 244:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	if (Ki > 0.0f)
+ 245:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	{
+ 246:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //		eInt[0] += ex;      // accumulate integral error
+ 247:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //		eInt[1] += ey;
+ 248:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //		eInt[2] += ez;
+ 249:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	}
+ 250:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	else
+ 251:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	{
+ 252:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //		eInt[0] = 0.0f;     // prevent integral wind up
+ 253:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //		eInt[1] = 0.0f;
+ 254:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //		eInt[2] = 0.0f;
+ 255:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	}
+ 256:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //
+ 257:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	// Apply feedback terms
+ 258:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	gx = gx + Kp * ex + Ki * eInt[0];
+ 259:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	gy = gy + Kp * ey + Ki * eInt[1];
+ 260:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	gz = gz + Kp * ez + Ki * eInt[2];
+ 261:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //
+ 262:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	// Integrate rate of change of quaternion
+ 263:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	pa = q2;
+ 264:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	pb = q3;
+ 265:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	pc = q4;
+ 266:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	q1 = q1 + (-q2 * gx - q3 * gy - q4 * gz) * (0.5f * deltat);
+ 267:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	q2 = pa + (q1 * gx + pb * gz - pc * gy) * (0.5f * deltat);
+ 268:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	q3 = pb + (q1 * gy - pa * gz + pc * gx) * (0.5f * deltat);
+ 269:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	q4 = pc + (q1 * gz + pa * gy - pb * gx) * (0.5f * deltat);
+ 270:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //
+ 271:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	// Normalise quaternion
+ 272:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	norm = sqrt(q1 * q1 + q2 * q2 + q3 * q3 + q4 * q4);
+ 273:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	norm = 1.0f / norm;
+ 274:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	q[0] = q1 * norm;
+ 275:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	q[1] = q2 * norm;
+ 276:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	q[2] = q3 * norm;
+ 277:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //	q[3] = q4 * norm;
+ 278:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** //}
+ 279:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+ 280:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** void MadgwickQuaternionUpdateWithouMag(float* q, float deltat, float a_x, float a_y, float a_z, flo
+ 281:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** {
+ 987              	 .loc 1 281 0
+ 988              	 .cfi_startproc
+ 989              	 
+ 990              	 
+ 991 0000 80B5     	 push {r7,lr}
+ 992              	.LCFI5:
+ 993              	 .cfi_def_cfa_offset 8
+ 994              	 .cfi_offset 7,-8
+ 995              	 .cfi_offset 14,-4
+ 996 0002 9EB0     	 sub sp,sp,#120
+ 997              	.LCFI6:
+ 998              	 .cfi_def_cfa_offset 128
+ 999 0004 00AF     	 add r7,sp,#0
+ 1000              	.LCFI7:
+ 1001              	 .cfi_def_cfa_register 7
+ 1002 0006 F860     	 str r0,[r7,#12]
+ 1003 0008 B960     	 str r1,[r7,#8]
+ 1004 000a 7A60     	 str r2,[r7,#4]
+ 1005 000c 3B60     	 str r3,[r7]
+ 282:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	// Local system variables
+ 283:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float norm; // vector norm
+ 284:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float SEqDot_omega_1, SEqDot_omega_2, SEqDot_omega_3, SEqDot_omega_4; // quaternion derrivative fr
+ 285:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float f_1, f_2, f_3; // objective function elements
+ 286:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float J_11or24, J_12or23, J_13or22, J_14or21, J_32, J_33; // objective function Jacobian elements
+ 287:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float SEqHatDot_1, SEqHatDot_2, SEqHatDot_3, SEqHatDot_4; // estimated direction of the gyroscope 
+ 288:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	// Axulirary variables to avoid reapeated calcualtions
+ 289:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float halfSEq_1 = 0.5f * q[0];
+ 1006              	 .loc 1 289 0
+ 1007 000e FB68     	 ldr r3,[r7,#12]
+ 1008 0010 D3ED007A 	 flds s15,[r3]
+ 1009 0014 9FEDF17A 	 flds s14,.L11
+ 1010 0018 67EE877A 	 fmuls s15,s15,s14
+ 1011 001c C7ED1D7A 	 fsts s15,[r7,#116]
+ 290:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float halfSEq_2 = 0.5f * q[1];
+ 1012              	 .loc 1 290 0
+ 1013 0020 FB68     	 ldr r3,[r7,#12]
+ 1014 0022 0433     	 adds r3,r3,#4
+ 1015 0024 D3ED007A 	 flds s15,[r3]
+ 1016 0028 9FEDEC7A 	 flds s14,.L11
+ 1017 002c 67EE877A 	 fmuls s15,s15,s14
+ 1018 0030 C7ED1C7A 	 fsts s15,[r7,#112]
+ 291:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float halfSEq_3 = 0.5f * q[2];
+ 1019              	 .loc 1 291 0
+ 1020 0034 FB68     	 ldr r3,[r7,#12]
+ 1021 0036 0833     	 adds r3,r3,#8
+ 1022 0038 D3ED007A 	 flds s15,[r3]
+ 1023 003c 9FEDE77A 	 flds s14,.L11
+ 1024 0040 67EE877A 	 fmuls s15,s15,s14
+ 1025 0044 C7ED1B7A 	 fsts s15,[r7,#108]
+ 292:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float halfSEq_4 = 0.5f * q[3];
+ 1026              	 .loc 1 292 0
+ 1027 0048 FB68     	 ldr r3,[r7,#12]
+ 1028 004a 0C33     	 adds r3,r3,#12
+ 1029 004c D3ED007A 	 flds s15,[r3]
+ 1030 0050 9FEDE27A 	 flds s14,.L11
+ 1031 0054 67EE877A 	 fmuls s15,s15,s14
+ 1032 0058 C7ED1A7A 	 fsts s15,[r7,#104]
+ 293:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float twoSEq_1 = 2.0f * q[0];
+ 1033              	 .loc 1 293 0
+ 1034 005c FB68     	 ldr r3,[r7,#12]
+ 1035 005e D3ED007A 	 flds s15,[r3]
+ 1036 0062 77EEA77A 	 fadds s15,s15,s15
+ 1037 0066 C7ED197A 	 fsts s15,[r7,#100]
+ 294:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float twoSEq_2 = 2.0f * q[1];
+ 1038              	 .loc 1 294 0
+ 1039 006a FB68     	 ldr r3,[r7,#12]
+ 1040 006c 0433     	 adds r3,r3,#4
+ 1041 006e D3ED007A 	 flds s15,[r3]
+ 1042 0072 77EEA77A 	 fadds s15,s15,s15
+ 1043 0076 C7ED187A 	 fsts s15,[r7,#96]
+ 295:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float twoSEq_3 = 2.0f * q[2];
+ 1044              	 .loc 1 295 0
+ 1045 007a FB68     	 ldr r3,[r7,#12]
+ 1046 007c 0833     	 adds r3,r3,#8
+ 1047 007e D3ED007A 	 flds s15,[r3]
+ 1048 0082 77EEA77A 	 fadds s15,s15,s15
+ 1049 0086 C7ED177A 	 fsts s15,[r7,#92]
+ 296:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+ 297:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	float beta = sqrtf(3.0f / 4.0f) * GYROMEASERROR;
+ 1050              	 .loc 1 297 0
+ 1051 008a D54B     	 ldr r3,.L11+4
+ 1052 008c BB65     	 str r3,[r7,#88]
+ 298:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 
+ 299:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	// Normalise the accelerometer measurement
+ 300:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	norm = sqrtf(a_x * a_x + a_y * a_y + a_z * a_z);
+ 1053              	 .loc 1 300 0
+ 1054 008e 97ED017A 	 flds s14,[r7,#4]
+ 1055 0092 D7ED017A 	 flds s15,[r7,#4]
+ 1056 0096 27EE277A 	 fmuls s14,s14,s15
+ 1057 009a D7ED006A 	 flds s13,[r7]
+ 1058 009e D7ED007A 	 flds s15,[r7]
+ 1059 00a2 66EEA77A 	 fmuls s15,s13,s15
+ 1060 00a6 37EE277A 	 fadds s14,s14,s15
+ 1061 00aa D7ED206A 	 flds s13,[r7,#128]
+ 1062 00ae D7ED207A 	 flds s15,[r7,#128]
+ 1063 00b2 66EEA77A 	 fmuls s15,s13,s15
+ 1064 00b6 77EE277A 	 fadds s15,s14,s15
+ 1065 00ba 17EE900A 	 fmrs r0,s15
+ 1066 00be FFF7FEFF 	 bl sqrtf
+ 1067 00c2 7865     	 str r0,[r7,#84]
+ 301:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	a_x /= norm;
+ 1068              	 .loc 1 301 0
+ 1069 00c4 97ED017A 	 flds s14,[r7,#4]
+ 1070 00c8 D7ED157A 	 flds s15,[r7,#84]
+ 1071 00cc C7EE277A 	 fdivs s15,s14,s15
+ 1072 00d0 C7ED017A 	 fsts s15,[r7,#4]
+ 302:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	a_y /= norm;
+ 1073              	 .loc 1 302 0
+ 1074 00d4 97ED007A 	 flds s14,[r7]
+ 1075 00d8 D7ED157A 	 flds s15,[r7,#84]
+ 1076 00dc C7EE277A 	 fdivs s15,s14,s15
+ 1077 00e0 C7ED007A 	 fsts s15,[r7]
+ 303:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	a_z /= norm;
+ 1078              	 .loc 1 303 0
+ 1079 00e4 97ED207A 	 flds s14,[r7,#128]
+ 1080 00e8 D7ED157A 	 flds s15,[r7,#84]
+ 1081 00ec C7EE277A 	 fdivs s15,s14,s15
+ 1082 00f0 C7ED207A 	 fsts s15,[r7,#128]
+ 304:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	// Compute the objective function and Jacobian
+ 305:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	f_1 = twoSEq_2 * q[3] - twoSEq_1 * q[2] - a_x;
+ 1083              	 .loc 1 305 0
+ 1084 00f4 FB68     	 ldr r3,[r7,#12]
+ 1085 00f6 0C33     	 adds r3,r3,#12
+ 1086 00f8 93ED007A 	 flds s14,[r3]
+ 1087 00fc D7ED187A 	 flds s15,[r7,#96]
+ 1088 0100 27EE277A 	 fmuls s14,s14,s15
+ 1089 0104 FB68     	 ldr r3,[r7,#12]
+ 1090 0106 0833     	 adds r3,r3,#8
+ 1091 0108 D3ED006A 	 flds s13,[r3]
+ 1092 010c D7ED197A 	 flds s15,[r7,#100]
+ 1093 0110 66EEA77A 	 fmuls s15,s13,s15
+ 1094 0114 37EE677A 	 fsubs s14,s14,s15
+ 1095 0118 D7ED017A 	 flds s15,[r7,#4]
+ 1096 011c 77EE677A 	 fsubs s15,s14,s15
+ 1097 0120 C7ED147A 	 fsts s15,[r7,#80]
+ 306:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	f_2 = twoSEq_1 * q[1] + twoSEq_3 * q[3] - a_y;
+ 1098              	 .loc 1 306 0
+ 1099 0124 FB68     	 ldr r3,[r7,#12]
+ 1100 0126 0433     	 adds r3,r3,#4
+ 1101 0128 93ED007A 	 flds s14,[r3]
+ 1102 012c D7ED197A 	 flds s15,[r7,#100]
+ 1103 0130 27EE277A 	 fmuls s14,s14,s15
+ 1104 0134 FB68     	 ldr r3,[r7,#12]
+ 1105 0136 0C33     	 adds r3,r3,#12
+ 1106 0138 D3ED006A 	 flds s13,[r3]
+ 1107 013c D7ED177A 	 flds s15,[r7,#92]
+ 1108 0140 66EEA77A 	 fmuls s15,s13,s15
+ 1109 0144 37EE277A 	 fadds s14,s14,s15
+ 1110 0148 D7ED007A 	 flds s15,[r7]
+ 1111 014c 77EE677A 	 fsubs s15,s14,s15
+ 1112 0150 C7ED137A 	 fsts s15,[r7,#76]
+ 307:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	f_3 = 1.0f - twoSEq_2 * q[1] - twoSEq_3 * q[2] - a_z;
+ 1113              	 .loc 1 307 0
+ 1114 0154 FB68     	 ldr r3,[r7,#12]
+ 1115 0156 0433     	 adds r3,r3,#4
+ 1116 0158 93ED007A 	 flds s14,[r3]
+ 1117 015c D7ED187A 	 flds s15,[r7,#96]
+ 1118 0160 67EE277A 	 fmuls s15,s14,s15
+ 1119 0164 9FED9F7A 	 flds s14,.L11+8
+ 1120 0168 37EE677A 	 fsubs s14,s14,s15
+ 1121 016c FB68     	 ldr r3,[r7,#12]
+ 1122 016e 0833     	 adds r3,r3,#8
+ 1123 0170 D3ED006A 	 flds s13,[r3]
+ 1124 0174 D7ED177A 	 flds s15,[r7,#92]
+ 1125 0178 66EEA77A 	 fmuls s15,s13,s15
+ 1126 017c 37EE677A 	 fsubs s14,s14,s15
+ 1127 0180 D7ED207A 	 flds s15,[r7,#128]
+ 1128 0184 77EE677A 	 fsubs s15,s14,s15
+ 1129 0188 C7ED127A 	 fsts s15,[r7,#72]
+ 308:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	J_11or24 = twoSEq_3; // J_11 negated in matrix multiplication
+ 1130              	 .loc 1 308 0
+ 1131 018c FB6D     	 ldr r3,[r7,#92]
+ 1132 018e 7B64     	 str r3,[r7,#68]
+ 309:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	J_12or23 = 2.0f * q[3];
+ 1133              	 .loc 1 309 0
+ 1134 0190 FB68     	 ldr r3,[r7,#12]
+ 1135 0192 0C33     	 adds r3,r3,#12
+ 1136 0194 D3ED007A 	 flds s15,[r3]
+ 1137 0198 77EEA77A 	 fadds s15,s15,s15
+ 1138 019c C7ED107A 	 fsts s15,[r7,#64]
+ 310:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	J_13or22 = twoSEq_1; // J_12 negated in matrix multiplication
+ 1139              	 .loc 1 310 0
+ 1140 01a0 7B6E     	 ldr r3,[r7,#100]
+ 1141 01a2 FB63     	 str r3,[r7,#60]
+ 311:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	J_14or21 = twoSEq_2;
+ 1142              	 .loc 1 311 0
+ 1143 01a4 3B6E     	 ldr r3,[r7,#96]
+ 1144 01a6 BB63     	 str r3,[r7,#56]
+ 312:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	J_32 = 2.0f * J_14or21; // negated in matrix multiplication
+ 1145              	 .loc 1 312 0
+ 1146 01a8 D7ED0E7A 	 flds s15,[r7,#56]
+ 1147 01ac 77EEA77A 	 fadds s15,s15,s15
+ 1148 01b0 C7ED0D7A 	 fsts s15,[r7,#52]
+ 313:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	J_33 = 2.0f * J_11or24; // negated in matrix multiplication
+ 1149              	 .loc 1 313 0
+ 1150 01b4 D7ED117A 	 flds s15,[r7,#68]
+ 1151 01b8 77EEA77A 	 fadds s15,s15,s15
+ 1152 01bc C7ED0C7A 	 fsts s15,[r7,#48]
+ 314:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	// Compute the gradient (matrix multiplication)
+ 315:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	SEqHatDot_1 = J_14or21 * f_2 - J_11or24 * f_1;
+ 1153              	 .loc 1 315 0
+ 1154 01c0 97ED0E7A 	 flds s14,[r7,#56]
+ 1155 01c4 D7ED137A 	 flds s15,[r7,#76]
+ 1156 01c8 27EE277A 	 fmuls s14,s14,s15
+ 1157 01cc D7ED116A 	 flds s13,[r7,#68]
+ 1158 01d0 D7ED147A 	 flds s15,[r7,#80]
+ 1159 01d4 66EEA77A 	 fmuls s15,s13,s15
+ 1160 01d8 77EE677A 	 fsubs s15,s14,s15
+ 1161 01dc C7ED0B7A 	 fsts s15,[r7,#44]
+ 316:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	SEqHatDot_2 = J_12or23 * f_1 + J_13or22 * f_2 - J_32 * f_3;
+ 1162              	 .loc 1 316 0
+ 1163 01e0 97ED107A 	 flds s14,[r7,#64]
+ 1164 01e4 D7ED147A 	 flds s15,[r7,#80]
+ 1165 01e8 27EE277A 	 fmuls s14,s14,s15
+ 1166 01ec D7ED0F6A 	 flds s13,[r7,#60]
+ 1167 01f0 D7ED137A 	 flds s15,[r7,#76]
+ 1168 01f4 66EEA77A 	 fmuls s15,s13,s15
+ 1169 01f8 37EE277A 	 fadds s14,s14,s15
+ 1170 01fc D7ED0D6A 	 flds s13,[r7,#52]
+ 1171 0200 D7ED127A 	 flds s15,[r7,#72]
+ 1172 0204 66EEA77A 	 fmuls s15,s13,s15
+ 1173 0208 77EE677A 	 fsubs s15,s14,s15
+ 1174 020c C7ED0A7A 	 fsts s15,[r7,#40]
+ 317:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	SEqHatDot_3 = J_12or23 * f_2 - J_33 * f_3 - J_13or22 * f_1;
+ 1175              	 .loc 1 317 0
+ 1176 0210 97ED107A 	 flds s14,[r7,#64]
+ 1177 0214 D7ED137A 	 flds s15,[r7,#76]
+ 1178 0218 27EE277A 	 fmuls s14,s14,s15
+ 1179 021c D7ED0C6A 	 flds s13,[r7,#48]
+ 1180 0220 D7ED127A 	 flds s15,[r7,#72]
+ 1181 0224 66EEA77A 	 fmuls s15,s13,s15
+ 1182 0228 37EE677A 	 fsubs s14,s14,s15
+ 1183 022c D7ED0F6A 	 flds s13,[r7,#60]
+ 1184 0230 D7ED147A 	 flds s15,[r7,#80]
+ 1185 0234 66EEA77A 	 fmuls s15,s13,s15
+ 1186 0238 77EE677A 	 fsubs s15,s14,s15
+ 1187 023c C7ED097A 	 fsts s15,[r7,#36]
+ 318:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	SEqHatDot_4 = J_14or21 * f_1 + J_11or24 * f_2;
+ 1188              	 .loc 1 318 0
+ 1189 0240 97ED0E7A 	 flds s14,[r7,#56]
+ 1190 0244 D7ED147A 	 flds s15,[r7,#80]
+ 1191 0248 27EE277A 	 fmuls s14,s14,s15
+ 1192 024c D7ED116A 	 flds s13,[r7,#68]
+ 1193 0250 D7ED137A 	 flds s15,[r7,#76]
+ 1194 0254 66EEA77A 	 fmuls s15,s13,s15
+ 1195 0258 77EE277A 	 fadds s15,s14,s15
+ 1196 025c C7ED087A 	 fsts s15,[r7,#32]
+ 319:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	// Normalise the gradient
+ 320:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	norm = sqrtf(SEqHatDot_1 * SEqHatDot_1 + SEqHatDot_2 * SEqHatDot_2 + SEqHatDot_3 * SEqHatDot_3 + S
+ 1197              	 .loc 1 320 0
+ 1198 0260 97ED0B7A 	 flds s14,[r7,#44]
+ 1199 0264 D7ED0B7A 	 flds s15,[r7,#44]
+ 1200 0268 27EE277A 	 fmuls s14,s14,s15
+ 1201 026c D7ED0A6A 	 flds s13,[r7,#40]
+ 1202 0270 D7ED0A7A 	 flds s15,[r7,#40]
+ 1203 0274 66EEA77A 	 fmuls s15,s13,s15
+ 1204 0278 37EE277A 	 fadds s14,s14,s15
+ 1205 027c D7ED096A 	 flds s13,[r7,#36]
+ 1206 0280 D7ED097A 	 flds s15,[r7,#36]
+ 1207 0284 66EEA77A 	 fmuls s15,s13,s15
+ 1208 0288 37EE277A 	 fadds s14,s14,s15
+ 1209 028c D7ED086A 	 flds s13,[r7,#32]
+ 1210 0290 D7ED087A 	 flds s15,[r7,#32]
+ 1211 0294 66EEA77A 	 fmuls s15,s13,s15
+ 1212 0298 77EE277A 	 fadds s15,s14,s15
+ 1213 029c 17EE900A 	 fmrs r0,s15
+ 1214 02a0 FFF7FEFF 	 bl sqrtf
+ 1215 02a4 7865     	 str r0,[r7,#84]
+ 321:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	SEqHatDot_1 /= norm;
+ 1216              	 .loc 1 321 0
+ 1217 02a6 97ED0B7A 	 flds s14,[r7,#44]
+ 1218 02aa D7ED157A 	 flds s15,[r7,#84]
+ 1219 02ae C7EE277A 	 fdivs s15,s14,s15
+ 1220 02b2 C7ED0B7A 	 fsts s15,[r7,#44]
+ 322:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	SEqHatDot_2 /= norm;
+ 1221              	 .loc 1 322 0
+ 1222 02b6 97ED0A7A 	 flds s14,[r7,#40]
+ 1223 02ba D7ED157A 	 flds s15,[r7,#84]
+ 1224 02be C7EE277A 	 fdivs s15,s14,s15
+ 1225 02c2 C7ED0A7A 	 fsts s15,[r7,#40]
+ 323:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	SEqHatDot_3 /= norm;
+ 1226              	 .loc 1 323 0
+ 1227 02c6 97ED097A 	 flds s14,[r7,#36]
+ 1228 02ca D7ED157A 	 flds s15,[r7,#84]
+ 1229 02ce C7EE277A 	 fdivs s15,s14,s15
+ 1230 02d2 C7ED097A 	 fsts s15,[r7,#36]
+ 324:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	SEqHatDot_4 /= norm;
+ 1231              	 .loc 1 324 0
+ 1232 02d6 97ED087A 	 flds s14,[r7,#32]
+ 1233 02da D7ED157A 	 flds s15,[r7,#84]
+ 1234 02de C7EE277A 	 fdivs s15,s14,s15
+ 1235 02e2 C7ED087A 	 fsts s15,[r7,#32]
+ 325:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	// Compute the quaternion derrivative measured by gyroscopes
+ 326:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	SEqDot_omega_1 = -halfSEq_2 * w_x - halfSEq_3 * w_y - halfSEq_4 * w_z;
+ 1236              	 .loc 1 326 0
+ 1237 02e6 D7ED1C7A 	 flds s15,[r7,#112]
+ 1238 02ea B1EE677A 	 fnegs s14,s15
+ 1239 02ee D7ED217A 	 flds s15,[r7,#132]
+ 1240 02f2 27EE277A 	 fmuls s14,s14,s15
+ 1241 02f6 D7ED1B6A 	 flds s13,[r7,#108]
+ 1242 02fa D7ED227A 	 flds s15,[r7,#136]
+ 1243 02fe 66EEA77A 	 fmuls s15,s13,s15
+ 1244 0302 37EE677A 	 fsubs s14,s14,s15
+ 1245 0306 D7ED1A6A 	 flds s13,[r7,#104]
+ 1246 030a D7ED237A 	 flds s15,[r7,#140]
+ 1247 030e 66EEA77A 	 fmuls s15,s13,s15
+ 1248 0312 77EE677A 	 fsubs s15,s14,s15
+ 1249 0316 C7ED077A 	 fsts s15,[r7,#28]
+ 327:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	SEqDot_omega_2 = halfSEq_1 * w_x + halfSEq_3 * w_z - halfSEq_4 * w_y;
+ 1250              	 .loc 1 327 0
+ 1251 031a 97ED1D7A 	 flds s14,[r7,#116]
+ 1252 031e D7ED217A 	 flds s15,[r7,#132]
+ 1253 0322 27EE277A 	 fmuls s14,s14,s15
+ 1254 0326 D7ED1B6A 	 flds s13,[r7,#108]
+ 1255 032a D7ED237A 	 flds s15,[r7,#140]
+ 1256 032e 66EEA77A 	 fmuls s15,s13,s15
+ 1257 0332 37EE277A 	 fadds s14,s14,s15
+ 1258 0336 D7ED1A6A 	 flds s13,[r7,#104]
+ 1259 033a D7ED227A 	 flds s15,[r7,#136]
+ 1260 033e 66EEA77A 	 fmuls s15,s13,s15
+ 1261 0342 77EE677A 	 fsubs s15,s14,s15
+ 1262 0346 C7ED067A 	 fsts s15,[r7,#24]
+ 328:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	SEqDot_omega_3 = halfSEq_1 * w_y - halfSEq_2 * w_z + halfSEq_4 * w_x;
+ 1263              	 .loc 1 328 0
+ 1264 034a 97ED1D7A 	 flds s14,[r7,#116]
+ 1265 034e D7ED227A 	 flds s15,[r7,#136]
+ 1266 0352 27EE277A 	 fmuls s14,s14,s15
+ 1267 0356 D7ED1C6A 	 flds s13,[r7,#112]
+ 1268 035a D7ED237A 	 flds s15,[r7,#140]
+ 1269 035e 66EEA77A 	 fmuls s15,s13,s15
+ 1270 0362 37EE677A 	 fsubs s14,s14,s15
+ 1271 0366 D7ED1A6A 	 flds s13,[r7,#104]
+ 1272 036a D7ED217A 	 flds s15,[r7,#132]
+ 1273 036e 66EEA77A 	 fmuls s15,s13,s15
+ 1274 0372 77EE277A 	 fadds s15,s14,s15
+ 1275 0376 C7ED057A 	 fsts s15,[r7,#20]
+ 329:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	SEqDot_omega_4 = halfSEq_1 * w_z + halfSEq_2 * w_y - halfSEq_3 * w_x;
+ 1276              	 .loc 1 329 0
+ 1277 037a 97ED1D7A 	 flds s14,[r7,#116]
+ 1278 037e D7ED237A 	 flds s15,[r7,#140]
+ 1279 0382 27EE277A 	 fmuls s14,s14,s15
+ 1280 0386 D7ED1C6A 	 flds s13,[r7,#112]
+ 1281 038a D7ED227A 	 flds s15,[r7,#136]
+ 1282 038e 66EEA77A 	 fmuls s15,s13,s15
+ 1283 0392 37EE277A 	 fadds s14,s14,s15
+ 1284 0396 D7ED1B6A 	 flds s13,[r7,#108]
+ 1285 039a D7ED217A 	 flds s15,[r7,#132]
+ 1286 039e 66EEA77A 	 fmuls s15,s13,s15
+ 1287 03a2 77EE677A 	 fsubs s15,s14,s15
+ 1288 03a6 C7ED047A 	 fsts s15,[r7,#16]
+ 330:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	// Compute then integrate the estimated quaternion derrivative
+ 331:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	q[0] += (SEqDot_omega_1 - (beta * SEqHatDot_1)) * deltat;
+ 1289              	 .loc 1 331 0
+ 1290 03aa FB68     	 ldr r3,[r7,#12]
+ 1291 03ac 93ED007A 	 flds s14,[r3]
+ 1292 03b0 D7ED166A 	 flds s13,[r7,#88]
+ 1293 03b4 D7ED0B7A 	 flds s15,[r7,#44]
+ 1294 03b8 66EEA77A 	 fmuls s15,s13,s15
+ 1295 03bc D7ED076A 	 flds s13,[r7,#28]
+ 1296 03c0 76EEE76A 	 fsubs s13,s13,s15
+ 1297 03c4 D7ED027A 	 flds s15,[r7,#8]
+ 1298 03c8 66EEA77A 	 fmuls s15,s13,s15
+ 1299 03cc 77EE277A 	 fadds s15,s14,s15
+ 1300 03d0 FB68     	 ldr r3,[r7,#12]
+ 1301 03d2 C3ED007A 	 fsts s15,[r3]
+ 332:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	q[1] += (SEqDot_omega_2 - (beta * SEqHatDot_2)) * deltat;
+ 1302              	 .loc 1 332 0
+ 1303 03d6 FB68     	 ldr r3,[r7,#12]
+ 1304 03d8 06E0     	 b .L12
+ 1305              	.L13:
+ 1306 03da 00BF     	 .align 2
+ 1307              	.L11:
+ 1308 03dc 0000003F 	 .word 1056964608
+ 1309 03e0 0DC71A3F 	 .word 1058719501
+ 1310 03e4 0000803F 	 .word 1065353216
+ 1311              	.L12:
+ 1312 03e8 0433     	 adds r3,r3,#4
+ 1313 03ea FA68     	 ldr r2,[r7,#12]
+ 1314 03ec 0432     	 adds r2,r2,#4
+ 1315 03ee 92ED007A 	 flds s14,[r2]
+ 1316 03f2 D7ED166A 	 flds s13,[r7,#88]
+ 1317 03f6 D7ED0A7A 	 flds s15,[r7,#40]
+ 1318 03fa 66EEA77A 	 fmuls s15,s13,s15
+ 1319 03fe D7ED066A 	 flds s13,[r7,#24]
+ 1320 0402 76EEE76A 	 fsubs s13,s13,s15
+ 1321 0406 D7ED027A 	 flds s15,[r7,#8]
+ 1322 040a 66EEA77A 	 fmuls s15,s13,s15
+ 1323 040e 77EE277A 	 fadds s15,s14,s15
+ 1324 0412 C3ED007A 	 fsts s15,[r3]
+ 333:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	q[2] += (SEqDot_omega_3 - (beta * SEqHatDot_3)) * deltat;
+ 1325              	 .loc 1 333 0
+ 1326 0416 FB68     	 ldr r3,[r7,#12]
+ 1327 0418 0833     	 adds r3,r3,#8
+ 1328 041a FA68     	 ldr r2,[r7,#12]
+ 1329 041c 0832     	 adds r2,r2,#8
+ 1330 041e 92ED007A 	 flds s14,[r2]
+ 1331 0422 D7ED166A 	 flds s13,[r7,#88]
+ 1332 0426 D7ED097A 	 flds s15,[r7,#36]
+ 1333 042a 66EEA77A 	 fmuls s15,s13,s15
+ 1334 042e D7ED056A 	 flds s13,[r7,#20]
+ 1335 0432 76EEE76A 	 fsubs s13,s13,s15
+ 1336 0436 D7ED027A 	 flds s15,[r7,#8]
+ 1337 043a 66EEA77A 	 fmuls s15,s13,s15
+ 1338 043e 77EE277A 	 fadds s15,s14,s15
+ 1339 0442 C3ED007A 	 fsts s15,[r3]
+ 334:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	q[3] += (SEqDot_omega_4 - (beta * SEqHatDot_4)) * deltat;
+ 1340              	 .loc 1 334 0
+ 1341 0446 FB68     	 ldr r3,[r7,#12]
+ 1342 0448 0C33     	 adds r3,r3,#12
+ 1343 044a FA68     	 ldr r2,[r7,#12]
+ 1344 044c 0C32     	 adds r2,r2,#12
+ 1345 044e 92ED007A 	 flds s14,[r2]
+ 1346 0452 D7ED166A 	 flds s13,[r7,#88]
+ 1347 0456 D7ED087A 	 flds s15,[r7,#32]
+ 1348 045a 66EEA77A 	 fmuls s15,s13,s15
+ 1349 045e D7ED046A 	 flds s13,[r7,#16]
+ 1350 0462 76EEE76A 	 fsubs s13,s13,s15
+ 1351 0466 D7ED027A 	 flds s15,[r7,#8]
+ 1352 046a 66EEA77A 	 fmuls s15,s13,s15
+ 1353 046e 77EE277A 	 fadds s15,s14,s15
+ 1354 0472 C3ED007A 	 fsts s15,[r3]
+ 335:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	// Normalise quaternion
+ 336:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	norm = sqrtf(q[0] * q[0] + q[1] * q[1] + q[2] * q[2] + q[3] * q[3]);
+ 1355              	 .loc 1 336 0
+ 1356 0476 FB68     	 ldr r3,[r7,#12]
+ 1357 0478 93ED007A 	 flds s14,[r3]
+ 1358 047c FB68     	 ldr r3,[r7,#12]
+ 1359 047e D3ED007A 	 flds s15,[r3]
+ 1360 0482 27EE277A 	 fmuls s14,s14,s15
+ 1361 0486 FB68     	 ldr r3,[r7,#12]
+ 1362 0488 0433     	 adds r3,r3,#4
+ 1363 048a D3ED006A 	 flds s13,[r3]
+ 1364 048e FB68     	 ldr r3,[r7,#12]
+ 1365 0490 0433     	 adds r3,r3,#4
+ 1366 0492 D3ED007A 	 flds s15,[r3]
+ 1367 0496 66EEA77A 	 fmuls s15,s13,s15
+ 1368 049a 37EE277A 	 fadds s14,s14,s15
+ 1369 049e FB68     	 ldr r3,[r7,#12]
+ 1370 04a0 0833     	 adds r3,r3,#8
+ 1371 04a2 D3ED006A 	 flds s13,[r3]
+ 1372 04a6 FB68     	 ldr r3,[r7,#12]
+ 1373 04a8 0833     	 adds r3,r3,#8
+ 1374 04aa D3ED007A 	 flds s15,[r3]
+ 1375 04ae 66EEA77A 	 fmuls s15,s13,s15
+ 1376 04b2 37EE277A 	 fadds s14,s14,s15
+ 1377 04b6 FB68     	 ldr r3,[r7,#12]
+ 1378 04b8 0C33     	 adds r3,r3,#12
+ 1379 04ba D3ED006A 	 flds s13,[r3]
+ 1380 04be FB68     	 ldr r3,[r7,#12]
+ 1381 04c0 0C33     	 adds r3,r3,#12
+ 1382 04c2 D3ED007A 	 flds s15,[r3]
+ 1383 04c6 66EEA77A 	 fmuls s15,s13,s15
+ 1384 04ca 77EE277A 	 fadds s15,s14,s15
+ 1385 04ce 17EE900A 	 fmrs r0,s15
+ 1386 04d2 FFF7FEFF 	 bl sqrtf
+ 1387 04d6 7865     	 str r0,[r7,#84]
+ 337:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	q[0] /= norm;
+ 1388              	 .loc 1 337 0
+ 1389 04d8 FB68     	 ldr r3,[r7,#12]
+ 1390 04da 93ED007A 	 flds s14,[r3]
+ 1391 04de D7ED157A 	 flds s15,[r7,#84]
+ 1392 04e2 C7EE277A 	 fdivs s15,s14,s15
+ 1393 04e6 FB68     	 ldr r3,[r7,#12]
+ 1394 04e8 C3ED007A 	 fsts s15,[r3]
+ 338:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	q[1] /= norm;
+ 1395              	 .loc 1 338 0
+ 1396 04ec FB68     	 ldr r3,[r7,#12]
+ 1397 04ee 0433     	 adds r3,r3,#4
+ 1398 04f0 FA68     	 ldr r2,[r7,#12]
+ 1399 04f2 0432     	 adds r2,r2,#4
+ 1400 04f4 92ED007A 	 flds s14,[r2]
+ 1401 04f8 D7ED157A 	 flds s15,[r7,#84]
+ 1402 04fc C7EE277A 	 fdivs s15,s14,s15
+ 1403 0500 C3ED007A 	 fsts s15,[r3]
+ 339:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	q[2] /= norm;
+ 1404              	 .loc 1 339 0
+ 1405 0504 FB68     	 ldr r3,[r7,#12]
+ 1406 0506 0833     	 adds r3,r3,#8
+ 1407 0508 FA68     	 ldr r2,[r7,#12]
+ 1408 050a 0832     	 adds r2,r2,#8
+ 1409 050c 92ED007A 	 flds s14,[r2]
+ 1410 0510 D7ED157A 	 flds s15,[r7,#84]
+ 1411 0514 C7EE277A 	 fdivs s15,s14,s15
+ 1412 0518 C3ED007A 	 fsts s15,[r3]
+ 340:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** 	q[3] /= norm;
+ 1413              	 .loc 1 340 0
+ 1414 051c FB68     	 ldr r3,[r7,#12]
+ 1415 051e 0C33     	 adds r3,r3,#12
+ 1416 0520 FA68     	 ldr r2,[r7,#12]
+ 1417 0522 0C32     	 adds r2,r2,#12
+ 1418 0524 92ED007A 	 flds s14,[r2]
+ 1419 0528 D7ED157A 	 flds s15,[r7,#84]
+ 1420 052c C7EE277A 	 fdivs s15,s14,s15
+ 1421 0530 C3ED007A 	 fsts s15,[r3]
+ 341:../_Quadrocopter/Sensors/MPU9X50/Filter/QuaternionFilters.c **** }
+ 1422              	 .loc 1 341 0
+ 1423 0534 7837     	 adds r7,r7,#120
+ 1424              	.LCFI8:
+ 1425              	 .cfi_def_cfa_offset 8
+ 1426 0536 BD46     	 mov sp,r7
+ 1427              	.LCFI9:
+ 1428              	 .cfi_def_cfa_register 13
+ 1429              	 
+ 1430 0538 80BD     	 pop {r7,pc}
+ 1431              	 .cfi_endproc
+ 1432              	.LFE441:
+ 1434 053a 00BF     	 .text
+ 1435              	.Letext0:
+ 1436              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 1437              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 1438              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working/Libraries/CMSIS/Infineon/XMC4500_series/Include/XMC4500.h"
+ 1439              	 .file 5 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Libraries\\XMCLib\\inc/xmc_usbd_regs.h"
+ 1440              	 .file 6 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Libraries\\XMCLib\\inc/xmc_usbd.h"
+ 1441              	 .file 7 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/USBD/usbd.h"
+ 1442              	 .file 8 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working/Libraries/CMSIS/Include/core_cm4.h"
+ 1443              	 .file 9 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working/Libraries/CMSIS/Infineon/XMC4500_series/Include/system_XMC4500.h"
+ 1444              	 .file 10 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/USBD/usbd_extern.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 QuaternionFilters.c
+    {standard input}:20     .text.MadgwickQuaternionUpdate:00000000 $t
+    {standard input}:25     .text.MadgwickQuaternionUpdate:00000000 MadgwickQuaternionUpdate
+    {standard input}:208    .text.MadgwickQuaternionUpdate:000001fc $d
+    {standard input}:214    .text.MadgwickQuaternionUpdate:0000020c $t
+    {standard input}:746    .text.MadgwickQuaternionUpdate:00000a08 $d
+    {standard input}:750    .text.MadgwickQuaternionUpdate:00000a14 $t
+    {standard input}:980    .text.MadgwickQuaternionUpdateWithouMag:00000000 $t
+    {standard input}:985    .text.MadgwickQuaternionUpdateWithouMag:00000000 MadgwickQuaternionUpdateWithouMag
+    {standard input}:1308   .text.MadgwickQuaternionUpdateWithouMag:000003dc $d
+    {standard input}:1312   .text.MadgwickQuaternionUpdateWithouMag:000003e8 $t
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+sqrtf

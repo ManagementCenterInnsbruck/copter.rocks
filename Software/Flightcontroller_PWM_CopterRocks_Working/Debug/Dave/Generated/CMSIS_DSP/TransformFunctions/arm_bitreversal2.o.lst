@@ -1,0 +1,228 @@
+   1              	# 1 "../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal2.S"
+   1              	;/* ----------------------------------------------------------------------
+   0              	
+   0              	
+   0              	
+   2              	;* Copyright (C) 2010-2014 ARM Limited. All rights reserved.
+   3              	;*
+   4              	;* $Date:       12. March 2014
+   5              	;* $Revision: 	V1.4.4
+   6              	;*
+   7              	;* Project: 	CMSIS DSP Library
+   8              	;* Title:	    arm_bitreversal2.S
+   9              	;*
+  10              	;* Description:	This is the arm_bitreversal_32 function done in
+  11              	;*              assembly for maximum speed.  This function is called
+  12              	;*              after doing an fft to reorder the output.  The function
+  13              	;*              is loop unrolled by 2. arm_bitreversal_16 as well.
+  14              	;*
+  15              	;* Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  16              	;*
+  17              	;* Redistribution and use in source and binary forms, with or without
+  18              	;* modification, are permitted provided that the following conditions
+  19              	;* are met:
+  20              	;*   - Redistributions of source code must retain the above copyright
+  21              	;*     notice, this list of conditions and the following disclaimer.
+  22              	;*   - Redistributions in binary form must reproduce the above copyright
+  23              	;*     notice, this list of conditions and the following disclaimer in
+  24              	;*     the documentation and/or other materials provided with the
+  25              	;*     distribution.
+  26              	;*   - Neither the name of ARM LIMITED nor the names of its contributors
+  27              	;*     may be used to endorse or promote products derived from this
+  28              	;*     software without specific prior written permission.
+  29              	;*
+  30              	;* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  31              	;* "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  32              	;* LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  33              	;* FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+  34              	;* COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  35              	;* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  36              	;* BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  37              	;* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  38              	;* CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  39              	;* LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  40              	;* ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  41              	;* POSSIBILITY OF SUCH DAMAGE.
+  42              	;* -------------------------------------------------------------------- */
+  43              	
+  44              	#include "../cmsis_dsp_conf.h"
+   1              	/**************************************************************************************************
+  45              	
+  46              	#if defined(__CC_ARM)       // Keil
+  47              	    #define CODESECT AREA     ||.text||, CODE, READONLY, ALIGN=2
+  48              	    #define LABEL
+  49              	#elif defined(__IASMARM__)  // IAR
+  50              	    #define CODESECT SECTION `.text`:CODE
+  51              	    #define PROC
+  52              	    #define LABEL
+  53              	    #define ENDP
+  54              	    #define EXPORT PUBLIC
+  55              	#elif defined(__CSMC__)		/* Cosmic */
+  56              		#define	CODESECT	switch .text
+  57              		#define THUMB
+  58              		#define EXPORT	xdef
+  59              		#define PROC	:
+  60              		#define LABEL	:
+  61              		#define ENDP
+  62              		#define arm_bitreversal_32 _arm_bitreversal_32
+  63              	#elif defined (__GNUC__)    // GCC
+  64              	    #define THUMB .thumb
+  65              	    #define CODESECT .section .text
+  66              	    #define EXPORT .global
+  67              	    #define PROC :
+  68              	    #define LABEL :
+  69              	    #define ENDP
+  70              	    #define END
+  71              	
+  72              	    .syntax unified
+  73              	#endif
+  74              	
+  75              		CODESECT
+  76              		THUMB
+  77              	
+  78              	;/*
+  79              	;* @brief  In-place bit reversal function.
+  80              	;* @param[in, out] *pSrc        points to the in-place buffer of unknown 32-bit data type.
+  81              	;* @param[in]      bitRevLen    bit reversal table length
+  82              	;* @param[in]      *pBitRevTab  points to bit reversal table.
+  83              	;* @return none.
+  84              	;*/
+  85              		EXPORT arm_bitreversal_32
+  86              		EXPORT arm_bitreversal_16
+  87              	
+  88              	#if defined(ARM_MATH_CM0) || defined(ARM_MATH_CM0PLUS)
+  89              	
+  90              	arm_bitreversal_32 PROC
+  91              		ADDS     r3,r1,#1
+  92              		PUSH     {r4-r6}
+  93              		ADDS     r1,r2,#0
+  94              		LSRS     r3,r3,#1
+  95              	arm_bitreversal_32_0 LABEL
+  96              		LDRH     r2,[r1,#2]
+  97              		LDRH     r6,[r1,#0]
+  98              		ADD      r2,r0,r2
+  99              		ADD      r6,r0,r6
+ 100              		LDR      r5,[r2,#0]
+ 101              		LDR      r4,[r6,#0]
+ 102              		STR      r5,[r6,#0]
+ 103              		STR      r4,[r2,#0]
+ 104              		LDR      r5,[r2,#4]
+ 105              		LDR      r4,[r6,#4]
+ 106              		STR      r5,[r6,#4]
+ 107              		STR      r4,[r2,#4]
+ 108              		ADDS     r1,r1,#4
+ 109              		SUBS     r3,r3,#1
+ 110              		BNE      arm_bitreversal_32_0
+ 111              		POP      {r4-r6}
+ 112              		BX       lr
+ 113              		ENDP
+ 114              	
+ 115              	arm_bitreversal_16 PROC
+ 116              		ADDS     r3,r1,#1
+ 117              		PUSH     {r4-r6}
+ 118              		ADDS     r1,r2,#0
+ 119              		LSRS     r3,r3,#1
+ 120              	arm_bitreversal_16_0 LABEL
+ 121              		LDRH     r2,[r1,#2]
+ 122              		LDRH     r6,[r1,#0]
+ 123              	    LSRS     r2,r2,#1
+ 124              	    LSRS     r6,r6,#1
+ 125              		ADD      r2,r0,r2
+ 126              		ADD      r6,r0,r6
+ 127              		LDR      r5,[r2,#0]
+ 128              		LDR      r4,[r6,#0]
+ 129              		STR      r5,[r6,#0]
+ 130              		STR      r4,[r2,#0]
+ 131              		ADDS     r1,r1,#4
+ 132              		SUBS     r3,r3,#1
+ 133              		BNE      arm_bitreversal_16_0
+ 134              		POP      {r4-r6}
+ 135              		BX       lr
+ 136              		ENDP
+ 137              	
+ 138              	#else
+ 139              	
+ 140              	arm_bitreversal_32 PROC
+ 141 0000 4B1C     		ADDS     r3,r1,#1
+ 142 0002 012B     		CMP      r3,#1
+ 143 0004 98BF     		IT       LS
+ 144 0006 7047     		BXLS     lr
+ 145 0008 2DE9F003 		PUSH     {r4-r9}
+ 146 000c 911C     		ADDS     r1,r2,#2
+ 147 000e 9B08     		LSRS     r3,r3,#2
+ 148              	arm_bitreversal_32_0 LABEL       ;/* loop unrolled by 2 */
+ 149 0010 B1F80480 		LDRH     r8,[r1,#4]
+ 150 0014 B1F80290 		LDRH     r9,[r1,#2]
+ 151 0018 0A88     		LDRH     r2,[r1,#0]
+ 152 001a 31F802CC 		LDRH     r12,[r1,#-2]
+ 153 001e 8044     		ADD      r8,r0,r8
+ 154 0020 8144     		ADD      r9,r0,r9
+ 155 0022 0244     		ADD      r2,r0,r2
+ 156 0024 8444     		ADD      r12,r0,r12
+ 157 0026 D9F80070 		LDR      r7,[r9,#0]
+ 158 002a D8F80060 		LDR      r6,[r8,#0]
+ 159 002e 1568     		LDR      r5,[r2,#0]
+ 160 0030 DCF80040 		LDR      r4,[r12,#0]
+ 161 0034 C9F80060 		STR      r6,[r9,#0]
+ 162 0038 C8F80070 		STR      r7,[r8,#0]
+ 163 003c CCF80050 		STR      r5,[r12,#0]
+ 164 0040 1460     		STR      r4,[r2,#0]
+ 165 0042 D9F80470 		LDR      r7,[r9,#4]
+ 166 0046 D8F80460 		LDR      r6,[r8,#4]
+ 167 004a 5568     		LDR      r5,[r2,#4]
+ 168 004c DCF80440 		LDR      r4,[r12,#4]
+ 169 0050 C9F80460 		STR      r6,[r9,#4]
+ 170 0054 C8F80470 		STR      r7,[r8,#4]
+ 171 0058 CCF80450 		STR      r5,[r12,#4]
+ 172 005c 5460     		STR      r4,[r2,#4]
+ 173 005e 0831     		ADDS     r1,r1,#8
+ 174 0060 013B     		SUBS     r3,r3,#1
+ 175 0062 D5D1     		BNE      arm_bitreversal_32_0
+ 176 0064 BDE8F003 		POP      {r4-r9}
+ 177 0068 7047     		BX       lr
+ 178              		ENDP
+ 179              	
+ 180              	arm_bitreversal_16 PROC
+ 181 006a 4B1C     		ADDS     r3,r1,#1
+ 182 006c 012B     		CMP      r3,#1
+ 183 006e 98BF     		IT       LS
+ 184 0070 7047     		BXLS     lr
+ 185 0072 2DE9F003 		PUSH     {r4-r9}
+ 186 0076 911C     		ADDS     r1,r2,#2
+ 187 0078 9B08     		LSRS     r3,r3,#2
+ 188              	arm_bitreversal_16_0 LABEL       ;/* loop unrolled by 2 */
+ 189 007a B1F80480 		LDRH     r8,[r1,#4]
+ 190 007e B1F80290 		LDRH     r9,[r1,#2]
+ 191 0082 0A88     		LDRH     r2,[r1,#0]
+ 192 0084 31F802CC 		LDRH     r12,[r1,#-2]
+ 193 0088 00EB5808 		ADD      r8,r0,r8,LSR #1
+ 194 008c 00EB5909 		ADD      r9,r0,r9,LSR #1
+ 195 0090 00EB5202 		ADD      r2,r0,r2,LSR #1
+ 196 0094 00EB5C0C 		ADD      r12,r0,r12,LSR #1
+ 197 0098 D9F80070 		LDR      r7,[r9,#0]
+ 198 009c D8F80060 		LDR      r6,[r8,#0]
+ 199 00a0 1568     		LDR      r5,[r2,#0]
+ 200 00a2 DCF80040 		LDR      r4,[r12,#0]
+ 201 00a6 C9F80060 		STR      r6,[r9,#0]
+ 202 00aa C8F80070 		STR      r7,[r8,#0]
+ 203 00ae CCF80050 		STR      r5,[r12,#0]
+ 204 00b2 1460     		STR      r4,[r2,#0]
+ 205 00b4 0831     		ADDS     r1,r1,#8
+ 206 00b6 013B     		SUBS     r3,r3,#1
+ 207 00b8 DFD1     		BNE      arm_bitreversal_16_0
+ 208 00ba BDE8F003 		POP      {r4-r9}
+ 209 00be 7047     		BX       lr
+ 210              		ENDP
+ 211              	
+ 212              	#endif
+ 213              	
+ 214              		END
+DEFINED SYMBOLS
+../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal2.S:140    .text:00000000 arm_bitreversal_32
+../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal2.S:180    .text:0000006a arm_bitreversal_16
+../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal2.S:141    .text:00000000 $t
+../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal2.S:148    .text:00000010 arm_bitreversal_32_0
+../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal2.S:188    .text:0000007a arm_bitreversal_16_0
+                   .debug_aranges:0000000c $d
+
+NO UNDEFINED SYMBOLS

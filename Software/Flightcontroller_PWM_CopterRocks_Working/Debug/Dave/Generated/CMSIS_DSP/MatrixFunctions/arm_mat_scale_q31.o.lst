@@ -1,0 +1,605 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_mat_scale_q31.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.arm_mat_scale_q31,"ax",%progbits
+  20              	 .align 2
+  21              	 .global arm_mat_scale_q31
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	arm_mat_scale_q31:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c"
+   1:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** /* ----------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * $Date:        31. July 2014
+   5:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * $Revision: 	V1.4.4
+   6:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * Title:	    arm_mat_scale_q31.c    
+   9:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * Description:	Multiplies a Q31 matrix by a scalar.    
+  11:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** *
+  27:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** * POSSIBILITY OF SUCH DAMAGE.  ------------------------------------------------ */
+  39:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+  40:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  41:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+  42:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** /**        
+  43:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****  * @ingroup groupMatrix        
+  44:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****  */
+  45:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+  46:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** /**        
+  47:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****  * @addtogroup MatrixScale        
+  48:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****  * @{        
+  49:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****  */
+  50:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+  51:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** /**        
+  52:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****  * @brief Q31 matrix scaling.        
+  53:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****  * @param[in]       *pSrc points to input matrix        
+  54:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****  * @param[in]       scaleFract fractional portion of the scale factor        
+  55:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****  * @param[in]       shift number of bits to shift the result by        
+  56:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****  * @param[out]      *pDst points to output matrix structure        
+  57:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****  * @return     		The function returns either        
+  58:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****  * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of siz
+  59:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****  *        
+  60:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****  * @details        
+  61:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****  * <b>Scaling and Overflow Behavior:</b>        
+  62:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****  * \par        
+  63:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****  * The input data <code>*pSrc</code> and <code>scaleFract</code> are in 1.31 format.        
+  64:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****  * These are multiplied to yield a 2.62 intermediate result and this is shifted with saturation to 
+  65:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****  */
+  66:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+  67:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** arm_status arm_mat_scale_q31(
+  68:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****   const arm_matrix_instance_q31 * pSrc,
+  69:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****   q31_t scaleFract,
+  70:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****   int32_t shift,
+  71:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****   arm_matrix_instance_q31 * pDst)
+  72:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** {
+  28              	 .loc 1 72 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	 
+  33 0000 2DE9B00F 	 push {r4,r5,r7,r8,r9,r10,fp}
+  34              	.LCFI0:
+  35              	 .cfi_def_cfa_offset 28
+  36              	 .cfi_offset 4,-28
+  37              	 .cfi_offset 5,-24
+  38              	 .cfi_offset 7,-20
+  39              	 .cfi_offset 8,-16
+  40              	 .cfi_offset 9,-12
+  41              	 .cfi_offset 10,-8
+  42              	 .cfi_offset 11,-4
+  43 0004 99B0     	 sub sp,sp,#100
+  44              	.LCFI1:
+  45              	 .cfi_def_cfa_offset 128
+  46 0006 00AF     	 add r7,sp,#0
+  47              	.LCFI2:
+  48              	 .cfi_def_cfa_register 7
+  49 0008 7862     	 str r0,[r7,#36]
+  50 000a 3962     	 str r1,[r7,#32]
+  51 000c FA61     	 str r2,[r7,#28]
+  52 000e BB61     	 str r3,[r7,#24]
+  73:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****   q31_t *pIn = pSrc->pData;                      /* input data matrix pointer */
+  53              	 .loc 1 73 0
+  54 0010 7B6A     	 ldr r3,[r7,#36]
+  55 0012 5B68     	 ldr r3,[r3,#4]
+  56 0014 FB65     	 str r3,[r7,#92]
+  74:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****   q31_t *pOut = pDst->pData;                     /* output data matrix pointer */
+  57              	 .loc 1 74 0
+  58 0016 BB69     	 ldr r3,[r7,#24]
+  59 0018 5B68     	 ldr r3,[r3,#4]
+  60 001a BB65     	 str r3,[r7,#88]
+  75:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****   uint32_t numSamples;                           /* total number of elements in the matrix */
+  76:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****   int32_t totShift = shift + 1;                  /* shift to apply after scaling */
+  61              	 .loc 1 76 0
+  62 001c FB69     	 ldr r3,[r7,#28]
+  63 001e 0133     	 adds r3,r3,#1
+  64 0020 FB63     	 str r3,[r7,#60]
+  77:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****   uint32_t blkCnt;                               /* loop counters  */
+  78:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****   arm_status status;                             /* status of matrix scaling      */
+  79:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****   q31_t in1, in2, out1;                          /* temporary variabels */
+  80:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+  81:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** #ifndef ARM_MATH_CM0_FAMILY
+  82:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+  83:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****   q31_t in3, in4, out2, out3, out4;              /* temporary variables */
+  84:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+  85:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** #endif //      #ifndef ARM_MAT_CM0
+  86:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+  87:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** #ifdef ARM_MATH_MATRIX_CHECK
+  88:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****   /* Check for matrix mismatch  */
+  89:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****   if((pSrc->numRows != pDst->numRows) || (pSrc->numCols != pDst->numCols))
+  65              	 .loc 1 89 0
+  66 0022 7B6A     	 ldr r3,[r7,#36]
+  67 0024 1A88     	 ldrh r2,[r3]
+  68 0026 BB69     	 ldr r3,[r7,#24]
+  69 0028 1B88     	 ldrh r3,[r3]
+  70 002a 9A42     	 cmp r2,r3
+  71 002c 05D1     	 bne .L2
+  72              	 .loc 1 89 0 is_stmt 0 discriminator 1
+  73 002e 7B6A     	 ldr r3,[r7,#36]
+  74 0030 5A88     	 ldrh r2,[r3,#2]
+  75 0032 BB69     	 ldr r3,[r7,#24]
+  76 0034 5B88     	 ldrh r3,[r3,#2]
+  77 0036 9A42     	 cmp r2,r3
+  78 0038 03D0     	 beq .L3
+  79              	.L2:
+  90:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****   {
+  91:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     /* Set status as ARM_MATH_SIZE_MISMATCH */
+  92:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     status = ARM_MATH_SIZE_MISMATCH;
+  80              	 .loc 1 92 0 is_stmt 1
+  81 003a FD23     	 movs r3,#253
+  82 003c 87F85330 	 strb r3,[r7,#83]
+  83 0040 11E1     	 b .L4
+  84              	.L3:
+  93:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****   }
+  94:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****   else
+  95:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** #endif //    #ifdef ARM_MATH_MATRIX_CHECK
+  96:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****   {
+  97:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     /* Total number of samples in the input matrix */
+  98:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     numSamples = (uint32_t) pSrc->numRows * pSrc->numCols;
+  85              	 .loc 1 98 0
+  86 0042 7B6A     	 ldr r3,[r7,#36]
+  87 0044 1B88     	 ldrh r3,[r3]
+  88 0046 1A46     	 mov r2,r3
+  89 0048 7B6A     	 ldr r3,[r7,#36]
+  90 004a 5B88     	 ldrh r3,[r3,#2]
+  91 004c 03FB02F3 	 mul r3,r3,r2
+  92 0050 BB63     	 str r3,[r7,#56]
+  99:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 100:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** #ifndef ARM_MATH_CM0_FAMILY
+ 101:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 102:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     /* Run the below code for Cortex-M4 and Cortex-M3 */
+ 103:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 104:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     /* Loop Unrolling */
+ 105:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     blkCnt = numSamples >> 2u;
+  93              	 .loc 1 105 0
+  94 0052 BB6B     	 ldr r3,[r7,#56]
+  95 0054 9B08     	 lsrs r3,r3,#2
+  96 0056 7B65     	 str r3,[r7,#84]
+ 106:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 107:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
+ 108:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****      ** a second loop below computes the remaining 1 to 3 samples. */
+ 109:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     while(blkCnt > 0u)
+  97              	 .loc 1 109 0
+  98 0058 C2E0     	 b .L5
+  99              	.L10:
+ 110:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     {
+ 111:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       /* C(m,n) = A(m,n) * k */
+ 112:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       /* Read values from input */
+ 113:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       in1 = *pIn;
+ 100              	 .loc 1 113 0
+ 101 005a FB6D     	 ldr r3,[r7,#92]
+ 102 005c 1B68     	 ldr r3,[r3]
+ 103 005e 7B63     	 str r3,[r7,#52]
+ 114:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       in2 = *(pIn + 1);
+ 104              	 .loc 1 114 0
+ 105 0060 FB6D     	 ldr r3,[r7,#92]
+ 106 0062 5B68     	 ldr r3,[r3,#4]
+ 107 0064 3B63     	 str r3,[r7,#48]
+ 115:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       in3 = *(pIn + 2);
+ 108              	 .loc 1 115 0
+ 109 0066 FB6D     	 ldr r3,[r7,#92]
+ 110 0068 9B68     	 ldr r3,[r3,#8]
+ 111 006a FB62     	 str r3,[r7,#44]
+ 116:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       in4 = *(pIn + 3);
+ 112              	 .loc 1 116 0
+ 113 006c FB6D     	 ldr r3,[r7,#92]
+ 114 006e DB68     	 ldr r3,[r3,#12]
+ 115 0070 BB62     	 str r3,[r7,#40]
+ 117:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 118:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       /* multiply input with scaler value */
+ 119:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       in1 = ((q63_t) in1 * scaleFract) >> 32;
+ 116              	 .loc 1 119 0
+ 117 0072 7B6B     	 ldr r3,[r7,#52]
+ 118 0074 1A46     	 mov r2,r3
+ 119 0076 4FEAE273 	 asr r3,r2,#31
+ 120 007a 396A     	 ldr r1,[r7,#32]
+ 121 007c 0846     	 mov r0,r1
+ 122 007e 4FEAE071 	 asr r1,r0,#31
+ 123 0082 00FB03F5 	 mul r5,r0,r3
+ 124 0086 02FB01F4 	 mul r4,r2,r1
+ 125 008a 2C44     	 add r4,r4,r5
+ 126 008c A2FB0023 	 umull r2,r3,r2,r0
+ 127 0090 E118     	 adds r1,r4,r3
+ 128 0092 0B46     	 mov r3,r1
+ 129 0094 9A46     	 mov r10,r3
+ 130 0096 4FEAE37B 	 asr fp,r3,#31
+ 131 009a 5346     	 mov r3,r10
+ 132 009c 7B63     	 str r3,[r7,#52]
+ 120:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       in2 = ((q63_t) in2 * scaleFract) >> 32;
+ 133              	 .loc 1 120 0
+ 134 009e 3B6B     	 ldr r3,[r7,#48]
+ 135 00a0 1A46     	 mov r2,r3
+ 136 00a2 4FEAE273 	 asr r3,r2,#31
+ 137 00a6 396A     	 ldr r1,[r7,#32]
+ 138 00a8 0846     	 mov r0,r1
+ 139 00aa 4FEAE071 	 asr r1,r0,#31
+ 140 00ae 00FB03F5 	 mul r5,r0,r3
+ 141 00b2 02FB01F4 	 mul r4,r2,r1
+ 142 00b6 2C44     	 add r4,r4,r5
+ 143 00b8 A2FB0023 	 umull r2,r3,r2,r0
+ 144 00bc E118     	 adds r1,r4,r3
+ 145 00be 0B46     	 mov r3,r1
+ 146 00c0 1900     	 movs r1,r3
+ 147 00c2 3961     	 str r1,[r7,#16]
+ 148 00c4 DB17     	 asrs r3,r3,#31
+ 149 00c6 7B61     	 str r3,[r7,#20]
+ 150 00c8 3B69     	 ldr r3,[r7,#16]
+ 151 00ca 3B63     	 str r3,[r7,#48]
+ 121:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       in3 = ((q63_t) in3 * scaleFract) >> 32;
+ 152              	 .loc 1 121 0
+ 153 00cc FB6A     	 ldr r3,[r7,#44]
+ 154 00ce 1A46     	 mov r2,r3
+ 155 00d0 4FEAE273 	 asr r3,r2,#31
+ 156 00d4 396A     	 ldr r1,[r7,#32]
+ 157 00d6 0846     	 mov r0,r1
+ 158 00d8 4FEAE071 	 asr r1,r0,#31
+ 159 00dc 00FB03F5 	 mul r5,r0,r3
+ 160 00e0 02FB01F4 	 mul r4,r2,r1
+ 161 00e4 2C44     	 add r4,r4,r5
+ 162 00e6 A2FB0023 	 umull r2,r3,r2,r0
+ 163 00ea E118     	 adds r1,r4,r3
+ 164 00ec 0B46     	 mov r3,r1
+ 165 00ee 1900     	 movs r1,r3
+ 166 00f0 B960     	 str r1,[r7,#8]
+ 167 00f2 DB17     	 asrs r3,r3,#31
+ 168 00f4 FB60     	 str r3,[r7,#12]
+ 169 00f6 BB68     	 ldr r3,[r7,#8]
+ 170 00f8 FB62     	 str r3,[r7,#44]
+ 122:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       in4 = ((q63_t) in4 * scaleFract) >> 32;
+ 171              	 .loc 1 122 0
+ 172 00fa BB6A     	 ldr r3,[r7,#40]
+ 173 00fc 1A46     	 mov r2,r3
+ 174 00fe 4FEAE273 	 asr r3,r2,#31
+ 175 0102 396A     	 ldr r1,[r7,#32]
+ 176 0104 0846     	 mov r0,r1
+ 177 0106 4FEAE071 	 asr r1,r0,#31
+ 178 010a 00FB03F5 	 mul r5,r0,r3
+ 179 010e 02FB01F4 	 mul r4,r2,r1
+ 180 0112 2C44     	 add r4,r4,r5
+ 181 0114 A2FB0023 	 umull r2,r3,r2,r0
+ 182 0118 E118     	 adds r1,r4,r3
+ 183 011a 0B46     	 mov r3,r1
+ 184 011c 1900     	 movs r1,r3
+ 185 011e 3960     	 str r1,[r7]
+ 186 0120 DB17     	 asrs r3,r3,#31
+ 187 0122 7B60     	 str r3,[r7,#4]
+ 188 0124 3B68     	 ldr r3,[r7]
+ 189 0126 BB62     	 str r3,[r7,#40]
+ 123:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 124:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       /* apply shifting */
+ 125:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       out1 = in1 << totShift;
+ 190              	 .loc 1 125 0
+ 191 0128 7A6B     	 ldr r2,[r7,#52]
+ 192 012a FB6B     	 ldr r3,[r7,#60]
+ 193 012c 02FA03F3 	 lsl r3,r2,r3
+ 194 0130 FB64     	 str r3,[r7,#76]
+ 126:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       out2 = in2 << totShift;
+ 195              	 .loc 1 126 0
+ 196 0132 3A6B     	 ldr r2,[r7,#48]
+ 197 0134 FB6B     	 ldr r3,[r7,#60]
+ 198 0136 02FA03F3 	 lsl r3,r2,r3
+ 199 013a BB64     	 str r3,[r7,#72]
+ 127:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 128:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       /* saturate the results. */
+ 129:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       if(in1 != (out1 >> totShift))
+ 200              	 .loc 1 129 0
+ 201 013c FA6C     	 ldr r2,[r7,#76]
+ 202 013e FB6B     	 ldr r3,[r7,#60]
+ 203 0140 1A41     	 asrs r2,r2,r3
+ 204 0142 7B6B     	 ldr r3,[r7,#52]
+ 205 0144 9A42     	 cmp r2,r3
+ 206 0146 05D0     	 beq .L6
+ 130:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****         out1 = 0x7FFFFFFF ^ (in1 >> 31);
+ 207              	 .loc 1 130 0
+ 208 0148 7B6B     	 ldr r3,[r7,#52]
+ 209 014a DB17     	 asrs r3,r3,#31
+ 210 014c 83F00043 	 eor r3,r3,#-2147483648
+ 211 0150 DB43     	 mvns r3,r3
+ 212 0152 FB64     	 str r3,[r7,#76]
+ 213              	.L6:
+ 131:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 132:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       if(in2 != (out2 >> totShift))
+ 214              	 .loc 1 132 0
+ 215 0154 BA6C     	 ldr r2,[r7,#72]
+ 216 0156 FB6B     	 ldr r3,[r7,#60]
+ 217 0158 1A41     	 asrs r2,r2,r3
+ 218 015a 3B6B     	 ldr r3,[r7,#48]
+ 219 015c 9A42     	 cmp r2,r3
+ 220 015e 05D0     	 beq .L7
+ 133:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****         out2 = 0x7FFFFFFF ^ (in2 >> 31);
+ 221              	 .loc 1 133 0
+ 222 0160 3B6B     	 ldr r3,[r7,#48]
+ 223 0162 DB17     	 asrs r3,r3,#31
+ 224 0164 83F00043 	 eor r3,r3,#-2147483648
+ 225 0168 DB43     	 mvns r3,r3
+ 226 016a BB64     	 str r3,[r7,#72]
+ 227              	.L7:
+ 134:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 135:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       out3 = in3 << totShift;
+ 228              	 .loc 1 135 0
+ 229 016c FA6A     	 ldr r2,[r7,#44]
+ 230 016e FB6B     	 ldr r3,[r7,#60]
+ 231 0170 02FA03F3 	 lsl r3,r2,r3
+ 232 0174 7B64     	 str r3,[r7,#68]
+ 136:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       out4 = in4 << totShift;
+ 233              	 .loc 1 136 0
+ 234 0176 BA6A     	 ldr r2,[r7,#40]
+ 235 0178 FB6B     	 ldr r3,[r7,#60]
+ 236 017a 02FA03F3 	 lsl r3,r2,r3
+ 237 017e 3B64     	 str r3,[r7,#64]
+ 137:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 138:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       *pOut = out1;
+ 238              	 .loc 1 138 0
+ 239 0180 BB6D     	 ldr r3,[r7,#88]
+ 240 0182 FA6C     	 ldr r2,[r7,#76]
+ 241 0184 1A60     	 str r2,[r3]
+ 139:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       *(pOut + 1) = out2;
+ 242              	 .loc 1 139 0
+ 243 0186 BB6D     	 ldr r3,[r7,#88]
+ 244 0188 0433     	 adds r3,r3,#4
+ 245 018a BA6C     	 ldr r2,[r7,#72]
+ 246 018c 1A60     	 str r2,[r3]
+ 140:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 141:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       if(in3 != (out3 >> totShift))
+ 247              	 .loc 1 141 0
+ 248 018e 7A6C     	 ldr r2,[r7,#68]
+ 249 0190 FB6B     	 ldr r3,[r7,#60]
+ 250 0192 1A41     	 asrs r2,r2,r3
+ 251 0194 FB6A     	 ldr r3,[r7,#44]
+ 252 0196 9A42     	 cmp r2,r3
+ 253 0198 05D0     	 beq .L8
+ 142:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****         out3 = 0x7FFFFFFF ^ (in3 >> 31);
+ 254              	 .loc 1 142 0
+ 255 019a FB6A     	 ldr r3,[r7,#44]
+ 256 019c DB17     	 asrs r3,r3,#31
+ 257 019e 83F00043 	 eor r3,r3,#-2147483648
+ 258 01a2 DB43     	 mvns r3,r3
+ 259 01a4 7B64     	 str r3,[r7,#68]
+ 260              	.L8:
+ 143:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 144:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       if(in4 != (out4 >> totShift))
+ 261              	 .loc 1 144 0
+ 262 01a6 3A6C     	 ldr r2,[r7,#64]
+ 263 01a8 FB6B     	 ldr r3,[r7,#60]
+ 264 01aa 1A41     	 asrs r2,r2,r3
+ 265 01ac BB6A     	 ldr r3,[r7,#40]
+ 266 01ae 9A42     	 cmp r2,r3
+ 267 01b0 05D0     	 beq .L9
+ 145:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****         out4 = 0x7FFFFFFF ^ (in4 >> 31);
+ 268              	 .loc 1 145 0
+ 269 01b2 BB6A     	 ldr r3,[r7,#40]
+ 270 01b4 DB17     	 asrs r3,r3,#31
+ 271 01b6 83F00043 	 eor r3,r3,#-2147483648
+ 272 01ba DB43     	 mvns r3,r3
+ 273 01bc 3B64     	 str r3,[r7,#64]
+ 274              	.L9:
+ 146:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 147:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 148:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       *(pOut + 2) = out3;
+ 275              	 .loc 1 148 0
+ 276 01be BB6D     	 ldr r3,[r7,#88]
+ 277 01c0 0833     	 adds r3,r3,#8
+ 278 01c2 7A6C     	 ldr r2,[r7,#68]
+ 279 01c4 1A60     	 str r2,[r3]
+ 149:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       *(pOut + 3) = out4;
+ 280              	 .loc 1 149 0
+ 281 01c6 BB6D     	 ldr r3,[r7,#88]
+ 282 01c8 0C33     	 adds r3,r3,#12
+ 283 01ca 3A6C     	 ldr r2,[r7,#64]
+ 284 01cc 1A60     	 str r2,[r3]
+ 150:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 151:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       /* update pointers to process next sampels */
+ 152:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       pIn += 4u;
+ 285              	 .loc 1 152 0
+ 286 01ce FB6D     	 ldr r3,[r7,#92]
+ 287 01d0 1033     	 adds r3,r3,#16
+ 288 01d2 FB65     	 str r3,[r7,#92]
+ 153:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       pOut += 4u;
+ 289              	 .loc 1 153 0
+ 290 01d4 BB6D     	 ldr r3,[r7,#88]
+ 291 01d6 1033     	 adds r3,r3,#16
+ 292 01d8 BB65     	 str r3,[r7,#88]
+ 154:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 155:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 156:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       /* Decrement the numSamples loop counter */
+ 157:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       blkCnt--;
+ 293              	 .loc 1 157 0
+ 294 01da 7B6D     	 ldr r3,[r7,#84]
+ 295 01dc 013B     	 subs r3,r3,#1
+ 296 01de 7B65     	 str r3,[r7,#84]
+ 297              	.L5:
+ 109:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     {
+ 298              	 .loc 1 109 0
+ 299 01e0 7B6D     	 ldr r3,[r7,#84]
+ 300 01e2 002B     	 cmp r3,#0
+ 301 01e4 7FF439AF 	 bne .L10
+ 158:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     }
+ 159:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 160:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     /* If the numSamples is not a multiple of 4, compute any remaining output samples here.    
+ 161:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****      ** No loop unrolling is used. */
+ 162:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     blkCnt = numSamples % 0x4u;
+ 302              	 .loc 1 162 0
+ 303 01e8 BB6B     	 ldr r3,[r7,#56]
+ 304 01ea 03F00303 	 and r3,r3,#3
+ 305 01ee 7B65     	 str r3,[r7,#84]
+ 163:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 164:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** #else
+ 165:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 166:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     /* Run the below code for Cortex-M0 */
+ 167:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 168:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     /* Initialize blkCnt with number of samples */
+ 169:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     blkCnt = numSamples;
+ 170:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 171:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** #endif /* #ifndef ARM_MATH_CM0_FAMILY */
+ 172:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 173:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     while(blkCnt > 0u)
+ 306              	 .loc 1 173 0
+ 307 01f0 33E0     	 b .L11
+ 308              	.L13:
+ 174:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     {
+ 175:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       /* C(m,n) = A(m,n) * k */
+ 176:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       /* Scale, saturate and then store the results in the destination buffer. */
+ 177:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       in1 = *pIn++;
+ 309              	 .loc 1 177 0
+ 310 01f2 FB6D     	 ldr r3,[r7,#92]
+ 311 01f4 1A1D     	 adds r2,r3,#4
+ 312 01f6 FA65     	 str r2,[r7,#92]
+ 313 01f8 1B68     	 ldr r3,[r3]
+ 314 01fa 7B63     	 str r3,[r7,#52]
+ 178:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 179:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       in2 = ((q63_t) in1 * scaleFract) >> 32;
+ 315              	 .loc 1 179 0
+ 316 01fc 7B6B     	 ldr r3,[r7,#52]
+ 317 01fe 1846     	 mov r0,r3
+ 318 0200 4FEAE071 	 asr r1,r0,#31
+ 319 0204 3B6A     	 ldr r3,[r7,#32]
+ 320 0206 1A46     	 mov r2,r3
+ 321 0208 4FEAE273 	 asr r3,r2,#31
+ 322 020c 02FB01F5 	 mul r5,r2,r1
+ 323 0210 00FB03F4 	 mul r4,r0,r3
+ 324 0214 2C44     	 add r4,r4,r5
+ 325 0216 A0FB0223 	 umull r2,r3,r0,r2
+ 326 021a E118     	 adds r1,r4,r3
+ 327 021c 0B46     	 mov r3,r1
+ 328 021e 9846     	 mov r8,r3
+ 329 0220 4FEAE379 	 asr r9,r3,#31
+ 330 0224 4346     	 mov r3,r8
+ 331 0226 3B63     	 str r3,[r7,#48]
+ 180:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 181:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       out1 = in2 << totShift;
+ 332              	 .loc 1 181 0
+ 333 0228 3A6B     	 ldr r2,[r7,#48]
+ 334 022a FB6B     	 ldr r3,[r7,#60]
+ 335 022c 02FA03F3 	 lsl r3,r2,r3
+ 336 0230 FB64     	 str r3,[r7,#76]
+ 182:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 183:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       if(in2 != (out1 >> totShift))
+ 337              	 .loc 1 183 0
+ 338 0232 FA6C     	 ldr r2,[r7,#76]
+ 339 0234 FB6B     	 ldr r3,[r7,#60]
+ 340 0236 1A41     	 asrs r2,r2,r3
+ 341 0238 3B6B     	 ldr r3,[r7,#48]
+ 342 023a 9A42     	 cmp r2,r3
+ 343 023c 05D0     	 beq .L12
+ 184:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****         out1 = 0x7FFFFFFF ^ (in2 >> 31);
+ 344              	 .loc 1 184 0
+ 345 023e 3B6B     	 ldr r3,[r7,#48]
+ 346 0240 DB17     	 asrs r3,r3,#31
+ 347 0242 83F00043 	 eor r3,r3,#-2147483648
+ 348 0246 DB43     	 mvns r3,r3
+ 349 0248 FB64     	 str r3,[r7,#76]
+ 350              	.L12:
+ 185:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 186:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       *pOut++ = out1;
+ 351              	 .loc 1 186 0
+ 352 024a BB6D     	 ldr r3,[r7,#88]
+ 353 024c 1A1D     	 adds r2,r3,#4
+ 354 024e BA65     	 str r2,[r7,#88]
+ 355 0250 FA6C     	 ldr r2,[r7,#76]
+ 356 0252 1A60     	 str r2,[r3]
+ 187:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 188:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       /* Decrement the numSamples loop counter */
+ 189:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****       blkCnt--;
+ 357              	 .loc 1 189 0
+ 358 0254 7B6D     	 ldr r3,[r7,#84]
+ 359 0256 013B     	 subs r3,r3,#1
+ 360 0258 7B65     	 str r3,[r7,#84]
+ 361              	.L11:
+ 173:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     {
+ 362              	 .loc 1 173 0
+ 363 025a 7B6D     	 ldr r3,[r7,#84]
+ 364 025c 002B     	 cmp r3,#0
+ 365 025e C8D1     	 bne .L13
+ 190:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     }
+ 191:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 192:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     /* Set status as ARM_MATH_SUCCESS */
+ 193:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****     status = ARM_MATH_SUCCESS;
+ 366              	 .loc 1 193 0
+ 367 0260 0023     	 movs r3,#0
+ 368 0262 87F85330 	 strb r3,[r7,#83]
+ 369              	.L4:
+ 194:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****   }
+ 195:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** 
+ 196:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****   /* Return to application */
+ 197:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c ****   return (status);
+ 370              	 .loc 1 197 0
+ 371 0266 97F85330 	 ldrb r3,[r7,#83]
+ 372 026a 5BB2     	 sxtb r3,r3
+ 198:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_scale_q31.c **** }
+ 373              	 .loc 1 198 0
+ 374 026c 1846     	 mov r0,r3
+ 375 026e 6437     	 adds r7,r7,#100
+ 376              	.LCFI3:
+ 377              	 .cfi_def_cfa_offset 28
+ 378 0270 BD46     	 mov sp,r7
+ 379              	.LCFI4:
+ 380              	 .cfi_def_cfa_register 13
+ 381              	 
+ 382 0272 BDE8B00F 	 pop {r4,r5,r7,r8,r9,r10,fp}
+ 383              	.LCFI5:
+ 384              	 .cfi_restore 11
+ 385              	 .cfi_restore 10
+ 386              	 .cfi_restore 9
+ 387              	 .cfi_restore 8
+ 388              	 .cfi_restore 7
+ 389              	 .cfi_restore 5
+ 390              	 .cfi_restore 4
+ 391              	 .cfi_def_cfa_offset 0
+ 392 0276 7047     	 bx lr
+ 393              	 .cfi_endproc
+ 394              	.LFE139:
+ 396              	 .text
+ 397              	.Letext0:
+ 398              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 399              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 400              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_mat_scale_q31.c
+    {standard input}:20     .text.arm_mat_scale_q31:00000000 $t
+    {standard input}:25     .text.arm_mat_scale_q31:00000000 arm_mat_scale_q31
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

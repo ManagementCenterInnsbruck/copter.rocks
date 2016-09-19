@@ -1,0 +1,2098 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_lms_norm_q31.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.clip_q63_to_q31,"ax",%progbits
+  20              	 .align 2
+  21              	 .thumb
+  22              	 .thumb_func
+  24              	clip_q63_to_q31:
+  25              	.LFB106:
+  26              	 .file 1 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+   1:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /* ----------------------------------------------------------------------
+   2:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * Copyright (C) 2010-2015 ARM Limited. All rights reserved.
+   3:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *
+   4:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * $Date:        20. October 2015
+   5:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * $Revision:    V1.4.5 b
+   6:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *
+   7:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * Project:      CMSIS DSP Library
+   8:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * Title:        arm_math.h
+   9:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *
+  10:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * Description:  Public header file for CMSIS DSP Library
+  11:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *
+  12:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * Target Processor: Cortex-M7/Cortex-M4/Cortex-M3/Cortex-M0
+  13:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *
+  14:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * Redistribution and use in source and binary forms, with or without
+  15:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * modification, are permitted provided that the following conditions
+  16:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * are met:
+  17:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *   - Redistributions of source code must retain the above copyright
+  18:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *     notice, this list of conditions and the following disclaimer.
+  19:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *   - Redistributions in binary form must reproduce the above copyright
+  20:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *     notice, this list of conditions and the following disclaimer in
+  21:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *     the documentation and/or other materials provided with the
+  22:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *     distribution.
+  23:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *     may be used to endorse or promote products derived from this
+  25:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *     software without specific prior written permission.
+  26:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *
+  27:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+  31:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * POSSIBILITY OF SUCH DAMAGE.
+  39:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * -------------------------------------------------------------------- */
+  40:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+  41:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+  42:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    \mainpage CMSIS DSP Software Library
+  43:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  44:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Introduction
+  45:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ------------
+  46:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  47:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * This user manual describes the CMSIS DSP software library,
+  48:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * a suite of common signal processing functions for use on Cortex-M processor based devices.
+  49:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  50:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library is divided into a number of functions each covering a specific category:
+  51:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Basic math functions
+  52:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Fast math functions
+  53:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Complex math functions
+  54:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Filters
+  55:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Matrix functions
+  56:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Transforms
+  57:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Motor control functions
+  58:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Statistical functions
+  59:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Support functions
+  60:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Interpolation functions
+  61:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  62:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library has separate functions for operating on 8-bit integers, 16-bit integers,
+  63:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * 32-bit integer and 32-bit floating-point values.
+  64:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  65:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Using the Library
+  66:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ------------
+  67:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  68:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library installer contains prebuilt versions of the libraries in the <code>Lib</code> fold
+  69:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM7lfdp_math.lib (Little endian and Double Precision Floating Point Unit on Cortex-
+  70:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM7bfdp_math.lib (Big endian and Double Precision Floating Point Unit on Cortex-M7)
+  71:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM7lfsp_math.lib (Little endian and Single Precision Floating Point Unit on Cortex-
+  72:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM7bfsp_math.lib (Big endian and Single Precision Floating Point Unit on Cortex-M7)
+  73:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM7l_math.lib (Little endian on Cortex-M7)
+  74:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM7b_math.lib (Big endian on Cortex-M7)
+  75:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM4lf_math.lib (Little endian and Floating Point Unit on Cortex-M4)
+  76:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM4bf_math.lib (Big endian and Floating Point Unit on Cortex-M4)
+  77:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM4l_math.lib (Little endian on Cortex-M4)
+  78:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM4b_math.lib (Big endian on Cortex-M4)
+  79:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM3l_math.lib (Little endian on Cortex-M3)
+  80:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM3b_math.lib (Big endian on Cortex-M3)
+  81:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM0l_math.lib (Little endian on Cortex-M0 / CortexM0+)
+  82:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM0b_math.lib (Big endian on Cortex-M0 / CortexM0+)
+  83:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  84:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library functions are declared in the public file <code>arm_math.h</code> which is placed 
+  85:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Simply include this file and link the appropriate library in the application and begin calling
+  86:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * public header file <code> arm_math.h</code> for Cortex-M7/M4/M3/M0/M0+ with little endian and 
+  87:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Define the appropriate pre processor MACRO ARM_MATH_CM7 or ARM_MATH_CM4 or  ARM_MATH_CM3 or
+  88:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ARM_MATH_CM0 or ARM_MATH_CM0PLUS depending on the target processor in the application.
+  89:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  90:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Examples
+  91:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * --------
+  92:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  93:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library ships with a number of examples which demonstrate how to use the library functions
+  94:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  95:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Toolchain Support
+  96:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ------------
+  97:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  98:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library has been developed and tested with MDK-ARM version 5.14.0.0
+  99:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library is being tested in GCC and IAR toolchains and updates on this activity will be mad
+ 100:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 101:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Building the Library
+ 102:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ------------
+ 103:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 104:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library installer contains a project file to re build libraries on MDK-ARM Tool chain in t
+ 105:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM_math.uvprojx
+ 106:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 107:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 108:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The libraries can be built by opening the arm_cortexM_math.uvprojx project in MDK-ARM, selecti
+ 109:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 110:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Pre-processor Macros
+ 111:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ------------
+ 112:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 113:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Each library project have differant pre-processor macros.
+ 114:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 115:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - UNALIGNED_SUPPORT_DISABLE:
+ 116:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 117:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Define macro UNALIGNED_SUPPORT_DISABLE, If the silicon does not support unaligned memory acces
+ 118:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 119:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - ARM_MATH_BIG_ENDIAN:
+ 120:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 121:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Define macro ARM_MATH_BIG_ENDIAN to build the library for big endian targets. By default libra
+ 122:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 123:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - ARM_MATH_MATRIX_CHECK:
+ 124:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 125:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Define macro ARM_MATH_MATRIX_CHECK for checking on the input and output sizes of matrices
+ 126:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 127:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - ARM_MATH_ROUNDING:
+ 128:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 129:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Define macro ARM_MATH_ROUNDING for rounding on support functions
+ 130:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 131:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - ARM_MATH_CMx:
+ 132:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 133:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Define macro ARM_MATH_CM4 for building the library on Cortex-M4 target, ARM_MATH_CM3 for build
+ 134:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * and ARM_MATH_CM0 for building library on Cortex-M0 target, ARM_MATH_CM0PLUS for building libra
+ 135:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ARM_MATH_CM7 for building the library on cortex-M7.
+ 136:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 137:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - __FPU_PRESENT:
+ 138:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 139:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Initialize macro __FPU_PRESENT = 1 when building on FPU supported Targets. Enable this macro f
+ 140:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 141:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * <hr>
+ 142:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * CMSIS-DSP in ARM::CMSIS Pack
+ 143:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * -----------------------------
+ 144:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 145:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The following files relevant to CMSIS-DSP are present in the <b>ARM::CMSIS</b> Pack directorie
+ 146:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * |File/Folder                   |Content                                                       
+ 147:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * |------------------------------|--------------------------------------------------------------
+ 148:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * |\b CMSIS\\Documentation\\DSP  | This documentation                                           
+ 149:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * |\b CMSIS\\DSP_Lib             | Software license agreement (license.txt)                     
+ 150:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * |\b CMSIS\\DSP_Lib\\Examples   | Example projects demonstrating the usage of the library funct
+ 151:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * |\b CMSIS\\DSP_Lib\\Source     | Source files for rebuilding the library                      
+ 152:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 153:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * <hr>
+ 154:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Revision History of CMSIS-DSP
+ 155:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ------------
+ 156:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Please refer to \ref ChangeLog_pg.
+ 157:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 158:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Copyright Notice
+ 159:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ------------
+ 160:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 161:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Copyright (C) 2010-2015 ARM Limited. All rights reserved.
+ 162:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 163:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 164:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 165:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 166:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupMath Basic Math Functions
+ 167:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 168:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 169:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 170:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupFastMath Fast Math Functions
+ 171:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * This set of functions provides a fast approximation to sine, cosine, and square root.
+ 172:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * As compared to most of the other functions in the CMSIS math library, the fast math functions
+ 173:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * operate on individual values and not arrays.
+ 174:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * There are separate functions for Q15, Q31, and floating-point data.
+ 175:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *
+ 176:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 177:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 178:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 179:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupCmplxMath Complex Math Functions
+ 180:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * This set of functions operates on complex data vectors.
+ 181:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * The data in the complex arrays is stored in an interleaved fashion
+ 182:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * (real, imag, real, imag, ...).
+ 183:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * In the API functions, the number of samples in a complex array refers
+ 184:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * to the number of complex values; the array contains twice this number of
+ 185:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * real values.
+ 186:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 187:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 188:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 189:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupFilters Filtering Functions
+ 190:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 191:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 192:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 193:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupMatrix Matrix Functions
+ 194:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *
+ 195:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * This set of functions provides basic matrix math operations.
+ 196:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * The functions operate on matrix data structures.  For example,
+ 197:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * the type
+ 198:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * definition for the floating-point matrix structure is shown
+ 199:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * below:
+ 200:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <pre>
+ 201:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *     typedef struct
+ 202:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *     {
+ 203:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *       uint16_t numRows;     // number of rows of the matrix.
+ 204:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *       uint16_t numCols;     // number of columns of the matrix.
+ 205:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *       float32_t *pData;     // points to the data of the matrix.
+ 206:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *     } arm_matrix_instance_f32;
+ 207:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * </pre>
+ 208:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * There are similar definitions for Q15 and Q31 data types.
+ 209:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *
+ 210:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * The structure specifies the size of the matrix and then points to
+ 211:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * an array of data.  The array is of size <code>numRows X numCols</code>
+ 212:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * and the values are arranged in row order.  That is, the
+ 213:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * matrix element (i, j) is stored at:
+ 214:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <pre>
+ 215:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *     pData[i*numCols + j]
+ 216:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * </pre>
+ 217:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *
+ 218:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * \par Init Functions
+ 219:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * There is an associated initialization function for each type of matrix
+ 220:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * data structure.
+ 221:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * The initialization function sets the values of the internal structure fields.
+ 222:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * Refer to the function <code>arm_mat_init_f32()</code>, <code>arm_mat_init_q31()</code>
+ 223:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * and <code>arm_mat_init_q15()</code> for floating-point, Q31 and Q15 types,  respectively.
+ 224:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *
+ 225:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * \par
+ 226:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * Use of the initialization function is optional. However, if initialization function is used
+ 227:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * then the instance structure cannot be placed into a const data section.
+ 228:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * To place the instance structure in a const data
+ 229:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * section, manually initialize the data structure.  For example:
+ 230:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <pre>
+ 231:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <code>arm_matrix_instance_f32 S = {nRows, nColumns, pData};</code>
+ 232:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <code>arm_matrix_instance_q31 S = {nRows, nColumns, pData};</code>
+ 233:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <code>arm_matrix_instance_q15 S = {nRows, nColumns, pData};</code>
+ 234:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * </pre>
+ 235:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * where <code>nRows</code> specifies the number of rows, <code>nColumns</code>
+ 236:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * specifies the number of columns, and <code>pData</code> points to the
+ 237:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * data array.
+ 238:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *
+ 239:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * \par Size Checking
+ 240:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * By default all of the matrix functions perform size checking on the input and
+ 241:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * output matrices.  For example, the matrix addition function verifies that the
+ 242:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * two input matrices and the output matrix all have the same number of rows and
+ 243:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * columns.  If the size check fails the functions return:
+ 244:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <pre>
+ 245:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *     ARM_MATH_SIZE_MISMATCH
+ 246:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * </pre>
+ 247:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * Otherwise the functions return
+ 248:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <pre>
+ 249:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *     ARM_MATH_SUCCESS
+ 250:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * </pre>
+ 251:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * There is some overhead associated with this matrix size checking.
+ 252:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * The matrix size checking is enabled via the \#define
+ 253:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <pre>
+ 254:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *     ARM_MATH_MATRIX_CHECK
+ 255:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * </pre>
+ 256:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * within the library project settings.  By default this macro is defined
+ 257:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * and size checking is enabled.  By changing the project settings and
+ 258:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * undefining this macro size checking is eliminated and the functions
+ 259:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * run a bit faster.  With size checking disabled the functions always
+ 260:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * return <code>ARM_MATH_SUCCESS</code>.
+ 261:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 262:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 263:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 264:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupTransforms Transform Functions
+ 265:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 266:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 267:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 268:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupController Controller Functions
+ 269:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 270:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 271:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 272:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupStats Statistics Functions
+ 273:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 274:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 275:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupSupport Support Functions
+ 276:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 277:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 278:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 279:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupInterpolation Interpolation Functions
+ 280:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * These functions perform 1- and 2-dimensional interpolation of data.
+ 281:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * Linear interpolation is used for 1-dimensional data and
+ 282:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * bilinear interpolation is used for 2-dimensional data.
+ 283:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 284:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 285:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 286:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupExamples Examples
+ 287:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 288:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #ifndef _ARM_MATH_H
+ 289:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define _ARM_MATH_H
+ 290:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 291:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /* ignore some GCC warnings */
+ 292:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #if defined ( __GNUC__ )
+ 293:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #pragma GCC diagnostic push
+ 294:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #pragma GCC diagnostic ignored "-Wsign-conversion"
+ 295:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #pragma GCC diagnostic ignored "-Wconversion"
+ 296:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #pragma GCC diagnostic ignored "-Wunused-parameter"
+ 297:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 298:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 299:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __CMSIS_GENERIC         /* disable NVIC and Systick functions */
+ 300:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 301:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #if defined(ARM_MATH_CM7)
+ 302:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #include "core_cm7.h"
+ 303:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined (ARM_MATH_CM4)
+ 304:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #include "core_cm4.h"
+ 305:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined (ARM_MATH_CM3)
+ 306:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #include "core_cm3.h"
+ 307:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined (ARM_MATH_CM0)
+ 308:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #include "core_cm0.h"
+ 309:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define ARM_MATH_CM0_FAMILY
+ 310:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined (ARM_MATH_CM0PLUS)
+ 311:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #include "core_cm0plus.h"
+ 312:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define ARM_MATH_CM0_FAMILY
+ 313:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #else
+ 314:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #error "Define according the used Cortex core ARM_MATH_CM7, ARM_MATH_CM4, ARM_MATH_CM3, ARM_MATH_
+ 315:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 316:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 317:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #undef  __CMSIS_GENERIC         /* enable NVIC and Systick functions */
+ 318:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #include "string.h"
+ 319:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #include "math.h"
+ 320:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #ifdef   __cplusplus
+ 321:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** extern "C"
+ 322:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** {
+ 323:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 324:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 325:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 326:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 327:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Macros required for reciprocal calculation in Normalized LMS
+ 328:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 329:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 330:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define DELTA_Q31          (0x100)
+ 331:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define DELTA_Q15          0x5
+ 332:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define INDEX_MASK         0x0000003F
+ 333:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #ifndef PI
+ 334:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define PI                 3.14159265358979f
+ 335:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 336:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 337:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 338:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Macros required for SINE and COSINE Fast math approximations
+ 339:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 340:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 341:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define FAST_MATH_TABLE_SIZE  512
+ 342:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define FAST_MATH_Q31_SHIFT   (32 - 10)
+ 343:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define FAST_MATH_Q15_SHIFT   (16 - 10)
+ 344:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define CONTROLLER_Q31_SHIFT  (32 - 9)
+ 345:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define TABLE_SIZE  256
+ 346:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define TABLE_SPACING_Q31     0x400000
+ 347:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define TABLE_SPACING_Q15     0x80
+ 348:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 349:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 350:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Macros required for SINE and COSINE Controller functions
+ 351:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 352:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /* 1.31(q31) Fixed value of 2/360 */
+ 353:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /* -1 to +1 is divided into 360 values so total spacing is (2/360) */
+ 354:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define INPUT_SPACING         0xB60B61
+ 355:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 356:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 357:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Macro for Unaligned Support
+ 358:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 359:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #ifndef UNALIGNED_SUPPORT_DISABLE
+ 360:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     #define ALIGN4
+ 361:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #else
+ 362:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #if defined  (__GNUC__)
+ 363:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     #define ALIGN4 __attribute__((aligned(4)))
+ 364:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #else
+ 365:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     #define ALIGN4 __align(4)
+ 366:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #endif
+ 367:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif   /* #ifndef UNALIGNED_SUPPORT_DISABLE */
+ 368:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 369:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 370:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Error status returned by some functions in the library.
+ 371:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 372:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 373:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   typedef enum
+ 374:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   {
+ 375:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     ARM_MATH_SUCCESS = 0,                /**< No error */
+ 376:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     ARM_MATH_ARGUMENT_ERROR = -1,        /**< One or more arguments are incorrect */
+ 377:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     ARM_MATH_LENGTH_ERROR = -2,          /**< Length of data buffer is incorrect */
+ 378:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     ARM_MATH_SIZE_MISMATCH = -3,         /**< Size of matrices is not compatible with the operation
+ 379:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     ARM_MATH_NANINF = -4,                /**< Not-a-number (NaN) or infinity is generated */
+ 380:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     ARM_MATH_SINGULAR = -5,              /**< Generated by matrix inversion if the input matrix is 
+ 381:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     ARM_MATH_TEST_FAILURE = -6           /**< Test Failed  */
+ 382:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   } arm_status;
+ 383:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 384:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 385:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief 8-bit fractional data type in 1.7 format.
+ 386:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 387:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   typedef int8_t q7_t;
+ 388:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 389:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 390:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief 16-bit fractional data type in 1.15 format.
+ 391:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 392:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   typedef int16_t q15_t;
+ 393:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 394:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 395:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief 32-bit fractional data type in 1.31 format.
+ 396:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 397:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   typedef int32_t q31_t;
+ 398:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 399:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 400:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief 64-bit fractional data type in 1.63 format.
+ 401:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 402:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   typedef int64_t q63_t;
+ 403:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 404:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 405:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief 32-bit floating-point type definition.
+ 406:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 407:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   typedef float float32_t;
+ 408:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 409:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 410:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief 64-bit floating-point type definition.
+ 411:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 412:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   typedef double float64_t;
+ 413:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 414:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 415:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief definition to read/write two 16 bit values.
+ 416:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 417:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #if defined __CC_ARM
+ 418:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define __SIMD32_TYPE int32_t __packed
+ 419:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define CMSIS_UNUSED __attribute__((unused))
+ 420:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 421:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+ 422:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define __SIMD32_TYPE int32_t
+ 423:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define CMSIS_UNUSED __attribute__((unused))
+ 424:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 425:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined __GNUC__
+ 426:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define __SIMD32_TYPE int32_t
+ 427:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define CMSIS_UNUSED __attribute__((unused))
+ 428:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 429:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined __ICCARM__
+ 430:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define __SIMD32_TYPE int32_t __packed
+ 431:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define CMSIS_UNUSED
+ 432:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 433:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined __CSMC__
+ 434:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define __SIMD32_TYPE int32_t
+ 435:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define CMSIS_UNUSED
+ 436:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 437:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined __TASKING__
+ 438:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define __SIMD32_TYPE __unaligned int32_t
+ 439:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define CMSIS_UNUSED
+ 440:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 441:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #else
+ 442:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #error Unknown compiler
+ 443:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 444:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 445:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __SIMD32(addr)        (*(__SIMD32_TYPE **) & (addr))
+ 446:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __SIMD32_CONST(addr)  ((__SIMD32_TYPE *)(addr))
+ 447:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define _SIMD32_OFFSET(addr)  (*(__SIMD32_TYPE *)  (addr))
+ 448:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __SIMD64(addr)        (*(int64_t **) & (addr))
+ 449:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 450:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #if defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY)
+ 451:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 452:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief definition to pack two 16 bit values.
+ 453:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 454:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __PKHBT(ARG1, ARG2, ARG3)      ( (((int32_t)(ARG1) <<  0) & (int32_t)0x0000FFFF) | \
+ 455:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                          (((int32_t)(ARG2) << ARG3) & (int32_t)0xFFFF0000)  )
+ 456:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __PKHTB(ARG1, ARG2, ARG3)      ( (((int32_t)(ARG1) <<  0) & (int32_t)0xFFFF0000) | \
+ 457:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                          (((int32_t)(ARG2) >> ARG3) & (int32_t)0x0000FFFF)  )
+ 458:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 459:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 460:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 461:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 462:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    /**
+ 463:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief definition to pack four 8 bit values.
+ 464:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 465:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #ifndef ARM_MATH_BIG_ENDIAN
+ 466:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 467:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __PACKq7(v0,v1,v2,v3) ( (((int32_t)(v0) <<  0) & (int32_t)0x000000FF) | \
+ 468:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                 (((int32_t)(v1) <<  8) & (int32_t)0x0000FF00) | \
+ 469:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                 (((int32_t)(v2) << 16) & (int32_t)0x00FF0000) | \
+ 470:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                 (((int32_t)(v3) << 24) & (int32_t)0xFF000000)  )
+ 471:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #else
+ 472:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 473:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __PACKq7(v0,v1,v2,v3) ( (((int32_t)(v3) <<  0) & (int32_t)0x000000FF) | \
+ 474:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                 (((int32_t)(v2) <<  8) & (int32_t)0x0000FF00) | \
+ 475:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                 (((int32_t)(v1) << 16) & (int32_t)0x00FF0000) | \
+ 476:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                 (((int32_t)(v0) << 24) & (int32_t)0xFF000000)  )
+ 477:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 478:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 479:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 480:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 481:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 482:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Clips Q63 to Q31 values.
+ 483:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 484:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   static __INLINE q31_t clip_q63_to_q31(
+ 485:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   q63_t x)
+ 486:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   {
+  27              	 .loc 1 486 0
+  28              	 .cfi_startproc
+  29              	 
+  30              	 
+  31              	 
+  32 0000 2DE9B003 	 push {r4,r5,r7,r8,r9}
+  33              	.LCFI0:
+  34              	 .cfi_def_cfa_offset 20
+  35              	 .cfi_offset 4,-20
+  36              	 .cfi_offset 5,-16
+  37              	 .cfi_offset 7,-12
+  38              	 .cfi_offset 8,-8
+  39              	 .cfi_offset 9,-4
+  40 0004 83B0     	 sub sp,sp,#12
+  41              	.LCFI1:
+  42              	 .cfi_def_cfa_offset 32
+  43 0006 00AF     	 add r7,sp,#0
+  44              	.LCFI2:
+  45              	 .cfi_def_cfa_register 7
+  46 0008 C7E90001 	 strd r0,[r7]
+ 487:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     return ((q31_t) (x >> 32) != ((q31_t) x >> 31)) ?
+  47              	 .loc 1 487 0
+  48 000c D7E90023 	 ldrd r2,[r7]
+  49 0010 9846     	 mov r8,r3
+  50 0012 4FEAE379 	 asr r9,r3,#31
+  51 0016 4246     	 mov r2,r8
+  52 0018 3B68     	 ldr r3,[r7]
+  53 001a DB17     	 asrs r3,r3,#31
+ 488:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****       ((0x7FFFFFFF ^ ((q31_t) (x >> 63)))) : (q31_t) x;
+  54              	 .loc 1 488 0
+  55 001c 9A42     	 cmp r2,r3
+  56 001e 08D0     	 beq .L2
+  57              	 .loc 1 488 0 is_stmt 0 discriminator 1
+  58 0020 D7E90023 	 ldrd r2,[r7]
+  59 0024 DC17     	 asrs r4,r3,#31
+  60 0026 DD17     	 asrs r5,r3,#31
+  61 0028 2346     	 mov r3,r4
+  62 002a 83F00043 	 eor r3,r3,#-2147483648
+  63 002e DB43     	 mvns r3,r3
+  64 0030 00E0     	 b .L3
+  65              	.L2:
+  66              	 .loc 1 488 0 discriminator 2
+  67 0032 3B68     	 ldr r3,[r7]
+  68              	.L3:
+ 489:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   }
+  69              	 .loc 1 489 0 is_stmt 1
+  70 0034 1846     	 mov r0,r3
+  71 0036 0C37     	 adds r7,r7,#12
+  72              	.LCFI3:
+  73              	 .cfi_def_cfa_offset 20
+  74 0038 BD46     	 mov sp,r7
+  75              	.LCFI4:
+  76              	 .cfi_def_cfa_register 13
+  77              	 
+  78 003a BDE8B003 	 pop {r4,r5,r7,r8,r9}
+  79              	.LCFI5:
+  80              	 .cfi_restore 9
+  81              	 .cfi_restore 8
+  82              	 .cfi_restore 7
+  83              	 .cfi_restore 5
+  84              	 .cfi_restore 4
+  85              	 .cfi_def_cfa_offset 0
+  86 003e 7047     	 bx lr
+  87              	 .cfi_endproc
+  88              	.LFE106:
+  90              	 .section .text.arm_recip_q31,"ax",%progbits
+  91              	 .align 2
+  92              	 .thumb
+  93              	 .thumb_func
+  95              	arm_recip_q31:
+  96              	.LFB111:
+ 490:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 491:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 492:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Clips Q63 to Q15 values.
+ 493:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 494:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   static __INLINE q15_t clip_q63_to_q15(
+ 495:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   q63_t x)
+ 496:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   {
+ 497:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     return ((q31_t) (x >> 32) != ((q31_t) x >> 31)) ?
+ 498:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****       ((0x7FFF ^ ((q15_t) (x >> 63)))) : (q15_t) (x >> 15);
+ 499:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   }
+ 500:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 501:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 502:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Clips Q31 to Q7 values.
+ 503:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 504:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   static __INLINE q7_t clip_q31_to_q7(
+ 505:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   q31_t x)
+ 506:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   {
+ 507:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     return ((q31_t) (x >> 24) != ((q31_t) x >> 23)) ?
+ 508:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****       ((0x7F ^ ((q7_t) (x >> 31)))) : (q7_t) x;
+ 509:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   }
+ 510:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 511:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 512:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Clips Q31 to Q15 values.
+ 513:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 514:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   static __INLINE q15_t clip_q31_to_q15(
+ 515:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   q31_t x)
+ 516:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   {
+ 517:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     return ((q31_t) (x >> 16) != ((q31_t) x >> 15)) ?
+ 518:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****       ((0x7FFF ^ ((q15_t) (x >> 31)))) : (q15_t) x;
+ 519:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   }
+ 520:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 521:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 522:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Multiplies 32 X 64 and returns 32 bit result in 2.30 format.
+ 523:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 524:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 525:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   static __INLINE q63_t mult32x64(
+ 526:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   q63_t x,
+ 527:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   q31_t y)
+ 528:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   {
+ 529:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     return ((((q63_t) (x & 0x00000000FFFFFFFF) * y) >> 32) +
+ 530:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****             (((q63_t) (x >> 32) * y)));
+ 531:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   }
+ 532:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 533:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /*
+ 534:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #if defined (ARM_MATH_CM0_FAMILY) && defined ( __CC_ARM   )
+ 535:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define __CLZ __clz
+ 536:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #endif
+ 537:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 538:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /* note: function can be removed when all toolchain support __CLZ for Cortex-M0 */
+ 539:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #if defined (ARM_MATH_CM0_FAMILY) && ((defined (__ICCARM__))  )
+ 540:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   static __INLINE uint32_t __CLZ(
+ 541:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   q31_t data);
+ 542:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 543:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   static __INLINE uint32_t __CLZ(
+ 544:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   q31_t data)
+ 545:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   {
+ 546:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     uint32_t count = 0;
+ 547:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     uint32_t mask = 0x80000000;
+ 548:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 549:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     while((data & mask) == 0)
+ 550:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     {
+ 551:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****       count += 1u;
+ 552:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****       mask = mask >> 1u;
+ 553:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     }
+ 554:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 555:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     return (count);
+ 556:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   }
+ 557:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 558:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 559:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 560:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Function to Calculates 1/in (reciprocal) value of Q31 Data type.
+ 561:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 562:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 563:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   static __INLINE uint32_t arm_recip_q31(
+ 564:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   q31_t in,
+ 565:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   q31_t * dst,
+ 566:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   q31_t * pRecipTable)
+ 567:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   {
+  97              	 .loc 1 567 0
+  98              	 .cfi_startproc
+  99              	 
+ 100              	 
+ 101 0000 2DE9F043 	 push {r4,r5,r6,r7,r8,r9,lr}
+ 102              	.LCFI6:
+ 103              	 .cfi_def_cfa_offset 28
+ 104              	 .cfi_offset 4,-28
+ 105              	 .cfi_offset 5,-24
+ 106              	 .cfi_offset 6,-20
+ 107              	 .cfi_offset 7,-16
+ 108              	 .cfi_offset 8,-12
+ 109              	 .cfi_offset 9,-8
+ 110              	 .cfi_offset 14,-4
+ 111 0004 8BB0     	 sub sp,sp,#44
+ 112              	.LCFI7:
+ 113              	 .cfi_def_cfa_offset 72
+ 114 0006 00AF     	 add r7,sp,#0
+ 115              	.LCFI8:
+ 116              	 .cfi_def_cfa_register 7
+ 117 0008 F860     	 str r0,[r7,#12]
+ 118 000a B960     	 str r1,[r7,#8]
+ 119 000c 7A60     	 str r2,[r7,#4]
+ 568:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     q31_t out;
+ 569:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     uint32_t tempVal;
+ 570:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     uint32_t index, i;
+ 571:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     uint32_t signBits;
+ 572:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 573:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     if(in > 0)
+ 120              	 .loc 1 573 0
+ 121 000e FB68     	 ldr r3,[r7,#12]
+ 122 0010 002B     	 cmp r3,#0
+ 123 0012 05DD     	 ble .L6
+ 574:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     {
+ 575:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****       signBits = ((uint32_t) (__CLZ( in) - 1));
+ 124              	 .loc 1 575 0
+ 125 0014 FB68     	 ldr r3,[r7,#12]
+ 126 0016 B3FA83F3 	 clz r3,r3
+ 127 001a 013B     	 subs r3,r3,#1
+ 128 001c FB61     	 str r3,[r7,#28]
+ 129 001e 05E0     	 b .L7
+ 130              	.L6:
+ 576:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     }
+ 577:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     else
+ 578:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     {
+ 579:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****       signBits = ((uint32_t) (__CLZ(-in) - 1));
+ 131              	 .loc 1 579 0
+ 132 0020 FB68     	 ldr r3,[r7,#12]
+ 133 0022 5B42     	 negs r3,r3
+ 134 0024 B3FA83F3 	 clz r3,r3
+ 135 0028 013B     	 subs r3,r3,#1
+ 136 002a FB61     	 str r3,[r7,#28]
+ 137              	.L7:
+ 580:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     }
+ 581:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 582:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     /* Convert input sample to 1.31 format */
+ 583:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     in = (in << signBits);
+ 138              	 .loc 1 583 0
+ 139 002c FB69     	 ldr r3,[r7,#28]
+ 140 002e FA68     	 ldr r2,[r7,#12]
+ 141 0030 02FA03F3 	 lsl r3,r2,r3
+ 142 0034 FB60     	 str r3,[r7,#12]
+ 584:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 585:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     /* calculation of index for initial approximated Val */
+ 586:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     index = (uint32_t)(in >> 24);
+ 143              	 .loc 1 586 0
+ 144 0036 FB68     	 ldr r3,[r7,#12]
+ 145 0038 1B16     	 asrs r3,r3,#24
+ 146 003a BB61     	 str r3,[r7,#24]
+ 587:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     index = (index & INDEX_MASK);
+ 147              	 .loc 1 587 0
+ 148 003c BB69     	 ldr r3,[r7,#24]
+ 149 003e 03F03F03 	 and r3,r3,#63
+ 150 0042 BB61     	 str r3,[r7,#24]
+ 588:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 589:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     /* 1.31 with exp 1 */
+ 590:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     out = pRecipTable[index];
+ 151              	 .loc 1 590 0
+ 152 0044 BB69     	 ldr r3,[r7,#24]
+ 153 0046 9B00     	 lsls r3,r3,#2
+ 154 0048 7A68     	 ldr r2,[r7,#4]
+ 155 004a 1344     	 add r3,r3,r2
+ 156 004c 1B68     	 ldr r3,[r3]
+ 157 004e 7B62     	 str r3,[r7,#36]
+ 591:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 592:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     /* calculation of reciprocal value */
+ 593:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     /* running approximation for two iterations */
+ 594:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     for (i = 0u; i < 2u; i++)
+ 158              	 .loc 1 594 0
+ 159 0050 0023     	 movs r3,#0
+ 160 0052 3B62     	 str r3,[r7,#32]
+ 161 0054 3AE0     	 b .L8
+ 162              	.L9:
+ 595:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     {
+ 596:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****       tempVal = (uint32_t) (((q63_t) in * out) >> 31);
+ 163              	 .loc 1 596 0 discriminator 3
+ 164 0056 FB68     	 ldr r3,[r7,#12]
+ 165 0058 1846     	 mov r0,r3
+ 166 005a 4FEAE071 	 asr r1,r0,#31
+ 167 005e 7B6A     	 ldr r3,[r7,#36]
+ 168 0060 1A46     	 mov r2,r3
+ 169 0062 4FEAE273 	 asr r3,r2,#31
+ 170 0066 02FB01FE 	 mul lr,r2,r1
+ 171 006a 00FB03F6 	 mul r6,r0,r3
+ 172 006e 7644     	 add r6,r6,lr
+ 173 0070 A0FB0223 	 umull r2,r3,r0,r2
+ 174 0074 F118     	 adds r1,r6,r3
+ 175 0076 0B46     	 mov r3,r1
+ 176 0078 D40F     	 lsrs r4,r2,#31
+ 177 007a 44EA4304 	 orr r4,r4,r3,lsl#1
+ 178 007e DD17     	 asrs r5,r3,#31
+ 179 0080 2346     	 mov r3,r4
+ 180 0082 7B61     	 str r3,[r7,#20]
+ 597:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****       tempVal = 0x7FFFFFFFu - tempVal;
+ 181              	 .loc 1 597 0 discriminator 3
+ 182 0084 7A69     	 ldr r2,[r7,#20]
+ 183 0086 6FF00043 	 mvn r3,#-2147483648
+ 184 008a 9B1A     	 subs r3,r3,r2
+ 185 008c 7B61     	 str r3,[r7,#20]
+ 598:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****       /*      1.31 with exp 1 */
+ 599:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****       /* out = (q31_t) (((q63_t) out * tempVal) >> 30); */
+ 600:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****       out = clip_q63_to_q31(((q63_t) out * tempVal) >> 30);
+ 186              	 .loc 1 600 0 discriminator 3
+ 187 008e 7B6A     	 ldr r3,[r7,#36]
+ 188 0090 1846     	 mov r0,r3
+ 189 0092 4FEAE071 	 asr r1,r0,#31
+ 190 0096 7B69     	 ldr r3,[r7,#20]
+ 191 0098 1A46     	 mov r2,r3
+ 192 009a 4FF00003 	 mov r3,#0
+ 193 009e 02FB01FE 	 mul lr,r2,r1
+ 194 00a2 00FB03F6 	 mul r6,r0,r3
+ 195 00a6 7644     	 add r6,r6,lr
+ 196 00a8 A0FB0223 	 umull r2,r3,r0,r2
+ 197 00ac F118     	 adds r1,r6,r3
+ 198 00ae 0B46     	 mov r3,r1
+ 199 00b0 4FEA9278 	 lsr r8,r2,#30
+ 200 00b4 48EA8308 	 orr r8,r8,r3,lsl#2
+ 201 00b8 4FEAA379 	 asr r9,r3,#30
+ 202 00bc 4046     	 mov r0,r8
+ 203 00be 4946     	 mov r1,r9
+ 204 00c0 FFF7FEFF 	 bl clip_q63_to_q31
+ 205 00c4 7862     	 str r0,[r7,#36]
+ 594:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     {
+ 206              	 .loc 1 594 0 discriminator 3
+ 207 00c6 3B6A     	 ldr r3,[r7,#32]
+ 208 00c8 0133     	 adds r3,r3,#1
+ 209 00ca 3B62     	 str r3,[r7,#32]
+ 210              	.L8:
+ 594:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     {
+ 211              	 .loc 1 594 0 is_stmt 0 discriminator 1
+ 212 00cc 3B6A     	 ldr r3,[r7,#32]
+ 213 00ce 012B     	 cmp r3,#1
+ 214 00d0 C1D9     	 bls .L9
+ 601:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     }
+ 602:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 603:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     /* write output */
+ 604:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     *dst = out;
+ 215              	 .loc 1 604 0 is_stmt 1
+ 216 00d2 BB68     	 ldr r3,[r7,#8]
+ 217 00d4 7A6A     	 ldr r2,[r7,#36]
+ 218 00d6 1A60     	 str r2,[r3]
+ 605:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 606:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     /* return num of signbits of out = 1/in value */
+ 607:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     return (signBits + 1u);
+ 219              	 .loc 1 607 0
+ 220 00d8 FB69     	 ldr r3,[r7,#28]
+ 221 00da 0133     	 adds r3,r3,#1
+ 608:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   }
+ 222              	 .loc 1 608 0
+ 223 00dc 1846     	 mov r0,r3
+ 224 00de 2C37     	 adds r7,r7,#44
+ 225              	.LCFI9:
+ 226              	 .cfi_def_cfa_offset 28
+ 227 00e0 BD46     	 mov sp,r7
+ 228              	.LCFI10:
+ 229              	 .cfi_def_cfa_register 13
+ 230              	 
+ 231 00e2 BDE8F083 	 pop {r4,r5,r6,r7,r8,r9,pc}
+ 232              	 .cfi_endproc
+ 233              	.LFE111:
+ 235 00e6 00BF     	 .section .text.arm_lms_norm_q31,"ax",%progbits
+ 236              	 .align 2
+ 237              	 .global arm_lms_norm_q31
+ 238              	 .thumb
+ 239              	 .thumb_func
+ 241              	arm_lms_norm_q31:
+ 242              	.LFB139:
+ 243              	 .file 2 "../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c"
+   1:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** /* ----------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * $Date:        12. March 2014
+   5:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * $Revision: 	V1.4.4
+   6:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * Title:	    arm_lms_norm_q31.c    
+   9:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * Description:	Processing function for the Q31 NLMS filter.    
+  11:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** *
+  27:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * POSSIBILITY OF SUCH DAMAGE.    
+  39:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * -------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+  41:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+  43:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** /**    
+  44:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****  * @ingroup groupFilters    
+  45:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****  */
+  46:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+  47:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** /**    
+  48:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****  * @addtogroup LMS_NORM    
+  49:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****  * @{    
+  50:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****  */
+  51:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+  52:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** /**    
+  53:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * @brief Processing function for Q31 normalized LMS filter.    
+  54:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * @param[in] *S points to an instance of the Q31 normalized LMS filter structure.    
+  55:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * @param[in] *pSrc points to the block of input data.    
+  56:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * @param[in] *pRef points to the block of reference data.    
+  57:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * @param[out] *pOut points to the block of output data.    
+  58:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * @param[out] *pErr points to the block of error data.    
+  59:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * @param[in] blockSize number of samples to process.    
+  60:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * @return none.    
+  61:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** *    
+  62:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * <b>Scaling and Overflow Behavior:</b>     
+  63:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * \par     
+  64:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * The function is implemented using an internal 64-bit accumulator.     
+  65:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * The accumulator has a 2.62 format and maintains full precision of the intermediate   
+  66:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * multiplication results but provides only a single guard bit.     
+  67:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * Thus, if the accumulator result overflows it wraps around rather than clip.     
+  68:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * In order to avoid overflows completely the input signal must be scaled down by    
+  69:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * log2(numTaps) bits. The reference signal should not be scaled down.     
+  70:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * After all multiply-accumulates are performed, the 2.62 accumulator is shifted    
+  71:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * and saturated to 1.31 format to yield the final result.     
+  72:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * The output signal and error signal are in 1.31 format.     
+  73:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** *    
+  74:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * \par    
+  75:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * 	In this filter, filter coefficients are updated for each sample and the    
+  76:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** * updation of filter cofficients are saturted.    
+  77:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** *     
+  78:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** */
+  79:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+  80:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** void arm_lms_norm_q31(
+  81:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   arm_lms_norm_instance_q31 * S,
+  82:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   q31_t * pSrc,
+  83:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   q31_t * pRef,
+  84:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   q31_t * pOut,
+  85:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   q31_t * pErr,
+  86:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   uint32_t blockSize)
+  87:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** {
+ 244              	 .loc 2 87 0
+ 245              	 .cfi_startproc
+ 246              	 
+ 247              	 
+ 248 0000 2DE9B04F 	 push {r4,r5,r7,r8,r9,r10,fp,lr}
+ 249              	.LCFI11:
+ 250              	 .cfi_def_cfa_offset 32
+ 251              	 .cfi_offset 4,-32
+ 252              	 .cfi_offset 5,-28
+ 253              	 .cfi_offset 7,-24
+ 254              	 .cfi_offset 8,-20
+ 255              	 .cfi_offset 9,-16
+ 256              	 .cfi_offset 10,-12
+ 257              	 .cfi_offset 11,-8
+ 258              	 .cfi_offset 14,-4
+ 259 0004 B2B0     	 sub sp,sp,#200
+ 260              	.LCFI12:
+ 261              	 .cfi_def_cfa_offset 232
+ 262 0006 00AF     	 add r7,sp,#0
+ 263              	.LCFI13:
+ 264              	 .cfi_def_cfa_register 7
+ 265 0008 F865     	 str r0,[r7,#92]
+ 266 000a B965     	 str r1,[r7,#88]
+ 267 000c 7A65     	 str r2,[r7,#84]
+ 268 000e 3B65     	 str r3,[r7,#80]
+  88:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   q31_t *pState = S->pState;                     /* State pointer */
+ 269              	 .loc 2 88 0
+ 270 0010 FB6D     	 ldr r3,[r7,#92]
+ 271 0012 5B68     	 ldr r3,[r3,#4]
+ 272 0014 C7F8C430 	 str r3,[r7,#196]
+  89:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   q31_t *pCoeffs = S->pCoeffs;                   /* Coefficient pointer */
+ 273              	 .loc 2 89 0
+ 274 0018 FB6D     	 ldr r3,[r7,#92]
+ 275 001a 9B68     	 ldr r3,[r3,#8]
+ 276 001c C7F89830 	 str r3,[r7,#152]
+  90:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   q31_t *pStateCurnt;                            /* Points to the current sample of the state */
+  91:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   q31_t *px, *pb;                                /* Temporary pointers for state and coefficient bu
+  92:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   q31_t mu = S->mu;                              /* Adaptive factor */
+ 277              	 .loc 2 92 0
+ 278 0020 FB6D     	 ldr r3,[r7,#92]
+ 279 0022 DB68     	 ldr r3,[r3,#12]
+ 280 0024 C7F89430 	 str r3,[r7,#148]
+  93:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   uint32_t numTaps = S->numTaps;                 /* Number of filter coefficients in the filter */
+ 281              	 .loc 2 93 0
+ 282 0028 FB6D     	 ldr r3,[r7,#92]
+ 283 002a 1B88     	 ldrh r3,[r3]
+ 284 002c C7F89030 	 str r3,[r7,#144]
+  94:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   uint32_t tapCnt, blkCnt;                       /* Loop counters */
+  95:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   q63_t energy;                                  /* Energy of the input */
+  96:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   q63_t acc;                                     /* Accumulator */
+  97:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   q31_t e = 0, d = 0;                            /* error, reference data sample */
+ 285              	 .loc 2 97 0
+ 286 0030 0023     	 movs r3,#0
+ 287 0032 C7F88C30 	 str r3,[r7,#140]
+ 288 0036 0023     	 movs r3,#0
+ 289 0038 C7F88830 	 str r3,[r7,#136]
+  98:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   q31_t w = 0, in;                               /* weight factor and state */
+ 290              	 .loc 2 98 0
+ 291 003c 0023     	 movs r3,#0
+ 292 003e C7F88430 	 str r3,[r7,#132]
+  99:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   q31_t x0;                                      /* temporary variable to hold input sample */
+ 100:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** //  uint32_t shift = 32u - ((uint32_t) S->postShift + 1u);        /* Shift to be applied to the out
+ 101:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   q31_t errorXmu, oneByEnergy;                   /* Temporary variables to store error and mu produ
+ 102:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   q31_t postShift;                               /* Post shift to be applied to weight after recipr
+ 103:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   q31_t coef;                                    /* Temporary variable for coef */
+ 104:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   q31_t acc_l, acc_h;                            /*  temporary input */
+ 105:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   uint32_t uShift = ((uint32_t) S->postShift + 1u);
+ 293              	 .loc 2 105 0
+ 294 0042 FB6D     	 ldr r3,[r7,#92]
+ 295 0044 1B7C     	 ldrb r3,[r3,#16]
+ 296 0046 0133     	 adds r3,r3,#1
+ 297 0048 C7F88030 	 str r3,[r7,#128]
+ 106:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   uint32_t lShift = 32u - uShift;                /*  Shift to be applied to the output */
+ 298              	 .loc 2 106 0
+ 299 004c D7F88030 	 ldr r3,[r7,#128]
+ 300 0050 C3F12003 	 rsb r3,r3,#32
+ 301 0054 FB67     	 str r3,[r7,#124]
+ 107:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 108:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   energy = S->energy;
+ 302              	 .loc 2 108 0
+ 303 0056 FB6D     	 ldr r3,[r7,#92]
+ 304 0058 9B69     	 ldr r3,[r3,#24]
+ 305 005a 1A46     	 mov r2,r3
+ 306 005c 4FEAE273 	 asr r3,r2,#31
+ 307 0060 C7E92A23 	 strd r2,[r7,#168]
+ 109:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   x0 = S->x0;
+ 308              	 .loc 2 109 0
+ 309 0064 FB6D     	 ldr r3,[r7,#92]
+ 310 0066 DB69     	 ldr r3,[r3,#28]
+ 311 0068 C7F89C30 	 str r3,[r7,#156]
+ 110:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 111:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   /* S->pState points to buffer which contains previous frame (numTaps - 1) samples */
+ 112:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   /* pStateCurnt points to the location where the new input data should be written */
+ 113:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   pStateCurnt = &(S->pState[(numTaps - 1u)]);
+ 312              	 .loc 2 113 0
+ 313 006c FB6D     	 ldr r3,[r7,#92]
+ 314 006e 5A68     	 ldr r2,[r3,#4]
+ 315 0070 D7F89030 	 ldr r3,[r7,#144]
+ 316 0074 03F18043 	 add r3,r3,#1073741824
+ 317 0078 013B     	 subs r3,r3,#1
+ 318 007a 9B00     	 lsls r3,r3,#2
+ 319 007c 1344     	 add r3,r3,r2
+ 320 007e C7F8C030 	 str r3,[r7,#192]
+ 114:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 115:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   /* Loop over blockSize number of values */
+ 116:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   blkCnt = blockSize;
+ 321              	 .loc 2 116 0
+ 322 0082 D7F8EC30 	 ldr r3,[r7,#236]
+ 323 0086 C7F8B030 	 str r3,[r7,#176]
+ 117:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 118:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 119:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** #ifndef ARM_MATH_CM0_FAMILY
+ 120:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 121:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   /* Run the below code for Cortex-M4 and Cortex-M3 */
+ 122:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 123:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   while(blkCnt > 0u)
+ 324              	 .loc 2 123 0
+ 325 008a 14E3     	 b .L12
+ 326              	.L22:
+ 124:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   {
+ 125:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 126:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Copy the new input sample into the state buffer */
+ 127:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     *pStateCurnt++ = *pSrc;
+ 327              	 .loc 2 127 0
+ 328 008c D7F8C020 	 ldr r2,[r7,#192]
+ 329 0090 131D     	 adds r3,r2,#4
+ 330 0092 C7F8C030 	 str r3,[r7,#192]
+ 331 0096 BB6D     	 ldr r3,[r7,#88]
+ 332 0098 1B68     	 ldr r3,[r3]
+ 333 009a 1360     	 str r3,[r2]
+ 128:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 129:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Initialize pState pointer */
+ 130:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     px = pState;
+ 334              	 .loc 2 130 0
+ 335 009c D7F8C430 	 ldr r3,[r7,#196]
+ 336 00a0 C7F8BC30 	 str r3,[r7,#188]
+ 131:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 132:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Initialize coeff pointer */
+ 133:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     pb = (pCoeffs);
+ 337              	 .loc 2 133 0
+ 338 00a4 D7F89830 	 ldr r3,[r7,#152]
+ 339 00a8 C7F8B830 	 str r3,[r7,#184]
+ 134:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 135:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Read the sample from input buffer */
+ 136:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     in = *pSrc++;
+ 340              	 .loc 2 136 0
+ 341 00ac BA6D     	 ldr r2,[r7,#88]
+ 342 00ae 131D     	 adds r3,r2,#4
+ 343 00b0 BB65     	 str r3,[r7,#88]
+ 344 00b2 1368     	 ldr r3,[r2]
+ 345 00b4 BB67     	 str r3,[r7,#120]
+ 137:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 138:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Update the energy calculation */
+ 139:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     energy = (q31_t) ((((q63_t) energy << 32) -
+ 346              	 .loc 2 139 0
+ 347 00b6 D7E92A23 	 ldrd r2,[r7,#168]
+ 348 00ba 1300     	 movs r3,r2
+ 349 00bc FB64     	 str r3,[r7,#76]
+ 350 00be 0023     	 movs r3,#0
+ 351 00c0 BB64     	 str r3,[r7,#72]
+ 140:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****                        (((q63_t) x0 * x0) << 1)) >> 32);
+ 352              	 .loc 2 140 0
+ 353 00c2 D7F89C30 	 ldr r3,[r7,#156]
+ 354 00c6 1846     	 mov r0,r3
+ 355 00c8 4FEAE071 	 asr r1,r0,#31
+ 356 00cc D7F89C30 	 ldr r3,[r7,#156]
+ 357 00d0 1A46     	 mov r2,r3
+ 358 00d2 4FEAE273 	 asr r3,r2,#31
+ 359 00d6 02FB01F5 	 mul r5,r2,r1
+ 360 00da 00FB03F4 	 mul r4,r0,r3
+ 361 00de 2C44     	 add r4,r4,r5
+ 362 00e0 A0FB0201 	 umull r0,r1,r0,r2
+ 363 00e4 6318     	 adds r3,r4,r1
+ 364 00e6 1946     	 mov r1,r3
+ 365 00e8 0218     	 adds r2,r0,r0
+ 366 00ea 41EB0103 	 adc r3,r1,r1
+ 139:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****                        (((q63_t) x0 * x0) << 1)) >> 32);
+ 367              	 .loc 2 139 0
+ 368 00ee D7E91201 	 ldrd r0,[r7,#72]
+ 369 00f2 801A     	 subs r0,r0,r2
+ 370 00f4 61EB0301 	 sbc r1,r1,r3
+ 371 00f8 0246     	 mov r2,r0
+ 372 00fa 0B46     	 mov r3,r1
+ 373              	 .loc 2 140 0
+ 374 00fc 1900     	 movs r1,r3
+ 375 00fe 3964     	 str r1,[r7,#64]
+ 376 0100 DB17     	 asrs r3,r3,#31
+ 377 0102 7B64     	 str r3,[r7,#68]
+ 139:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****                        (((q63_t) x0 * x0) << 1)) >> 32);
+ 378              	 .loc 2 139 0
+ 379 0104 3B6C     	 ldr r3,[r7,#64]
+ 380 0106 1A46     	 mov r2,r3
+ 381 0108 4FEAE273 	 asr r3,r2,#31
+ 382 010c C7E92A23 	 strd r2,[r7,#168]
+ 141:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     energy = (q31_t) (((((q63_t) in * in) << 1) + (energy << 32)) >> 32);
+ 383              	 .loc 2 141 0
+ 384 0110 BB6F     	 ldr r3,[r7,#120]
+ 385 0112 1846     	 mov r0,r3
+ 386 0114 4FEAE071 	 asr r1,r0,#31
+ 387 0118 BB6F     	 ldr r3,[r7,#120]
+ 388 011a 1A46     	 mov r2,r3
+ 389 011c 4FEAE273 	 asr r3,r2,#31
+ 390 0120 02FB01F5 	 mul r5,r2,r1
+ 391 0124 00FB03F4 	 mul r4,r0,r3
+ 392 0128 2C44     	 add r4,r4,r5
+ 393 012a A0FB0201 	 umull r0,r1,r0,r2
+ 394 012e 6318     	 adds r3,r4,r1
+ 395 0130 1946     	 mov r1,r3
+ 396 0132 0218     	 adds r2,r0,r0
+ 397 0134 41EB0103 	 adc r3,r1,r1
+ 398 0138 1046     	 mov r0,r2
+ 399 013a 1946     	 mov r1,r3
+ 400 013c D7E92A23 	 ldrd r2,[r7,#168]
+ 401 0140 1300     	 movs r3,r2
+ 402 0142 FB63     	 str r3,[r7,#60]
+ 403 0144 0023     	 movs r3,#0
+ 404 0146 BB63     	 str r3,[r7,#56]
+ 405 0148 D7E90E23 	 ldrd r2,[r7,#56]
+ 406 014c 1218     	 adds r2,r2,r0
+ 407 014e 43EB0103 	 adc r3,r3,r1
+ 408 0152 1900     	 movs r1,r3
+ 409 0154 3963     	 str r1,[r7,#48]
+ 410 0156 DB17     	 asrs r3,r3,#31
+ 411 0158 7B63     	 str r3,[r7,#52]
+ 412 015a 3B6B     	 ldr r3,[r7,#48]
+ 413 015c 1A46     	 mov r2,r3
+ 414 015e 4FEAE273 	 asr r3,r2,#31
+ 415 0162 C7E92A23 	 strd r2,[r7,#168]
+ 142:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 143:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Set the accumulator to zero */
+ 144:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     acc = 0;
+ 416              	 .loc 2 144 0
+ 417 0166 4FF00002 	 mov r2,#0
+ 418 016a 4FF00003 	 mov r3,#0
+ 419 016e C7E92823 	 strd r2,[r7,#160]
+ 145:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 146:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Loop unrolling.  Process 4 taps at a time. */
+ 147:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     tapCnt = numTaps >> 2;
+ 420              	 .loc 2 147 0
+ 421 0172 D7F89030 	 ldr r3,[r7,#144]
+ 422 0176 9B08     	 lsrs r3,r3,#2
+ 423 0178 C7F8B430 	 str r3,[r7,#180]
+ 148:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 149:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     while(tapCnt > 0u)
+ 424              	 .loc 2 149 0
+ 425 017c 8CE0     	 b .L13
+ 426              	.L14:
+ 150:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     {
+ 151:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       /* Perform the multiply-accumulate */
+ 152:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       acc += ((q63_t) (*px++)) * (*pb++);
+ 427              	 .loc 2 152 0
+ 428 017e D7F8BC20 	 ldr r2,[r7,#188]
+ 429 0182 131D     	 adds r3,r2,#4
+ 430 0184 C7F8BC30 	 str r3,[r7,#188]
+ 431 0188 1368     	 ldr r3,[r2]
+ 432 018a 1C46     	 mov r4,r3
+ 433 018c 4FEAE475 	 asr r5,r4,#31
+ 434 0190 D7F8B820 	 ldr r2,[r7,#184]
+ 435 0194 131D     	 adds r3,r2,#4
+ 436 0196 C7F8B830 	 str r3,[r7,#184]
+ 437 019a 1368     	 ldr r3,[r2]
+ 438 019c 1A46     	 mov r2,r3
+ 439 019e 4FEAE273 	 asr r3,r2,#31
+ 440 01a2 02FB05F0 	 mul r0,r2,r5
+ 441 01a6 04FB03F1 	 mul r1,r4,r3
+ 442 01aa 0144     	 add r1,r1,r0
+ 443 01ac A4FB0245 	 umull r4,r5,r4,r2
+ 444 01b0 4B19     	 adds r3,r1,r5
+ 445 01b2 1D46     	 mov r5,r3
+ 446 01b4 D7E92823 	 ldrd r2,[r7,#160]
+ 447 01b8 1219     	 adds r2,r2,r4
+ 448 01ba 43EB0503 	 adc r3,r3,r5
+ 449 01be C7E92823 	 strd r2,[r7,#160]
+ 153:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       acc += ((q63_t) (*px++)) * (*pb++);
+ 450              	 .loc 2 153 0
+ 451 01c2 D7F8BC20 	 ldr r2,[r7,#188]
+ 452 01c6 131D     	 adds r3,r2,#4
+ 453 01c8 C7F8BC30 	 str r3,[r7,#188]
+ 454 01cc 1368     	 ldr r3,[r2]
+ 455 01ce 1C46     	 mov r4,r3
+ 456 01d0 4FEAE475 	 asr r5,r4,#31
+ 457 01d4 D7F8B820 	 ldr r2,[r7,#184]
+ 458 01d8 131D     	 adds r3,r2,#4
+ 459 01da C7F8B830 	 str r3,[r7,#184]
+ 460 01de 1368     	 ldr r3,[r2]
+ 461 01e0 1A46     	 mov r2,r3
+ 462 01e2 4FEAE273 	 asr r3,r2,#31
+ 463 01e6 02FB05F0 	 mul r0,r2,r5
+ 464 01ea 04FB03F1 	 mul r1,r4,r3
+ 465 01ee 0144     	 add r1,r1,r0
+ 466 01f0 A4FB0245 	 umull r4,r5,r4,r2
+ 467 01f4 4B19     	 adds r3,r1,r5
+ 468 01f6 1D46     	 mov r5,r3
+ 469 01f8 D7E92823 	 ldrd r2,[r7,#160]
+ 470 01fc 1219     	 adds r2,r2,r4
+ 471 01fe 43EB0503 	 adc r3,r3,r5
+ 472 0202 C7E92823 	 strd r2,[r7,#160]
+ 154:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       acc += ((q63_t) (*px++)) * (*pb++);
+ 473              	 .loc 2 154 0
+ 474 0206 D7F8BC20 	 ldr r2,[r7,#188]
+ 475 020a 131D     	 adds r3,r2,#4
+ 476 020c C7F8BC30 	 str r3,[r7,#188]
+ 477 0210 1368     	 ldr r3,[r2]
+ 478 0212 1C46     	 mov r4,r3
+ 479 0214 4FEAE475 	 asr r5,r4,#31
+ 480 0218 D7F8B820 	 ldr r2,[r7,#184]
+ 481 021c 131D     	 adds r3,r2,#4
+ 482 021e C7F8B830 	 str r3,[r7,#184]
+ 483 0222 1368     	 ldr r3,[r2]
+ 484 0224 1A46     	 mov r2,r3
+ 485 0226 4FEAE273 	 asr r3,r2,#31
+ 486 022a 02FB05F0 	 mul r0,r2,r5
+ 487 022e 04FB03F1 	 mul r1,r4,r3
+ 488 0232 0144     	 add r1,r1,r0
+ 489 0234 A4FB0245 	 umull r4,r5,r4,r2
+ 490 0238 4B19     	 adds r3,r1,r5
+ 491 023a 1D46     	 mov r5,r3
+ 492 023c D7E92823 	 ldrd r2,[r7,#160]
+ 493 0240 1219     	 adds r2,r2,r4
+ 494 0242 43EB0503 	 adc r3,r3,r5
+ 495 0246 C7E92823 	 strd r2,[r7,#160]
+ 155:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       acc += ((q63_t) (*px++)) * (*pb++);
+ 496              	 .loc 2 155 0
+ 497 024a D7F8BC20 	 ldr r2,[r7,#188]
+ 498 024e 131D     	 adds r3,r2,#4
+ 499 0250 C7F8BC30 	 str r3,[r7,#188]
+ 500 0254 1368     	 ldr r3,[r2]
+ 501 0256 1C46     	 mov r4,r3
+ 502 0258 4FEAE475 	 asr r5,r4,#31
+ 503 025c D7F8B820 	 ldr r2,[r7,#184]
+ 504 0260 131D     	 adds r3,r2,#4
+ 505 0262 C7F8B830 	 str r3,[r7,#184]
+ 506 0266 1368     	 ldr r3,[r2]
+ 507 0268 1A46     	 mov r2,r3
+ 508 026a 4FEAE273 	 asr r3,r2,#31
+ 509 026e 02FB05F0 	 mul r0,r2,r5
+ 510 0272 04FB03F1 	 mul r1,r4,r3
+ 511 0276 0144     	 add r1,r1,r0
+ 512 0278 A4FB0245 	 umull r4,r5,r4,r2
+ 513 027c 4B19     	 adds r3,r1,r5
+ 514 027e 1D46     	 mov r5,r3
+ 515 0280 D7E92823 	 ldrd r2,[r7,#160]
+ 516 0284 1219     	 adds r2,r2,r4
+ 517 0286 43EB0503 	 adc r3,r3,r5
+ 518 028a C7E92823 	 strd r2,[r7,#160]
+ 156:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 157:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       /* Decrement the loop counter */
+ 158:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       tapCnt--;
+ 519              	 .loc 2 158 0
+ 520 028e D7F8B430 	 ldr r3,[r7,#180]
+ 521 0292 013B     	 subs r3,r3,#1
+ 522 0294 C7F8B430 	 str r3,[r7,#180]
+ 523              	.L13:
+ 149:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     {
+ 524              	 .loc 2 149 0
+ 525 0298 D7F8B430 	 ldr r3,[r7,#180]
+ 526 029c 002B     	 cmp r3,#0
+ 527 029e 7FF46EAF 	 bne .L14
+ 159:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     }
+ 160:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 161:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
+ 162:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     tapCnt = numTaps % 0x4u;
+ 528              	 .loc 2 162 0
+ 529 02a2 D7F89030 	 ldr r3,[r7,#144]
+ 530 02a6 03F00303 	 and r3,r3,#3
+ 531 02aa C7F8B430 	 str r3,[r7,#180]
+ 163:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 164:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     while(tapCnt > 0u)
+ 532              	 .loc 2 164 0
+ 533 02ae 26E0     	 b .L15
+ 534              	.L16:
+ 165:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     {
+ 166:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       /* Perform the multiply-accumulate */
+ 167:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       acc += ((q63_t) (*px++)) * (*pb++);
+ 535              	 .loc 2 167 0
+ 536 02b0 D7F8BC20 	 ldr r2,[r7,#188]
+ 537 02b4 131D     	 adds r3,r2,#4
+ 538 02b6 C7F8BC30 	 str r3,[r7,#188]
+ 539 02ba 1368     	 ldr r3,[r2]
+ 540 02bc 1C46     	 mov r4,r3
+ 541 02be 4FEAE475 	 asr r5,r4,#31
+ 542 02c2 D7F8B820 	 ldr r2,[r7,#184]
+ 543 02c6 131D     	 adds r3,r2,#4
+ 544 02c8 C7F8B830 	 str r3,[r7,#184]
+ 545 02cc 1368     	 ldr r3,[r2]
+ 546 02ce 1A46     	 mov r2,r3
+ 547 02d0 4FEAE273 	 asr r3,r2,#31
+ 548 02d4 02FB05F0 	 mul r0,r2,r5
+ 549 02d8 04FB03F1 	 mul r1,r4,r3
+ 550 02dc 0144     	 add r1,r1,r0
+ 551 02de A4FB0245 	 umull r4,r5,r4,r2
+ 552 02e2 4B19     	 adds r3,r1,r5
+ 553 02e4 1D46     	 mov r5,r3
+ 554 02e6 D7E92823 	 ldrd r2,[r7,#160]
+ 555 02ea 1219     	 adds r2,r2,r4
+ 556 02ec 43EB0503 	 adc r3,r3,r5
+ 557 02f0 C7E92823 	 strd r2,[r7,#160]
+ 168:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 169:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       /* Decrement the loop counter */
+ 170:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       tapCnt--;
+ 558              	 .loc 2 170 0
+ 559 02f4 D7F8B430 	 ldr r3,[r7,#180]
+ 560 02f8 013B     	 subs r3,r3,#1
+ 561 02fa C7F8B430 	 str r3,[r7,#180]
+ 562              	.L15:
+ 164:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     {
+ 563              	 .loc 2 164 0
+ 564 02fe D7F8B430 	 ldr r3,[r7,#180]
+ 565 0302 002B     	 cmp r3,#0
+ 566 0304 D4D1     	 bne .L16
+ 171:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     }
+ 172:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 173:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Converting the result to 1.31 format */
+ 174:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Calc lower part of acc */
+ 175:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     acc_l = acc & 0xffffffff;
+ 567              	 .loc 2 175 0
+ 568 0306 D7F8A030 	 ldr r3,[r7,#160]
+ 569 030a 7B67     	 str r3,[r7,#116]
+ 176:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 177:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Calc upper part of acc */
+ 178:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     acc_h = (acc >> 32) & 0xffffffff;
+ 570              	 .loc 2 178 0
+ 571 030c D7E92823 	 ldrd r2,[r7,#160]
+ 572 0310 1B00     	 movs r3,r3
+ 573 0312 BB62     	 str r3,[r7,#40]
+ 574 0314 0023     	 movs r3,#0
+ 575 0316 FB62     	 str r3,[r7,#44]
+ 576 0318 BB6A     	 ldr r3,[r7,#40]
+ 577 031a 3B67     	 str r3,[r7,#112]
+ 179:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 180:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     acc = (uint32_t) acc_l >> lShift | acc_h << uShift;
+ 578              	 .loc 2 180 0
+ 579 031c 7A6F     	 ldr r2,[r7,#116]
+ 580 031e FB6F     	 ldr r3,[r7,#124]
+ 581 0320 22FA03F1 	 lsr r1,r2,r3
+ 582 0324 D7F88020 	 ldr r2,[r7,#128]
+ 583 0328 3B6F     	 ldr r3,[r7,#112]
+ 584 032a 9340     	 lsls r3,r3,r2
+ 585 032c 0B43     	 orrs r3,r3,r1
+ 586 032e 1A46     	 mov r2,r3
+ 587 0330 4FF00003 	 mov r3,#0
+ 588 0334 C7E92823 	 strd r2,[r7,#160]
+ 181:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 182:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Store the result from accumulator into the destination buffer. */
+ 183:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     *pOut++ = (q31_t) acc;
+ 589              	 .loc 2 183 0
+ 590 0338 3A6D     	 ldr r2,[r7,#80]
+ 591 033a 131D     	 adds r3,r2,#4
+ 592 033c 3B65     	 str r3,[r7,#80]
+ 593 033e D7F8A030 	 ldr r3,[r7,#160]
+ 594 0342 1360     	 str r3,[r2]
+ 184:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 185:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Compute and store error */
+ 186:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     d = *pRef++;
+ 595              	 .loc 2 186 0
+ 596 0344 7A6D     	 ldr r2,[r7,#84]
+ 597 0346 131D     	 adds r3,r2,#4
+ 598 0348 7B65     	 str r3,[r7,#84]
+ 599 034a 1368     	 ldr r3,[r2]
+ 600 034c C7F88830 	 str r3,[r7,#136]
+ 187:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     e = d - (q31_t) acc;
+ 601              	 .loc 2 187 0
+ 602 0350 D7F8A020 	 ldr r2,[r7,#160]
+ 603 0354 D7F88830 	 ldr r3,[r7,#136]
+ 604 0358 9B1A     	 subs r3,r3,r2
+ 605 035a C7F88C30 	 str r3,[r7,#140]
+ 188:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     *pErr++ = e;
+ 606              	 .loc 2 188 0
+ 607 035e D7F8E820 	 ldr r2,[r7,#232]
+ 608 0362 131D     	 adds r3,r2,#4
+ 609 0364 C7F8E830 	 str r3,[r7,#232]
+ 610 0368 D7F88C30 	 ldr r3,[r7,#140]
+ 611 036c 1360     	 str r3,[r2]
+ 189:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 190:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Calculates the reciprocal of energy */
+ 191:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     postShift = arm_recip_q31(energy + DELTA_Q31,
+ 612              	 .loc 2 191 0
+ 613 036e D7F8A830 	 ldr r3,[r7,#168]
+ 614 0372 03F58073 	 add r3,r3,#256
+ 615 0376 1946     	 mov r1,r3
+ 616 0378 FB6D     	 ldr r3,[r7,#92]
+ 617 037a 5A69     	 ldr r2,[r3,#20]
+ 618 037c 07F16003 	 add r3,r7,#96
+ 619 0380 0846     	 mov r0,r1
+ 620 0382 1946     	 mov r1,r3
+ 621 0384 FFF7FEFF 	 bl arm_recip_q31
+ 622 0388 0346     	 mov r3,r0
+ 623 038a FB66     	 str r3,[r7,#108]
+ 192:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****                               &oneByEnergy, &S->recipTable[0]);
+ 193:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 194:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Calculation of product of (e * mu) */
+ 195:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     errorXmu = (q31_t) (((q63_t) e * mu) >> 31);
+ 624              	 .loc 2 195 0
+ 625 038c D7F88C30 	 ldr r3,[r7,#140]
+ 626 0390 1846     	 mov r0,r3
+ 627 0392 4FEAE071 	 asr r1,r0,#31
+ 628 0396 D7F89430 	 ldr r3,[r7,#148]
+ 629 039a 1A46     	 mov r2,r3
+ 630 039c 4FEAE273 	 asr r3,r2,#31
+ 631 03a0 02FB01F5 	 mul r5,r2,r1
+ 632 03a4 00FB03F4 	 mul r4,r0,r3
+ 633 03a8 2C44     	 add r4,r4,r5
+ 634 03aa A0FB0223 	 umull r2,r3,r0,r2
+ 635 03ae E118     	 adds r1,r4,r3
+ 636 03b0 0B46     	 mov r3,r1
+ 637 03b2 4FEAD27A 	 lsr r10,r2,#31
+ 638 03b6 4AEA430A 	 orr r10,r10,r3,lsl#1
+ 639 03ba 4FEAE37B 	 asr fp,r3,#31
+ 640 03be 5346     	 mov r3,r10
+ 641 03c0 BB66     	 str r3,[r7,#104]
+ 196:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 197:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Weighting factor for the normalized version */
+ 198:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     w = clip_q63_to_q31(((q63_t) errorXmu * oneByEnergy) >> (31 - postShift));
+ 642              	 .loc 2 198 0
+ 643 03c2 BB6E     	 ldr r3,[r7,#104]
+ 644 03c4 1846     	 mov r0,r3
+ 645 03c6 4FEAE071 	 asr r1,r0,#31
+ 646 03ca 3B6E     	 ldr r3,[r7,#96]
+ 647 03cc 1A46     	 mov r2,r3
+ 648 03ce 4FEAE273 	 asr r3,r2,#31
+ 649 03d2 02FB01F5 	 mul r5,r2,r1
+ 650 03d6 00FB03F4 	 mul r4,r0,r3
+ 651 03da 2C44     	 add r4,r4,r5
+ 652 03dc A0FB0201 	 umull r0,r1,r0,r2
+ 653 03e0 6318     	 adds r3,r4,r1
+ 654 03e2 1946     	 mov r1,r3
+ 655 03e4 FB6E     	 ldr r3,[r7,#108]
+ 656 03e6 C3F11F04 	 rsb r4,r3,#31
+ 657 03ea C4F12003 	 rsb r3,r4,#32
+ 658 03ee B4F12002 	 subs r2,r4,#32
+ 659 03f2 20FA04F8 	 lsr r8,r0,r4
+ 660 03f6 01FA03F3 	 lsl r3,r1,r3
+ 661 03fa 48EA0308 	 orr r8,r8,r3
+ 662 03fe 03D4     	 bmi .L17
+ 663 0400 41FA02F2 	 asr r2,r1,r2
+ 664 0404 48EA0208 	 orr r8,r8,r2
+ 665              	.L17:
+ 666 0408 41FA04F9 	 asr r9,r1,r4
+ 667 040c 4046     	 mov r0,r8
+ 668 040e 4946     	 mov r1,r9
+ 669 0410 FFF7FEFF 	 bl clip_q63_to_q31
+ 670 0414 C7F88400 	 str r0,[r7,#132]
+ 199:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 200:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Initialize pState pointer */
+ 201:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     px = pState;
+ 671              	 .loc 2 201 0
+ 672 0418 D7F8C430 	 ldr r3,[r7,#196]
+ 673 041c C7F8BC30 	 str r3,[r7,#188]
+ 202:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 203:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Initialize coeff pointer */
+ 204:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     pb = (pCoeffs);
+ 674              	 .loc 2 204 0
+ 675 0420 D7F89830 	 ldr r3,[r7,#152]
+ 676 0424 C7F8B830 	 str r3,[r7,#184]
+ 205:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 206:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Loop unrolling.  Process 4 taps at a time. */
+ 207:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     tapCnt = numTaps >> 2;
+ 677              	 .loc 2 207 0
+ 678 0428 D7F89030 	 ldr r3,[r7,#144]
+ 679 042c 9B08     	 lsrs r3,r3,#2
+ 680 042e C7F8B430 	 str r3,[r7,#180]
+ 208:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 209:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Update filter coefficients */
+ 210:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     while(tapCnt > 0u)
+ 681              	 .loc 2 210 0
+ 682 0432 E4E0     	 b .L18
+ 683              	.L19:
+ 211:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     {
+ 212:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       /* Perform the multiply-accumulate */
+ 213:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 214:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       /* coef is in 2.30 format */
+ 215:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       coef = (q31_t) (((q63_t) w * (*px++)) >> (32));
+ 684              	 .loc 2 215 0
+ 685 0434 D7F88430 	 ldr r3,[r7,#132]
+ 686 0438 1C46     	 mov r4,r3
+ 687 043a 4FEAE475 	 asr r5,r4,#31
+ 688 043e D7F8BC20 	 ldr r2,[r7,#188]
+ 689 0442 131D     	 adds r3,r2,#4
+ 690 0444 C7F8BC30 	 str r3,[r7,#188]
+ 691 0448 1368     	 ldr r3,[r2]
+ 692 044a 1A46     	 mov r2,r3
+ 693 044c 4FEAE273 	 asr r3,r2,#31
+ 694 0450 02FB05F0 	 mul r0,r2,r5
+ 695 0454 04FB03F1 	 mul r1,r4,r3
+ 696 0458 0144     	 add r1,r1,r0
+ 697 045a A4FB0223 	 umull r2,r3,r4,r2
+ 698 045e 1944     	 add r1,r1,r3
+ 699 0460 0B46     	 mov r3,r1
+ 700 0462 1900     	 movs r1,r3
+ 701 0464 3962     	 str r1,[r7,#32]
+ 702 0466 DB17     	 asrs r3,r3,#31
+ 703 0468 7B62     	 str r3,[r7,#36]
+ 704 046a 3B6A     	 ldr r3,[r7,#32]
+ 705 046c 7B66     	 str r3,[r7,#100]
+ 216:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       /* get coef in 1.31 format by left shifting */
+ 217:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       *pb = clip_q63_to_q31((q63_t) * pb + (coef << 1u));
+ 706              	 .loc 2 217 0
+ 707 046e D7F8B830 	 ldr r3,[r7,#184]
+ 708 0472 1B68     	 ldr r3,[r3]
+ 709 0474 1846     	 mov r0,r3
+ 710 0476 4FEAE071 	 asr r1,r0,#31
+ 711 047a 7B6E     	 ldr r3,[r7,#100]
+ 712 047c 5B00     	 lsls r3,r3,#1
+ 713 047e 1A46     	 mov r2,r3
+ 714 0480 4FEAE273 	 asr r3,r2,#31
+ 715 0484 1218     	 adds r2,r2,r0
+ 716 0486 43EB0103 	 adc r3,r3,r1
+ 717 048a 1046     	 mov r0,r2
+ 718 048c 1946     	 mov r1,r3
+ 719 048e FFF7FEFF 	 bl clip_q63_to_q31
+ 720 0492 0246     	 mov r2,r0
+ 721 0494 D7F8B830 	 ldr r3,[r7,#184]
+ 722 0498 1A60     	 str r2,[r3]
+ 218:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       /* update coefficient buffer to next coefficient */
+ 219:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       pb++;
+ 723              	 .loc 2 219 0
+ 724 049a D7F8B830 	 ldr r3,[r7,#184]
+ 725 049e 0433     	 adds r3,r3,#4
+ 726 04a0 C7F8B830 	 str r3,[r7,#184]
+ 220:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 221:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       coef = (q31_t) (((q63_t) w * (*px++)) >> (32));
+ 727              	 .loc 2 221 0
+ 728 04a4 D7F88430 	 ldr r3,[r7,#132]
+ 729 04a8 1C46     	 mov r4,r3
+ 730 04aa 4FEAE475 	 asr r5,r4,#31
+ 731 04ae D7F8BC20 	 ldr r2,[r7,#188]
+ 732 04b2 131D     	 adds r3,r2,#4
+ 733 04b4 C7F8BC30 	 str r3,[r7,#188]
+ 734 04b8 1368     	 ldr r3,[r2]
+ 735 04ba 1A46     	 mov r2,r3
+ 736 04bc 4FEAE273 	 asr r3,r2,#31
+ 737 04c0 02FB05F0 	 mul r0,r2,r5
+ 738 04c4 04FB03F1 	 mul r1,r4,r3
+ 739 04c8 0144     	 add r1,r1,r0
+ 740 04ca A4FB0223 	 umull r2,r3,r4,r2
+ 741 04ce 1944     	 add r1,r1,r3
+ 742 04d0 0B46     	 mov r3,r1
+ 743 04d2 1900     	 movs r1,r3
+ 744 04d4 B961     	 str r1,[r7,#24]
+ 745 04d6 DB17     	 asrs r3,r3,#31
+ 746 04d8 FB61     	 str r3,[r7,#28]
+ 747 04da BB69     	 ldr r3,[r7,#24]
+ 748 04dc 7B66     	 str r3,[r7,#100]
+ 222:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       *pb = clip_q63_to_q31((q63_t) * pb + (coef << 1u));
+ 749              	 .loc 2 222 0
+ 750 04de D7F8B830 	 ldr r3,[r7,#184]
+ 751 04e2 1B68     	 ldr r3,[r3]
+ 752 04e4 1846     	 mov r0,r3
+ 753 04e6 4FEAE071 	 asr r1,r0,#31
+ 754 04ea 7B6E     	 ldr r3,[r7,#100]
+ 755 04ec 5B00     	 lsls r3,r3,#1
+ 756 04ee 1A46     	 mov r2,r3
+ 757 04f0 4FEAE273 	 asr r3,r2,#31
+ 758 04f4 1218     	 adds r2,r2,r0
+ 759 04f6 43EB0103 	 adc r3,r3,r1
+ 760 04fa 1046     	 mov r0,r2
+ 761 04fc 1946     	 mov r1,r3
+ 762 04fe FFF7FEFF 	 bl clip_q63_to_q31
+ 763 0502 0246     	 mov r2,r0
+ 764 0504 D7F8B830 	 ldr r3,[r7,#184]
+ 765 0508 1A60     	 str r2,[r3]
+ 223:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       pb++;
+ 766              	 .loc 2 223 0
+ 767 050a D7F8B830 	 ldr r3,[r7,#184]
+ 768 050e 0433     	 adds r3,r3,#4
+ 769 0510 C7F8B830 	 str r3,[r7,#184]
+ 224:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 225:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       coef = (q31_t) (((q63_t) w * (*px++)) >> (32));
+ 770              	 .loc 2 225 0
+ 771 0514 D7F88430 	 ldr r3,[r7,#132]
+ 772 0518 1C46     	 mov r4,r3
+ 773 051a 4FEAE475 	 asr r5,r4,#31
+ 774 051e D7F8BC20 	 ldr r2,[r7,#188]
+ 775 0522 131D     	 adds r3,r2,#4
+ 776 0524 C7F8BC30 	 str r3,[r7,#188]
+ 777 0528 1368     	 ldr r3,[r2]
+ 778 052a 1A46     	 mov r2,r3
+ 779 052c 4FEAE273 	 asr r3,r2,#31
+ 780 0530 02FB05F0 	 mul r0,r2,r5
+ 781 0534 04FB03F1 	 mul r1,r4,r3
+ 782 0538 0144     	 add r1,r1,r0
+ 783 053a A4FB0223 	 umull r2,r3,r4,r2
+ 784 053e 1944     	 add r1,r1,r3
+ 785 0540 0B46     	 mov r3,r1
+ 786 0542 1900     	 movs r1,r3
+ 787 0544 3961     	 str r1,[r7,#16]
+ 788 0546 DB17     	 asrs r3,r3,#31
+ 789 0548 7B61     	 str r3,[r7,#20]
+ 790 054a 3B69     	 ldr r3,[r7,#16]
+ 791 054c 7B66     	 str r3,[r7,#100]
+ 226:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       *pb = clip_q63_to_q31((q63_t) * pb + (coef << 1u));
+ 792              	 .loc 2 226 0
+ 793 054e D7F8B830 	 ldr r3,[r7,#184]
+ 794 0552 1B68     	 ldr r3,[r3]
+ 795 0554 1846     	 mov r0,r3
+ 796 0556 4FEAE071 	 asr r1,r0,#31
+ 797 055a 7B6E     	 ldr r3,[r7,#100]
+ 798 055c 5B00     	 lsls r3,r3,#1
+ 799 055e 1A46     	 mov r2,r3
+ 800 0560 4FEAE273 	 asr r3,r2,#31
+ 801 0564 1218     	 adds r2,r2,r0
+ 802 0566 43EB0103 	 adc r3,r3,r1
+ 803 056a 1046     	 mov r0,r2
+ 804 056c 1946     	 mov r1,r3
+ 805 056e FFF7FEFF 	 bl clip_q63_to_q31
+ 806 0572 0246     	 mov r2,r0
+ 807 0574 D7F8B830 	 ldr r3,[r7,#184]
+ 808 0578 1A60     	 str r2,[r3]
+ 227:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       pb++;
+ 809              	 .loc 2 227 0
+ 810 057a D7F8B830 	 ldr r3,[r7,#184]
+ 811 057e 0433     	 adds r3,r3,#4
+ 812 0580 C7F8B830 	 str r3,[r7,#184]
+ 228:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 229:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       coef = (q31_t) (((q63_t) w * (*px++)) >> (32));
+ 813              	 .loc 2 229 0
+ 814 0584 D7F88430 	 ldr r3,[r7,#132]
+ 815 0588 1C46     	 mov r4,r3
+ 816 058a 4FEAE475 	 asr r5,r4,#31
+ 817 058e D7F8BC20 	 ldr r2,[r7,#188]
+ 818 0592 131D     	 adds r3,r2,#4
+ 819 0594 C7F8BC30 	 str r3,[r7,#188]
+ 820 0598 1368     	 ldr r3,[r2]
+ 821 059a 1A46     	 mov r2,r3
+ 822 059c 4FEAE273 	 asr r3,r2,#31
+ 823 05a0 02FB05F0 	 mul r0,r2,r5
+ 824 05a4 04FB03F1 	 mul r1,r4,r3
+ 825 05a8 0144     	 add r1,r1,r0
+ 826 05aa A4FB0223 	 umull r2,r3,r4,r2
+ 827 05ae 1944     	 add r1,r1,r3
+ 828 05b0 0B46     	 mov r3,r1
+ 829 05b2 1900     	 movs r1,r3
+ 830 05b4 B960     	 str r1,[r7,#8]
+ 831 05b6 DB17     	 asrs r3,r3,#31
+ 832 05b8 FB60     	 str r3,[r7,#12]
+ 833 05ba BB68     	 ldr r3,[r7,#8]
+ 834 05bc 7B66     	 str r3,[r7,#100]
+ 230:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       *pb = clip_q63_to_q31((q63_t) * pb + (coef << 1u));
+ 835              	 .loc 2 230 0
+ 836 05be D7F8B830 	 ldr r3,[r7,#184]
+ 837 05c2 1B68     	 ldr r3,[r3]
+ 838 05c4 1846     	 mov r0,r3
+ 839 05c6 4FEAE071 	 asr r1,r0,#31
+ 840 05ca 7B6E     	 ldr r3,[r7,#100]
+ 841 05cc 5B00     	 lsls r3,r3,#1
+ 842 05ce 1A46     	 mov r2,r3
+ 843 05d0 4FEAE273 	 asr r3,r2,#31
+ 844 05d4 1218     	 adds r2,r2,r0
+ 845 05d6 43EB0103 	 adc r3,r3,r1
+ 846 05da 1046     	 mov r0,r2
+ 847 05dc 1946     	 mov r1,r3
+ 848 05de FFF7FEFF 	 bl clip_q63_to_q31
+ 849 05e2 0246     	 mov r2,r0
+ 850 05e4 D7F8B830 	 ldr r3,[r7,#184]
+ 851 05e8 1A60     	 str r2,[r3]
+ 231:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       pb++;
+ 852              	 .loc 2 231 0
+ 853 05ea D7F8B830 	 ldr r3,[r7,#184]
+ 854 05ee 0433     	 adds r3,r3,#4
+ 855 05f0 C7F8B830 	 str r3,[r7,#184]
+ 232:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 233:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       /* Decrement the loop counter */
+ 234:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       tapCnt--;
+ 856              	 .loc 2 234 0
+ 857 05f4 D7F8B430 	 ldr r3,[r7,#180]
+ 858 05f8 013B     	 subs r3,r3,#1
+ 859 05fa C7F8B430 	 str r3,[r7,#180]
+ 860              	.L18:
+ 210:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     {
+ 861              	 .loc 2 210 0
+ 862 05fe D7F8B430 	 ldr r3,[r7,#180]
+ 863 0602 002B     	 cmp r3,#0
+ 864 0604 7FF416AF 	 bne .L19
+ 235:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     }
+ 236:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 237:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
+ 238:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     tapCnt = numTaps % 0x4u;
+ 865              	 .loc 2 238 0
+ 866 0608 D7F89030 	 ldr r3,[r7,#144]
+ 867 060c 03F00303 	 and r3,r3,#3
+ 868 0610 C7F8B430 	 str r3,[r7,#180]
+ 239:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 240:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     while(tapCnt > 0u)
+ 869              	 .loc 2 240 0
+ 870 0614 3CE0     	 b .L20
+ 871              	.L21:
+ 241:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     {
+ 242:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       /* Perform the multiply-accumulate */
+ 243:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       coef = (q31_t) (((q63_t) w * (*px++)) >> (32));
+ 872              	 .loc 2 243 0
+ 873 0616 D7F88430 	 ldr r3,[r7,#132]
+ 874 061a 1C46     	 mov r4,r3
+ 875 061c 4FEAE475 	 asr r5,r4,#31
+ 876 0620 D7F8BC20 	 ldr r2,[r7,#188]
+ 877 0624 131D     	 adds r3,r2,#4
+ 878 0626 C7F8BC30 	 str r3,[r7,#188]
+ 879 062a 1368     	 ldr r3,[r2]
+ 880 062c 1A46     	 mov r2,r3
+ 881 062e 4FEAE273 	 asr r3,r2,#31
+ 882 0632 02FB05F0 	 mul r0,r2,r5
+ 883 0636 04FB03F1 	 mul r1,r4,r3
+ 884 063a 0144     	 add r1,r1,r0
+ 885 063c A4FB0223 	 umull r2,r3,r4,r2
+ 886 0640 1944     	 add r1,r1,r3
+ 887 0642 0B46     	 mov r3,r1
+ 888 0644 1900     	 movs r1,r3
+ 889 0646 3960     	 str r1,[r7]
+ 890 0648 DB17     	 asrs r3,r3,#31
+ 891 064a 7B60     	 str r3,[r7,#4]
+ 892 064c 3B68     	 ldr r3,[r7]
+ 893 064e 7B66     	 str r3,[r7,#100]
+ 244:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       *pb = clip_q63_to_q31((q63_t) * pb + (coef << 1u));
+ 894              	 .loc 2 244 0
+ 895 0650 D7F8B830 	 ldr r3,[r7,#184]
+ 896 0654 1B68     	 ldr r3,[r3]
+ 897 0656 1846     	 mov r0,r3
+ 898 0658 4FEAE071 	 asr r1,r0,#31
+ 899 065c 7B6E     	 ldr r3,[r7,#100]
+ 900 065e 5B00     	 lsls r3,r3,#1
+ 901 0660 1A46     	 mov r2,r3
+ 902 0662 4FEAE273 	 asr r3,r2,#31
+ 903 0666 1218     	 adds r2,r2,r0
+ 904 0668 43EB0103 	 adc r3,r3,r1
+ 905 066c 1046     	 mov r0,r2
+ 906 066e 1946     	 mov r1,r3
+ 907 0670 FFF7FEFF 	 bl clip_q63_to_q31
+ 908 0674 0246     	 mov r2,r0
+ 909 0676 D7F8B830 	 ldr r3,[r7,#184]
+ 910 067a 1A60     	 str r2,[r3]
+ 245:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       pb++;
+ 911              	 .loc 2 245 0
+ 912 067c D7F8B830 	 ldr r3,[r7,#184]
+ 913 0680 0433     	 adds r3,r3,#4
+ 914 0682 C7F8B830 	 str r3,[r7,#184]
+ 246:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 247:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       /* Decrement the loop counter */
+ 248:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       tapCnt--;
+ 915              	 .loc 2 248 0
+ 916 0686 D7F8B430 	 ldr r3,[r7,#180]
+ 917 068a 013B     	 subs r3,r3,#1
+ 918 068c C7F8B430 	 str r3,[r7,#180]
+ 919              	.L20:
+ 240:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     {
+ 920              	 .loc 2 240 0
+ 921 0690 D7F8B430 	 ldr r3,[r7,#180]
+ 922 0694 002B     	 cmp r3,#0
+ 923 0696 BED1     	 bne .L21
+ 249:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     }
+ 250:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 251:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Read the sample from state buffer */
+ 252:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     x0 = *pState;
+ 924              	 .loc 2 252 0
+ 925 0698 D7F8C430 	 ldr r3,[r7,#196]
+ 926 069c 1B68     	 ldr r3,[r3]
+ 927 069e C7F89C30 	 str r3,[r7,#156]
+ 253:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 254:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Advance state pointer by 1 for the next sample */
+ 255:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     pState = pState + 1;
+ 928              	 .loc 2 255 0
+ 929 06a2 D7F8C430 	 ldr r3,[r7,#196]
+ 930 06a6 0433     	 adds r3,r3,#4
+ 931 06a8 C7F8C430 	 str r3,[r7,#196]
+ 256:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 257:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Decrement the loop counter */
+ 258:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     blkCnt--;
+ 932              	 .loc 2 258 0
+ 933 06ac D7F8B030 	 ldr r3,[r7,#176]
+ 934 06b0 013B     	 subs r3,r3,#1
+ 935 06b2 C7F8B030 	 str r3,[r7,#176]
+ 936              	.L12:
+ 123:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   {
+ 937              	 .loc 2 123 0
+ 938 06b6 D7F8B030 	 ldr r3,[r7,#176]
+ 939 06ba 002B     	 cmp r3,#0
+ 940 06bc 7FF4E6AC 	 bne .L22
+ 259:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   }
+ 260:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 261:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   /* Save energy and x0 values for the next frame */
+ 262:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   S->energy = (q31_t) energy;
+ 941              	 .loc 2 262 0
+ 942 06c0 D7F8A820 	 ldr r2,[r7,#168]
+ 943 06c4 FB6D     	 ldr r3,[r7,#92]
+ 944 06c6 9A61     	 str r2,[r3,#24]
+ 263:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   S->x0 = x0;
+ 945              	 .loc 2 263 0
+ 946 06c8 FB6D     	 ldr r3,[r7,#92]
+ 947 06ca D7F89C20 	 ldr r2,[r7,#156]
+ 948 06ce DA61     	 str r2,[r3,#28]
+ 264:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 265:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   /* Processing is complete. Now copy the last numTaps - 1 samples to the    
+ 266:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****      satrt of the state buffer. This prepares the state buffer for the    
+ 267:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****      next function call. */
+ 268:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 269:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   /* Points to the start of the pState buffer */
+ 270:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   pStateCurnt = S->pState;
+ 949              	 .loc 2 270 0
+ 950 06d0 FB6D     	 ldr r3,[r7,#92]
+ 951 06d2 5B68     	 ldr r3,[r3,#4]
+ 952 06d4 C7F8C030 	 str r3,[r7,#192]
+ 271:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 272:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   /* Loop unrolling for (numTaps - 1u) samples copy */
+ 273:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   tapCnt = (numTaps - 1u) >> 2u;
+ 953              	 .loc 2 273 0
+ 954 06d8 D7F89030 	 ldr r3,[r7,#144]
+ 955 06dc 013B     	 subs r3,r3,#1
+ 956 06de 9B08     	 lsrs r3,r3,#2
+ 957 06e0 C7F8B430 	 str r3,[r7,#180]
+ 274:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 275:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   /* copy data */
+ 276:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   while(tapCnt > 0u)
+ 958              	 .loc 2 276 0
+ 959 06e4 34E0     	 b .L23
+ 960              	.L24:
+ 277:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   {
+ 278:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     *pStateCurnt++ = *pState++;
+ 961              	 .loc 2 278 0
+ 962 06e6 D7F8C030 	 ldr r3,[r7,#192]
+ 963 06ea 1A1D     	 adds r2,r3,#4
+ 964 06ec C7F8C020 	 str r2,[r7,#192]
+ 965 06f0 D7F8C420 	 ldr r2,[r7,#196]
+ 966 06f4 111D     	 adds r1,r2,#4
+ 967 06f6 C7F8C410 	 str r1,[r7,#196]
+ 968 06fa 1268     	 ldr r2,[r2]
+ 969 06fc 1A60     	 str r2,[r3]
+ 279:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     *pStateCurnt++ = *pState++;
+ 970              	 .loc 2 279 0
+ 971 06fe D7F8C030 	 ldr r3,[r7,#192]
+ 972 0702 1A1D     	 adds r2,r3,#4
+ 973 0704 C7F8C020 	 str r2,[r7,#192]
+ 974 0708 D7F8C420 	 ldr r2,[r7,#196]
+ 975 070c 111D     	 adds r1,r2,#4
+ 976 070e C7F8C410 	 str r1,[r7,#196]
+ 977 0712 1268     	 ldr r2,[r2]
+ 978 0714 1A60     	 str r2,[r3]
+ 280:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     *pStateCurnt++ = *pState++;
+ 979              	 .loc 2 280 0
+ 980 0716 D7F8C030 	 ldr r3,[r7,#192]
+ 981 071a 1A1D     	 adds r2,r3,#4
+ 982 071c C7F8C020 	 str r2,[r7,#192]
+ 983 0720 D7F8C420 	 ldr r2,[r7,#196]
+ 984 0724 111D     	 adds r1,r2,#4
+ 985 0726 C7F8C410 	 str r1,[r7,#196]
+ 986 072a 1268     	 ldr r2,[r2]
+ 987 072c 1A60     	 str r2,[r3]
+ 281:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     *pStateCurnt++ = *pState++;
+ 988              	 .loc 2 281 0
+ 989 072e D7F8C030 	 ldr r3,[r7,#192]
+ 990 0732 1A1D     	 adds r2,r3,#4
+ 991 0734 C7F8C020 	 str r2,[r7,#192]
+ 992 0738 D7F8C420 	 ldr r2,[r7,#196]
+ 993 073c 111D     	 adds r1,r2,#4
+ 994 073e C7F8C410 	 str r1,[r7,#196]
+ 995 0742 1268     	 ldr r2,[r2]
+ 996 0744 1A60     	 str r2,[r3]
+ 282:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 283:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Decrement the loop counter */
+ 284:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     tapCnt--;
+ 997              	 .loc 2 284 0
+ 998 0746 D7F8B430 	 ldr r3,[r7,#180]
+ 999 074a 013B     	 subs r3,r3,#1
+ 1000 074c C7F8B430 	 str r3,[r7,#180]
+ 1001              	.L23:
+ 276:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   {
+ 1002              	 .loc 2 276 0
+ 1003 0750 D7F8B430 	 ldr r3,[r7,#180]
+ 1004 0754 002B     	 cmp r3,#0
+ 1005 0756 C6D1     	 bne .L24
+ 285:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   }
+ 286:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 287:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   /* Calculate remaining number of copies */
+ 288:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   tapCnt = (numTaps - 1u) % 0x4u;
+ 1006              	 .loc 2 288 0
+ 1007 0758 D7F89030 	 ldr r3,[r7,#144]
+ 1008 075c 013B     	 subs r3,r3,#1
+ 1009 075e 03F00303 	 and r3,r3,#3
+ 1010 0762 C7F8B430 	 str r3,[r7,#180]
+ 289:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 290:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   /* Copy the remaining q31_t data */
+ 291:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   while(tapCnt > 0u)
+ 1011              	 .loc 2 291 0
+ 1012 0766 10E0     	 b .L25
+ 1013              	.L26:
+ 292:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   {
+ 293:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     *pStateCurnt++ = *pState++;
+ 1014              	 .loc 2 293 0
+ 1015 0768 D7F8C030 	 ldr r3,[r7,#192]
+ 1016 076c 1A1D     	 adds r2,r3,#4
+ 1017 076e C7F8C020 	 str r2,[r7,#192]
+ 1018 0772 D7F8C420 	 ldr r2,[r7,#196]
+ 1019 0776 111D     	 adds r1,r2,#4
+ 1020 0778 C7F8C410 	 str r1,[r7,#196]
+ 1021 077c 1268     	 ldr r2,[r2]
+ 1022 077e 1A60     	 str r2,[r3]
+ 294:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 295:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Decrement the loop counter */
+ 296:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     tapCnt--;
+ 1023              	 .loc 2 296 0
+ 1024 0780 D7F8B430 	 ldr r3,[r7,#180]
+ 1025 0784 013B     	 subs r3,r3,#1
+ 1026 0786 C7F8B430 	 str r3,[r7,#180]
+ 1027              	.L25:
+ 291:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   {
+ 1028              	 .loc 2 291 0
+ 1029 078a D7F8B430 	 ldr r3,[r7,#180]
+ 1030 078e 002B     	 cmp r3,#0
+ 1031 0790 EAD1     	 bne .L26
+ 297:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   }
+ 298:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 299:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** #else
+ 300:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 301:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   /* Run the below code for Cortex-M0 */
+ 302:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 303:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   while(blkCnt > 0u)
+ 304:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   {
+ 305:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 306:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Copy the new input sample into the state buffer */
+ 307:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     *pStateCurnt++ = *pSrc;
+ 308:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 309:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Initialize pState pointer */
+ 310:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     px = pState;
+ 311:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 312:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Initialize pCoeffs pointer */
+ 313:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     pb = pCoeffs;
+ 314:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 315:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Read the sample from input buffer */
+ 316:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     in = *pSrc++;
+ 317:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 318:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Update the energy calculation */
+ 319:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     energy =
+ 320:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       (q31_t) ((((q63_t) energy << 32) - (((q63_t) x0 * x0) << 1)) >> 32);
+ 321:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     energy = (q31_t) (((((q63_t) in * in) << 1) + (energy << 32)) >> 32);
+ 322:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 323:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Set the accumulator to zero */
+ 324:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     acc = 0;
+ 325:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 326:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Loop over numTaps number of values */
+ 327:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     tapCnt = numTaps;
+ 328:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 329:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     while(tapCnt > 0u)
+ 330:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     {
+ 331:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       /* Perform the multiply-accumulate */
+ 332:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       acc += ((q63_t) (*px++)) * (*pb++);
+ 333:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 334:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       /* Decrement the loop counter */
+ 335:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       tapCnt--;
+ 336:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     }
+ 337:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 338:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Converting the result to 1.31 format */
+ 339:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Converting the result to 1.31 format */
+ 340:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Calc lower part of acc */
+ 341:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     acc_l = acc & 0xffffffff;
+ 342:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 343:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Calc upper part of acc */
+ 344:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     acc_h = (acc >> 32) & 0xffffffff;
+ 345:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 346:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     acc = (uint32_t) acc_l >> lShift | acc_h << uShift;
+ 347:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 348:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 349:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     //acc = (q31_t) (acc >> shift); 
+ 350:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 351:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Store the result from accumulator into the destination buffer. */
+ 352:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     *pOut++ = (q31_t) acc;
+ 353:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 354:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Compute and store error */
+ 355:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     d = *pRef++;
+ 356:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     e = d - (q31_t) acc;
+ 357:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     *pErr++ = e;
+ 358:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 359:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Calculates the reciprocal of energy */
+ 360:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     postShift =
+ 361:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       arm_recip_q31(energy + DELTA_Q31, &oneByEnergy, &S->recipTable[0]);
+ 362:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 363:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Calculation of product of (e * mu) */
+ 364:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     errorXmu = (q31_t) (((q63_t) e * mu) >> 31);
+ 365:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 366:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Weighting factor for the normalized version */
+ 367:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     w = clip_q63_to_q31(((q63_t) errorXmu * oneByEnergy) >> (31 - postShift));
+ 368:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 369:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Initialize pState pointer */
+ 370:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     px = pState;
+ 371:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 372:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Initialize coeff pointer */
+ 373:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     pb = (pCoeffs);
+ 374:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 375:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Loop over numTaps number of values */
+ 376:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     tapCnt = numTaps;
+ 377:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 378:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     while(tapCnt > 0u)
+ 379:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     {
+ 380:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       /* Perform the multiply-accumulate */
+ 381:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       /* coef is in 2.30 format */
+ 382:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       coef = (q31_t) (((q63_t) w * (*px++)) >> (32));
+ 383:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       /* get coef in 1.31 format by left shifting */
+ 384:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       *pb = clip_q63_to_q31((q63_t) * pb + (coef << 1u));
+ 385:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       /* update coefficient buffer to next coefficient */
+ 386:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       pb++;
+ 387:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 388:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       /* Decrement the loop counter */
+ 389:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****       tapCnt--;
+ 390:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     }
+ 391:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 392:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Read the sample from state buffer */
+ 393:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     x0 = *pState;
+ 394:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 395:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Advance state pointer by 1 for the next sample */
+ 396:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     pState = pState + 1;
+ 397:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 398:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Decrement the loop counter */
+ 399:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     blkCnt--;
+ 400:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   }
+ 401:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 402:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   /* Save energy and x0 values for the next frame */
+ 403:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   S->energy = (q31_t) energy;
+ 404:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   S->x0 = x0;
+ 405:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 406:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   /* Processing is complete. Now copy the last numTaps - 1 samples to the     
+ 407:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****      start of the state buffer. This prepares the state buffer for the        
+ 408:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****      next function call. */
+ 409:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 410:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   /* Points to the start of the pState buffer */
+ 411:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   pStateCurnt = S->pState;
+ 412:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 413:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   /* Loop for (numTaps - 1u) samples copy */
+ 414:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   tapCnt = (numTaps - 1u);
+ 415:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 416:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   /* Copy the remaining q31_t data */
+ 417:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   while(tapCnt > 0u)
+ 418:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   {
+ 419:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     *pStateCurnt++ = *pState++;
+ 420:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 421:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     /* Decrement the loop counter */
+ 422:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****     tapCnt--;
+ 423:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c ****   }
+ 424:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 425:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** #endif /*   #ifndef ARM_MATH_CM0_FAMILY */
+ 426:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** 
+ 427:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_norm_q31.c **** }
+ 1032              	 .loc 2 427 0
+ 1033 0792 C837     	 adds r7,r7,#200
+ 1034              	.LCFI14:
+ 1035              	 .cfi_def_cfa_offset 32
+ 1036 0794 BD46     	 mov sp,r7
+ 1037              	.LCFI15:
+ 1038              	 .cfi_def_cfa_register 13
+ 1039              	 
+ 1040 0796 BDE8B08F 	 pop {r4,r5,r7,r8,r9,r10,fp,pc}
+ 1041              	 .cfi_endproc
+ 1042              	.LFE139:
+ 1044 079a 00BF     	 .text
+ 1045              	.Letext0:
+ 1046              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 1047              	 .file 4 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_lms_norm_q31.c
+    {standard input}:20     .text.clip_q63_to_q31:00000000 $t
+    {standard input}:24     .text.clip_q63_to_q31:00000000 clip_q63_to_q31
+    {standard input}:91     .text.arm_recip_q31:00000000 $t
+    {standard input}:95     .text.arm_recip_q31:00000000 arm_recip_q31
+    {standard input}:236    .text.arm_lms_norm_q31:00000000 $t
+    {standard input}:241    .text.arm_lms_norm_q31:00000000 arm_lms_norm_q31
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

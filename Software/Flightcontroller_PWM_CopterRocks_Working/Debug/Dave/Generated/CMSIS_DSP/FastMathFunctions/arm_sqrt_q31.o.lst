@@ -1,0 +1,593 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_sqrt_q31.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.arm_sqrt_q31,"ax",%progbits
+  20              	 .align 2
+  21              	 .global arm_sqrt_q31
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	arm_sqrt_q31:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c"
+   1:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** /* ----------------------------------------------------------------------     
+   2:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.  
+   3:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** *     
+   4:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * $Date:        12. March 2014
+   5:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * $Revision: 	V1.4.4
+   6:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** *     
+   7:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * Project:      CMSIS DSP Library  
+   8:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * Title:		arm_sqrt_q31.c     
+   9:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** *     
+  10:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * Description:	Q31 square root function.    
+  11:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** *     
+  12:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** *
+  27:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * POSSIBILITY OF SUCH DAMAGE. 
+  39:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** * -------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  41:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** #include "CMSIS_DSP/arm_common_tables.h"
+  42:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** 
+  43:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** /**     
+  44:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****  * @ingroup groupFastMath     
+  45:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****  */
+  46:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** 
+  47:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** /**     
+  48:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****  * @addtogroup SQRT     
+  49:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****  * @{     
+  50:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****  */
+  51:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** 
+  52:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** /**    
+  53:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****  * @brief Q31 square root function.    
+  54:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****  * @param[in]   in    input value.  The range of the input value is [0 +1) or 0x00000000 to 0x7FFFF
+  55:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****  * @param[out]  *pOut square root of input value.    
+  56:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****  * @return The function returns ARM_MATH_SUCCESS if the input value is positive
+  57:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****  * and ARM_MATH_ARGUMENT_ERROR if the input is negative.  For
+  58:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****  * negative inputs, the function returns *pOut = 0.
+  59:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****  */
+  60:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** 
+  61:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** arm_status arm_sqrt_q31(
+  62:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****   q31_t in,
+  63:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****   q31_t * pOut)
+  64:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** {
+  28              	 .loc 1 64 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32 0000 2DE9F04F 	 push {r4,r5,r6,r7,r8,r9,r10,fp,lr}
+  33              	.LCFI0:
+  34              	 .cfi_def_cfa_offset 36
+  35              	 .cfi_offset 4,-36
+  36              	 .cfi_offset 5,-32
+  37              	 .cfi_offset 6,-28
+  38              	 .cfi_offset 7,-24
+  39              	 .cfi_offset 8,-20
+  40              	 .cfi_offset 9,-16
+  41              	 .cfi_offset 10,-12
+  42              	 .cfi_offset 11,-8
+  43              	 .cfi_offset 14,-4
+  44 0004 9DB0     	 sub sp,sp,#116
+  45              	.LCFI1:
+  46              	 .cfi_def_cfa_offset 152
+  47 0006 00AF     	 add r7,sp,#0
+  48              	.LCFI2:
+  49              	 .cfi_def_cfa_register 7
+  50 0008 F864     	 str r0,[r7,#76]
+  51 000a B964     	 str r1,[r7,#72]
+  65:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****   q31_t number, temp1, bits_val1, var1, signBits1, half;
+  66:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****   float32_t temp_float1;
+  67:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****   union
+  68:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****   {
+  69:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****       q31_t fracval;
+  70:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****       float32_t floatval;
+  71:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****   } tempconv;
+  72:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** 
+  73:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****   number = in;
+  52              	 .loc 1 73 0
+  53 000c FB6C     	 ldr r3,[r7,#76]
+  54 000e FB66     	 str r3,[r7,#108]
+  74:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** 
+  75:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****   /* If the input is a positive number then compute the signBits. */
+  76:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****   if(number > 0)
+  55              	 .loc 1 76 0
+  56 0010 FB6E     	 ldr r3,[r7,#108]
+  57 0012 002B     	 cmp r3,#0
+  58 0014 40F36381 	 ble .L2
+  77:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****   {
+  78:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     signBits1 = __CLZ(number) - 1;
+  59              	 .loc 1 78 0
+  60 0018 FB6E     	 ldr r3,[r7,#108]
+  61 001a B3FA83F3 	 clz r3,r3
+  62 001e 013B     	 subs r3,r3,#1
+  63 0020 7B66     	 str r3,[r7,#100]
+  79:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** 
+  80:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     /* Shift by the number of signBits1 */
+  81:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     if((signBits1 % 2) == 0)
+  64              	 .loc 1 81 0
+  65 0022 7B6E     	 ldr r3,[r7,#100]
+  66 0024 03F00103 	 and r3,r3,#1
+  67 0028 002B     	 cmp r3,#0
+  68 002a 05D1     	 bne .L3
+  82:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     {
+  83:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****       number = number << signBits1;
+  69              	 .loc 1 83 0
+  70 002c FA6E     	 ldr r2,[r7,#108]
+  71 002e 7B6E     	 ldr r3,[r7,#100]
+  72 0030 02FA03F3 	 lsl r3,r2,r3
+  73 0034 FB66     	 str r3,[r7,#108]
+  74 0036 04E0     	 b .L4
+  75              	.L3:
+  84:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     }
+  85:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     else
+  86:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     {
+  87:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****       number = number << (signBits1 - 1);
+  76              	 .loc 1 87 0
+  77 0038 7B6E     	 ldr r3,[r7,#100]
+  78 003a 5A1E     	 subs r2,r3,#1
+  79 003c FB6E     	 ldr r3,[r7,#108]
+  80 003e 9340     	 lsls r3,r3,r2
+  81 0040 FB66     	 str r3,[r7,#108]
+  82              	.L4:
+  88:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     }
+  89:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** 
+  90:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     /* Calculate half value of the number */
+  91:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     half = number >> 1;
+  83              	 .loc 1 91 0
+  84 0042 FB6E     	 ldr r3,[r7,#108]
+  85 0044 5B10     	 asrs r3,r3,#1
+  86 0046 3B66     	 str r3,[r7,#96]
+  92:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     /* Store the number for later use */
+  93:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     temp1 = number;
+  87              	 .loc 1 93 0
+  88 0048 FB6E     	 ldr r3,[r7,#108]
+  89 004a FB65     	 str r3,[r7,#92]
+  94:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** 
+  95:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     /*Convert to float */
+  96:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     temp_float1 = number * 4.6566128731e-010f;
+  90              	 .loc 1 96 0
+  91 004c FB6E     	 ldr r3,[r7,#108]
+  92 004e 07EE903A 	 fmsr s15,r3
+  93 0052 F8EEE77A 	 fsitos s15,s15
+  94 0056 9FEDA77A 	 flds s14,.L9
+  95 005a 67EE877A 	 fmuls s15,s15,s14
+  96 005e C7ED167A 	 fsts s15,[r7,#88]
+  97:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     /*Store as integer */
+  98:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     tempconv.floatval = temp_float1;
+  97              	 .loc 1 98 0
+  98 0062 BB6D     	 ldr r3,[r7,#88]
+  99 0064 3B65     	 str r3,[r7,#80]
+  99:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     bits_val1 = tempconv.fracval;
+ 100              	 .loc 1 99 0
+ 101 0066 3B6D     	 ldr r3,[r7,#80]
+ 102 0068 7B65     	 str r3,[r7,#84]
+ 100:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     /* Subtract the shifted value from the magic number to give intial guess */
+ 101:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     bits_val1 = 0x5f3759df - (bits_val1 >> 1);  // gives initial guess  
+ 103              	 .loc 1 101 0
+ 104 006a 7B6D     	 ldr r3,[r7,#84]
+ 105 006c 5A10     	 asrs r2,r3,#1
+ 106 006e A24B     	 ldr r3,.L9+4
+ 107 0070 9B1A     	 subs r3,r3,r2
+ 108 0072 7B65     	 str r3,[r7,#84]
+ 102:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     /* Store as float */
+ 103:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     tempconv.fracval = bits_val1;
+ 109              	 .loc 1 103 0
+ 110 0074 7B6D     	 ldr r3,[r7,#84]
+ 111 0076 3B65     	 str r3,[r7,#80]
+ 104:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     temp_float1 = tempconv.floatval;
+ 112              	 .loc 1 104 0
+ 113 0078 3B6D     	 ldr r3,[r7,#80]
+ 114 007a BB65     	 str r3,[r7,#88]
+ 105:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     /* Convert to integer format */
+ 106:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     var1 = (q31_t) (temp_float1 * 1073741824);
+ 115              	 .loc 1 106 0
+ 116 007c D7ED167A 	 flds s15,[r7,#88]
+ 117 0080 9FED9E7A 	 flds s14,.L9+8
+ 118 0084 67EE877A 	 fmuls s15,s15,s14
+ 119 0088 FDEEE77A 	 ftosizs s15,s15
+ 120 008c 17EE903A 	 fmrs r3,s15
+ 121 0090 BB66     	 str r3,[r7,#104]
+ 107:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** 
+ 108:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     /* 1st iteration */
+ 109:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     var1 = ((q31_t) ((q63_t) var1 * (0x30000000 -
+ 122              	 .loc 1 109 0
+ 123 0092 BB6E     	 ldr r3,[r7,#104]
+ 124 0094 9846     	 mov r8,r3
+ 125 0096 4FEAE879 	 asr r9,r8,#31
+ 110:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                      ((q31_t)
+ 111:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                       ((((q31_t)
+ 112:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                          (((q63_t) var1 * var1) >> 31)) *
+ 126              	 .loc 1 112 0
+ 127 009a BB6E     	 ldr r3,[r7,#104]
+ 128 009c 1846     	 mov r0,r3
+ 129 009e 4FEAE071 	 asr r1,r0,#31
+ 130 00a2 BB6E     	 ldr r3,[r7,#104]
+ 131 00a4 1A46     	 mov r2,r3
+ 132 00a6 4FEAE273 	 asr r3,r2,#31
+ 133 00aa 02FB01F5 	 mul r5,r2,r1
+ 134 00ae 00FB03F4 	 mul r4,r0,r3
+ 135 00b2 2C44     	 add r4,r4,r5
+ 136 00b4 A0FB0223 	 umull r2,r3,r0,r2
+ 137 00b8 E118     	 adds r1,r4,r3
+ 138 00ba 0B46     	 mov r3,r1
+ 139 00bc 4FEAD27A 	 lsr r10,r2,#31
+ 140 00c0 4AEA430A 	 orr r10,r10,r3,lsl#1
+ 141 00c4 4FEAE37B 	 asr fp,r3,#31
+ 111:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                          (((q63_t) var1 * var1) >> 31)) *
+ 142              	 .loc 1 111 0
+ 143 00c8 5346     	 mov r3,r10
+ 144              	 .loc 1 112 0
+ 145 00ca 1846     	 mov r0,r3
+ 146 00cc 4FEAE071 	 asr r1,r0,#31
+ 113:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                         (q63_t) half) >> 31))) >> 31)) << 2;
+ 147              	 .loc 1 113 0
+ 148 00d0 3B6E     	 ldr r3,[r7,#96]
+ 149 00d2 1A46     	 mov r2,r3
+ 150 00d4 4FEAE273 	 asr r3,r2,#31
+ 112:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                         (q63_t) half) >> 31))) >> 31)) << 2;
+ 151              	 .loc 1 112 0
+ 152 00d8 02FB01F5 	 mul r5,r2,r1
+ 153 00dc 00FB03F4 	 mul r4,r0,r3
+ 154 00e0 2C44     	 add r4,r4,r5
+ 155 00e2 A0FB0223 	 umull r2,r3,r0,r2
+ 156 00e6 E118     	 adds r1,r4,r3
+ 157 00e8 0B46     	 mov r3,r1
+ 158              	 .loc 1 113 0
+ 159 00ea D10F     	 lsrs r1,r2,#31
+ 160 00ec 3964     	 str r1,[r7,#64]
+ 161 00ee 396C     	 ldr r1,[r7,#64]
+ 162 00f0 41EA4301 	 orr r1,r1,r3,lsl#1
+ 163 00f4 3964     	 str r1,[r7,#64]
+ 164 00f6 DB17     	 asrs r3,r3,#31
+ 165 00f8 7B64     	 str r3,[r7,#68]
+ 110:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                       ((((q31_t)
+ 166              	 .loc 1 110 0
+ 167 00fa 3B6C     	 ldr r3,[r7,#64]
+ 109:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                      ((q31_t)
+ 168              	 .loc 1 109 0
+ 169 00fc C3F14053 	 rsb r3,r3,#805306368
+ 170 0100 1A46     	 mov r2,r3
+ 171 0102 4FEAE273 	 asr r3,r2,#31
+ 172 0106 02FB09F0 	 mul r0,r2,r9
+ 173 010a 08FB03F1 	 mul r1,r8,r3
+ 174 010e 0144     	 add r1,r1,r0
+ 175 0110 A8FB0223 	 umull r2,r3,r8,r2
+ 176 0114 1944     	 add r1,r1,r3
+ 177 0116 0B46     	 mov r3,r1
+ 178              	 .loc 1 113 0
+ 179 0118 D10F     	 lsrs r1,r2,#31
+ 180 011a B963     	 str r1,[r7,#56]
+ 181 011c B96B     	 ldr r1,[r7,#56]
+ 182 011e 41EA4301 	 orr r1,r1,r3,lsl#1
+ 183 0122 B963     	 str r1,[r7,#56]
+ 184 0124 DB17     	 asrs r3,r3,#31
+ 185 0126 FB63     	 str r3,[r7,#60]
+ 109:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                      ((q31_t)
+ 186              	 .loc 1 109 0
+ 187 0128 BB6B     	 ldr r3,[r7,#56]
+ 188 012a 9B00     	 lsls r3,r3,#2
+ 189 012c BB66     	 str r3,[r7,#104]
+ 114:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     /* 2nd iteration */
+ 115:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     var1 = ((q31_t) ((q63_t) var1 * (0x30000000 -
+ 190              	 .loc 1 115 0
+ 191 012e BB6E     	 ldr r3,[r7,#104]
+ 192 0130 9846     	 mov r8,r3
+ 193 0132 4FEAE879 	 asr r9,r8,#31
+ 116:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                      ((q31_t)
+ 117:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                       ((((q31_t)
+ 118:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                          (((q63_t) var1 * var1) >> 31)) *
+ 194              	 .loc 1 118 0
+ 195 0136 BB6E     	 ldr r3,[r7,#104]
+ 196 0138 1846     	 mov r0,r3
+ 197 013a 4FEAE071 	 asr r1,r0,#31
+ 198 013e BB6E     	 ldr r3,[r7,#104]
+ 199 0140 1A46     	 mov r2,r3
+ 200 0142 4FEAE273 	 asr r3,r2,#31
+ 201 0146 02FB01F5 	 mul r5,r2,r1
+ 202 014a 00FB03F4 	 mul r4,r0,r3
+ 203 014e 2C44     	 add r4,r4,r5
+ 204 0150 A0FB0223 	 umull r2,r3,r0,r2
+ 205 0154 E118     	 adds r1,r4,r3
+ 206 0156 0B46     	 mov r3,r1
+ 207 0158 D10F     	 lsrs r1,r2,#31
+ 208 015a 3963     	 str r1,[r7,#48]
+ 209 015c 396B     	 ldr r1,[r7,#48]
+ 210 015e 41EA4301 	 orr r1,r1,r3,lsl#1
+ 211 0162 3963     	 str r1,[r7,#48]
+ 212 0164 DB17     	 asrs r3,r3,#31
+ 213 0166 7B63     	 str r3,[r7,#52]
+ 117:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                          (((q63_t) var1 * var1) >> 31)) *
+ 214              	 .loc 1 117 0
+ 215 0168 3B6B     	 ldr r3,[r7,#48]
+ 216              	 .loc 1 118 0
+ 217 016a 1846     	 mov r0,r3
+ 218 016c 4FEAE071 	 asr r1,r0,#31
+ 119:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                         (q63_t) half) >> 31))) >> 31)) << 2;
+ 219              	 .loc 1 119 0
+ 220 0170 3B6E     	 ldr r3,[r7,#96]
+ 221 0172 1A46     	 mov r2,r3
+ 222 0174 4FEAE273 	 asr r3,r2,#31
+ 118:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                         (q63_t) half) >> 31))) >> 31)) << 2;
+ 223              	 .loc 1 118 0
+ 224 0178 02FB01F5 	 mul r5,r2,r1
+ 225 017c 00FB03F4 	 mul r4,r0,r3
+ 226 0180 2C44     	 add r4,r4,r5
+ 227 0182 A0FB0223 	 umull r2,r3,r0,r2
+ 228 0186 E118     	 adds r1,r4,r3
+ 229 0188 0B46     	 mov r3,r1
+ 230              	 .loc 1 119 0
+ 231 018a D10F     	 lsrs r1,r2,#31
+ 232 018c B962     	 str r1,[r7,#40]
+ 233 018e B96A     	 ldr r1,[r7,#40]
+ 234 0190 41EA4301 	 orr r1,r1,r3,lsl#1
+ 235 0194 B962     	 str r1,[r7,#40]
+ 236 0196 DB17     	 asrs r3,r3,#31
+ 237 0198 FB62     	 str r3,[r7,#44]
+ 116:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                       ((((q31_t)
+ 238              	 .loc 1 116 0
+ 239 019a BB6A     	 ldr r3,[r7,#40]
+ 115:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                      ((q31_t)
+ 240              	 .loc 1 115 0
+ 241 019c C3F14053 	 rsb r3,r3,#805306368
+ 242 01a0 1A46     	 mov r2,r3
+ 243 01a2 4FEAE273 	 asr r3,r2,#31
+ 244 01a6 02FB09F0 	 mul r0,r2,r9
+ 245 01aa 08FB03F1 	 mul r1,r8,r3
+ 246 01ae 0144     	 add r1,r1,r0
+ 247 01b0 A8FB0223 	 umull r2,r3,r8,r2
+ 248 01b4 1944     	 add r1,r1,r3
+ 249 01b6 0B46     	 mov r3,r1
+ 250              	 .loc 1 119 0
+ 251 01b8 D10F     	 lsrs r1,r2,#31
+ 252 01ba 3962     	 str r1,[r7,#32]
+ 253 01bc 396A     	 ldr r1,[r7,#32]
+ 254 01be 41EA4301 	 orr r1,r1,r3,lsl#1
+ 255 01c2 3962     	 str r1,[r7,#32]
+ 256 01c4 DB17     	 asrs r3,r3,#31
+ 257 01c6 7B62     	 str r3,[r7,#36]
+ 115:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                      ((q31_t)
+ 258              	 .loc 1 115 0
+ 259 01c8 3B6A     	 ldr r3,[r7,#32]
+ 260 01ca 9B00     	 lsls r3,r3,#2
+ 261 01cc BB66     	 str r3,[r7,#104]
+ 120:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     /* 3rd iteration */
+ 121:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     var1 = ((q31_t) ((q63_t) var1 * (0x30000000 -
+ 262              	 .loc 1 121 0
+ 263 01ce BB6E     	 ldr r3,[r7,#104]
+ 264 01d0 1C46     	 mov r4,r3
+ 265 01d2 4FEAE475 	 asr r5,r4,#31
+ 122:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                      ((q31_t)
+ 123:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                       ((((q31_t)
+ 124:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                          (((q63_t) var1 * var1) >> 31)) *
+ 266              	 .loc 1 124 0
+ 267 01d6 BB6E     	 ldr r3,[r7,#104]
+ 268 01d8 1A46     	 mov r2,r3
+ 269 01da 4FEAE273 	 asr r3,r2,#31
+ 270 01de B96E     	 ldr r1,[r7,#104]
+ 271 01e0 0846     	 mov r0,r1
+ 272 01e2 4FEAE071 	 asr r1,r0,#31
+ 273 01e6 00FB03FE 	 mul lr,r0,r3
+ 274 01ea 02FB01F6 	 mul r6,r2,r1
+ 275 01ee 7644     	 add r6,r6,lr
+ 276 01f0 A2FB0023 	 umull r2,r3,r2,r0
+ 277 01f4 F118     	 adds r1,r6,r3
+ 278 01f6 0B46     	 mov r3,r1
+ 279 01f8 D10F     	 lsrs r1,r2,#31
+ 280 01fa B961     	 str r1,[r7,#24]
+ 281 01fc B969     	 ldr r1,[r7,#24]
+ 282 01fe 41EA4301 	 orr r1,r1,r3,lsl#1
+ 283 0202 B961     	 str r1,[r7,#24]
+ 284 0204 DB17     	 asrs r3,r3,#31
+ 285 0206 FB61     	 str r3,[r7,#28]
+ 123:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                          (((q63_t) var1 * var1) >> 31)) *
+ 286              	 .loc 1 123 0
+ 287 0208 BB69     	 ldr r3,[r7,#24]
+ 288              	 .loc 1 124 0
+ 289 020a 1846     	 mov r0,r3
+ 290 020c 4FEAE071 	 asr r1,r0,#31
+ 125:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                         (q63_t) half) >> 31))) >> 31)) << 2;
+ 291              	 .loc 1 125 0
+ 292 0210 3B6E     	 ldr r3,[r7,#96]
+ 293 0212 1A46     	 mov r2,r3
+ 294 0214 4FEAE273 	 asr r3,r2,#31
+ 124:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                         (q63_t) half) >> 31))) >> 31)) << 2;
+ 295              	 .loc 1 124 0
+ 296 0218 02FB01FE 	 mul lr,r2,r1
+ 297 021c 00FB03F6 	 mul r6,r0,r3
+ 298 0220 7644     	 add r6,r6,lr
+ 299 0222 A0FB0223 	 umull r2,r3,r0,r2
+ 300 0226 F118     	 adds r1,r6,r3
+ 301 0228 0B46     	 mov r3,r1
+ 302              	 .loc 1 125 0
+ 303 022a D10F     	 lsrs r1,r2,#31
+ 304 022c 3961     	 str r1,[r7,#16]
+ 305 022e 3969     	 ldr r1,[r7,#16]
+ 306 0230 41EA4301 	 orr r1,r1,r3,lsl#1
+ 307 0234 3961     	 str r1,[r7,#16]
+ 308 0236 DB17     	 asrs r3,r3,#31
+ 309 0238 7B61     	 str r3,[r7,#20]
+ 122:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                       ((((q31_t)
+ 310              	 .loc 1 122 0
+ 311 023a 3B69     	 ldr r3,[r7,#16]
+ 121:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                      ((q31_t)
+ 312              	 .loc 1 121 0
+ 313 023c C3F14053 	 rsb r3,r3,#805306368
+ 314 0240 1A46     	 mov r2,r3
+ 315 0242 4FEAE273 	 asr r3,r2,#31
+ 316 0246 02FB05F0 	 mul r0,r2,r5
+ 317 024a 04FB03F1 	 mul r1,r4,r3
+ 318 024e 0144     	 add r1,r1,r0
+ 319 0250 A4FB0223 	 umull r2,r3,r4,r2
+ 320 0254 1944     	 add r1,r1,r3
+ 321 0256 0B46     	 mov r3,r1
+ 322              	 .loc 1 125 0
+ 323 0258 D10F     	 lsrs r1,r2,#31
+ 324 025a B960     	 str r1,[r7,#8]
+ 325 025c B968     	 ldr r1,[r7,#8]
+ 326 025e 41EA4301 	 orr r1,r1,r3,lsl#1
+ 327 0262 B960     	 str r1,[r7,#8]
+ 328 0264 DB17     	 asrs r3,r3,#31
+ 329 0266 FB60     	 str r3,[r7,#12]
+ 121:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****                                      ((q31_t)
+ 330              	 .loc 1 121 0
+ 331 0268 BB68     	 ldr r3,[r7,#8]
+ 332 026a 9B00     	 lsls r3,r3,#2
+ 333 026c BB66     	 str r3,[r7,#104]
+ 126:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** 
+ 127:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     /* Multiply the inverse square root with the original value */
+ 128:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     var1 = ((q31_t) (((q63_t) temp1 * var1) >> 31)) << 1;
+ 334              	 .loc 1 128 0
+ 335 026e FB6D     	 ldr r3,[r7,#92]
+ 336 0270 1846     	 mov r0,r3
+ 337 0272 4FEAE071 	 asr r1,r0,#31
+ 338 0276 BB6E     	 ldr r3,[r7,#104]
+ 339 0278 1A46     	 mov r2,r3
+ 340 027a 4FEAE273 	 asr r3,r2,#31
+ 341 027e 02FB01F5 	 mul r5,r2,r1
+ 342 0282 00FB03F4 	 mul r4,r0,r3
+ 343 0286 2C44     	 add r4,r4,r5
+ 344 0288 A0FB0223 	 umull r2,r3,r0,r2
+ 345 028c E118     	 adds r1,r4,r3
+ 346 028e 0B46     	 mov r3,r1
+ 347 0290 D10F     	 lsrs r1,r2,#31
+ 348 0292 3960     	 str r1,[r7]
+ 349 0294 3968     	 ldr r1,[r7]
+ 350 0296 41EA4301 	 orr r1,r1,r3,lsl#1
+ 351 029a 3960     	 str r1,[r7]
+ 352 029c DB17     	 asrs r3,r3,#31
+ 353 029e 7B60     	 str r3,[r7,#4]
+ 354 02a0 3B68     	 ldr r3,[r7]
+ 355 02a2 5B00     	 lsls r3,r3,#1
+ 356 02a4 BB66     	 str r3,[r7,#104]
+ 129:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** 
+ 130:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     /* Shift the output down accordingly */
+ 131:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     if((signBits1 % 2) == 0)
+ 357              	 .loc 1 131 0
+ 358 02a6 7B6E     	 ldr r3,[r7,#100]
+ 359 02a8 03F00103 	 and r3,r3,#1
+ 360 02ac 002B     	 cmp r3,#0
+ 361 02ae 08D1     	 bne .L5
+ 132:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     {
+ 133:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****       var1 = var1 >> (signBits1 / 2);
+ 362              	 .loc 1 133 0
+ 363 02b0 7B6E     	 ldr r3,[r7,#100]
+ 364 02b2 DA0F     	 lsrs r2,r3,#31
+ 365 02b4 1344     	 add r3,r3,r2
+ 366 02b6 5B10     	 asrs r3,r3,#1
+ 367 02b8 1A46     	 mov r2,r3
+ 368 02ba BB6E     	 ldr r3,[r7,#104]
+ 369 02bc 1341     	 asrs r3,r3,r2
+ 370 02be BB66     	 str r3,[r7,#104]
+ 371 02c0 08E0     	 b .L6
+ 372              	.L5:
+ 134:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     }
+ 135:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     else
+ 136:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     {
+ 137:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****       var1 = var1 >> ((signBits1 - 1) / 2);
+ 373              	 .loc 1 137 0
+ 374 02c2 7B6E     	 ldr r3,[r7,#100]
+ 375 02c4 013B     	 subs r3,r3,#1
+ 376 02c6 DA0F     	 lsrs r2,r3,#31
+ 377 02c8 1344     	 add r3,r3,r2
+ 378 02ca 5B10     	 asrs r3,r3,#1
+ 379 02cc 1A46     	 mov r2,r3
+ 380 02ce BB6E     	 ldr r3,[r7,#104]
+ 381 02d0 1341     	 asrs r3,r3,r2
+ 382 02d2 BB66     	 str r3,[r7,#104]
+ 383              	.L6:
+ 138:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     }
+ 139:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     *pOut = var1;
+ 384              	 .loc 1 139 0
+ 385 02d4 BB6C     	 ldr r3,[r7,#72]
+ 386 02d6 BA6E     	 ldr r2,[r7,#104]
+ 387 02d8 1A60     	 str r2,[r3]
+ 140:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** 
+ 141:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     return (ARM_MATH_SUCCESS);
+ 388              	 .loc 1 141 0
+ 389 02da 0023     	 movs r3,#0
+ 390 02dc 03E0     	 b .L8
+ 391              	.L2:
+ 142:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****   }
+ 143:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****   /* If the number is a negative number then store zero as its square root value */
+ 144:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****   else
+ 145:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****   {
+ 146:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     *pOut = 0;
+ 392              	 .loc 1 146 0
+ 393 02de BB6C     	 ldr r3,[r7,#72]
+ 394 02e0 0022     	 movs r2,#0
+ 395 02e2 1A60     	 str r2,[r3]
+ 147:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****     return (ARM_MATH_ARGUMENT_ERROR);
+ 396              	 .loc 1 147 0
+ 397 02e4 FF23     	 movs r3,#255
+ 398              	.L8:
+ 399 02e6 5BB2     	 sxtb r3,r3
+ 148:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c ****   }
+ 149:../Dave/Generated/CMSIS_DSP/FastMathFunctions/arm_sqrt_q31.c **** }
+ 400              	 .loc 1 149 0 discriminator 1
+ 401 02e8 1846     	 mov r0,r3
+ 402 02ea 7437     	 adds r7,r7,#116
+ 403              	.LCFI3:
+ 404              	 .cfi_def_cfa_offset 36
+ 405 02ec BD46     	 mov sp,r7
+ 406              	.LCFI4:
+ 407              	 .cfi_def_cfa_register 13
+ 408              	 
+ 409 02ee BDE8F08F 	 pop {r4,r5,r6,r7,r8,r9,r10,fp,pc}
+ 410              	.L10:
+ 411 02f2 00BF     	 .align 2
+ 412              	.L9:
+ 413 02f4 00000030 	 .word 805306368
+ 414 02f8 DF59375F 	 .word 1597463007
+ 415 02fc 0000804E 	 .word 1317011456
+ 416              	 .cfi_endproc
+ 417              	.LFE139:
+ 419              	 .text
+ 420              	.Letext0:
+ 421              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 422              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 423              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_sqrt_q31.c
+    {standard input}:20     .text.arm_sqrt_q31:00000000 $t
+    {standard input}:25     .text.arm_sqrt_q31:00000000 arm_sqrt_q31
+    {standard input}:413    .text.arm_sqrt_q31:000002f4 $d
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

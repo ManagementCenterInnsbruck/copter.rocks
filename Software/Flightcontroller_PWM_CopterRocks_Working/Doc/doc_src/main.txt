@@ -1,0 +1,258 @@
+/**
+ * @mainpage LARIX Flight-Controller
+ *
+ * @tableofcontents
+ * @image html  "QuadroMainpage.jpg"
+ * @image latex "QuadroMainpage.jpg"
+ *
+ * The LARIX Flight-Controller is the Flight-Controller software for the LARIX Quadrocopter Demonstrator.<br> 
+ * Built on top the DAVE4 Apps and XMC library it provides an easy to configure solution which can be easily modified.<br>
+ * 
+ *
+ * @section support Supported devices and toolchains
+ * The following 32-Bit Industrial Microcontrollers based on ARM Cortex-M4F are supported:
+ * - XMC4500 series
+ *
+ * The following tool chains are supported:
+ * - GNU GCC for ARM (gcc) found in DAVE4.
+ *
+ * @section overview Overview
+  * Main function of this piece of software is to collect the data of the user input:
+ * - Bluetooth (RN42) or
+ * - RC-Receiver (DSMX-Spektrum) <br>
+ *
+ * and the internal sensors:
+ * - MPU9X50 (Inertial Measurement Unit)
+ * - DPS310  (Precision pressure sensor)
+ *
+ * to calculate and transmit needed speed of motors so that a stable flight is ensured.
+ * <br>
+ *
+ * The LARIX-Flight Controller Software consists of several files all stored at the _Quadrocopter folder. <br>
+ * Within this _Quadrocopter folder you find several subfolders, which represent nearly independent modules <br>
+ * that are built on top of DAVE4 Apps, the XMC Library and a rudimentary Harware Abstraction Layer. <br>
+ *
+ * The software is interrupt driven which means every sensor and the control interrupt is caused by <br>
+ * it's individual interrupt source which could be a timer or an external interrupt that is triggered by the <br>
+ * sensor itself. Detailed information for each Interrupt and the corresponding service routine can be found at the<br>
+ * end of this document.
+ * <br>
+ *
+ * A debug interface is given via uC Probe: <a href="http://www.infineon.com/cms/de/product/microcontroller/development-tools-software-and-kits/dave-version-4-free-development-platform-for-code-generation/uc-probe-xmc-for-industrial-mcu/channel.html?channel=5546d46254e133b40154f34038fe1620#ispnTab1">uC Probe</a> <br>
+ * or via a VCOM Port provided by a USB interface which is configured and used via USB_VCOM App.
+ * 
+ * More details on hard- and software of the LARIX Quadrocopter Demonstrator can be found at:
+ * - https://github.com/ManagementCenterInnsbruck/InfineonMulticopter_LARIX/wiki
+ * - http://www.infineon.com/cms/en/applications/consumer/multicopters/
+ *
+ *
+ * @section moduleDescription Module Description
+ *
+ * <b> Folder Structure: </b>
+ * @image html  "FolderStructure.PNG"
+ * @image latex "FolderStructure.PNG"
+ *
+ * - _FIR_Filter<br>
+ * This module provides a simple implementation of a finite impulse response filter. <br>
+ * It is used for filtering the pressure data provided by the DPS310.
+ 
+ * - _HAL<br>
+ * This module builds the basis for serial communication via<br> 
+ * UART and I2C and holds the files for a delay function.<br>
+ * In addition it contains the file GPIO.h which provides an easy way to control<br> 
+ * the digital pins of the controller.
+ * 
+ * - Attitude_Control<br>
+ * This module holds the control algorithms for the Quadrocopter.<br>
+ * In addition it contains the function for scaling the output values of the control algorithm to the input values of the electric speed controllers(ESC's).<br> 
+ * 
+ *
+ * - BatterySafety<br>
+ * This module contains the software for battery monitoring.<br>
+ * It shows battery status via three status LED's that are mounted at<br>
+ * the LARIX board.
+ *
+ * - DaisyChain<br>
+ * This module provides functions to transmit data using an UART DaisyChain which connects the flight controller<br>
+ * with the ESC's.
+ * The possibility to add feedback data from the ESC's is given, but is not implemented.
+ *
+ * - RemoteControl<br>
+ * This module contains the software for receiving the steering data of the user.<br>
+ * The two supported ways of communication are Bluetooth(RN-42 module)<br>
+ * and 2.4GHz Radio(Spektrum DSMX Receiver, Spektrum DX6i transmitter).<br>
+ * A Bluetooth-Only mode can be configured via a #define at the  RCReceive.h
+ *
+ * - Sensors<br>
+ * This module contains the software for configuring, reading and interpreting the<br>
+ * values of both the DPS310 pressure sensor and the MPU9X50 Inertial Measurement Unit(IMU). Both are signaling new values<br>
+ * by triggering external interrupts.
+ * 
+ *
+ *
+ * @section interrupts Interrupts at LARIX Flight-Controller software
+ *
+ * Like described at the section overview the LARIX Flight-Controller software<br>
+ * is an interrupt driven software. This means a set of functions exists, which are executed when<br> a specific event triggers an interrupt.<br>
+ * It is important to know that these functions can be interrupted by each other depending on their<br>
+ * priority. Priority 0 is the highest priority while 63 is the last priority that can be given<br>
+ * to an interrupt function.<br>
+ * At Dave4 Interrupts are handled via INTERRUPT App.<br>
+ *
+ * LARIX Flight-Controller software uses global variables to communicate with other interrupt routines.<br>
+ * It is important to note that every variable, which is used by more than one interrupt is only allowed to be directly<br>
+ * manipulated by one interrupt. Every other interrupt which wants to use the data stored at these globals<br>
+ * has to make a local copy of the global one. This is done to avoid unwanted change of global variables<br>
+ * which would influence stability of the other software modules.
+ *
+ *The next table shows all independent interrupt routines and their purpose. <br> 
+ *
+ * <table>
+    <caption id="multi_row">Interrupt Overview</caption>
+    <tr><th>Number                      <th>Interrupt Service Routine                                     <th>Priority                                           <th>Event                                                                     <th>Description                                                  <th>Found at
+    <tr><th>1                           <th>Util_Timer_ISR                                                <th>2                                                  <th>Triggered by Utils_Timer(1 kHz)                                           <th>Builds the basis of delay function                           <th> ./_HAL/Delay/util.c
+    <tr><th>2                           <th>Control_Timer_ISR                                             <th>5                                                  <th>Triggered by Control_Timer(100 Hz)                                        <th>Contains the Control Algorithm for Quadcopter                <th> ./Attitude_Control/AttitudeController.c
+    <tr><th>3                           <th>RemoteControl_RX_ISR                                          <th>7                                                  <th>32 Bytes of data are received at UART for RC                              <th>Data gets read out and interpreted to new desired values     <th> ./RemoteControl/RCReceive.c
+    <tr><th>4                           <th>Bluetooth_RX_ISR                                              <th>8                                                  <th>19 Bytes of data are received at UART for Bluetooth                       <th>Data gets read out and interpreted to new desired values     <th> ./RemoteControl/RCReceive.c
+    <tr><th>5                           <th>MPU9X50_Ext_Int_ISR                                           <th>10                                                 <th>Rising Edge on P0.5 detected                                              <th>Data gets read and new orientation is calculated             <th> ./Sensors/MPU9X50/MPU9150.c
+    <tr><th>6                           <th>DPS310_EXT_INT_ISR                                            <th>12                                                 <th>Falling Edge on P1.15 detected                                            <th>Data gets read out and interpreted to new pressure value     <th> ./Sensors/DPS310/DPS310.c
+    <tr><th>7                           <th>WatchRC                                                       <th>17                                                 <th>Triggered by RC Watch Timer(5 Hz)                                         <th>check if new value from RC or Bluetooth -> timeoutflag       <th> ./RemoteControl/RCReceive.c
+    <tr><th>8                           <th>GeneralPurpose_Timer_Bluetooth_Keep_Alive_ISR                 <th>20                                                 <th>Triggered by General Purpose Timer(1 Hz)                                  <th>Sends keep alive message for Android app                     <th> ./RemoteControl/RCReceive.c
+    <tr><th>9                           <th>VBat_Measurement_ISR                                          <th>30                                                 <th>ADC Conversion of Battery Voltage finished                                <th>Voltage is read out of register and displayed trough LEDs    <th> ./BatterySafety/BatterySafety.c
+    <tr><th>10                          <th>MagnetometerCal_Timer_ISR                                     <th>63                                                 <th>Triggered by MagnetometerCal_Timer(10 Hz)                                 <th>Not implemented                                              <th> *_______________________________*
+    <tr><th>11                          <th>DaisyChain_RX_ISR                                             <th>63                                                 <th>should be triggered when 13Bytes of Data are received at Daisy Uart       <th>Not implemented                                              <th> *_______________________________*
+ * </table>
+ * <br>
+ *
+ * To give a better overview of this table the image under this text was created.<br>
+ * Keep in mind that this picture's purpose is to give an overview but not an exact representation of<br>
+ * the Software.<br>
+ *
+ * <b>Simple Flow-Chart</b>
+ *
+ * \dot
+        digraph G {
+            subgraph cluster0 {
+                node [style=filled];
+                setup -> while -> while;
+                label = "main()           ";
+                color=blue
+            }
+            subgraph cluster1 {
+                node [style=filled,];
+                "Event" -> "Trigger ADC";
+                "Event" -> "Send\nKeep-Alive Message\nBluetooth";
+                label = "GP-Timer IRQ";
+                color=blue
+            }
+            subgraph cluster2 {
+                node [style=filled];
+                GetAngles -> GetRCData -> ControlAlgorithm -> TransferNewSpeedValues;
+                label = "Control-Routine IRQ";
+                color=blue
+            }
+            subgraph cluster3 {
+                node [style=filled,];
+                "timer_cnt++";
+                label = "Util-Timer IRQ";
+                color=blue
+            }
+            subgraph cluster4 {
+                node [style=filled,];
+                "sendCalibration Data to PC";
+                label = "MagCalib-Timer IRQ";
+                color=blue
+            }
+            subgraph cluster5 {
+                node [style=filled,];
+                "get Data from Bluetooth FIFO" -> "maintainBluetoothInputBuffer";
+                label = "Bluetooth RX IRQ";
+                color=blue
+            }
+            subgraph cluster6 {
+                node [style=filled,];
+                "get Data from RC FIFO" -> "decode Received Data";
+                label = "RC RX IRQ";
+                color=blue
+            }
+            subgraph cluster7 {
+                node [style=filled,];
+                "get Data from DPS310" -> "calculate new pressure and temperature value" -> "FIR-Filter" ->"update global variables\n with new values";
+                label = "DPS310 EXT IRQ";
+                color=blue
+            }
+            subgraph cluster8 {
+                node [style=filled,];
+                "get Data from MPU9X50" -> "filter data";
+                "filter data" -> "Madgwick-Filter" -> "update global variables\n containing orientation data";
+                "filter data" -> "Kalman-Filter" -> "update global variables\n containing orientation data";
+                label = "MPU9X50 EXT IRQ";
+                color=blue
+            }
+            subgraph cluster9 {
+                node [style=filled,];
+                "get Data from ADC Conversion" -> "switch State LED's\n depending on battery voltage";
+                label = "ADC Result IRQ";
+                color=blue
+            }
+            subgraph cluster10 {
+                node [style=filled,];
+                "check if new data is received " -> "continue normal operation" [label="YES"];
+                "check if new data is received " -> "set global variables containing desired values to zero" [label="NO"]
+                label = "RC Watchdog IRQ";
+                color=blue
+            }
+        start [shape=Mdiamond];
+        start -> setup;
+        setup -> "1Hz\nTimer"   -> Event;
+        setup -> "5Hz\nTimer"   -> "check if new data is received ";
+        setup -> "10Hz\nTimer"  -> "sendCalibration Data to PC";
+        setup -> "100Hz\nTimer" -> GetAngles;
+        setup -> "1kHz\nTimer"  -> "timer_cnt++";
+        setup -> "UART Bluetooth"  -> "get Data from Bluetooth FIFO";
+        setup -> "UART RC"  -> "get Data from RC FIFO";
+        "maintainBluetoothInputBuffer" -> "update global variables\n with new desired values";
+        "decode Received Data" -> "update global variables\n with new desired values";
+        setup -> "I2C and ERU\n for DPS310"  -> "get Data from DPS310";
+        setup -> "I2C and ERU\n for MPU9X50" -> "get Data from MPU9X50";
+        setup -> "ADC" -> "get Data from ADC Conversion";
+        }
+ * \enddot
+ * <br>
+ *
+ *
+ *
+ *
+ *
+ *
+ * <br>
+ * <br>
+ * <br>
+ * <br>
+ * @Licensing
+ * 
+ * <b> License Terms and Copyright Information </b>
+ *   
+ * Copyright (c) 2015, Infineon Technologies AG All rights reserved. 
+ * 
+ * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: 
+ * - Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. 
+ * - Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation 
+ *   and/or other materials provided with the distribution. 
+ * - Neither the name of the copyright holders nor the names of its contributors may be used to endorse or promote products derived from this software 
+ *   without specific prior written permission. 
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, 
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE 
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
+ * To improve the quality of the software, users are encouraged to share modifications, enhancements or bug fixes with Infineon Technologies AG (support@infineon.com).  
+ *
+ * <b>Legal Disclaimer</b> The information given in this document shall in no event be regarded as a guarantee of conditions or characteristics. With respect to any examples or hints given herein, any typical values stated herein and/or any information regarding the application of the device, Infineon Technologies hereby disclaims any and all warranties and liabilities of any kind, including without limitation, warranties of non-infringement of intellectual property rights of any third party. 
+ *
+ * <b>Information</b> For further information on technology, delivery terms and conditions and prices, please contact the nearest Infineon Technologies Office (www.infineon.com). 
+ *
+ * <b>Warnings</b> Due to technical requirements, components may contain dangerous substances. For information on the types in question, please contact the nearest Infineon Technologies Office. Infineon Technologies components may be used in life-support devices or systems only with the express written approval of Infineon Technologies, if a failure of such components can reasonably be expected to cause the failure of that life-support device or system or to affect the safety or effectiveness of that device or system. Life support devices or systems are intended to be implanted in the human body or to support and/or maintain and sustain and/or protect human life. If they fail, it is reasonable to assume that the health of the user or other persons may be endangered.
+ */

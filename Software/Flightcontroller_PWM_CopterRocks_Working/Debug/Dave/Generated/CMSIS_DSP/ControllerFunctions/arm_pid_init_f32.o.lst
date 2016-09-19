@@ -1,0 +1,188 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_pid_init_f32.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.arm_pid_init_f32,"ax",%progbits
+  20              	 .align 2
+  21              	 .global arm_pid_init_f32
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	arm_pid_init_f32:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c"
+   1:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** /* ----------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * $Date:        12. March 2014
+   5:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * $Revision: 	V1.4.4
+   6:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * Title:	    arm_pid_init_f32.c    
+   9:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * Description:	Floating-point PID Control initialization function    
+  11:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** *				   
+  12:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** *    
+  13:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  14:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** *  
+  15:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * Redistribution and use in source and binary forms, with or without 
+  16:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * modification, are permitted provided that the following conditions
+  17:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * are met:
+  18:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** *   - Redistributions of source code must retain the above copyright
+  19:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** *     notice, this list of conditions and the following disclaimer.
+  20:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** *   - Redistributions in binary form must reproduce the above copyright
+  21:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** *     notice, this list of conditions and the following disclaimer in
+  22:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** *     the documentation and/or other materials provided with the 
+  23:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** *     distribution.
+  24:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  25:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** *     may be used to endorse or promote products derived from this
+  26:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** *     software without specific prior written permission.
+  27:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** *
+  28:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  29:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  30:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  31:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  32:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  33:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  34:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  35:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  36:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  37:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  38:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  39:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * POSSIBILITY OF SUCH DAMAGE.   
+  40:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** * ------------------------------------------------------------------- */
+  41:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** 
+  42:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  43:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** 
+  44:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****  /**    
+  45:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****  * @addtogroup PID    
+  46:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****  * @{    
+  47:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****  */
+  48:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** 
+  49:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** /**    
+  50:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****  * @brief  Initialization function for the floating-point PID Control.   
+  51:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****  * @param[in,out] *S points to an instance of the PID structure.   
+  52:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****  * @param[in]     resetStateFlag  flag to reset the state. 0 = no change in state & 1 = reset the s
+  53:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****  * @return none.   
+  54:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****  * \par Description:   
+  55:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****  * \par    
+  56:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****  * The <code>resetStateFlag</code> specifies whether to set state to zero or not. \n   
+  57:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****  * The function computes the structure fields: <code>A0</code>, <code>A1</code> <code>A2</code>    
+  58:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****  * using the proportional gain( \c Kp), integral gain( \c Ki) and derivative gain( \c Kd)    
+  59:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****  * also sets the state variables to all zeros.    
+  60:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****  */
+  61:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** 
+  62:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** void arm_pid_init_f32(
+  63:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****   arm_pid_instance_f32 * S,
+  64:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****   int32_t resetStateFlag)
+  65:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** {
+  28              	 .loc 1 65 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32 0000 80B5     	 push {r7,lr}
+  33              	.LCFI0:
+  34              	 .cfi_def_cfa_offset 8
+  35              	 .cfi_offset 7,-8
+  36              	 .cfi_offset 14,-4
+  37 0002 82B0     	 sub sp,sp,#8
+  38              	.LCFI1:
+  39              	 .cfi_def_cfa_offset 16
+  40 0004 00AF     	 add r7,sp,#0
+  41              	.LCFI2:
+  42              	 .cfi_def_cfa_register 7
+  43 0006 7860     	 str r0,[r7,#4]
+  44 0008 3960     	 str r1,[r7]
+  66:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** 
+  67:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****   /* Derived coefficient A0 */
+  68:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****   S->A0 = S->Kp + S->Ki + S->Kd;
+  45              	 .loc 1 68 0
+  46 000a 7B68     	 ldr r3,[r7,#4]
+  47 000c 93ED067A 	 flds s14,[r3,#24]
+  48 0010 7B68     	 ldr r3,[r7,#4]
+  49 0012 D3ED077A 	 flds s15,[r3,#28]
+  50 0016 37EE277A 	 fadds s14,s14,s15
+  51 001a 7B68     	 ldr r3,[r7,#4]
+  52 001c D3ED087A 	 flds s15,[r3,#32]
+  53 0020 77EE277A 	 fadds s15,s14,s15
+  54 0024 7B68     	 ldr r3,[r7,#4]
+  55 0026 C3ED007A 	 fsts s15,[r3]
+  69:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** 
+  70:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****   /* Derived coefficient A1 */
+  71:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****   S->A1 = (-S->Kp) - ((float32_t) 2.0 * S->Kd);
+  56              	 .loc 1 71 0
+  57 002a 7B68     	 ldr r3,[r7,#4]
+  58 002c D3ED067A 	 flds s15,[r3,#24]
+  59 0030 B1EE677A 	 fnegs s14,s15
+  60 0034 7B68     	 ldr r3,[r7,#4]
+  61 0036 D3ED087A 	 flds s15,[r3,#32]
+  62 003a 77EEA77A 	 fadds s15,s15,s15
+  63 003e 77EE677A 	 fsubs s15,s14,s15
+  64 0042 7B68     	 ldr r3,[r7,#4]
+  65 0044 C3ED017A 	 fsts s15,[r3,#4]
+  72:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** 
+  73:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****   /* Derived coefficient A2 */
+  74:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****   S->A2 = S->Kd;
+  66              	 .loc 1 74 0
+  67 0048 7B68     	 ldr r3,[r7,#4]
+  68 004a 1A6A     	 ldr r2,[r3,#32]
+  69 004c 7B68     	 ldr r3,[r7,#4]
+  70 004e 9A60     	 str r2,[r3,#8]
+  75:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** 
+  76:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****   /* Check whether state needs reset or not */
+  77:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****   if(resetStateFlag)
+  71              	 .loc 1 77 0
+  72 0050 3B68     	 ldr r3,[r7]
+  73 0052 002B     	 cmp r3,#0
+  74 0054 06D0     	 beq .L1
+  78:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****   {
+  79:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****     /* Clear the state buffer.  The size will be always 3 samples */
+  80:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****     memset(S->state, 0, 3u * sizeof(float32_t));
+  75              	 .loc 1 80 0
+  76 0056 7B68     	 ldr r3,[r7,#4]
+  77 0058 0C33     	 adds r3,r3,#12
+  78 005a 1846     	 mov r0,r3
+  79 005c 0021     	 movs r1,#0
+  80 005e 0C22     	 movs r2,#12
+  81 0060 FFF7FEFF 	 bl memset
+  82              	.L1:
+  81:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c ****   }
+  82:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** 
+  83:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_init_f32.c **** }
+  83              	 .loc 1 83 0
+  84 0064 0837     	 adds r7,r7,#8
+  85              	.LCFI3:
+  86              	 .cfi_def_cfa_offset 8
+  87 0066 BD46     	 mov sp,r7
+  88              	.LCFI4:
+  89              	 .cfi_def_cfa_register 13
+  90              	 
+  91 0068 80BD     	 pop {r7,pc}
+  92              	 .cfi_endproc
+  93              	.LFE139:
+  95 006a 00BF     	 .text
+  96              	.Letext0:
+  97              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+  98              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+  99              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_pid_init_f32.c
+    {standard input}:20     .text.arm_pid_init_f32:00000000 $t
+    {standard input}:25     .text.arm_pid_init_f32:00000000 arm_pid_init_f32
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+memset

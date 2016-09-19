@@ -1,0 +1,1976 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_biquad_cascade_df1_32x64_q31.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.mult32x64,"ax",%progbits
+  20              	 .align 2
+  21              	 .thumb
+  22              	 .thumb_func
+  24              	mult32x64:
+  25              	.LFB110:
+  26              	 .file 1 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+   1:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /* ----------------------------------------------------------------------
+   2:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * Copyright (C) 2010-2015 ARM Limited. All rights reserved.
+   3:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *
+   4:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * $Date:        20. October 2015
+   5:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * $Revision:    V1.4.5 b
+   6:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *
+   7:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * Project:      CMSIS DSP Library
+   8:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * Title:        arm_math.h
+   9:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *
+  10:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * Description:  Public header file for CMSIS DSP Library
+  11:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *
+  12:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * Target Processor: Cortex-M7/Cortex-M4/Cortex-M3/Cortex-M0
+  13:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *
+  14:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * Redistribution and use in source and binary forms, with or without
+  15:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * modification, are permitted provided that the following conditions
+  16:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * are met:
+  17:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *   - Redistributions of source code must retain the above copyright
+  18:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *     notice, this list of conditions and the following disclaimer.
+  19:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *   - Redistributions in binary form must reproduce the above copyright
+  20:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *     notice, this list of conditions and the following disclaimer in
+  21:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *     the documentation and/or other materials provided with the
+  22:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *     distribution.
+  23:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *     may be used to endorse or promote products derived from this
+  25:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *     software without specific prior written permission.
+  26:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** *
+  27:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+  31:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** * POSSIBILITY OF SUCH DAMAGE.
+  39:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * -------------------------------------------------------------------- */
+  40:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+  41:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+  42:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    \mainpage CMSIS DSP Software Library
+  43:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  44:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Introduction
+  45:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ------------
+  46:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  47:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * This user manual describes the CMSIS DSP software library,
+  48:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * a suite of common signal processing functions for use on Cortex-M processor based devices.
+  49:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  50:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library is divided into a number of functions each covering a specific category:
+  51:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Basic math functions
+  52:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Fast math functions
+  53:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Complex math functions
+  54:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Filters
+  55:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Matrix functions
+  56:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Transforms
+  57:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Motor control functions
+  58:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Statistical functions
+  59:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Support functions
+  60:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - Interpolation functions
+  61:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  62:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library has separate functions for operating on 8-bit integers, 16-bit integers,
+  63:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * 32-bit integer and 32-bit floating-point values.
+  64:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  65:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Using the Library
+  66:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ------------
+  67:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  68:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library installer contains prebuilt versions of the libraries in the <code>Lib</code> fold
+  69:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM7lfdp_math.lib (Little endian and Double Precision Floating Point Unit on Cortex-
+  70:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM7bfdp_math.lib (Big endian and Double Precision Floating Point Unit on Cortex-M7)
+  71:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM7lfsp_math.lib (Little endian and Single Precision Floating Point Unit on Cortex-
+  72:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM7bfsp_math.lib (Big endian and Single Precision Floating Point Unit on Cortex-M7)
+  73:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM7l_math.lib (Little endian on Cortex-M7)
+  74:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM7b_math.lib (Big endian on Cortex-M7)
+  75:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM4lf_math.lib (Little endian and Floating Point Unit on Cortex-M4)
+  76:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM4bf_math.lib (Big endian and Floating Point Unit on Cortex-M4)
+  77:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM4l_math.lib (Little endian on Cortex-M4)
+  78:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM4b_math.lib (Big endian on Cortex-M4)
+  79:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM3l_math.lib (Little endian on Cortex-M3)
+  80:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM3b_math.lib (Big endian on Cortex-M3)
+  81:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM0l_math.lib (Little endian on Cortex-M0 / CortexM0+)
+  82:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM0b_math.lib (Big endian on Cortex-M0 / CortexM0+)
+  83:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  84:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library functions are declared in the public file <code>arm_math.h</code> which is placed 
+  85:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Simply include this file and link the appropriate library in the application and begin calling
+  86:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * public header file <code> arm_math.h</code> for Cortex-M7/M4/M3/M0/M0+ with little endian and 
+  87:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Define the appropriate pre processor MACRO ARM_MATH_CM7 or ARM_MATH_CM4 or  ARM_MATH_CM3 or
+  88:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ARM_MATH_CM0 or ARM_MATH_CM0PLUS depending on the target processor in the application.
+  89:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  90:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Examples
+  91:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * --------
+  92:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  93:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library ships with a number of examples which demonstrate how to use the library functions
+  94:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  95:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Toolchain Support
+  96:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ------------
+  97:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+  98:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library has been developed and tested with MDK-ARM version 5.14.0.0
+  99:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library is being tested in GCC and IAR toolchains and updates on this activity will be mad
+ 100:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 101:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Building the Library
+ 102:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ------------
+ 103:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 104:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The library installer contains a project file to re build libraries on MDK-ARM Tool chain in t
+ 105:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - arm_cortexM_math.uvprojx
+ 106:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 107:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 108:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The libraries can be built by opening the arm_cortexM_math.uvprojx project in MDK-ARM, selecti
+ 109:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 110:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Pre-processor Macros
+ 111:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ------------
+ 112:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 113:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Each library project have differant pre-processor macros.
+ 114:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 115:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - UNALIGNED_SUPPORT_DISABLE:
+ 116:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 117:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Define macro UNALIGNED_SUPPORT_DISABLE, If the silicon does not support unaligned memory acces
+ 118:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 119:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - ARM_MATH_BIG_ENDIAN:
+ 120:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 121:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Define macro ARM_MATH_BIG_ENDIAN to build the library for big endian targets. By default libra
+ 122:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 123:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - ARM_MATH_MATRIX_CHECK:
+ 124:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 125:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Define macro ARM_MATH_MATRIX_CHECK for checking on the input and output sizes of matrices
+ 126:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 127:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - ARM_MATH_ROUNDING:
+ 128:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 129:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Define macro ARM_MATH_ROUNDING for rounding on support functions
+ 130:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 131:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - ARM_MATH_CMx:
+ 132:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 133:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Define macro ARM_MATH_CM4 for building the library on Cortex-M4 target, ARM_MATH_CM3 for build
+ 134:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * and ARM_MATH_CM0 for building library on Cortex-M0 target, ARM_MATH_CM0PLUS for building libra
+ 135:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ARM_MATH_CM7 for building the library on cortex-M7.
+ 136:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 137:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * - __FPU_PRESENT:
+ 138:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 139:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Initialize macro __FPU_PRESENT = 1 when building on FPU supported Targets. Enable this macro f
+ 140:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 141:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * <hr>
+ 142:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * CMSIS-DSP in ARM::CMSIS Pack
+ 143:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * -----------------------------
+ 144:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 145:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * The following files relevant to CMSIS-DSP are present in the <b>ARM::CMSIS</b> Pack directorie
+ 146:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * |File/Folder                   |Content                                                       
+ 147:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * |------------------------------|--------------------------------------------------------------
+ 148:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * |\b CMSIS\\Documentation\\DSP  | This documentation                                           
+ 149:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * |\b CMSIS\\DSP_Lib             | Software license agreement (license.txt)                     
+ 150:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * |\b CMSIS\\DSP_Lib\\Examples   | Example projects demonstrating the usage of the library funct
+ 151:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * |\b CMSIS\\DSP_Lib\\Source     | Source files for rebuilding the library                      
+ 152:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 153:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * <hr>
+ 154:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Revision History of CMSIS-DSP
+ 155:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ------------
+ 156:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Please refer to \ref ChangeLog_pg.
+ 157:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 158:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Copyright Notice
+ 159:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * ------------
+ 160:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    *
+ 161:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * Copyright (C) 2010-2015 ARM Limited. All rights reserved.
+ 162:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 163:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 164:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 165:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 166:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupMath Basic Math Functions
+ 167:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 168:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 169:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 170:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupFastMath Fast Math Functions
+ 171:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * This set of functions provides a fast approximation to sine, cosine, and square root.
+ 172:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * As compared to most of the other functions in the CMSIS math library, the fast math functions
+ 173:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * operate on individual values and not arrays.
+ 174:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * There are separate functions for Q15, Q31, and floating-point data.
+ 175:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *
+ 176:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 177:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 178:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 179:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupCmplxMath Complex Math Functions
+ 180:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * This set of functions operates on complex data vectors.
+ 181:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * The data in the complex arrays is stored in an interleaved fashion
+ 182:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * (real, imag, real, imag, ...).
+ 183:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * In the API functions, the number of samples in a complex array refers
+ 184:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * to the number of complex values; the array contains twice this number of
+ 185:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * real values.
+ 186:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 187:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 188:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 189:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupFilters Filtering Functions
+ 190:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 191:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 192:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 193:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupMatrix Matrix Functions
+ 194:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *
+ 195:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * This set of functions provides basic matrix math operations.
+ 196:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * The functions operate on matrix data structures.  For example,
+ 197:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * the type
+ 198:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * definition for the floating-point matrix structure is shown
+ 199:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * below:
+ 200:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <pre>
+ 201:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *     typedef struct
+ 202:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *     {
+ 203:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *       uint16_t numRows;     // number of rows of the matrix.
+ 204:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *       uint16_t numCols;     // number of columns of the matrix.
+ 205:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *       float32_t *pData;     // points to the data of the matrix.
+ 206:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *     } arm_matrix_instance_f32;
+ 207:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * </pre>
+ 208:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * There are similar definitions for Q15 and Q31 data types.
+ 209:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *
+ 210:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * The structure specifies the size of the matrix and then points to
+ 211:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * an array of data.  The array is of size <code>numRows X numCols</code>
+ 212:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * and the values are arranged in row order.  That is, the
+ 213:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * matrix element (i, j) is stored at:
+ 214:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <pre>
+ 215:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *     pData[i*numCols + j]
+ 216:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * </pre>
+ 217:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *
+ 218:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * \par Init Functions
+ 219:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * There is an associated initialization function for each type of matrix
+ 220:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * data structure.
+ 221:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * The initialization function sets the values of the internal structure fields.
+ 222:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * Refer to the function <code>arm_mat_init_f32()</code>, <code>arm_mat_init_q31()</code>
+ 223:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * and <code>arm_mat_init_q15()</code> for floating-point, Q31 and Q15 types,  respectively.
+ 224:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *
+ 225:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * \par
+ 226:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * Use of the initialization function is optional. However, if initialization function is used
+ 227:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * then the instance structure cannot be placed into a const data section.
+ 228:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * To place the instance structure in a const data
+ 229:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * section, manually initialize the data structure.  For example:
+ 230:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <pre>
+ 231:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <code>arm_matrix_instance_f32 S = {nRows, nColumns, pData};</code>
+ 232:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <code>arm_matrix_instance_q31 S = {nRows, nColumns, pData};</code>
+ 233:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <code>arm_matrix_instance_q15 S = {nRows, nColumns, pData};</code>
+ 234:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * </pre>
+ 235:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * where <code>nRows</code> specifies the number of rows, <code>nColumns</code>
+ 236:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * specifies the number of columns, and <code>pData</code> points to the
+ 237:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * data array.
+ 238:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *
+ 239:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * \par Size Checking
+ 240:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * By default all of the matrix functions perform size checking on the input and
+ 241:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * output matrices.  For example, the matrix addition function verifies that the
+ 242:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * two input matrices and the output matrix all have the same number of rows and
+ 243:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * columns.  If the size check fails the functions return:
+ 244:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <pre>
+ 245:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *     ARM_MATH_SIZE_MISMATCH
+ 246:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * </pre>
+ 247:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * Otherwise the functions return
+ 248:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <pre>
+ 249:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *     ARM_MATH_SUCCESS
+ 250:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * </pre>
+ 251:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * There is some overhead associated with this matrix size checking.
+ 252:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * The matrix size checking is enabled via the \#define
+ 253:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * <pre>
+ 254:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  *     ARM_MATH_MATRIX_CHECK
+ 255:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * </pre>
+ 256:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * within the library project settings.  By default this macro is defined
+ 257:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * and size checking is enabled.  By changing the project settings and
+ 258:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * undefining this macro size checking is eliminated and the functions
+ 259:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * run a bit faster.  With size checking disabled the functions always
+ 260:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * return <code>ARM_MATH_SUCCESS</code>.
+ 261:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 262:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 263:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 264:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupTransforms Transform Functions
+ 265:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 266:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 267:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 268:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupController Controller Functions
+ 269:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 270:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 271:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 272:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupStats Statistics Functions
+ 273:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 274:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 275:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupSupport Support Functions
+ 276:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 277:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 278:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 279:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupInterpolation Interpolation Functions
+ 280:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * These functions perform 1- and 2-dimensional interpolation of data.
+ 281:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * Linear interpolation is used for 1-dimensional data and
+ 282:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * bilinear interpolation is used for 2-dimensional data.
+ 283:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 284:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 285:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /**
+ 286:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  * @defgroup groupExamples Examples
+ 287:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****  */
+ 288:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #ifndef _ARM_MATH_H
+ 289:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define _ARM_MATH_H
+ 290:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 291:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** /* ignore some GCC warnings */
+ 292:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #if defined ( __GNUC__ )
+ 293:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #pragma GCC diagnostic push
+ 294:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #pragma GCC diagnostic ignored "-Wsign-conversion"
+ 295:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #pragma GCC diagnostic ignored "-Wconversion"
+ 296:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #pragma GCC diagnostic ignored "-Wunused-parameter"
+ 297:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 298:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 299:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __CMSIS_GENERIC         /* disable NVIC and Systick functions */
+ 300:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 301:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #if defined(ARM_MATH_CM7)
+ 302:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #include "core_cm7.h"
+ 303:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined (ARM_MATH_CM4)
+ 304:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #include "core_cm4.h"
+ 305:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined (ARM_MATH_CM3)
+ 306:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #include "core_cm3.h"
+ 307:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined (ARM_MATH_CM0)
+ 308:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #include "core_cm0.h"
+ 309:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define ARM_MATH_CM0_FAMILY
+ 310:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined (ARM_MATH_CM0PLUS)
+ 311:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #include "core_cm0plus.h"
+ 312:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define ARM_MATH_CM0_FAMILY
+ 313:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #else
+ 314:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #error "Define according the used Cortex core ARM_MATH_CM7, ARM_MATH_CM4, ARM_MATH_CM3, ARM_MATH_
+ 315:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 316:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 317:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #undef  __CMSIS_GENERIC         /* enable NVIC and Systick functions */
+ 318:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #include "string.h"
+ 319:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #include "math.h"
+ 320:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #ifdef   __cplusplus
+ 321:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** extern "C"
+ 322:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** {
+ 323:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 324:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 325:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 326:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 327:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Macros required for reciprocal calculation in Normalized LMS
+ 328:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 329:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 330:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define DELTA_Q31          (0x100)
+ 331:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define DELTA_Q15          0x5
+ 332:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define INDEX_MASK         0x0000003F
+ 333:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #ifndef PI
+ 334:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define PI                 3.14159265358979f
+ 335:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 336:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 337:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 338:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Macros required for SINE and COSINE Fast math approximations
+ 339:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 340:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 341:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define FAST_MATH_TABLE_SIZE  512
+ 342:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define FAST_MATH_Q31_SHIFT   (32 - 10)
+ 343:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define FAST_MATH_Q15_SHIFT   (16 - 10)
+ 344:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define CONTROLLER_Q31_SHIFT  (32 - 9)
+ 345:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define TABLE_SIZE  256
+ 346:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define TABLE_SPACING_Q31     0x400000
+ 347:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define TABLE_SPACING_Q15     0x80
+ 348:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 349:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 350:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Macros required for SINE and COSINE Controller functions
+ 351:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 352:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /* 1.31(q31) Fixed value of 2/360 */
+ 353:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /* -1 to +1 is divided into 360 values so total spacing is (2/360) */
+ 354:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define INPUT_SPACING         0xB60B61
+ 355:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 356:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 357:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Macro for Unaligned Support
+ 358:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 359:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #ifndef UNALIGNED_SUPPORT_DISABLE
+ 360:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     #define ALIGN4
+ 361:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #else
+ 362:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #if defined  (__GNUC__)
+ 363:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     #define ALIGN4 __attribute__((aligned(4)))
+ 364:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #else
+ 365:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     #define ALIGN4 __align(4)
+ 366:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #endif
+ 367:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif   /* #ifndef UNALIGNED_SUPPORT_DISABLE */
+ 368:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 369:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 370:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Error status returned by some functions in the library.
+ 371:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 372:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 373:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   typedef enum
+ 374:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   {
+ 375:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     ARM_MATH_SUCCESS = 0,                /**< No error */
+ 376:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     ARM_MATH_ARGUMENT_ERROR = -1,        /**< One or more arguments are incorrect */
+ 377:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     ARM_MATH_LENGTH_ERROR = -2,          /**< Length of data buffer is incorrect */
+ 378:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     ARM_MATH_SIZE_MISMATCH = -3,         /**< Size of matrices is not compatible with the operation
+ 379:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     ARM_MATH_NANINF = -4,                /**< Not-a-number (NaN) or infinity is generated */
+ 380:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     ARM_MATH_SINGULAR = -5,              /**< Generated by matrix inversion if the input matrix is 
+ 381:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     ARM_MATH_TEST_FAILURE = -6           /**< Test Failed  */
+ 382:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   } arm_status;
+ 383:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 384:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 385:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief 8-bit fractional data type in 1.7 format.
+ 386:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 387:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   typedef int8_t q7_t;
+ 388:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 389:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 390:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief 16-bit fractional data type in 1.15 format.
+ 391:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 392:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   typedef int16_t q15_t;
+ 393:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 394:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 395:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief 32-bit fractional data type in 1.31 format.
+ 396:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 397:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   typedef int32_t q31_t;
+ 398:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 399:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 400:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief 64-bit fractional data type in 1.63 format.
+ 401:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 402:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   typedef int64_t q63_t;
+ 403:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 404:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 405:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief 32-bit floating-point type definition.
+ 406:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 407:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   typedef float float32_t;
+ 408:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 409:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 410:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief 64-bit floating-point type definition.
+ 411:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 412:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   typedef double float64_t;
+ 413:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 414:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 415:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief definition to read/write two 16 bit values.
+ 416:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 417:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #if defined __CC_ARM
+ 418:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define __SIMD32_TYPE int32_t __packed
+ 419:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define CMSIS_UNUSED __attribute__((unused))
+ 420:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 421:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+ 422:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define __SIMD32_TYPE int32_t
+ 423:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define CMSIS_UNUSED __attribute__((unused))
+ 424:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 425:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined __GNUC__
+ 426:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define __SIMD32_TYPE int32_t
+ 427:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define CMSIS_UNUSED __attribute__((unused))
+ 428:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 429:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined __ICCARM__
+ 430:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define __SIMD32_TYPE int32_t __packed
+ 431:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define CMSIS_UNUSED
+ 432:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 433:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined __CSMC__
+ 434:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define __SIMD32_TYPE int32_t
+ 435:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define CMSIS_UNUSED
+ 436:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 437:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #elif defined __TASKING__
+ 438:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define __SIMD32_TYPE __unaligned int32_t
+ 439:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #define CMSIS_UNUSED
+ 440:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 441:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #else
+ 442:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   #error Unknown compiler
+ 443:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 444:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 445:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __SIMD32(addr)        (*(__SIMD32_TYPE **) & (addr))
+ 446:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __SIMD32_CONST(addr)  ((__SIMD32_TYPE *)(addr))
+ 447:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define _SIMD32_OFFSET(addr)  (*(__SIMD32_TYPE *)  (addr))
+ 448:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __SIMD64(addr)        (*(int64_t **) & (addr))
+ 449:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 450:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #if defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY)
+ 451:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 452:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief definition to pack two 16 bit values.
+ 453:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 454:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __PKHBT(ARG1, ARG2, ARG3)      ( (((int32_t)(ARG1) <<  0) & (int32_t)0x0000FFFF) | \
+ 455:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                          (((int32_t)(ARG2) << ARG3) & (int32_t)0xFFFF0000)  )
+ 456:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __PKHTB(ARG1, ARG2, ARG3)      ( (((int32_t)(ARG1) <<  0) & (int32_t)0xFFFF0000) | \
+ 457:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                          (((int32_t)(ARG2) >> ARG3) & (int32_t)0x0000FFFF)  )
+ 458:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 459:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 460:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 461:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 462:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    /**
+ 463:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief definition to pack four 8 bit values.
+ 464:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 465:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #ifndef ARM_MATH_BIG_ENDIAN
+ 466:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 467:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __PACKq7(v0,v1,v2,v3) ( (((int32_t)(v0) <<  0) & (int32_t)0x000000FF) | \
+ 468:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                 (((int32_t)(v1) <<  8) & (int32_t)0x0000FF00) | \
+ 469:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                 (((int32_t)(v2) << 16) & (int32_t)0x00FF0000) | \
+ 470:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                 (((int32_t)(v3) << 24) & (int32_t)0xFF000000)  )
+ 471:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #else
+ 472:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 473:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #define __PACKq7(v0,v1,v2,v3) ( (((int32_t)(v3) <<  0) & (int32_t)0x000000FF) | \
+ 474:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                 (((int32_t)(v2) <<  8) & (int32_t)0x0000FF00) | \
+ 475:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                 (((int32_t)(v1) << 16) & (int32_t)0x00FF0000) | \
+ 476:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****                                 (((int32_t)(v0) << 24) & (int32_t)0xFF000000)  )
+ 477:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 478:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** #endif
+ 479:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 480:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 481:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 482:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Clips Q63 to Q31 values.
+ 483:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 484:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   static __INLINE q31_t clip_q63_to_q31(
+ 485:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   q63_t x)
+ 486:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   {
+ 487:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     return ((q31_t) (x >> 32) != ((q31_t) x >> 31)) ?
+ 488:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****       ((0x7FFFFFFF ^ ((q31_t) (x >> 63)))) : (q31_t) x;
+ 489:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   }
+ 490:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 491:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 492:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Clips Q63 to Q15 values.
+ 493:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 494:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   static __INLINE q15_t clip_q63_to_q15(
+ 495:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   q63_t x)
+ 496:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   {
+ 497:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     return ((q31_t) (x >> 32) != ((q31_t) x >> 31)) ?
+ 498:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****       ((0x7FFF ^ ((q15_t) (x >> 63)))) : (q15_t) (x >> 15);
+ 499:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   }
+ 500:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 501:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 502:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Clips Q31 to Q7 values.
+ 503:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 504:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   static __INLINE q7_t clip_q31_to_q7(
+ 505:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   q31_t x)
+ 506:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   {
+ 507:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     return ((q31_t) (x >> 24) != ((q31_t) x >> 23)) ?
+ 508:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****       ((0x7F ^ ((q7_t) (x >> 31)))) : (q7_t) x;
+ 509:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   }
+ 510:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 511:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 512:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Clips Q31 to Q15 values.
+ 513:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 514:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   static __INLINE q15_t clip_q31_to_q15(
+ 515:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   q31_t x)
+ 516:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   {
+ 517:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     return ((q31_t) (x >> 16) != ((q31_t) x >> 15)) ?
+ 518:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****       ((0x7FFF ^ ((q15_t) (x >> 31)))) : (q15_t) x;
+ 519:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   }
+ 520:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 521:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   /**
+ 522:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    * @brief Multiplies 32 X 64 and returns 32 bit result in 2.30 format.
+ 523:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****    */
+ 524:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h **** 
+ 525:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   static __INLINE q63_t mult32x64(
+ 526:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   q63_t x,
+ 527:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   q31_t y)
+ 528:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   {
+  27              	 .loc 1 528 0
+  28              	 .cfi_startproc
+  29              	 
+  30              	 
+  31 0000 2DE9F043 	 push {r4,r5,r6,r7,r8,r9,lr}
+  32              	.LCFI0:
+  33              	 .cfi_def_cfa_offset 28
+  34              	 .cfi_offset 4,-28
+  35              	 .cfi_offset 5,-24
+  36              	 .cfi_offset 6,-20
+  37              	 .cfi_offset 7,-16
+  38              	 .cfi_offset 8,-12
+  39              	 .cfi_offset 9,-8
+  40              	 .cfi_offset 14,-4
+  41 0004 85B0     	 sub sp,sp,#20
+  42              	.LCFI1:
+  43              	 .cfi_def_cfa_offset 48
+  44 0006 00AF     	 add r7,sp,#0
+  45              	.LCFI2:
+  46              	 .cfi_def_cfa_register 7
+  47 0008 C7E90201 	 strd r0,[r7,#8]
+  48 000c 7A60     	 str r2,[r7,#4]
+ 529:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     return ((((q63_t) (x & 0x00000000FFFFFFFF) * y) >> 32) +
+  49              	 .loc 1 529 0
+  50 000e D7E90223 	 ldrd r2,[r7,#8]
+  51 0012 4FF0FF30 	 mov r0,#-1
+  52 0016 4FF00001 	 mov r1,#0
+  53 001a 00EA0200 	 and r0,r0,r2
+  54 001e 01EA0301 	 and r1,r1,r3
+  55 0022 7B68     	 ldr r3,[r7,#4]
+  56 0024 1A46     	 mov r2,r3
+  57 0026 4FEAE273 	 asr r3,r2,#31
+  58 002a 02FB01FE 	 mul lr,r2,r1
+  59 002e 00FB03F6 	 mul r6,r0,r3
+  60 0032 7644     	 add r6,r6,lr
+  61 0034 A0FB0223 	 umull r2,r3,r0,r2
+  62 0038 F118     	 adds r1,r6,r3
+  63 003a 0B46     	 mov r3,r1
+  64 003c 9846     	 mov r8,r3
+  65 003e 4FEAE379 	 asr r9,r3,#31
+ 530:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****             (((q63_t) (x >> 32) * y)));
+  66              	 .loc 1 530 0
+  67 0042 D7E90223 	 ldrd r2,[r7,#8]
+  68 0046 1C00     	 movs r4,r3
+  69 0048 DD17     	 asrs r5,r3,#31
+  70 004a 7B68     	 ldr r3,[r7,#4]
+  71 004c 1A46     	 mov r2,r3
+  72 004e 4FEAE273 	 asr r3,r2,#31
+  73 0052 02FB05F0 	 mul r0,r2,r5
+  74 0056 04FB03F1 	 mul r1,r4,r3
+  75 005a 0144     	 add r1,r1,r0
+  76 005c A4FB0223 	 umull r2,r3,r4,r2
+  77 0060 1944     	 add r1,r1,r3
+  78 0062 0B46     	 mov r3,r1
+ 529:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****     return ((((q63_t) (x & 0x00000000FFFFFFFF) * y) >> 32) +
+  79              	 .loc 1 529 0
+  80 0064 12EB0802 	 adds r2,r2,r8
+  81 0068 43EB0903 	 adc r3,r3,r9
+ 531:C:\Workspaces\DAVE-4.1\Flightcontroller_PWM_CopterRocks_Working\Dave\Generated/CMSIS_DSP\arm_math.h ****   }
+  82              	 .loc 1 531 0
+  83 006c 1046     	 mov r0,r2
+  84 006e 1946     	 mov r1,r3
+  85 0070 1437     	 adds r7,r7,#20
+  86              	.LCFI3:
+  87              	 .cfi_def_cfa_offset 28
+  88 0072 BD46     	 mov sp,r7
+  89              	.LCFI4:
+  90              	 .cfi_def_cfa_register 13
+  91              	 
+  92 0074 BDE8F083 	 pop {r4,r5,r6,r7,r8,r9,pc}
+  93              	 .cfi_endproc
+  94              	.LFE110:
+  96              	 .section .text.arm_biquad_cas_df1_32x64_q31,"ax",%progbits
+  97              	 .align 2
+  98              	 .global arm_biquad_cas_df1_32x64_q31
+  99              	 .thumb
+ 100              	 .thumb_func
+ 102              	arm_biquad_cas_df1_32x64_q31:
+ 103              	.LFB139:
+ 104              	 .file 2 "../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c"
+   1:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** /* ----------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * $Date:        12. March 2014
+   5:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * $Revision: 	V1.4.4
+   6:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * Title:	    arm_biquad_cascade_df1_32x64_q31.c    
+   9:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * Description:	High precision Q31 Biquad cascade filter processing function    
+  11:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** *
+  27:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * POSSIBILITY OF SUCH DAMAGE.   
+  39:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** * -------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+  41:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+  43:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** /**    
+  44:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * @ingroup groupFilters    
+  45:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  */
+  46:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+  47:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** /**    
+  48:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * @defgroup BiquadCascadeDF1_32x64 High Precision Q31 Biquad Cascade Filter    
+  49:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  *    
+  50:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * This function implements a high precision Biquad cascade filter which operates on    
+  51:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * Q31 data values.  The filter coefficients are in 1.31 format and the state variables    
+  52:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * are in 1.63 format.  The double precision state variables reduce quantization noise    
+  53:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * in the filter and provide a cleaner output.    
+  54:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * These filters are particularly useful when implementing filters in which the    
+  55:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * singularities are close to the unit circle.  This is common for low pass or high    
+  56:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * pass filters with very low cutoff frequencies.    
+  57:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  *    
+  58:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * The function operates on blocks of input and output data    
+  59:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * and each call to the function processes <code>blockSize</code> samples through    
+  60:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * the filter. <code>pSrc</code> and <code>pDst</code> points to input and output arrays    
+  61:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * containing <code>blockSize</code> Q31 values.    
+  62:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  *    
+  63:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * \par Algorithm    
+  64:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * Each Biquad stage implements a second order filter using the difference equation:    
+  65:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * <pre>    
+  66:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  *     y[n] = b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2]    
+  67:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * </pre>    
+  68:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * A Direct Form I algorithm is used with 5 coefficients and 4 state variables per stage.    
+  69:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * \image html Biquad.gif "Single Biquad filter stage"    
+  70:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * Coefficients <code>b0, b1, and b2 </code> multiply the input signal <code>x[n]</code> and are re
+  71:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * Coefficients <code>a1</code> and <code>a2</code> multiply the output signal <code>y[n]</code> an
+  72:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * Pay careful attention to the sign of the feedback coefficients.    
+  73:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * Some design tools use the difference equation    
+  74:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * <pre>    
+  75:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  *     y[n] = b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] - a1 * y[n-1] - a2 * y[n-2]    
+  76:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * </pre>    
+  77:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * In this case the feedback coefficients <code>a1</code> and <code>a2</code> must be negated when 
+  78:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  *    
+  79:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * \par    
+  80:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * Higher order filters are realized as a cascade of second order sections.    
+  81:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * <code>numStages</code> refers to the number of second order stages used.    
+  82:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * For example, an 8th order filter would be realized with <code>numStages=4</code> second order st
+  83:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * \image html BiquadCascade.gif "8th order filter using a cascade of Biquad stages"    
+  84:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * A 9th order filter would be realized with <code>numStages=5</code> second order stages with the 
+  85:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  *    
+  86:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * \par    
+  87:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * The <code>pState</code> points to state variables array .    
+  88:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * Each Biquad stage has 4 state variables <code>x[n-1], x[n-2], y[n-1],</code> and <code>y[n-2]</c
+  89:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * The state variables are arranged in the array as:    
+  90:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * <pre>    
+  91:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  *     {x[n-1], x[n-2], y[n-1], y[n-2]}    
+  92:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * </pre>    
+  93:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  *    
+  94:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * \par    
+  95:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * The 4 state variables for stage 1 are first, then the 4 state variables for stage 2, and so on. 
+  96:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * The state array has a total length of <code>4*numStages</code> values of data in 1.63 format.   
+  97:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * The state variables are updated after each block of data is processed; the coefficients are unto
+  98:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  *    
+  99:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * \par Instance Structure    
+ 100:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * The coefficients and state variables for a filter are stored together in an instance data struct
+ 101:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * A separate instance structure must be defined for each filter.    
+ 102:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * Coefficient arrays may be shared among several instances while state variable arrays cannot be s
+ 103:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  *    
+ 104:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * \par Init Function    
+ 105:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * There is also an associated initialization function which performs the following operations:    
+ 106:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * - Sets the values of the internal structure fields.    
+ 107:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * - Zeros out the values in the state buffer.    
+ 108:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * To do this manually without calling the init function, assign the follow subfields of the instan
+ 109:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * numStages, pCoeffs, postShift, pState. Also set all of the values in pState to zero. 
+ 110:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  *
+ 111:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * \par    
+ 112:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * Use of the initialization function is optional.    
+ 113:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * However, if the initialization function is used, then the instance structure cannot be placed in
+ 114:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * To place an instance structure into a const data section, the instance structure must be manuall
+ 115:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * Set the values in the state buffer to zeros before static initialization.    
+ 116:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * For example, to statically initialize the filter instance structure use    
+ 117:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * <pre>    
+ 118:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  *     arm_biquad_cas_df1_32x64_ins_q31 S1 = {numStages, pState, pCoeffs, postShift};    
+ 119:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * </pre>    
+ 120:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * where <code>numStages</code> is the number of Biquad stages in the filter; <code>pState</code> i
+ 121:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * <code>pCoeffs</code> is the address of the coefficient buffer; <code>postShift</code> shift to b
+ 122:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * \par Fixed-Point Behavior    
+ 123:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * Care must be taken while using Biquad Cascade 32x64 filter function.    
+ 124:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * Following issues must be considered:    
+ 125:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * - Scaling of coefficients    
+ 126:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * - Filter gain    
+ 127:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * - Overflow and saturation    
+ 128:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  *    
+ 129:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * \par    
+ 130:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * Filter coefficients are represented as fractional values and    
+ 131:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * restricted to lie in the range <code>[-1 +1)</code>.    
+ 132:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * The processing function has an additional scaling parameter <code>postShift</code>    
+ 133:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * which allows the filter coefficients to exceed the range <code>[+1 -1)</code>.    
+ 134:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * At the output of the filter's accumulator is a shift register which shifts the result by <code>p
+ 135:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * \image html BiquadPostshift.gif "Fixed-point Biquad with shift by postShift bits after accumulat
+ 136:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * This essentially scales the filter coefficients by <code>2^postShift</code>.    
+ 137:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * For example, to realize the coefficients    
+ 138:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * <pre>    
+ 139:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  *    {1.5, -0.8, 1.2, 1.6, -0.9}    
+ 140:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * </pre>    
+ 141:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * set the Coefficient array to:    
+ 142:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * <pre>    
+ 143:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  *    {0.75, -0.4, 0.6, 0.8, -0.45}    
+ 144:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * </pre>    
+ 145:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * and set <code>postShift=1</code>    
+ 146:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  *    
+ 147:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * \par    
+ 148:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * The second thing to keep in mind is the gain through the filter.    
+ 149:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * The frequency response of a Biquad filter is a function of its coefficients.    
+ 150:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * It is possible for the gain through the filter to exceed 1.0 meaning that the filter increases t
+ 151:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * This means that an input signal with amplitude < 1.0 may result in an output > 1.0 and these are
+ 152:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * To avoid this behavior the filter needs to be scaled down such that its peak gain < 1.0 or the i
+ 153:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  *    
+ 154:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * \par    
+ 155:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * The third item to consider is the overflow and saturation behavior of the fixed-point Q31 versio
+ 156:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * This is described in the function specific documentation below.    
+ 157:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  */
+ 158:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 159:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** /**    
+ 160:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * @addtogroup BiquadCascadeDF1_32x64    
+ 161:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * @{    
+ 162:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  */
+ 163:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 164:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** /**    
+ 165:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * @details    
+ 166:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     
+ 167:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * @param[in]  *S points to an instance of the high precision Q31 Biquad cascade filter.    
+ 168:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * @param[in]  *pSrc points to the block of input data.    
+ 169:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * @param[out] *pDst points to the block of output data.    
+ 170:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * @param[in]  blockSize number of samples to process.    
+ 171:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * @return none.    
+ 172:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  *    
+ 173:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * \par    
+ 174:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * The function is implemented using an internal 64-bit accumulator.    
+ 175:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * The accumulator has a 2.62 format and maintains full precision of the intermediate multiplicatio
+ 176:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * Thus, if the accumulator result overflows it wraps around rather than clip.    
+ 177:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * In order to avoid overflows completely the input signal must be scaled down by 2 bits and lie in
+ 178:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * After all 5 multiply-accumulates are performed, the 2.62 accumulator is shifted by <code>postShi
+ 179:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * 1.31 format by discarding the low 32 bits.    
+ 180:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  *    
+ 181:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * \par    
+ 182:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * Two related functions are provided in the CMSIS DSP library.    
+ 183:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * <code>arm_biquad_cascade_df1_q31()</code> implements a Biquad cascade with 32-bit coefficients a
+ 184:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  * <code>arm_biquad_cascade_df1_fast_q31()</code> implements a Biquad cascade with 32-bit coefficie
+ 185:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****  */
+ 186:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 187:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** void arm_biquad_cas_df1_32x64_q31(
+ 188:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   const arm_biquad_cas_df1_32x64_ins_q31 * S,
+ 189:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   q31_t * pSrc,
+ 190:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   q31_t * pDst,
+ 191:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   uint32_t blockSize)
+ 192:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** {
+ 105              	 .loc 2 192 0
+ 106              	 .cfi_startproc
+ 107              	 
+ 108              	 
+ 109 0000 2DE9B04F 	 push {r4,r5,r7,r8,r9,r10,fp,lr}
+ 110              	.LCFI5:
+ 111              	 .cfi_def_cfa_offset 32
+ 112              	 .cfi_offset 4,-32
+ 113              	 .cfi_offset 5,-28
+ 114              	 .cfi_offset 7,-24
+ 115              	 .cfi_offset 8,-20
+ 116              	 .cfi_offset 9,-16
+ 117              	 .cfi_offset 10,-12
+ 118              	 .cfi_offset 11,-8
+ 119              	 .cfi_offset 14,-4
+ 120 0004 AEB0     	 sub sp,sp,#184
+ 121              	.LCFI6:
+ 122              	 .cfi_def_cfa_offset 216
+ 123 0006 00AF     	 add r7,sp,#0
+ 124              	.LCFI7:
+ 125              	 .cfi_def_cfa_register 7
+ 126 0008 F864     	 str r0,[r7,#76]
+ 127 000a B964     	 str r1,[r7,#72]
+ 128 000c 7A64     	 str r2,[r7,#68]
+ 129 000e 3B64     	 str r3,[r7,#64]
+ 193:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   q31_t *pIn = pSrc;                             /*  input pointer initialization  */
+ 130              	 .loc 2 193 0
+ 131 0010 BB6C     	 ldr r3,[r7,#72]
+ 132 0012 C7F8B430 	 str r3,[r7,#180]
+ 194:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   q31_t *pOut = pDst;                            /*  output pointer initialization */
+ 133              	 .loc 2 194 0
+ 134 0016 7B6C     	 ldr r3,[r7,#68]
+ 135 0018 C7F8B030 	 str r3,[r7,#176]
+ 195:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   q63_t *pState = S->pState;                     /*  state pointer initialization  */
+ 136              	 .loc 2 195 0
+ 137 001c FB6C     	 ldr r3,[r7,#76]
+ 138 001e 5B68     	 ldr r3,[r3,#4]
+ 139 0020 C7F8AC30 	 str r3,[r7,#172]
+ 196:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   q31_t *pCoeffs = S->pCoeffs;                   /*  coeff pointer initialization  */
+ 140              	 .loc 2 196 0
+ 141 0024 FB6C     	 ldr r3,[r7,#76]
+ 142 0026 9B68     	 ldr r3,[r3,#8]
+ 143 0028 C7F8A830 	 str r3,[r7,#168]
+ 197:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   q63_t acc;                                     /*  accumulator                   */
+ 198:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   q31_t Xn1, Xn2;                                /*  Input Filter state variables        */
+ 199:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   q63_t Yn1, Yn2;                                /*  Output Filter state variables        */
+ 200:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   q31_t b0, b1, b2, a1, a2;                      /*  Filter coefficients           */
+ 201:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   q31_t Xn;                                      /*  temporary input               */
+ 202:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   int32_t shift = (int32_t) S->postShift + 1;    /*  Shift to be applied to the output */
+ 144              	 .loc 2 202 0
+ 145 002c FB6C     	 ldr r3,[r7,#76]
+ 146 002e 1B7B     	 ldrb r3,[r3,#12]
+ 147 0030 0133     	 adds r3,r3,#1
+ 148 0032 C7F88430 	 str r3,[r7,#132]
+ 203:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   uint32_t sample, stage = S->numStages;         /*  loop counters                     */
+ 149              	 .loc 2 203 0
+ 150 0036 FB6C     	 ldr r3,[r7,#76]
+ 151 0038 1B78     	 ldrb r3,[r3]
+ 152 003a C7F88830 	 str r3,[r7,#136]
+ 204:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   q31_t acc_l, acc_h;                            /*  temporary output               */
+ 205:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   uint32_t uShift = ((uint32_t) S->postShift + 1u);
+ 153              	 .loc 2 205 0
+ 154 003e FB6C     	 ldr r3,[r7,#76]
+ 155 0040 1B7B     	 ldrb r3,[r3,#12]
+ 156 0042 0133     	 adds r3,r3,#1
+ 157 0044 C7F88030 	 str r3,[r7,#128]
+ 206:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   uint32_t lShift = 32u - uShift;                /*  Shift to be applied to the output */
+ 158              	 .loc 2 206 0
+ 159 0048 D7F88030 	 ldr r3,[r7,#128]
+ 160 004c C3F12003 	 rsb r3,r3,#32
+ 161 0050 FB67     	 str r3,[r7,#124]
+ 162              	.L8:
+ 207:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 208:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 209:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** #ifndef ARM_MATH_CM0_FAMILY
+ 210:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 211:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   /* Run the below code for Cortex-M4 and Cortex-M3 */
+ 212:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 213:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   do
+ 214:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   {
+ 215:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     /* Reading the coefficients */
+ 216:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     b0 = *pCoeffs++;
+ 163              	 .loc 2 216 0
+ 164 0052 D7F8A820 	 ldr r2,[r7,#168]
+ 165 0056 131D     	 adds r3,r2,#4
+ 166 0058 C7F8A830 	 str r3,[r7,#168]
+ 167 005c 1368     	 ldr r3,[r2]
+ 168 005e BB67     	 str r3,[r7,#120]
+ 217:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     b1 = *pCoeffs++;
+ 169              	 .loc 2 217 0
+ 170 0060 D7F8A820 	 ldr r2,[r7,#168]
+ 171 0064 131D     	 adds r3,r2,#4
+ 172 0066 C7F8A830 	 str r3,[r7,#168]
+ 173 006a 1368     	 ldr r3,[r2]
+ 174 006c 7B67     	 str r3,[r7,#116]
+ 218:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     b2 = *pCoeffs++;
+ 175              	 .loc 2 218 0
+ 176 006e D7F8A820 	 ldr r2,[r7,#168]
+ 177 0072 131D     	 adds r3,r2,#4
+ 178 0074 C7F8A830 	 str r3,[r7,#168]
+ 179 0078 1368     	 ldr r3,[r2]
+ 180 007a 3B67     	 str r3,[r7,#112]
+ 219:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     a1 = *pCoeffs++;
+ 181              	 .loc 2 219 0
+ 182 007c D7F8A820 	 ldr r2,[r7,#168]
+ 183 0080 131D     	 adds r3,r2,#4
+ 184 0082 C7F8A830 	 str r3,[r7,#168]
+ 185 0086 1368     	 ldr r3,[r2]
+ 186 0088 FB66     	 str r3,[r7,#108]
+ 220:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     a2 = *pCoeffs++;
+ 187              	 .loc 2 220 0
+ 188 008a D7F8A820 	 ldr r2,[r7,#168]
+ 189 008e 131D     	 adds r3,r2,#4
+ 190 0090 C7F8A830 	 str r3,[r7,#168]
+ 191 0094 1368     	 ldr r3,[r2]
+ 192 0096 BB66     	 str r3,[r7,#104]
+ 221:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 222:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     /* Reading the state values */
+ 223:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     Xn1 = (q31_t) (pState[0]);
+ 193              	 .loc 2 223 0
+ 194 0098 D7F8AC30 	 ldr r3,[r7,#172]
+ 195 009c D3E90023 	 ldrd r2,[r3]
+ 196 00a0 1346     	 mov r3,r2
+ 197 00a2 C7F8A430 	 str r3,[r7,#164]
+ 224:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     Xn2 = (q31_t) (pState[1]);
+ 198              	 .loc 2 224 0
+ 199 00a6 D7F8AC30 	 ldr r3,[r7,#172]
+ 200 00aa 0833     	 adds r3,r3,#8
+ 201 00ac D3E90023 	 ldrd r2,[r3]
+ 202 00b0 1346     	 mov r3,r2
+ 203 00b2 C7F8A030 	 str r3,[r7,#160]
+ 225:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     Yn1 = pState[2];
+ 204              	 .loc 2 225 0
+ 205 00b6 D7F8AC30 	 ldr r3,[r7,#172]
+ 206 00ba D3E90423 	 ldrd r2,[r3,#16]
+ 207 00be C7E92623 	 strd r2,[r7,#152]
+ 226:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     Yn2 = pState[3];
+ 208              	 .loc 2 226 0
+ 209 00c2 D7F8AC30 	 ldr r3,[r7,#172]
+ 210 00c6 D3E90623 	 ldrd r2,[r3,#24]
+ 211 00ca C7E92423 	 strd r2,[r7,#144]
+ 227:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 228:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     /* Apply loop unrolling and compute 4 output values simultaneously. */
+ 229:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     /* The variable acc hold output value that is being computed and    
+ 230:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****      * stored in the destination buffer    
+ 231:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****      * acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2]    
+ 232:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****      */
+ 233:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 234:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     sample = blockSize >> 2u;
+ 212              	 .loc 2 234 0
+ 213 00ce 3B6C     	 ldr r3,[r7,#64]
+ 214 00d0 9B08     	 lsrs r3,r3,#2
+ 215 00d2 C7F88C30 	 str r3,[r7,#140]
+ 235:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 236:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     /* First part of the processing with loop unrolling. Compute 4 outputs at a time.    
+ 237:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****      ** a second loop below computes the remaining 1 to 3 samples. */
+ 238:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     while(sample > 0u)
+ 216              	 .loc 2 238 0
+ 217 00d6 79E2     	 b .L4
+ 218              	.L5:
+ 239:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     {
+ 240:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Read the input */
+ 241:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       Xn = *pIn++;
+ 219              	 .loc 2 241 0
+ 220 00d8 D7F8B420 	 ldr r2,[r7,#180]
+ 221 00dc 131D     	 adds r3,r2,#4
+ 222 00de C7F8B430 	 str r3,[r7,#180]
+ 223 00e2 1368     	 ldr r3,[r2]
+ 224 00e4 7B66     	 str r3,[r7,#100]
+ 242:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 243:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2] */
+ 244:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 245:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc =  b0 * x[n] */
+ 246:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc = (q63_t) Xn *b0;
+ 225              	 .loc 2 246 0
+ 226 00e6 7B6E     	 ldr r3,[r7,#100]
+ 227 00e8 1846     	 mov r0,r3
+ 228 00ea 4FEAE071 	 asr r1,r0,#31
+ 229 00ee BB6F     	 ldr r3,[r7,#120]
+ 230 00f0 1A46     	 mov r2,r3
+ 231 00f2 4FEAE273 	 asr r3,r2,#31
+ 232 00f6 02FB01F5 	 mul r5,r2,r1
+ 233 00fa 00FB03F4 	 mul r4,r0,r3
+ 234 00fe 2C44     	 add r4,r4,r5
+ 235 0100 A0FB0223 	 umull r2,r3,r0,r2
+ 236 0104 E118     	 adds r1,r4,r3
+ 237 0106 0B46     	 mov r3,r1
+ 238 0108 C7E91623 	 strd r2,[r7,#88]
+ 239 010c C7E91623 	 strd r2,[r7,#88]
+ 247:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 248:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  b1 * x[n-1] */
+ 249:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += (q63_t) Xn1 *b1;
+ 240              	 .loc 2 249 0
+ 241 0110 D7F8A430 	 ldr r3,[r7,#164]
+ 242 0114 1846     	 mov r0,r3
+ 243 0116 4FEAE071 	 asr r1,r0,#31
+ 244 011a 7B6F     	 ldr r3,[r7,#116]
+ 245 011c 1A46     	 mov r2,r3
+ 246 011e 4FEAE273 	 asr r3,r2,#31
+ 247 0122 02FB01F5 	 mul r5,r2,r1
+ 248 0126 00FB03F4 	 mul r4,r0,r3
+ 249 012a 2C44     	 add r4,r4,r5
+ 250 012c A0FB0201 	 umull r0,r1,r0,r2
+ 251 0130 6318     	 adds r3,r4,r1
+ 252 0132 1946     	 mov r1,r3
+ 253 0134 D7E91623 	 ldrd r2,[r7,#88]
+ 254 0138 1218     	 adds r2,r2,r0
+ 255 013a 43EB0103 	 adc r3,r3,r1
+ 256 013e C7E91623 	 strd r2,[r7,#88]
+ 250:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 251:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  b[2] * x[n-2] */
+ 252:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += (q63_t) Xn2 *b2;
+ 257              	 .loc 2 252 0
+ 258 0142 D7F8A030 	 ldr r3,[r7,#160]
+ 259 0146 1846     	 mov r0,r3
+ 260 0148 4FEAE071 	 asr r1,r0,#31
+ 261 014c 3B6F     	 ldr r3,[r7,#112]
+ 262 014e 1A46     	 mov r2,r3
+ 263 0150 4FEAE273 	 asr r3,r2,#31
+ 264 0154 02FB01F5 	 mul r5,r2,r1
+ 265 0158 00FB03F4 	 mul r4,r0,r3
+ 266 015c 2C44     	 add r4,r4,r5
+ 267 015e A0FB0201 	 umull r0,r1,r0,r2
+ 268 0162 6318     	 adds r3,r4,r1
+ 269 0164 1946     	 mov r1,r3
+ 270 0166 D7E91623 	 ldrd r2,[r7,#88]
+ 271 016a 1218     	 adds r2,r2,r0
+ 272 016c 43EB0103 	 adc r3,r3,r1
+ 273 0170 C7E91623 	 strd r2,[r7,#88]
+ 253:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 254:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  a1 * y[n-1] */
+ 255:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += mult32x64(Yn1, a1);
+ 274              	 .loc 2 255 0
+ 275 0174 D7E92601 	 ldrd r0,[r7,#152]
+ 276 0178 FA6E     	 ldr r2,[r7,#108]
+ 277 017a FFF7FEFF 	 bl mult32x64
+ 278 017e D7E91623 	 ldrd r2,[r7,#88]
+ 279 0182 1218     	 adds r2,r2,r0
+ 280 0184 43EB0103 	 adc r3,r3,r1
+ 281 0188 C7E91623 	 strd r2,[r7,#88]
+ 256:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 257:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  a2 * y[n-2] */
+ 258:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += mult32x64(Yn2, a2);
+ 282              	 .loc 2 258 0
+ 283 018c D7E92401 	 ldrd r0,[r7,#144]
+ 284 0190 BA6E     	 ldr r2,[r7,#104]
+ 285 0192 FFF7FEFF 	 bl mult32x64
+ 286 0196 D7E91623 	 ldrd r2,[r7,#88]
+ 287 019a 1218     	 adds r2,r2,r0
+ 288 019c 43EB0103 	 adc r3,r3,r1
+ 289 01a0 C7E91623 	 strd r2,[r7,#88]
+ 259:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 260:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* The result is converted to 1.63 , Yn2 variable is reused */
+ 261:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       Yn2 = acc << shift;
+ 290              	 .loc 2 261 0
+ 291 01a4 D7E91623 	 ldrd r2,[r7,#88]
+ 292 01a8 D7F88440 	 ldr r4,[r7,#132]
+ 293 01ac A4F12001 	 sub r1,r4,#32
+ 294 01b0 C4F12000 	 rsb r0,r4,#32
+ 295 01b4 03FA04F5 	 lsl r5,r3,r4
+ 296 01b8 FD63     	 str r5,[r7,#60]
+ 297 01ba 02FA01F1 	 lsl r1,r2,r1
+ 298 01be FD6B     	 ldr r5,[r7,#60]
+ 299 01c0 0D43     	 orrs r5,r5,r1
+ 300 01c2 FD63     	 str r5,[r7,#60]
+ 301 01c4 22FA00F0 	 lsr r0,r2,r0
+ 302 01c8 F96B     	 ldr r1,[r7,#60]
+ 303 01ca 0143     	 orrs r1,r1,r0
+ 304 01cc F963     	 str r1,[r7,#60]
+ 305 01ce 02FA04F3 	 lsl r3,r2,r4
+ 306 01d2 BB63     	 str r3,[r7,#56]
+ 307 01d4 D7E90E23 	 ldrd r2,[r7,#56]
+ 308 01d8 C7E92423 	 strd r2,[r7,#144]
+ 262:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 263:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Calc lower part of acc */
+ 264:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc_l = acc & 0xffffffff;
+ 309              	 .loc 2 264 0
+ 310 01dc BB6D     	 ldr r3,[r7,#88]
+ 311 01de 7B65     	 str r3,[r7,#84]
+ 265:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 266:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Calc upper part of acc */
+ 267:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc_h = (acc >> 32) & 0xffffffff;
+ 312              	 .loc 2 267 0
+ 313 01e0 D7E91623 	 ldrd r2,[r7,#88]
+ 314 01e4 1B00     	 movs r3,r3
+ 315 01e6 3B62     	 str r3,[r7,#32]
+ 316 01e8 0023     	 movs r3,#0
+ 317 01ea 7B62     	 str r3,[r7,#36]
+ 318 01ec 3B6A     	 ldr r3,[r7,#32]
+ 319 01ee 3B65     	 str r3,[r7,#80]
+ 268:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 269:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Apply shift for lower part of acc and upper part of acc */
+ 270:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc_h = (uint32_t) acc_l >> lShift | acc_h << uShift;
+ 320              	 .loc 2 270 0
+ 321 01f0 7A6D     	 ldr r2,[r7,#84]
+ 322 01f2 FB6F     	 ldr r3,[r7,#124]
+ 323 01f4 22FA03F1 	 lsr r1,r2,r3
+ 324 01f8 D7F88020 	 ldr r2,[r7,#128]
+ 325 01fc 3B6D     	 ldr r3,[r7,#80]
+ 326 01fe 9340     	 lsls r3,r3,r2
+ 327 0200 0B43     	 orrs r3,r3,r1
+ 328 0202 3B65     	 str r3,[r7,#80]
+ 271:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 272:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Store the output in the destination buffer in 1.31 format. */
+ 273:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       *pOut = acc_h;
+ 329              	 .loc 2 273 0
+ 330 0204 D7F8B020 	 ldr r2,[r7,#176]
+ 331 0208 3B6D     	 ldr r3,[r7,#80]
+ 332 020a 1360     	 str r3,[r2]
+ 274:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 275:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Read the second input into Xn2, to reuse the value */
+ 276:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       Xn2 = *pIn++;
+ 333              	 .loc 2 276 0
+ 334 020c D7F8B420 	 ldr r2,[r7,#180]
+ 335 0210 131D     	 adds r3,r2,#4
+ 336 0212 C7F8B430 	 str r3,[r7,#180]
+ 337 0216 1368     	 ldr r3,[r2]
+ 338 0218 C7F8A030 	 str r3,[r7,#160]
+ 277:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 278:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2] */
+ 279:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 280:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  b1 * x[n-1] */
+ 281:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc = (q63_t) Xn *b1;
+ 339              	 .loc 2 281 0
+ 340 021c 7B6E     	 ldr r3,[r7,#100]
+ 341 021e 1846     	 mov r0,r3
+ 342 0220 4FEAE071 	 asr r1,r0,#31
+ 343 0224 7B6F     	 ldr r3,[r7,#116]
+ 344 0226 1A46     	 mov r2,r3
+ 345 0228 4FEAE273 	 asr r3,r2,#31
+ 346 022c 02FB01F5 	 mul r5,r2,r1
+ 347 0230 00FB03F4 	 mul r4,r0,r3
+ 348 0234 2C44     	 add r4,r4,r5
+ 349 0236 A0FB0223 	 umull r2,r3,r0,r2
+ 350 023a E118     	 adds r1,r4,r3
+ 351 023c 0B46     	 mov r3,r1
+ 352 023e C7E91623 	 strd r2,[r7,#88]
+ 353 0242 C7E91623 	 strd r2,[r7,#88]
+ 282:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 283:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc =  b0 * x[n] */
+ 284:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += (q63_t) Xn2 *b0;
+ 354              	 .loc 2 284 0
+ 355 0246 D7F8A030 	 ldr r3,[r7,#160]
+ 356 024a 1846     	 mov r0,r3
+ 357 024c 4FEAE071 	 asr r1,r0,#31
+ 358 0250 BB6F     	 ldr r3,[r7,#120]
+ 359 0252 1A46     	 mov r2,r3
+ 360 0254 4FEAE273 	 asr r3,r2,#31
+ 361 0258 02FB01F5 	 mul r5,r2,r1
+ 362 025c 00FB03F4 	 mul r4,r0,r3
+ 363 0260 2C44     	 add r4,r4,r5
+ 364 0262 A0FB0201 	 umull r0,r1,r0,r2
+ 365 0266 6318     	 adds r3,r4,r1
+ 366 0268 1946     	 mov r1,r3
+ 367 026a D7E91623 	 ldrd r2,[r7,#88]
+ 368 026e 1218     	 adds r2,r2,r0
+ 369 0270 43EB0103 	 adc r3,r3,r1
+ 370 0274 C7E91623 	 strd r2,[r7,#88]
+ 285:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 286:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  b[2] * x[n-2] */
+ 287:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += (q63_t) Xn1 *b2;
+ 371              	 .loc 2 287 0
+ 372 0278 D7F8A430 	 ldr r3,[r7,#164]
+ 373 027c 1846     	 mov r0,r3
+ 374 027e 4FEAE071 	 asr r1,r0,#31
+ 375 0282 3B6F     	 ldr r3,[r7,#112]
+ 376 0284 1A46     	 mov r2,r3
+ 377 0286 4FEAE273 	 asr r3,r2,#31
+ 378 028a 02FB01F5 	 mul r5,r2,r1
+ 379 028e 00FB03F4 	 mul r4,r0,r3
+ 380 0292 2C44     	 add r4,r4,r5
+ 381 0294 A0FB0201 	 umull r0,r1,r0,r2
+ 382 0298 6318     	 adds r3,r4,r1
+ 383 029a 1946     	 mov r1,r3
+ 384 029c D7E91623 	 ldrd r2,[r7,#88]
+ 385 02a0 1218     	 adds r2,r2,r0
+ 386 02a2 43EB0103 	 adc r3,r3,r1
+ 387 02a6 C7E91623 	 strd r2,[r7,#88]
+ 288:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 289:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  a1 * y[n-1] */
+ 290:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += mult32x64(Yn2, a1);
+ 388              	 .loc 2 290 0
+ 389 02aa D7E92401 	 ldrd r0,[r7,#144]
+ 390 02ae FA6E     	 ldr r2,[r7,#108]
+ 391 02b0 FFF7FEFF 	 bl mult32x64
+ 392 02b4 D7E91623 	 ldrd r2,[r7,#88]
+ 393 02b8 1218     	 adds r2,r2,r0
+ 394 02ba 43EB0103 	 adc r3,r3,r1
+ 395 02be C7E91623 	 strd r2,[r7,#88]
+ 291:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 292:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  a2 * y[n-2] */
+ 293:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += mult32x64(Yn1, a2);
+ 396              	 .loc 2 293 0
+ 397 02c2 D7E92601 	 ldrd r0,[r7,#152]
+ 398 02c6 BA6E     	 ldr r2,[r7,#104]
+ 399 02c8 FFF7FEFF 	 bl mult32x64
+ 400 02cc D7E91623 	 ldrd r2,[r7,#88]
+ 401 02d0 1218     	 adds r2,r2,r0
+ 402 02d2 43EB0103 	 adc r3,r3,r1
+ 403 02d6 C7E91623 	 strd r2,[r7,#88]
+ 294:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 295:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* The result is converted to 1.63, Yn1 variable is reused */
+ 296:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       Yn1 = acc << shift;
+ 404              	 .loc 2 296 0
+ 405 02da D7E91623 	 ldrd r2,[r7,#88]
+ 406 02de D7F88440 	 ldr r4,[r7,#132]
+ 407 02e2 A4F12001 	 sub r1,r4,#32
+ 408 02e6 C4F12000 	 rsb r0,r4,#32
+ 409 02ea 03FA04F5 	 lsl r5,r3,r4
+ 410 02ee 7D63     	 str r5,[r7,#52]
+ 411 02f0 02FA01F1 	 lsl r1,r2,r1
+ 412 02f4 7D6B     	 ldr r5,[r7,#52]
+ 413 02f6 0D43     	 orrs r5,r5,r1
+ 414 02f8 7D63     	 str r5,[r7,#52]
+ 415 02fa 22FA00F0 	 lsr r0,r2,r0
+ 416 02fe 796B     	 ldr r1,[r7,#52]
+ 417 0300 0143     	 orrs r1,r1,r0
+ 418 0302 7963     	 str r1,[r7,#52]
+ 419 0304 02FA04F3 	 lsl r3,r2,r4
+ 420 0308 3B63     	 str r3,[r7,#48]
+ 421 030a D7E90C23 	 ldrd r2,[r7,#48]
+ 422 030e C7E92623 	 strd r2,[r7,#152]
+ 297:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 298:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Calc lower part of acc */
+ 299:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc_l = acc & 0xffffffff;
+ 423              	 .loc 2 299 0
+ 424 0312 BB6D     	 ldr r3,[r7,#88]
+ 425 0314 7B65     	 str r3,[r7,#84]
+ 300:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 301:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Calc upper part of acc */
+ 302:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc_h = (acc >> 32) & 0xffffffff;
+ 426              	 .loc 2 302 0
+ 427 0316 D7E91623 	 ldrd r2,[r7,#88]
+ 428 031a 1B00     	 movs r3,r3
+ 429 031c BB61     	 str r3,[r7,#24]
+ 430 031e 0023     	 movs r3,#0
+ 431 0320 FB61     	 str r3,[r7,#28]
+ 432 0322 BB69     	 ldr r3,[r7,#24]
+ 433 0324 3B65     	 str r3,[r7,#80]
+ 303:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 304:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Apply shift for lower part of acc and upper part of acc */
+ 305:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc_h = (uint32_t) acc_l >> lShift | acc_h << uShift;
+ 434              	 .loc 2 305 0
+ 435 0326 7A6D     	 ldr r2,[r7,#84]
+ 436 0328 FB6F     	 ldr r3,[r7,#124]
+ 437 032a 22FA03F1 	 lsr r1,r2,r3
+ 438 032e D7F88020 	 ldr r2,[r7,#128]
+ 439 0332 3B6D     	 ldr r3,[r7,#80]
+ 440 0334 9340     	 lsls r3,r3,r2
+ 441 0336 0B43     	 orrs r3,r3,r1
+ 442 0338 3B65     	 str r3,[r7,#80]
+ 306:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 307:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Read the third input into Xn1, to reuse the value */
+ 308:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       Xn1 = *pIn++;
+ 443              	 .loc 2 308 0
+ 444 033a D7F8B420 	 ldr r2,[r7,#180]
+ 445 033e 131D     	 adds r3,r2,#4
+ 446 0340 C7F8B430 	 str r3,[r7,#180]
+ 447 0344 1368     	 ldr r3,[r2]
+ 448 0346 C7F8A430 	 str r3,[r7,#164]
+ 309:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 310:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* The result is converted to 1.31 */
+ 311:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Store the output in the destination buffer. */
+ 312:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       *(pOut + 1u) = acc_h;
+ 449              	 .loc 2 312 0
+ 450 034a D7F8B030 	 ldr r3,[r7,#176]
+ 451 034e 1A1D     	 adds r2,r3,#4
+ 452 0350 3B6D     	 ldr r3,[r7,#80]
+ 453 0352 1360     	 str r3,[r2]
+ 313:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 314:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2] */
+ 315:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 316:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc =  b0 * x[n] */
+ 317:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc = (q63_t) Xn1 *b0;
+ 454              	 .loc 2 317 0
+ 455 0354 D7F8A430 	 ldr r3,[r7,#164]
+ 456 0358 1846     	 mov r0,r3
+ 457 035a 4FEAE071 	 asr r1,r0,#31
+ 458 035e BB6F     	 ldr r3,[r7,#120]
+ 459 0360 1A46     	 mov r2,r3
+ 460 0362 4FEAE273 	 asr r3,r2,#31
+ 461 0366 02FB01F5 	 mul r5,r2,r1
+ 462 036a 00FB03F4 	 mul r4,r0,r3
+ 463 036e 2C44     	 add r4,r4,r5
+ 464 0370 A0FB0223 	 umull r2,r3,r0,r2
+ 465 0374 E118     	 adds r1,r4,r3
+ 466 0376 0B46     	 mov r3,r1
+ 467 0378 C7E91623 	 strd r2,[r7,#88]
+ 468 037c C7E91623 	 strd r2,[r7,#88]
+ 318:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 319:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  b1 * x[n-1] */
+ 320:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += (q63_t) Xn2 *b1;
+ 469              	 .loc 2 320 0
+ 470 0380 D7F8A030 	 ldr r3,[r7,#160]
+ 471 0384 1846     	 mov r0,r3
+ 472 0386 4FEAE071 	 asr r1,r0,#31
+ 473 038a 7B6F     	 ldr r3,[r7,#116]
+ 474 038c 1A46     	 mov r2,r3
+ 475 038e 4FEAE273 	 asr r3,r2,#31
+ 476 0392 02FB01F5 	 mul r5,r2,r1
+ 477 0396 00FB03F4 	 mul r4,r0,r3
+ 478 039a 2C44     	 add r4,r4,r5
+ 479 039c A0FB0201 	 umull r0,r1,r0,r2
+ 480 03a0 6318     	 adds r3,r4,r1
+ 481 03a2 1946     	 mov r1,r3
+ 482 03a4 D7E91623 	 ldrd r2,[r7,#88]
+ 483 03a8 1218     	 adds r2,r2,r0
+ 484 03aa 43EB0103 	 adc r3,r3,r1
+ 485 03ae C7E91623 	 strd r2,[r7,#88]
+ 321:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 322:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  b[2] * x[n-2] */
+ 323:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += (q63_t) Xn *b2;
+ 486              	 .loc 2 323 0
+ 487 03b2 7B6E     	 ldr r3,[r7,#100]
+ 488 03b4 1846     	 mov r0,r3
+ 489 03b6 4FEAE071 	 asr r1,r0,#31
+ 490 03ba 3B6F     	 ldr r3,[r7,#112]
+ 491 03bc 1A46     	 mov r2,r3
+ 492 03be 4FEAE273 	 asr r3,r2,#31
+ 493 03c2 02FB01F5 	 mul r5,r2,r1
+ 494 03c6 00FB03F4 	 mul r4,r0,r3
+ 495 03ca 2C44     	 add r4,r4,r5
+ 496 03cc A0FB0201 	 umull r0,r1,r0,r2
+ 497 03d0 6318     	 adds r3,r4,r1
+ 498 03d2 1946     	 mov r1,r3
+ 499 03d4 D7E91623 	 ldrd r2,[r7,#88]
+ 500 03d8 1218     	 adds r2,r2,r0
+ 501 03da 43EB0103 	 adc r3,r3,r1
+ 502 03de C7E91623 	 strd r2,[r7,#88]
+ 324:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 325:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  a1 * y[n-1] */
+ 326:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += mult32x64(Yn1, a1);
+ 503              	 .loc 2 326 0
+ 504 03e2 D7E92601 	 ldrd r0,[r7,#152]
+ 505 03e6 FA6E     	 ldr r2,[r7,#108]
+ 506 03e8 FFF7FEFF 	 bl mult32x64
+ 507 03ec D7E91623 	 ldrd r2,[r7,#88]
+ 508 03f0 1218     	 adds r2,r2,r0
+ 509 03f2 43EB0103 	 adc r3,r3,r1
+ 510 03f6 C7E91623 	 strd r2,[r7,#88]
+ 327:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 328:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  a2 * y[n-2] */
+ 329:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += mult32x64(Yn2, a2);
+ 511              	 .loc 2 329 0
+ 512 03fa D7E92401 	 ldrd r0,[r7,#144]
+ 513 03fe BA6E     	 ldr r2,[r7,#104]
+ 514 0400 FFF7FEFF 	 bl mult32x64
+ 515 0404 D7E91623 	 ldrd r2,[r7,#88]
+ 516 0408 1218     	 adds r2,r2,r0
+ 517 040a 43EB0103 	 adc r3,r3,r1
+ 518 040e C7E91623 	 strd r2,[r7,#88]
+ 330:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 331:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* The result is converted to 1.63, Yn2 variable is reused  */
+ 332:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       Yn2 = acc << shift;
+ 519              	 .loc 2 332 0
+ 520 0412 D7E91623 	 ldrd r2,[r7,#88]
+ 521 0416 D7F88440 	 ldr r4,[r7,#132]
+ 522 041a A4F12001 	 sub r1,r4,#32
+ 523 041e C4F12000 	 rsb r0,r4,#32
+ 524 0422 03FA04F5 	 lsl r5,r3,r4
+ 525 0426 FD62     	 str r5,[r7,#44]
+ 526 0428 02FA01F1 	 lsl r1,r2,r1
+ 527 042c FD6A     	 ldr r5,[r7,#44]
+ 528 042e 0D43     	 orrs r5,r5,r1
+ 529 0430 FD62     	 str r5,[r7,#44]
+ 530 0432 22FA00F0 	 lsr r0,r2,r0
+ 531 0436 F96A     	 ldr r1,[r7,#44]
+ 532 0438 0143     	 orrs r1,r1,r0
+ 533 043a F962     	 str r1,[r7,#44]
+ 534 043c 02FA04F3 	 lsl r3,r2,r4
+ 535 0440 BB62     	 str r3,[r7,#40]
+ 536 0442 D7E90A23 	 ldrd r2,[r7,#40]
+ 537 0446 C7E92423 	 strd r2,[r7,#144]
+ 333:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 334:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Calc lower part of acc */
+ 335:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc_l = acc & 0xffffffff;
+ 538              	 .loc 2 335 0
+ 539 044a BB6D     	 ldr r3,[r7,#88]
+ 540 044c 7B65     	 str r3,[r7,#84]
+ 336:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 337:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Calc upper part of acc */
+ 338:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc_h = (acc >> 32) & 0xffffffff;
+ 541              	 .loc 2 338 0
+ 542 044e D7E91623 	 ldrd r2,[r7,#88]
+ 543 0452 1B00     	 movs r3,r3
+ 544 0454 3B61     	 str r3,[r7,#16]
+ 545 0456 0023     	 movs r3,#0
+ 546 0458 7B61     	 str r3,[r7,#20]
+ 547 045a 3B69     	 ldr r3,[r7,#16]
+ 548 045c 3B65     	 str r3,[r7,#80]
+ 339:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 340:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Apply shift for lower part of acc and upper part of acc */
+ 341:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc_h = (uint32_t) acc_l >> lShift | acc_h << uShift;
+ 549              	 .loc 2 341 0
+ 550 045e 7A6D     	 ldr r2,[r7,#84]
+ 551 0460 FB6F     	 ldr r3,[r7,#124]
+ 552 0462 22FA03F1 	 lsr r1,r2,r3
+ 553 0466 D7F88020 	 ldr r2,[r7,#128]
+ 554 046a 3B6D     	 ldr r3,[r7,#80]
+ 555 046c 9340     	 lsls r3,r3,r2
+ 556 046e 0B43     	 orrs r3,r3,r1
+ 557 0470 3B65     	 str r3,[r7,#80]
+ 342:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 343:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Store the output in the destination buffer in 1.31 format. */
+ 344:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       *(pOut + 2u) = acc_h;
+ 558              	 .loc 2 344 0
+ 559 0472 D7F8B030 	 ldr r3,[r7,#176]
+ 560 0476 03F10802 	 add r2,r3,#8
+ 561 047a 3B6D     	 ldr r3,[r7,#80]
+ 562 047c 1360     	 str r3,[r2]
+ 345:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 346:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Read the fourth input into Xn, to reuse the value */
+ 347:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       Xn = *pIn++;
+ 563              	 .loc 2 347 0
+ 564 047e D7F8B420 	 ldr r2,[r7,#180]
+ 565 0482 131D     	 adds r3,r2,#4
+ 566 0484 C7F8B430 	 str r3,[r7,#180]
+ 567 0488 1368     	 ldr r3,[r2]
+ 568 048a 7B66     	 str r3,[r7,#100]
+ 348:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 349:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2] */
+ 350:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc =  b0 * x[n] */
+ 351:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc = (q63_t) Xn *b0;
+ 569              	 .loc 2 351 0
+ 570 048c 7B6E     	 ldr r3,[r7,#100]
+ 571 048e 1846     	 mov r0,r3
+ 572 0490 4FEAE071 	 asr r1,r0,#31
+ 573 0494 BB6F     	 ldr r3,[r7,#120]
+ 574 0496 1A46     	 mov r2,r3
+ 575 0498 4FEAE273 	 asr r3,r2,#31
+ 576 049c 02FB01F5 	 mul r5,r2,r1
+ 577 04a0 00FB03F4 	 mul r4,r0,r3
+ 578 04a4 2C44     	 add r4,r4,r5
+ 579 04a6 A0FB0223 	 umull r2,r3,r0,r2
+ 580 04aa E118     	 adds r1,r4,r3
+ 581 04ac 0B46     	 mov r3,r1
+ 582 04ae C7E91623 	 strd r2,[r7,#88]
+ 583 04b2 C7E91623 	 strd r2,[r7,#88]
+ 352:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 353:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  b1 * x[n-1] */
+ 354:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += (q63_t) Xn1 *b1;
+ 584              	 .loc 2 354 0
+ 585 04b6 D7F8A430 	 ldr r3,[r7,#164]
+ 586 04ba 1846     	 mov r0,r3
+ 587 04bc 4FEAE071 	 asr r1,r0,#31
+ 588 04c0 7B6F     	 ldr r3,[r7,#116]
+ 589 04c2 1A46     	 mov r2,r3
+ 590 04c4 4FEAE273 	 asr r3,r2,#31
+ 591 04c8 02FB01F5 	 mul r5,r2,r1
+ 592 04cc 00FB03F4 	 mul r4,r0,r3
+ 593 04d0 2C44     	 add r4,r4,r5
+ 594 04d2 A0FB0201 	 umull r0,r1,r0,r2
+ 595 04d6 6318     	 adds r3,r4,r1
+ 596 04d8 1946     	 mov r1,r3
+ 597 04da D7E91623 	 ldrd r2,[r7,#88]
+ 598 04de 1218     	 adds r2,r2,r0
+ 599 04e0 43EB0103 	 adc r3,r3,r1
+ 600 04e4 C7E91623 	 strd r2,[r7,#88]
+ 355:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 356:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  b[2] * x[n-2] */
+ 357:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += (q63_t) Xn2 *b2;
+ 601              	 .loc 2 357 0
+ 602 04e8 D7F8A030 	 ldr r3,[r7,#160]
+ 603 04ec 1846     	 mov r0,r3
+ 604 04ee 4FEAE071 	 asr r1,r0,#31
+ 605 04f2 3B6F     	 ldr r3,[r7,#112]
+ 606 04f4 1A46     	 mov r2,r3
+ 607 04f6 4FEAE273 	 asr r3,r2,#31
+ 608 04fa 02FB01F5 	 mul r5,r2,r1
+ 609 04fe 00FB03F4 	 mul r4,r0,r3
+ 610 0502 2C44     	 add r4,r4,r5
+ 611 0504 A0FB0201 	 umull r0,r1,r0,r2
+ 612 0508 6318     	 adds r3,r4,r1
+ 613 050a 1946     	 mov r1,r3
+ 614 050c D7E91623 	 ldrd r2,[r7,#88]
+ 615 0510 1218     	 adds r2,r2,r0
+ 616 0512 43EB0103 	 adc r3,r3,r1
+ 617 0516 C7E91623 	 strd r2,[r7,#88]
+ 358:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 359:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  a1 * y[n-1] */
+ 360:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += mult32x64(Yn2, a1);
+ 618              	 .loc 2 360 0
+ 619 051a D7E92401 	 ldrd r0,[r7,#144]
+ 620 051e FA6E     	 ldr r2,[r7,#108]
+ 621 0520 FFF7FEFF 	 bl mult32x64
+ 622 0524 D7E91623 	 ldrd r2,[r7,#88]
+ 623 0528 1218     	 adds r2,r2,r0
+ 624 052a 43EB0103 	 adc r3,r3,r1
+ 625 052e C7E91623 	 strd r2,[r7,#88]
+ 361:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 362:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  a2 * y[n-2] */
+ 363:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += mult32x64(Yn1, a2);
+ 626              	 .loc 2 363 0
+ 627 0532 D7E92601 	 ldrd r0,[r7,#152]
+ 628 0536 BA6E     	 ldr r2,[r7,#104]
+ 629 0538 FFF7FEFF 	 bl mult32x64
+ 630 053c D7E91623 	 ldrd r2,[r7,#88]
+ 631 0540 1218     	 adds r2,r2,r0
+ 632 0542 43EB0103 	 adc r3,r3,r1
+ 633 0546 C7E91623 	 strd r2,[r7,#88]
+ 364:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 365:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* The result is converted to 1.63, Yn1 variable is reused  */
+ 366:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       Yn1 = acc << shift;
+ 634              	 .loc 2 366 0
+ 635 054a D7E91623 	 ldrd r2,[r7,#88]
+ 636 054e D7F88440 	 ldr r4,[r7,#132]
+ 637 0552 A4F12001 	 sub r1,r4,#32
+ 638 0556 C4F12000 	 rsb r0,r4,#32
+ 639 055a 03FA04FB 	 lsl fp,r3,r4
+ 640 055e 02FA01F1 	 lsl r1,r2,r1
+ 641 0562 4BEA010B 	 orr fp,fp,r1
+ 642 0566 22FA00F0 	 lsr r0,r2,r0
+ 643 056a 4BEA000B 	 orr fp,fp,r0
+ 644 056e 02FA04FA 	 lsl r10,r2,r4
+ 645 0572 C7E926AB 	 strd r10,[r7,#152]
+ 367:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 368:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Calc lower part of acc */
+ 369:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc_l = acc & 0xffffffff;
+ 646              	 .loc 2 369 0
+ 647 0576 BB6D     	 ldr r3,[r7,#88]
+ 648 0578 7B65     	 str r3,[r7,#84]
+ 370:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 371:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Calc upper part of acc */
+ 372:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc_h = (acc >> 32) & 0xffffffff;
+ 649              	 .loc 2 372 0
+ 650 057a D7E91623 	 ldrd r2,[r7,#88]
+ 651 057e 1B00     	 movs r3,r3
+ 652 0580 BB60     	 str r3,[r7,#8]
+ 653 0582 0023     	 movs r3,#0
+ 654 0584 FB60     	 str r3,[r7,#12]
+ 655 0586 BB68     	 ldr r3,[r7,#8]
+ 656 0588 3B65     	 str r3,[r7,#80]
+ 373:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 374:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Apply shift for lower part of acc and upper part of acc */
+ 375:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc_h = (uint32_t) acc_l >> lShift | acc_h << uShift;
+ 657              	 .loc 2 375 0
+ 658 058a 7A6D     	 ldr r2,[r7,#84]
+ 659 058c FB6F     	 ldr r3,[r7,#124]
+ 660 058e 22FA03F1 	 lsr r1,r2,r3
+ 661 0592 D7F88020 	 ldr r2,[r7,#128]
+ 662 0596 3B6D     	 ldr r3,[r7,#80]
+ 663 0598 9340     	 lsls r3,r3,r2
+ 664 059a 0B43     	 orrs r3,r3,r1
+ 665 059c 3B65     	 str r3,[r7,#80]
+ 376:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 377:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Store the output in the destination buffer in 1.31 format. */
+ 378:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       *(pOut + 3u) = acc_h;
+ 666              	 .loc 2 378 0
+ 667 059e D7F8B030 	 ldr r3,[r7,#176]
+ 668 05a2 03F10C02 	 add r2,r3,#12
+ 669 05a6 3B6D     	 ldr r3,[r7,#80]
+ 670 05a8 1360     	 str r3,[r2]
+ 379:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 380:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Every time after the output is computed state should be updated. */
+ 381:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* The states should be updated as:  */
+ 382:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Xn2 = Xn1    */
+ 383:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Xn1 = Xn     */
+ 384:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Yn2 = Yn1    */
+ 385:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Yn1 = acc    */
+ 386:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       Xn2 = Xn1;
+ 671              	 .loc 2 386 0
+ 672 05aa D7F8A430 	 ldr r3,[r7,#164]
+ 673 05ae C7F8A030 	 str r3,[r7,#160]
+ 387:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       Xn1 = Xn;
+ 674              	 .loc 2 387 0
+ 675 05b2 7B6E     	 ldr r3,[r7,#100]
+ 676 05b4 C7F8A430 	 str r3,[r7,#164]
+ 388:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 389:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* update output pointer */
+ 390:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       pOut += 4u;
+ 677              	 .loc 2 390 0
+ 678 05b8 D7F8B030 	 ldr r3,[r7,#176]
+ 679 05bc 1033     	 adds r3,r3,#16
+ 680 05be C7F8B030 	 str r3,[r7,#176]
+ 391:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 392:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* decrement the loop counter */
+ 393:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       sample--;
+ 681              	 .loc 2 393 0
+ 682 05c2 D7F88C30 	 ldr r3,[r7,#140]
+ 683 05c6 013B     	 subs r3,r3,#1
+ 684 05c8 C7F88C30 	 str r3,[r7,#140]
+ 685              	.L4:
+ 238:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     {
+ 686              	 .loc 2 238 0
+ 687 05cc D7F88C30 	 ldr r3,[r7,#140]
+ 688 05d0 002B     	 cmp r3,#0
+ 689 05d2 7FF481AD 	 bne .L5
+ 394:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     }
+ 395:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 396:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     /* If the blockSize is not a multiple of 4, compute any remaining output samples here.    
+ 397:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****      ** No loop unrolling is used. */
+ 398:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     sample = (blockSize & 0x3u);
+ 690              	 .loc 2 398 0
+ 691 05d6 3B6C     	 ldr r3,[r7,#64]
+ 692 05d8 03F00303 	 and r3,r3,#3
+ 693 05dc C7F88C30 	 str r3,[r7,#140]
+ 399:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 400:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     while(sample > 0u)
+ 694              	 .loc 2 400 0
+ 695 05e0 A6E0     	 b .L6
+ 696              	.L7:
+ 401:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     {
+ 402:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Read the input */
+ 403:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       Xn = *pIn++;
+ 697              	 .loc 2 403 0
+ 698 05e2 D7F8B420 	 ldr r2,[r7,#180]
+ 699 05e6 131D     	 adds r3,r2,#4
+ 700 05e8 C7F8B430 	 str r3,[r7,#180]
+ 701 05ec 1368     	 ldr r3,[r2]
+ 702 05ee 7B66     	 str r3,[r7,#100]
+ 404:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 405:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2] */
+ 406:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 407:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc =  b0 * x[n] */
+ 408:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc = (q63_t) Xn *b0;
+ 703              	 .loc 2 408 0
+ 704 05f0 7B6E     	 ldr r3,[r7,#100]
+ 705 05f2 1846     	 mov r0,r3
+ 706 05f4 4FEAE071 	 asr r1,r0,#31
+ 707 05f8 BB6F     	 ldr r3,[r7,#120]
+ 708 05fa 1A46     	 mov r2,r3
+ 709 05fc 4FEAE273 	 asr r3,r2,#31
+ 710 0600 02FB01F5 	 mul r5,r2,r1
+ 711 0604 00FB03F4 	 mul r4,r0,r3
+ 712 0608 2C44     	 add r4,r4,r5
+ 713 060a A0FB0223 	 umull r2,r3,r0,r2
+ 714 060e E118     	 adds r1,r4,r3
+ 715 0610 0B46     	 mov r3,r1
+ 716 0612 C7E91623 	 strd r2,[r7,#88]
+ 717 0616 C7E91623 	 strd r2,[r7,#88]
+ 409:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  b1 * x[n-1] */
+ 410:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += (q63_t) Xn1 *b1;
+ 718              	 .loc 2 410 0
+ 719 061a D7F8A430 	 ldr r3,[r7,#164]
+ 720 061e 1846     	 mov r0,r3
+ 721 0620 4FEAE071 	 asr r1,r0,#31
+ 722 0624 7B6F     	 ldr r3,[r7,#116]
+ 723 0626 1A46     	 mov r2,r3
+ 724 0628 4FEAE273 	 asr r3,r2,#31
+ 725 062c 02FB01F5 	 mul r5,r2,r1
+ 726 0630 00FB03F4 	 mul r4,r0,r3
+ 727 0634 2C44     	 add r4,r4,r5
+ 728 0636 A0FB0201 	 umull r0,r1,r0,r2
+ 729 063a 6318     	 adds r3,r4,r1
+ 730 063c 1946     	 mov r1,r3
+ 731 063e D7E91623 	 ldrd r2,[r7,#88]
+ 732 0642 1218     	 adds r2,r2,r0
+ 733 0644 43EB0103 	 adc r3,r3,r1
+ 734 0648 C7E91623 	 strd r2,[r7,#88]
+ 411:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  b[2] * x[n-2] */
+ 412:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += (q63_t) Xn2 *b2;
+ 735              	 .loc 2 412 0
+ 736 064c D7F8A030 	 ldr r3,[r7,#160]
+ 737 0650 1846     	 mov r0,r3
+ 738 0652 4FEAE071 	 asr r1,r0,#31
+ 739 0656 3B6F     	 ldr r3,[r7,#112]
+ 740 0658 1A46     	 mov r2,r3
+ 741 065a 4FEAE273 	 asr r3,r2,#31
+ 742 065e 02FB01F5 	 mul r5,r2,r1
+ 743 0662 00FB03F4 	 mul r4,r0,r3
+ 744 0666 2C44     	 add r4,r4,r5
+ 745 0668 A0FB0201 	 umull r0,r1,r0,r2
+ 746 066c 6318     	 adds r3,r4,r1
+ 747 066e 1946     	 mov r1,r3
+ 748 0670 D7E91623 	 ldrd r2,[r7,#88]
+ 749 0674 1218     	 adds r2,r2,r0
+ 750 0676 43EB0103 	 adc r3,r3,r1
+ 751 067a C7E91623 	 strd r2,[r7,#88]
+ 413:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  a1 * y[n-1] */
+ 414:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += mult32x64(Yn1, a1);
+ 752              	 .loc 2 414 0
+ 753 067e D7E92601 	 ldrd r0,[r7,#152]
+ 754 0682 FA6E     	 ldr r2,[r7,#108]
+ 755 0684 FFF7FEFF 	 bl mult32x64
+ 756 0688 D7E91623 	 ldrd r2,[r7,#88]
+ 757 068c 1218     	 adds r2,r2,r0
+ 758 068e 43EB0103 	 adc r3,r3,r1
+ 759 0692 C7E91623 	 strd r2,[r7,#88]
+ 415:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  a2 * y[n-2] */
+ 416:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += mult32x64(Yn2, a2);
+ 760              	 .loc 2 416 0
+ 761 0696 D7E92401 	 ldrd r0,[r7,#144]
+ 762 069a BA6E     	 ldr r2,[r7,#104]
+ 763 069c FFF7FEFF 	 bl mult32x64
+ 764 06a0 D7E91623 	 ldrd r2,[r7,#88]
+ 765 06a4 1218     	 adds r2,r2,r0
+ 766 06a6 43EB0103 	 adc r3,r3,r1
+ 767 06aa C7E91623 	 strd r2,[r7,#88]
+ 417:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 418:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Every time after the output is computed state should be updated. */
+ 419:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* The states should be updated as:  */
+ 420:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Xn2 = Xn1    */
+ 421:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Xn1 = Xn     */
+ 422:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Yn2 = Yn1    */
+ 423:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Yn1 = acc    */
+ 424:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       Xn2 = Xn1;
+ 768              	 .loc 2 424 0
+ 769 06ae D7F8A430 	 ldr r3,[r7,#164]
+ 770 06b2 C7F8A030 	 str r3,[r7,#160]
+ 425:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       Xn1 = Xn;
+ 771              	 .loc 2 425 0
+ 772 06b6 7B6E     	 ldr r3,[r7,#100]
+ 773 06b8 C7F8A430 	 str r3,[r7,#164]
+ 426:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       Yn2 = Yn1;
+ 774              	 .loc 2 426 0
+ 775 06bc D7E92623 	 ldrd r2,[r7,#152]
+ 776 06c0 C7E92423 	 strd r2,[r7,#144]
+ 427:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* The result is converted to 1.63, Yn1 variable is reused  */
+ 428:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       Yn1 = acc << shift;
+ 777              	 .loc 2 428 0
+ 778 06c4 D7E91623 	 ldrd r2,[r7,#88]
+ 779 06c8 D7F88440 	 ldr r4,[r7,#132]
+ 780 06cc A4F12001 	 sub r1,r4,#32
+ 781 06d0 C4F12000 	 rsb r0,r4,#32
+ 782 06d4 03FA04F9 	 lsl r9,r3,r4
+ 783 06d8 02FA01F1 	 lsl r1,r2,r1
+ 784 06dc 49EA0109 	 orr r9,r9,r1
+ 785 06e0 22FA00F0 	 lsr r0,r2,r0
+ 786 06e4 49EA0009 	 orr r9,r9,r0
+ 787 06e8 02FA04F8 	 lsl r8,r2,r4
+ 788 06ec C7E92689 	 strd r8,[r7,#152]
+ 429:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 430:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Calc lower part of acc */
+ 431:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc_l = acc & 0xffffffff;
+ 789              	 .loc 2 431 0
+ 790 06f0 BB6D     	 ldr r3,[r7,#88]
+ 791 06f2 7B65     	 str r3,[r7,#84]
+ 432:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 433:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Calc upper part of acc */
+ 434:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc_h = (acc >> 32) & 0xffffffff;
+ 792              	 .loc 2 434 0
+ 793 06f4 D7E91623 	 ldrd r2,[r7,#88]
+ 794 06f8 1B00     	 movs r3,r3
+ 795 06fa 3B60     	 str r3,[r7]
+ 796 06fc 0023     	 movs r3,#0
+ 797 06fe 7B60     	 str r3,[r7,#4]
+ 798 0700 3B68     	 ldr r3,[r7]
+ 799 0702 3B65     	 str r3,[r7,#80]
+ 435:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 436:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Apply shift for lower part of acc and upper part of acc */
+ 437:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc_h = (uint32_t) acc_l >> lShift | acc_h << uShift;
+ 800              	 .loc 2 437 0
+ 801 0704 7A6D     	 ldr r2,[r7,#84]
+ 802 0706 FB6F     	 ldr r3,[r7,#124]
+ 803 0708 22FA03F1 	 lsr r1,r2,r3
+ 804 070c D7F88020 	 ldr r2,[r7,#128]
+ 805 0710 3B6D     	 ldr r3,[r7,#80]
+ 806 0712 9340     	 lsls r3,r3,r2
+ 807 0714 0B43     	 orrs r3,r3,r1
+ 808 0716 3B65     	 str r3,[r7,#80]
+ 438:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 439:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Store the output in the destination buffer in 1.31 format. */
+ 440:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       *pOut++ = acc_h;
+ 809              	 .loc 2 440 0
+ 810 0718 D7F8B020 	 ldr r2,[r7,#176]
+ 811 071c 131D     	 adds r3,r2,#4
+ 812 071e C7F8B030 	 str r3,[r7,#176]
+ 813 0722 3B6D     	 ldr r3,[r7,#80]
+ 814 0724 1360     	 str r3,[r2]
+ 441:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       //Yn1 = acc << shift; 
+ 442:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 443:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Store the output in the destination buffer in 1.31 format. */
+ 444:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** //      *pOut++ = (q31_t) (acc >> (32 - shift)); 
+ 445:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 446:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* decrement the loop counter */
+ 447:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       sample--;
+ 815              	 .loc 2 447 0
+ 816 0726 D7F88C30 	 ldr r3,[r7,#140]
+ 817 072a 013B     	 subs r3,r3,#1
+ 818 072c C7F88C30 	 str r3,[r7,#140]
+ 819              	.L6:
+ 400:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     {
+ 820              	 .loc 2 400 0
+ 821 0730 D7F88C30 	 ldr r3,[r7,#140]
+ 822 0734 002B     	 cmp r3,#0
+ 823 0736 7FF454AF 	 bne .L7
+ 448:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     }
+ 449:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 450:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     /*  The first stage output is given as input to the second stage. */
+ 451:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     pIn = pDst;
+ 824              	 .loc 2 451 0
+ 825 073a 7B6C     	 ldr r3,[r7,#68]
+ 826 073c C7F8B430 	 str r3,[r7,#180]
+ 452:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 453:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     /* Reset to destination buffer working pointer */
+ 454:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     pOut = pDst;
+ 827              	 .loc 2 454 0
+ 828 0740 7B6C     	 ldr r3,[r7,#68]
+ 829 0742 C7F8B030 	 str r3,[r7,#176]
+ 455:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 456:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     /*  Store the updated state variables back into the pState array */
+ 457:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     /*  Store the updated state variables back into the pState array */
+ 458:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     *pState++ = (q63_t) Xn1;
+ 830              	 .loc 2 458 0
+ 831 0746 D7F8AC10 	 ldr r1,[r7,#172]
+ 832 074a 01F10803 	 add r3,r1,#8
+ 833 074e C7F8AC30 	 str r3,[r7,#172]
+ 834 0752 D7F8A430 	 ldr r3,[r7,#164]
+ 835 0756 1A46     	 mov r2,r3
+ 836 0758 4FEAE273 	 asr r3,r2,#31
+ 837 075c C1E90023 	 strd r2,[r1]
+ 459:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     *pState++ = (q63_t) Xn2;
+ 838              	 .loc 2 459 0
+ 839 0760 D7F8AC10 	 ldr r1,[r7,#172]
+ 840 0764 01F10803 	 add r3,r1,#8
+ 841 0768 C7F8AC30 	 str r3,[r7,#172]
+ 842 076c D7F8A030 	 ldr r3,[r7,#160]
+ 843 0770 1A46     	 mov r2,r3
+ 844 0772 4FEAE273 	 asr r3,r2,#31
+ 845 0776 C1E90023 	 strd r2,[r1]
+ 460:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     *pState++ = Yn1;
+ 846              	 .loc 2 460 0
+ 847 077a D7F8AC10 	 ldr r1,[r7,#172]
+ 848 077e 01F10803 	 add r3,r1,#8
+ 849 0782 C7F8AC30 	 str r3,[r7,#172]
+ 850 0786 D7E92623 	 ldrd r2,[r7,#152]
+ 851 078a C1E90023 	 strd r2,[r1]
+ 461:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     *pState++ = Yn2;
+ 852              	 .loc 2 461 0
+ 853 078e D7F8AC10 	 ldr r1,[r7,#172]
+ 854 0792 01F10803 	 add r3,r1,#8
+ 855 0796 C7F8AC30 	 str r3,[r7,#172]
+ 856 079a D7E92423 	 ldrd r2,[r7,#144]
+ 857 079e C1E90023 	 strd r2,[r1]
+ 462:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 463:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   } while(--stage);
+ 858              	 .loc 2 463 0
+ 859 07a2 D7F88830 	 ldr r3,[r7,#136]
+ 860 07a6 013B     	 subs r3,r3,#1
+ 861 07a8 C7F88830 	 str r3,[r7,#136]
+ 862 07ac D7F88830 	 ldr r3,[r7,#136]
+ 863 07b0 002B     	 cmp r3,#0
+ 864 07b2 7FF44EAC 	 bne .L8
+ 464:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 465:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** #else
+ 466:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 467:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   /* Run the below code for Cortex-M0 */
+ 468:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 469:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   do
+ 470:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   {
+ 471:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     /* Reading the coefficients */
+ 472:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     b0 = *pCoeffs++;
+ 473:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     b1 = *pCoeffs++;
+ 474:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     b2 = *pCoeffs++;
+ 475:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     a1 = *pCoeffs++;
+ 476:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     a2 = *pCoeffs++;
+ 477:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 478:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     /* Reading the state values */
+ 479:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     Xn1 = pState[0];
+ 480:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     Xn2 = pState[1];
+ 481:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     Yn1 = pState[2];
+ 482:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     Yn2 = pState[3];
+ 483:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 484:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     /* The variable acc hold output value that is being computed and        
+ 485:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****      * stored in the destination buffer            
+ 486:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****      * acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2]            
+ 487:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****      */
+ 488:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 489:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     sample = blockSize;
+ 490:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 491:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     while(sample > 0u)
+ 492:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     {
+ 493:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Read the input */
+ 494:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       Xn = *pIn++;
+ 495:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 496:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2] */
+ 497:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc =  b0 * x[n] */
+ 498:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc = (q63_t) Xn *b0;
+ 499:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  b1 * x[n-1] */
+ 500:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += (q63_t) Xn1 *b1;
+ 501:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  b[2] * x[n-2] */
+ 502:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += (q63_t) Xn2 *b2;
+ 503:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  a1 * y[n-1] */
+ 504:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += mult32x64(Yn1, a1);
+ 505:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* acc +=  a2 * y[n-2] */
+ 506:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc += mult32x64(Yn2, a2);
+ 507:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 508:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Every time after the output is computed state should be updated. */
+ 509:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* The states should be updated as:  */
+ 510:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Xn2 = Xn1    */
+ 511:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Xn1 = Xn     */
+ 512:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Yn2 = Yn1    */
+ 513:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Yn1 = acc    */
+ 514:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       Xn2 = Xn1;
+ 515:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       Xn1 = Xn;
+ 516:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       Yn2 = Yn1;
+ 517:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 518:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* The result is converted to 1.63, Yn1 variable is reused  */
+ 519:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       Yn1 = acc << shift;
+ 520:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 521:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Calc lower part of acc */
+ 522:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc_l = acc & 0xffffffff;
+ 523:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 524:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Calc upper part of acc */
+ 525:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc_h = (acc >> 32) & 0xffffffff;
+ 526:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 527:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Apply shift for lower part of acc and upper part of acc */
+ 528:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       acc_h = (uint32_t) acc_l >> lShift | acc_h << uShift;
+ 529:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 530:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Store the output in the destination buffer in 1.31 format. */
+ 531:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       *pOut++ = acc_h;
+ 532:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 533:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       //Yn1 = acc << shift; 
+ 534:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 535:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* Store the output in the destination buffer in 1.31 format. */
+ 536:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       //*pOut++ = (q31_t) (acc >> (32 - shift)); 
+ 537:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 538:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       /* decrement the loop counter */
+ 539:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****       sample--;
+ 540:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     }
+ 541:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 542:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     /*  The first stage output is given as input to the second stage. */
+ 543:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     pIn = pDst;
+ 544:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 545:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     /* Reset to destination buffer working pointer */
+ 546:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     pOut = pDst;
+ 547:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 548:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     /*  Store the updated state variables back into the pState array */
+ 549:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     *pState++ = (q63_t) Xn1;
+ 550:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     *pState++ = (q63_t) Xn2;
+ 551:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     *pState++ = Yn1;
+ 552:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****     *pState++ = Yn2;
+ 553:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 554:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c ****   } while(--stage);
+ 555:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** 
+ 556:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** #endif /*    #ifndef ARM_MATH_CM0_FAMILY     */
+ 557:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_biquad_cascade_df1_32x64_q31.c **** }
+ 865              	 .loc 2 557 0
+ 866 07b6 B837     	 adds r7,r7,#184
+ 867              	.LCFI8:
+ 868              	 .cfi_def_cfa_offset 32
+ 869 07b8 BD46     	 mov sp,r7
+ 870              	.LCFI9:
+ 871              	 .cfi_def_cfa_register 13
+ 872              	 
+ 873 07ba BDE8B08F 	 pop {r4,r5,r7,r8,r9,r10,fp,pc}
+ 874              	 .cfi_endproc
+ 875              	.LFE139:
+ 877 07be 00BF     	 .text
+ 878              	.Letext0:
+ 879              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 880              	 .file 4 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_biquad_cascade_df1_32x64_q31.c
+    {standard input}:20     .text.mult32x64:00000000 $t
+    {standard input}:24     .text.mult32x64:00000000 mult32x64
+    {standard input}:97     .text.arm_biquad_cas_df1_32x64_q31:00000000 $t
+    {standard input}:102    .text.arm_biquad_cas_df1_32x64_q31:00000000 arm_biquad_cas_df1_32x64_q31
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

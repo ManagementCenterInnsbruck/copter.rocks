@@ -1,0 +1,644 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu vfp
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "BluetoothProtocol.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .comm control_value,28,4
+  20              	 .comm dpacket,43,4
+  21              	 .comm ReadBufBT,4,4
+  22              	 .section .text.initBluetoothStorage,"ax",%progbits
+  23              	 .align 2
+  24              	 .global initBluetoothStorage
+  25              	 .thumb
+  26              	 .thumb_func
+  28              	initBluetoothStorage:
+  29              	.LFB440:
+  30              	 .file 1 "../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c"
+   1:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** /* *****************************************************************************
+   2:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** **                      Author(s) Identity                                    **
+   3:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** ********************************************************************************
+   4:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** **                                                                            **
+   5:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** ** Initials     Name                                                          **
+   6:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** ** ---------------------------------------------------------------------------**
+   7:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** ** SE           Steurer Elias                                                 **
+   8:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** **                                                                            **
+   9:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** **                                                                            **
+  10:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** ***************************************************************************** */
+  11:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 
+  12:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** /* *****************************************************************************
+  13:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** **                      Revision Control History                              **
+  14:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** ***************************************************************************** */
+  15:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** /* 
+  16:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c ****  * V0.0: 30.01.2015, SE   :  Initial Version
+  17:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c ****  * V0.1: 08.04.2016, SE   :  modified Version
+  18:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c ****   */
+  19:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c ****  
+  20:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c ****  
+  21:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** /* *****************************************************************************
+  22:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** **                      Includes                                              **
+  23:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** ***************************************************************************** */
+  24:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c ****  #include "BluetoothProtocol.h"
+  25:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** /* *****************************************************************************
+  26:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** **                      Private Constant Definitions to be changed            **
+  27:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** ***************************************************************************** */
+  28:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 
+  29:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** /* *****************************************************************************
+  30:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** **                      Private Macro Definitions                             **
+  31:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** ***************************************************************************** */
+  32:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 
+  33:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** /* *****************************************************************************
+  34:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** **                      Global Type Definitions                               **
+  35:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** ***************************************************************************** */
+  36:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 
+  37:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** /* *****************************************************************************
+  38:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** **                      Private Type Definitions                              **
+  39:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** ***************************************************************************** */
+  40:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 
+  41:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** /* *****************************************************************************
+  42:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** **                      Global Function Declarations                          **
+  43:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** ***************************************************************************** */
+  44:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 
+  45:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** /* *****************************************************************************
+  46:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** **                      Private Function Declarations                         **
+  47:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** ***************************************************************************** */
+  48:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 
+  49:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** /* *****************************************************************************
+  50:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** **                      Global Constant Definitions                           **
+  51:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** ***************************************************************************** */
+  52:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 
+  53:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** /* *****************************************************************************
+  54:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** **                      Private Constant Definitions                          **
+  55:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** ***************************************************************************** */
+  56:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 
+  57:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** /* *****************************************************************************
+  58:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** **                      Global Variable Definitions                           **
+  59:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** ***************************************************************************** */
+  60:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 
+  61:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** /* *****************************************************************************
+  62:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** **                      Private Variable Definitions                          **
+  63:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** ***************************************************************************** */
+  64:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** ControlValue control_value;	/**< struct full of pointers for Bluetooth receiving */
+  65:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** DataPacket dpacket;			/**< struct for received data */
+  66:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** uint8_t* ReadBufBT;			/**< Pointer to Bluetooth read Buffer location */
+  67:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** /* *****************************************************************************
+  68:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** **                      Global Function Definitions                           **
+  69:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** ***************************************************************************** */
+  70:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** /**
+  71:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c ****  *  \brief Allocates storage for Bluetooth
+  72:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c ****  *  
+  73:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c ****  *  \details alllocates storage for ReadBufBT and all control_value components
+  74:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c ****  */
+  75:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** void initBluetoothStorage()
+  76:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** {
+  31              	 .loc 1 76 0
+  32              	 .cfi_startproc
+  33              	 
+  34              	 
+  35 0000 80B5     	 push {r7,lr}
+  36              	.LCFI0:
+  37              	 .cfi_def_cfa_offset 8
+  38              	 .cfi_offset 7,-8
+  39              	 .cfi_offset 14,-4
+  40 0002 00AF     	 add r7,sp,#0
+  41              	.LCFI1:
+  42              	 .cfi_def_cfa_register 7
+  77:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	ReadBufBT = malloc(sizeof(uint8_t)*BLUETOOTH_INPUT_BUFFER);
+  43              	 .loc 1 77 0
+  44 0004 2020     	 movs r0,#32
+  45 0006 FFF7FEFF 	 bl malloc
+  46 000a 0346     	 mov r3,r0
+  47 000c 1A46     	 mov r2,r3
+  48 000e 1A4B     	 ldr r3,.L2
+  49 0010 1A60     	 str r2,[r3]
+  78:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	control_value.header = malloc(sizeof(uint8_t));
+  50              	 .loc 1 78 0
+  51 0012 0120     	 movs r0,#1
+  52 0014 FFF7FEFF 	 bl malloc
+  53 0018 0346     	 mov r3,r0
+  54 001a 1A46     	 mov r2,r3
+  55 001c 174B     	 ldr r3,.L2+4
+  56 001e 1A60     	 str r2,[r3]
+  79:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	control_value.height_control = malloc(sizeof(uint8_t));
+  57              	 .loc 1 79 0
+  58 0020 0120     	 movs r0,#1
+  59 0022 FFF7FEFF 	 bl malloc
+  60 0026 0346     	 mov r3,r0
+  61 0028 1A46     	 mov r2,r3
+  62 002a 144B     	 ldr r3,.L2+4
+  63 002c 5A60     	 str r2,[r3,#4]
+  80:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	control_value.speed = malloc(sizeof(uint8_t));
+  64              	 .loc 1 80 0
+  65 002e 0120     	 movs r0,#1
+  66 0030 FFF7FEFF 	 bl malloc
+  67 0034 0346     	 mov r3,r0
+  68 0036 1A46     	 mov r2,r3
+  69 0038 104B     	 ldr r3,.L2+4
+  70 003a 9A60     	 str r2,[r3,#8]
+  81:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	control_value.x_pitch = malloc(sizeof(float));
+  71              	 .loc 1 81 0
+  72 003c 0420     	 movs r0,#4
+  73 003e FFF7FEFF 	 bl malloc
+  74 0042 0346     	 mov r3,r0
+  75 0044 1A46     	 mov r2,r3
+  76 0046 0D4B     	 ldr r3,.L2+4
+  77 0048 1A61     	 str r2,[r3,#16]
+  82:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	control_value.y_roll = malloc(sizeof(float));
+  78              	 .loc 1 82 0
+  79 004a 0420     	 movs r0,#4
+  80 004c FFF7FEFF 	 bl malloc
+  81 0050 0346     	 mov r3,r0
+  82 0052 1A46     	 mov r2,r3
+  83 0054 094B     	 ldr r3,.L2+4
+  84 0056 5A61     	 str r2,[r3,#20]
+  83:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	control_value.z_rotate = malloc(sizeof(float));
+  85              	 .loc 1 83 0
+  86 0058 0420     	 movs r0,#4
+  87 005a FFF7FEFF 	 bl malloc
+  88 005e 0346     	 mov r3,r0
+  89 0060 1A46     	 mov r2,r3
+  90 0062 064B     	 ldr r3,.L2+4
+  91 0064 DA60     	 str r2,[r3,#12]
+  84:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	control_value.checksum = malloc(sizeof(uint32_t));
+  92              	 .loc 1 84 0
+  93 0066 0420     	 movs r0,#4
+  94 0068 FFF7FEFF 	 bl malloc
+  95 006c 0346     	 mov r3,r0
+  96 006e 1A46     	 mov r2,r3
+  97 0070 024B     	 ldr r3,.L2+4
+  98 0072 9A61     	 str r2,[r3,#24]
+  85:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** }
+  99              	 .loc 1 85 0
+ 100 0074 80BD     	 pop {r7,pc}
+ 101              	.L3:
+ 102 0076 00BF     	 .align 2
+ 103              	.L2:
+ 104 0078 00000000 	 .word ReadBufBT
+ 105 007c 00000000 	 .word control_value
+ 106              	 .cfi_endproc
+ 107              	.LFE440:
+ 109              	 .section .text.maintainBluetoothInputBuffer,"ax",%progbits
+ 110              	 .align 2
+ 111              	 .global maintainBluetoothInputBuffer
+ 112              	 .thumb
+ 113              	 .thumb_func
+ 115              	maintainBluetoothInputBuffer:
+ 116              	.LFB441:
+  86:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 
+  87:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** /**
+  88:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c ****  *  \brief receives the Bluetooth packages
+  89:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c ****  *  
+  90:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c ****  *  \param [in] input_buffer 
+  91:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c ****  *  \param [in] control_value used as return for control values
+  92:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c ****  *  \param [in] packet Parameter_Description
+  93:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c ****  *  \return returns if reading was successful and gives information about received package
+  94:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c ****  *  
+  95:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c ****  *  \details processes received bytes from Bluetooth-UART Module and assigns it to corresponding re
+  96:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c ****  *  values.
+  97:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c ****  */
+  98:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** int32_t maintainBluetoothInputBuffer(
+  99:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 		uint8_t input_buffer[BLUETOOTH_INPUT_BUFFER],
+ 100:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 		ControlValue *control_value, DataPacket* packet)
+ 101:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** {
+ 117              	 .loc 1 101 0
+ 118              	 .cfi_startproc
+ 119              	 
+ 120              	 
+ 121 0000 80B5     	 push {r7,lr}
+ 122              	.LCFI2:
+ 123              	 .cfi_def_cfa_offset 8
+ 124              	 .cfi_offset 7,-8
+ 125              	 .cfi_offset 14,-4
+ 126 0002 8AB0     	 sub sp,sp,#40
+ 127              	.LCFI3:
+ 128              	 .cfi_def_cfa_offset 48
+ 129 0004 00AF     	 add r7,sp,#0
+ 130              	.LCFI4:
+ 131              	 .cfi_def_cfa_register 7
+ 132 0006 F860     	 str r0,[r7,#12]
+ 133 0008 B960     	 str r1,[r7,#8]
+ 134 000a 7A60     	 str r2,[r7,#4]
+ 102:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	static int packet_counter = 0;
+ 103:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	static int packets_to_be_received = 0;
+ 104:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	uint32_t checksum;
+ 105:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	checksum = input_buffer[0];
+ 135              	 .loc 1 105 0
+ 136 000c FB68     	 ldr r3,[r7,#12]
+ 137 000e 1B78     	 ldrb r3,[r3]
+ 138 0010 7B62     	 str r3,[r7,#36]
+ 106:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	checksum ^= ((input_buffer[1] << 8 | input_buffer[2]) & 0xFFFF);
+ 139              	 .loc 1 106 0
+ 140 0012 FB68     	 ldr r3,[r7,#12]
+ 141 0014 0133     	 adds r3,r3,#1
+ 142 0016 1B78     	 ldrb r3,[r3]
+ 143 0018 1B02     	 lsls r3,r3,#8
+ 144 001a FA68     	 ldr r2,[r7,#12]
+ 145 001c 0232     	 adds r2,r2,#2
+ 146 001e 1278     	 ldrb r2,[r2]
+ 147 0020 1343     	 orrs r3,r3,r2
+ 148 0022 9BB2     	 uxth r3,r3
+ 149 0024 7A6A     	 ldr r2,[r7,#36]
+ 150 0026 5340     	 eors r3,r3,r2
+ 151 0028 7B62     	 str r3,[r7,#36]
+ 152              	.LBB2:
+ 107:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	for (int i = 3; i < (PACKET_SIZE - PACKET_CHECKSUM) - 1; i += 4)
+ 153              	 .loc 1 107 0
+ 154 002a 0323     	 movs r3,#3
+ 155 002c 3B62     	 str r3,[r7,#32]
+ 156 002e 1FE0     	 b .L5
+ 157              	.L6:
+ 108:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	{
+ 109:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 		checksum ^= (input_buffer[i] << 24 | input_buffer[i + 1] << 16
+ 158              	 .loc 1 109 0 discriminator 3
+ 159 0030 3B6A     	 ldr r3,[r7,#32]
+ 160 0032 FA68     	 ldr r2,[r7,#12]
+ 161 0034 1344     	 add r3,r3,r2
+ 162 0036 1B78     	 ldrb r3,[r3]
+ 163 0038 1A06     	 lsls r2,r3,#24
+ 164 003a 3B6A     	 ldr r3,[r7,#32]
+ 165 003c 0133     	 adds r3,r3,#1
+ 166 003e F968     	 ldr r1,[r7,#12]
+ 167 0040 0B44     	 add r3,r3,r1
+ 168 0042 1B78     	 ldrb r3,[r3]
+ 169 0044 1B04     	 lsls r3,r3,#16
+ 170 0046 1A43     	 orrs r2,r2,r3
+ 110:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 				| input_buffer[i + 2] << 8 | input_buffer[i + 3]);
+ 171              	 .loc 1 110 0 discriminator 3
+ 172 0048 3B6A     	 ldr r3,[r7,#32]
+ 173 004a 0233     	 adds r3,r3,#2
+ 174 004c F968     	 ldr r1,[r7,#12]
+ 175 004e 0B44     	 add r3,r3,r1
+ 176 0050 1B78     	 ldrb r3,[r3]
+ 177 0052 1B02     	 lsls r3,r3,#8
+ 178 0054 1343     	 orrs r3,r3,r2
+ 179 0056 3A6A     	 ldr r2,[r7,#32]
+ 180 0058 0332     	 adds r2,r2,#3
+ 181 005a F968     	 ldr r1,[r7,#12]
+ 182 005c 0A44     	 add r2,r2,r1
+ 183 005e 1278     	 ldrb r2,[r2]
+ 184 0060 1343     	 orrs r3,r3,r2
+ 109:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 				| input_buffer[i + 2] << 8 | input_buffer[i + 3]);
+ 185              	 .loc 1 109 0 discriminator 3
+ 186 0062 1A46     	 mov r2,r3
+ 187 0064 7B6A     	 ldr r3,[r7,#36]
+ 188 0066 5340     	 eors r3,r3,r2
+ 189 0068 7B62     	 str r3,[r7,#36]
+ 107:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	{
+ 190              	 .loc 1 107 0 discriminator 3
+ 191 006a 3B6A     	 ldr r3,[r7,#32]
+ 192 006c 0433     	 adds r3,r3,#4
+ 193 006e 3B62     	 str r3,[r7,#32]
+ 194              	.L5:
+ 107:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	{
+ 195              	 .loc 1 107 0 is_stmt 0 discriminator 1
+ 196 0070 3B6A     	 ldr r3,[r7,#32]
+ 197 0072 0D2B     	 cmp r3,#13
+ 198 0074 DCDD     	 ble .L6
+ 199              	.LBE2:
+ 200              	.LBB3:
+ 111:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	}
+ 112:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	for(int j = 0;j < 4;j++)
+ 201              	 .loc 1 112 0 is_stmt 1
+ 202 0076 0023     	 movs r3,#0
+ 203 0078 FB61     	 str r3,[r7,#28]
+ 204 007a 0FE0     	 b .L7
+ 205              	.L8:
+ 113:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	{
+ 114:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 		*((uint8_t*)(control_value->checksum) + 3-j) = input_buffer[15+j];
+ 206              	 .loc 1 114 0 discriminator 3
+ 207 007c BB68     	 ldr r3,[r7,#8]
+ 208 007e 9A69     	 ldr r2,[r3,#24]
+ 209 0080 FB69     	 ldr r3,[r7,#28]
+ 210 0082 C3F10303 	 rsb r3,r3,#3
+ 211 0086 1344     	 add r3,r3,r2
+ 212 0088 FA69     	 ldr r2,[r7,#28]
+ 213 008a 0F32     	 adds r2,r2,#15
+ 214 008c 1146     	 mov r1,r2
+ 215 008e FA68     	 ldr r2,[r7,#12]
+ 216 0090 0A44     	 add r2,r2,r1
+ 217 0092 1278     	 ldrb r2,[r2]
+ 218 0094 1A70     	 strb r2,[r3]
+ 112:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	{
+ 219              	 .loc 1 112 0 discriminator 3
+ 220 0096 FB69     	 ldr r3,[r7,#28]
+ 221 0098 0133     	 adds r3,r3,#1
+ 222 009a FB61     	 str r3,[r7,#28]
+ 223              	.L7:
+ 112:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	{
+ 224              	 .loc 1 112 0 is_stmt 0 discriminator 1
+ 225 009c FB69     	 ldr r3,[r7,#28]
+ 226 009e 032B     	 cmp r3,#3
+ 227 00a0 ECDD     	 ble .L8
+ 228              	.LBE3:
+ 115:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	}
+ 116:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	control_value->header = (uint8_t*)&input_buffer[0];
+ 229              	 .loc 1 116 0 is_stmt 1
+ 230 00a2 BB68     	 ldr r3,[r7,#8]
+ 231 00a4 FA68     	 ldr r2,[r7,#12]
+ 232 00a6 1A60     	 str r2,[r3]
+ 117:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	if (*(control_value->checksum) == checksum)//received checksum is the same as calculated checksum
+ 233              	 .loc 1 117 0
+ 234 00a8 BB68     	 ldr r3,[r7,#8]
+ 235 00aa 9B69     	 ldr r3,[r3,#24]
+ 236 00ac 1A68     	 ldr r2,[r3]
+ 237 00ae 7B6A     	 ldr r3,[r7,#36]
+ 238 00b0 9A42     	 cmp r2,r3
+ 239 00b2 40F08480 	 bne .L9
+ 118:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	{
+ 119:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 		if (*control_value->header)//Got a valid Data-Package
+ 240              	 .loc 1 119 0
+ 241 00b6 BB68     	 ldr r3,[r7,#8]
+ 242 00b8 1B68     	 ldr r3,[r3]
+ 243 00ba 1B78     	 ldrb r3,[r3]
+ 244 00bc 002B     	 cmp r3,#0
+ 245 00be 42D0     	 beq .L10
+ 246              	.LBB4:
+ 120:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			{
+ 121:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			if (packets_to_be_received == 0)
+ 247              	 .loc 1 121 0
+ 248 00c0 464B     	 ldr r3,.L18
+ 249 00c2 1B68     	 ldr r3,[r3]
+ 250 00c4 002B     	 cmp r3,#0
+ 251 00c6 04D1     	 bne .L11
+ 122:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			{
+ 123:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 				packets_to_be_received = input_buffer[0];
+ 252              	 .loc 1 123 0
+ 253 00c8 FB68     	 ldr r3,[r7,#12]
+ 254 00ca 1B78     	 ldrb r3,[r3]
+ 255 00cc 1A46     	 mov r2,r3
+ 256 00ce 434B     	 ldr r3,.L18
+ 257 00d0 1A60     	 str r2,[r3]
+ 258              	.L11:
+ 124:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			}
+ 125:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			int current_val = packet_counter;
+ 259              	 .loc 1 125 0
+ 260 00d2 434B     	 ldr r3,.L18+4
+ 261 00d4 1B68     	 ldr r3,[r3]
+ 262 00d6 7B61     	 str r3,[r7,#20]
+ 126:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			for (; packet_counter < (current_val + DATA_SIZE);
+ 263              	 .loc 1 126 0
+ 264 00d8 10E0     	 b .L12
+ 265              	.L13:
+ 127:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 				packet_counter++)
+ 128:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			{
+ 129:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 				packet->cmd[packet_counter] = input_buffer[packet_counter
+ 266              	 .loc 1 129 0
+ 267 00da 414B     	 ldr r3,.L18+4
+ 268 00dc 1B68     	 ldr r3,[r3]
+ 130:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 						- current_val + PACKET_HEADER];
+ 269              	 .loc 1 130 0
+ 270 00de 404A     	 ldr r2,.L18+4
+ 271 00e0 1168     	 ldr r1,[r2]
+ 272 00e2 7A69     	 ldr r2,[r7,#20]
+ 273 00e4 8A1A     	 subs r2,r1,r2
+ 129:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 						- current_val + PACKET_HEADER];
+ 274              	 .loc 1 129 0
+ 275 00e6 0132     	 adds r2,r2,#1
+ 276 00e8 F968     	 ldr r1,[r7,#12]
+ 277 00ea 0A44     	 add r2,r2,r1
+ 278 00ec 1178     	 ldrb r1,[r2]
+ 279 00ee 7A68     	 ldr r2,[r7,#4]
+ 280 00f0 D154     	 strb r1,[r2,r3]
+ 127:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 				packet_counter++)
+ 281              	 .loc 1 127 0
+ 282 00f2 3B4B     	 ldr r3,.L18+4
+ 283 00f4 1B68     	 ldr r3,[r3]
+ 284 00f6 0133     	 adds r3,r3,#1
+ 285 00f8 394A     	 ldr r2,.L18+4
+ 286 00fa 1360     	 str r3,[r2]
+ 287              	.L12:
+ 126:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 				packet_counter++)
+ 288              	 .loc 1 126 0
+ 289 00fc 7B69     	 ldr r3,[r7,#20]
+ 290 00fe 03F10E02 	 add r2,r3,#14
+ 291 0102 374B     	 ldr r3,.L18+4
+ 292 0104 1B68     	 ldr r3,[r3]
+ 293 0106 9A42     	 cmp r2,r3
+ 294 0108 E7DC     	 bgt .L13
+ 131:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			}
+ 132:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			if ((input_buffer[0]
+ 295              	 .loc 1 132 0
+ 296 010a FB68     	 ldr r3,[r7,#12]
+ 297 010c 1B78     	 ldrb r3,[r3]
+ 298 010e 0E2B     	 cmp r3,#14
+ 299 0110 12D8     	 bhi .L14
+ 133:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 					<= (PACKET_SIZE - PACKET_HEADER - PACKET_CHECKSUM)))
+ 134:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			{ //all cmd-bytes are within this data-package
+ 135:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 				packet->character_count = packets_to_be_received;
+ 300              	 .loc 1 135 0
+ 301 0112 324B     	 ldr r3,.L18
+ 302 0114 1B68     	 ldr r3,[r3]
+ 303 0116 DAB2     	 uxtb r2,r3
+ 304 0118 7B68     	 ldr r3,[r7,#4]
+ 305 011a 83F82A20 	 strb r2,[r3,#42]
+ 136:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 				packet_counter = 0;
+ 306              	 .loc 1 136 0
+ 307 011e 304B     	 ldr r3,.L18+4
+ 308 0120 0022     	 movs r2,#0
+ 309 0122 1A60     	 str r2,[r3]
+ 137:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 				packets_to_be_received = 0;
+ 310              	 .loc 1 137 0
+ 311 0124 2D4B     	 ldr r3,.L18
+ 312 0126 0022     	 movs r2,#0
+ 313 0128 1A60     	 str r2,[r3]
+ 138:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 				//Cleanup Buffer//
+ 139:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 				memset(input_buffer, 0x00,PACKET_SIZE);
+ 314              	 .loc 1 139 0
+ 315 012a F868     	 ldr r0,[r7,#12]
+ 316 012c 0021     	 movs r1,#0
+ 317 012e 1322     	 movs r2,#19
+ 318 0130 FFF7FEFF 	 bl memset
+ 140:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 				return RECEIVED_DATA_PACKET; //Got a complete and valid Data-Package
+ 319              	 .loc 1 140 0
+ 320 0134 0123     	 movs r3,#1
+ 321 0136 4CE0     	 b .L15
+ 322              	.L14:
+ 141:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			} else {
+ 142:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 				memset(input_buffer, 0x00,PACKET_SIZE);
+ 323              	 .loc 1 142 0
+ 324 0138 F868     	 ldr r0,[r7,#12]
+ 325 013a 0021     	 movs r1,#0
+ 326 013c 1322     	 movs r2,#19
+ 327 013e FFF7FEFF 	 bl memset
+ 143:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 				return RECEIVED_DATA_PACKET_N_C; //must do another read operation
+ 328              	 .loc 1 143 0
+ 329 0142 0223     	 movs r3,#2
+ 330 0144 45E0     	 b .L15
+ 331              	.L10:
+ 332              	.LBE4:
+ 144:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			}
+ 145:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 		} else
+ 146:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 		{
+ 147:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			*((uint8_t*)(control_value->height_control)) = input_buffer[1];
+ 333              	 .loc 1 147 0
+ 334 0146 BB68     	 ldr r3,[r7,#8]
+ 335 0148 5B68     	 ldr r3,[r3,#4]
+ 336 014a FA68     	 ldr r2,[r7,#12]
+ 337 014c 5278     	 ldrb r2,[r2,#1]
+ 338 014e 1A70     	 strb r2,[r3]
+ 148:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			*((uint8_t*)(control_value->speed)) = input_buffer[2];
+ 339              	 .loc 1 148 0
+ 340 0150 BB68     	 ldr r3,[r7,#8]
+ 341 0152 9B68     	 ldr r3,[r3,#8]
+ 342 0154 FA68     	 ldr r2,[r7,#12]
+ 343 0156 9278     	 ldrb r2,[r2,#2]
+ 344 0158 1A70     	 strb r2,[r3]
+ 345              	.LBB5:
+ 149:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			for(int k = 0;k < 4;k++)
+ 346              	 .loc 1 149 0
+ 347 015a 0023     	 movs r3,#0
+ 348 015c BB61     	 str r3,[r7,#24]
+ 349 015e 29E0     	 b .L16
+ 350              	.L17:
+ 150:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			{
+ 151:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 				*((uint8_t*)(control_value->z_rotate) + 3-k) = input_buffer[3+k];
+ 351              	 .loc 1 151 0 discriminator 3
+ 352 0160 BB68     	 ldr r3,[r7,#8]
+ 353 0162 DA68     	 ldr r2,[r3,#12]
+ 354 0164 BB69     	 ldr r3,[r7,#24]
+ 355 0166 C3F10303 	 rsb r3,r3,#3
+ 356 016a 1344     	 add r3,r3,r2
+ 357 016c BA69     	 ldr r2,[r7,#24]
+ 358 016e 0332     	 adds r2,r2,#3
+ 359 0170 1146     	 mov r1,r2
+ 360 0172 FA68     	 ldr r2,[r7,#12]
+ 361 0174 0A44     	 add r2,r2,r1
+ 362 0176 1278     	 ldrb r2,[r2]
+ 363 0178 1A70     	 strb r2,[r3]
+ 152:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 				*((uint8_t*)(control_value->x_pitch) + 3-k) = input_buffer[7+k];
+ 364              	 .loc 1 152 0 discriminator 3
+ 365 017a BB68     	 ldr r3,[r7,#8]
+ 366 017c 1A69     	 ldr r2,[r3,#16]
+ 367 017e BB69     	 ldr r3,[r7,#24]
+ 368 0180 C3F10303 	 rsb r3,r3,#3
+ 369 0184 1344     	 add r3,r3,r2
+ 370 0186 BA69     	 ldr r2,[r7,#24]
+ 371 0188 0732     	 adds r2,r2,#7
+ 372 018a 1146     	 mov r1,r2
+ 373 018c FA68     	 ldr r2,[r7,#12]
+ 374 018e 0A44     	 add r2,r2,r1
+ 375 0190 1278     	 ldrb r2,[r2]
+ 376 0192 1A70     	 strb r2,[r3]
+ 153:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 				*((uint8_t*)(control_value->y_roll) + 3-k) = input_buffer[11+k];
+ 377              	 .loc 1 153 0 discriminator 3
+ 378 0194 BB68     	 ldr r3,[r7,#8]
+ 379 0196 5A69     	 ldr r2,[r3,#20]
+ 380 0198 BB69     	 ldr r3,[r7,#24]
+ 381 019a C3F10303 	 rsb r3,r3,#3
+ 382 019e 1344     	 add r3,r3,r2
+ 383 01a0 BA69     	 ldr r2,[r7,#24]
+ 384 01a2 0B32     	 adds r2,r2,#11
+ 385 01a4 1146     	 mov r1,r2
+ 386 01a6 FA68     	 ldr r2,[r7,#12]
+ 387 01a8 0A44     	 add r2,r2,r1
+ 388 01aa 1278     	 ldrb r2,[r2]
+ 389 01ac 1A70     	 strb r2,[r3]
+ 149:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			{
+ 390              	 .loc 1 149 0 discriminator 3
+ 391 01ae BB69     	 ldr r3,[r7,#24]
+ 392 01b0 0133     	 adds r3,r3,#1
+ 393 01b2 BB61     	 str r3,[r7,#24]
+ 394              	.L16:
+ 149:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			{
+ 395              	 .loc 1 149 0 is_stmt 0 discriminator 1
+ 396 01b4 BB69     	 ldr r3,[r7,#24]
+ 397 01b6 032B     	 cmp r3,#3
+ 398 01b8 D2DD     	 ble .L17
+ 399              	.LBE5:
+ 154:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			}
+ 155:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			return RECEIVED_CONTROL_PACKET; //Got a valid Control-Package
+ 400              	 .loc 1 155 0 is_stmt 1
+ 401 01ba 0023     	 movs r3,#0
+ 402 01bc 09E0     	 b .L15
+ 403              	.L9:
+ 156:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 		}
+ 157:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	} else {
+ 158:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			packet_counter = 0; //if it happens between data-packages...
+ 404              	 .loc 1 158 0
+ 405 01be 084B     	 ldr r3,.L18+4
+ 406 01c0 0022     	 movs r2,#0
+ 407 01c2 1A60     	 str r2,[r3]
+ 159:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			//Cleanup Buffer//
+ 160:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			memset(input_buffer, 0x00,PACKET_SIZE);
+ 408              	 .loc 1 160 0
+ 409 01c4 F868     	 ldr r0,[r7,#12]
+ 410 01c6 0021     	 movs r1,#0
+ 411 01c8 1322     	 movs r2,#19
+ 412 01ca FFF7FEFF 	 bl memset
+ 161:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 			return CHECKSUM_ERROR; //Wrong checksum
+ 413              	 .loc 1 161 0
+ 414 01ce 4FF0FF33 	 mov r3,#-1
+ 415              	.L15:
+ 162:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	}
+ 163:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** 	return UNDEFINED_ERROR; //error by default but in fact never reachable
+ 164:../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.c **** }
+ 416              	 .loc 1 164 0
+ 417 01d2 1846     	 mov r0,r3
+ 418 01d4 2837     	 adds r7,r7,#40
+ 419              	.LCFI5:
+ 420              	 .cfi_def_cfa_offset 8
+ 421 01d6 BD46     	 mov sp,r7
+ 422              	.LCFI6:
+ 423              	 .cfi_def_cfa_register 13
+ 424              	 
+ 425 01d8 80BD     	 pop {r7,pc}
+ 426              	.L19:
+ 427 01da 00BF     	 .align 2
+ 428              	.L18:
+ 429 01dc 00000000 	 .word packets_to_be_received.16086
+ 430 01e0 00000000 	 .word packet_counter.16085
+ 431              	 .cfi_endproc
+ 432              	.LFE441:
+ 434              	 .section .bss.packets_to_be_received.16086,"aw",%nobits
+ 435              	 .align 2
+ 438              	packets_to_be_received.16086:
+ 439 0000 00000000 	 .space 4
+ 440              	 .section .bss.packet_counter.16085,"aw",%nobits
+ 441              	 .align 2
+ 444              	packet_counter.16085:
+ 445 0000 00000000 	 .space 4
+ 446              	 .text
+ 447              	.Letext0:
+ 448              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 449              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 450              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working/Libraries/CMSIS/Infineon/XMC4500_series/Include/XMC4500.h"
+ 451              	 .file 5 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Libraries\\XMCLib\\inc/xmc_usic.h"
+ 452              	 .file 6 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Libraries\\XMCLib\\inc/xmc_usbd_regs.h"
+ 453              	 .file 7 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Libraries\\XMCLib\\inc/xmc_usbd.h"
+ 454              	 .file 8 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/USBD/usbd.h"
+ 455              	 .file 9 "../_Quadrocopter/RemoteControl/BluetoothProtocol/BluetoothProtocol.h"
+ 456              	 .file 10 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working/Libraries/CMSIS/Include/core_cm4.h"
+ 457              	 .file 11 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working/Libraries/CMSIS/Infineon/XMC4500_series/Include/system_XMC4500.h"
+ 458              	 .file 12 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/USBD/usbd_extern.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 BluetoothProtocol.c
+                            *COM*:0000001c control_value
+                            *COM*:0000002b dpacket
+                            *COM*:00000004 ReadBufBT
+    {standard input}:23     .text.initBluetoothStorage:00000000 $t
+    {standard input}:28     .text.initBluetoothStorage:00000000 initBluetoothStorage
+    {standard input}:104    .text.initBluetoothStorage:00000078 $d
+    {standard input}:110    .text.maintainBluetoothInputBuffer:00000000 $t
+    {standard input}:115    .text.maintainBluetoothInputBuffer:00000000 maintainBluetoothInputBuffer
+    {standard input}:429    .text.maintainBluetoothInputBuffer:000001dc $d
+    {standard input}:438    .bss.packets_to_be_received.16086:00000000 packets_to_be_received.16086
+    {standard input}:444    .bss.packet_counter.16085:00000000 packet_counter.16085
+    {standard input}:435    .bss.packets_to_be_received.16086:00000000 $d
+    {standard input}:441    .bss.packet_counter.16085:00000000 $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+malloc
+memset

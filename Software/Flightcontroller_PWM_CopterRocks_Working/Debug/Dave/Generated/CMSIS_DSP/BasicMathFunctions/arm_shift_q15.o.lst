@@ -1,0 +1,617 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_shift_q15.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.arm_shift_q15,"ax",%progbits
+  20              	 .align 2
+  21              	 .global arm_shift_q15
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	arm_shift_q15:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c"
+   1:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** /* ----------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * $Date:        12. March 2014
+   5:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * $Revision: 	V1.4.4
+   6:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * Title:		arm_shift_q15.c    
+   9:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * Description:	Shifts the elements of a Q15 vector by a specified number of bits.    
+  11:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** *
+  27:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * POSSIBILITY OF SUCH DAMAGE. 
+  39:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** * -------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+  41:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+  43:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** /**    
+  44:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****  * @ingroup groupMath    
+  45:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****  */
+  46:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+  47:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** /**    
+  48:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****  * @addtogroup shift    
+  49:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****  * @{    
+  50:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****  */
+  51:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+  52:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** /**    
+  53:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****  * @brief  Shifts the elements of a Q15 vector a specified number of bits.    
+  54:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****  * @param[in]  *pSrc points to the input vector    
+  55:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****  * @param[in]  shiftBits number of bits to shift.  A positive value shifts left; a negative value s
+  56:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****  * @param[out]  *pDst points to the output vector    
+  57:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****  * @param[in]  blockSize number of samples in the vector    
+  58:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****  * @return none.    
+  59:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****  *    
+  60:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****  * <b>Scaling and Overflow Behavior:</b>    
+  61:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****  * \par    
+  62:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****  * The function uses saturating arithmetic.    
+  63:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****  * Results outside of the allowable Q15 range [0x8000 0x7FFF] will be saturated.    
+  64:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****  */
+  65:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+  66:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** void arm_shift_q15(
+  67:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   q15_t * pSrc,
+  68:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   int8_t shiftBits,
+  69:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   q15_t * pDst,
+  70:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   uint32_t blockSize)
+  71:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** {
+  28              	 .loc 1 71 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	 
+  33 0000 80B4     	 push {r7}
+  34              	.LCFI0:
+  35              	 .cfi_def_cfa_offset 4
+  36              	 .cfi_offset 7,-4
+  37 0002 9FB0     	 sub sp,sp,#124
+  38              	.LCFI1:
+  39              	 .cfi_def_cfa_offset 128
+  40 0004 00AF     	 add r7,sp,#0
+  41              	.LCFI2:
+  42              	 .cfi_def_cfa_register 7
+  43 0006 F860     	 str r0,[r7,#12]
+  44 0008 7A60     	 str r2,[r7,#4]
+  45 000a 3B60     	 str r3,[r7]
+  46 000c 0B46     	 mov r3,r1
+  47 000e FB72     	 strb r3,[r7,#11]
+  72:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   uint32_t blkCnt;                               /* loop counter */
+  73:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   uint8_t sign;                                  /* Sign of shiftBits */
+  74:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+  75:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** #ifndef ARM_MATH_CM0_FAMILY
+  76:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+  77:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** /* Run the below code for Cortex-M4 and Cortex-M3 */
+  78:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+  79:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   q15_t in1, in2;                                /* Temporary variables */
+  80:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+  81:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+  82:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   /*loop Unrolling */
+  83:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   blkCnt = blockSize >> 2u;
+  48              	 .loc 1 83 0
+  49 0010 3B68     	 ldr r3,[r7]
+  50 0012 9B08     	 lsrs r3,r3,#2
+  51 0014 7B67     	 str r3,[r7,#116]
+  84:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+  85:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   /* Getting the sign of shiftBits */
+  86:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   sign = (shiftBits & 0x80);
+  52              	 .loc 1 86 0
+  53 0016 FB7A     	 ldrb r3,[r7,#11]
+  54 0018 23F07F03 	 bic r3,r3,#127
+  55 001c 87F87330 	 strb r3,[r7,#115]
+  87:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+  88:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   /* If the shift value is positive then do right shift else left shift */
+  89:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   if(sign == 0u)
+  56              	 .loc 1 89 0
+  57 0020 97F87330 	 ldrb r3,[r7,#115]
+  58 0024 002B     	 cmp r3,#0
+  59 0026 40F08980 	 bne .L2
+  90:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   {
+  91:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
+  92:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****      ** a second loop below computes the remaining 1 to 3 samples. */
+  93:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     while(blkCnt > 0u)
+  60              	 .loc 1 93 0
+  61 002a 64E0     	 b .L3
+  62              	.L4:
+  94:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     {
+  95:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       /* Read 2 inputs */
+  96:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       in1 = *pSrc++;
+  63              	 .loc 1 96 0
+  64 002c FB68     	 ldr r3,[r7,#12]
+  65 002e 9A1C     	 adds r2,r3,#2
+  66 0030 FA60     	 str r2,[r7,#12]
+  67 0032 1B88     	 ldrh r3,[r3]
+  68 0034 A7F87030 	 strh r3,[r7,#112]
+  97:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       in2 = *pSrc++;
+  69              	 .loc 1 97 0
+  70 0038 FB68     	 ldr r3,[r7,#12]
+  71 003a 9A1C     	 adds r2,r3,#2
+  72 003c FA60     	 str r2,[r7,#12]
+  73 003e 1B88     	 ldrh r3,[r3]
+  74 0040 A7F86E30 	 strh r3,[r7,#110]
+  98:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       /* C = A << shiftBits */
+  99:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       /* Shift the inputs and then store the results in the destination buffer. */
+ 100:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** #ifndef  ARM_MATH_BIG_ENDIAN
+ 101:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 102:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       *__SIMD32(pDst)++ = __PKHBT(__SSAT((in1 << shiftBits), 16),
+  75              	 .loc 1 102 0
+  76 0044 3A1D     	 adds r2,r7,#4
+  77 0046 1368     	 ldr r3,[r2]
+  78 0048 191D     	 adds r1,r3,#4
+  79 004a 1160     	 str r1,[r2]
+  80              	.LBB2:
+  81              	.LBB3:
+  82 004c B7F97010 	 ldrsh r1,[r7,#112]
+  83 0050 97F90B20 	 ldrsb r2,[r7,#11]
+  84 0054 01FA02F2 	 lsl r2,r1,r2
+  85 0058 BA66     	 str r2,[r7,#104]
+  86 005a BA6E     	 ldr r2,[r7,#104]
+  87              	
+  88 005c 02F30F02 	 ssat r2,#16,r2
+  89              	
+  90              	 .thumb
+  91 0060 7A66     	 str r2,[r7,#100]
+  92 0062 7A6E     	 ldr r2,[r7,#100]
+  93              	.LBE3:
+  94 0064 3A66     	 str r2,[r7,#96]
+  95              	.LBB4:
+  96 0066 B7F96E10 	 ldrsh r1,[r7,#110]
+  97 006a 97F90B20 	 ldrsb r2,[r7,#11]
+  98 006e 01FA02F2 	 lsl r2,r1,r2
+  99 0072 FA65     	 str r2,[r7,#92]
+ 100 0074 FA6D     	 ldr r2,[r7,#92]
+ 101              	
+ 102 0076 02F30F02 	 ssat r2,#16,r2
+ 103              	
+ 104              	 .thumb
+ 105 007a BA65     	 str r2,[r7,#88]
+ 106 007c BA6D     	 ldr r2,[r7,#88]
+ 107              	.LBE4:
+ 108 007e 7A65     	 str r2,[r7,#84]
+ 109 0080 3A6E     	 ldr r2,[r7,#96]
+ 110 0082 796D     	 ldr r1,[r7,#84]
+ 111              	
+ 112 0084 C2EA0142 	 pkhbt r2,r2,r1,lsl#16
+ 113              	
+ 114              	 .thumb
+ 115 0088 3A65     	 str r2,[r7,#80]
+ 116 008a 3A6D     	 ldr r2,[r7,#80]
+ 117              	.LBE2:
+ 118 008c 1A60     	 str r2,[r3]
+ 103:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****                                   __SSAT((in2 << shiftBits), 16), 16);
+ 104:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 105:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** #else
+ 106:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 107:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       *__SIMD32(pDst)++ = __PKHBT(__SSAT((in2 << shiftBits), 16),
+ 108:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****                                   __SSAT((in1 << shiftBits), 16), 16);
+ 109:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 110:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** #endif /* #ifndef  ARM_MATH_BIG_ENDIAN    */
+ 111:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 112:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       in1 = *pSrc++;
+ 119              	 .loc 1 112 0
+ 120 008e FB68     	 ldr r3,[r7,#12]
+ 121 0090 9A1C     	 adds r2,r3,#2
+ 122 0092 FA60     	 str r2,[r7,#12]
+ 123 0094 1B88     	 ldrh r3,[r3]
+ 124 0096 A7F87030 	 strh r3,[r7,#112]
+ 113:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       in2 = *pSrc++;
+ 125              	 .loc 1 113 0
+ 126 009a FB68     	 ldr r3,[r7,#12]
+ 127 009c 9A1C     	 adds r2,r3,#2
+ 128 009e FA60     	 str r2,[r7,#12]
+ 129 00a0 1B88     	 ldrh r3,[r3]
+ 130 00a2 A7F86E30 	 strh r3,[r7,#110]
+ 114:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 115:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** #ifndef  ARM_MATH_BIG_ENDIAN
+ 116:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 117:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       *__SIMD32(pDst)++ = __PKHBT(__SSAT((in1 << shiftBits), 16),
+ 131              	 .loc 1 117 0
+ 132 00a6 3A1D     	 adds r2,r7,#4
+ 133 00a8 1368     	 ldr r3,[r2]
+ 134 00aa 191D     	 adds r1,r3,#4
+ 135 00ac 1160     	 str r1,[r2]
+ 136              	.LBB5:
+ 137              	.LBB6:
+ 138 00ae B7F97010 	 ldrsh r1,[r7,#112]
+ 139 00b2 97F90B20 	 ldrsb r2,[r7,#11]
+ 140 00b6 01FA02F2 	 lsl r2,r1,r2
+ 141 00ba FA64     	 str r2,[r7,#76]
+ 142 00bc FA6C     	 ldr r2,[r7,#76]
+ 143              	
+ 144 00be 02F30F02 	 ssat r2,#16,r2
+ 145              	
+ 146              	 .thumb
+ 147 00c2 BA64     	 str r2,[r7,#72]
+ 148 00c4 BA6C     	 ldr r2,[r7,#72]
+ 149              	.LBE6:
+ 150 00c6 7A64     	 str r2,[r7,#68]
+ 151              	.LBB7:
+ 152 00c8 B7F96E10 	 ldrsh r1,[r7,#110]
+ 153 00cc 97F90B20 	 ldrsb r2,[r7,#11]
+ 154 00d0 01FA02F2 	 lsl r2,r1,r2
+ 155 00d4 3A64     	 str r2,[r7,#64]
+ 156 00d6 3A6C     	 ldr r2,[r7,#64]
+ 157              	
+ 158 00d8 02F30F02 	 ssat r2,#16,r2
+ 159              	
+ 160              	 .thumb
+ 161 00dc FA63     	 str r2,[r7,#60]
+ 162 00de FA6B     	 ldr r2,[r7,#60]
+ 163              	.LBE7:
+ 164 00e0 BA63     	 str r2,[r7,#56]
+ 165 00e2 7A6C     	 ldr r2,[r7,#68]
+ 166 00e4 B96B     	 ldr r1,[r7,#56]
+ 167              	
+ 168 00e6 C2EA0142 	 pkhbt r2,r2,r1,lsl#16
+ 169              	
+ 170              	 .thumb
+ 171 00ea 7A63     	 str r2,[r7,#52]
+ 172 00ec 7A6B     	 ldr r2,[r7,#52]
+ 173              	.LBE5:
+ 174 00ee 1A60     	 str r2,[r3]
+ 118:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****                                   __SSAT((in2 << shiftBits), 16), 16);
+ 119:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 120:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** #else
+ 121:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 122:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       *__SIMD32(pDst)++ = __PKHBT(__SSAT((in2 << shiftBits), 16),
+ 123:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****                                   __SSAT((in1 << shiftBits), 16), 16);
+ 124:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 125:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** #endif /* #ifndef  ARM_MATH_BIG_ENDIAN    */
+ 126:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 127:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       /* Decrement the loop counter */
+ 128:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       blkCnt--;
+ 175              	 .loc 1 128 0
+ 176 00f0 7B6F     	 ldr r3,[r7,#116]
+ 177 00f2 013B     	 subs r3,r3,#1
+ 178 00f4 7B67     	 str r3,[r7,#116]
+ 179              	.L3:
+  93:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     {
+ 180              	 .loc 1 93 0
+ 181 00f6 7B6F     	 ldr r3,[r7,#116]
+ 182 00f8 002B     	 cmp r3,#0
+ 183 00fa 97D1     	 bne .L4
+ 129:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     }
+ 130:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 131:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     /* If the blockSize is not a multiple of 4, compute any remaining output samples here.    
+ 132:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****      ** No loop unrolling is used. */
+ 133:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     blkCnt = blockSize % 0x4u;
+ 184              	 .loc 1 133 0
+ 185 00fc 3B68     	 ldr r3,[r7]
+ 186 00fe 03F00303 	 and r3,r3,#3
+ 187 0102 7B67     	 str r3,[r7,#116]
+ 134:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 135:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     while(blkCnt > 0u)
+ 188              	 .loc 1 135 0
+ 189 0104 16E0     	 b .L5
+ 190              	.L6:
+ 136:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     {
+ 137:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       /* C = A << shiftBits */
+ 138:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       /* Shift and then store the results in the destination buffer. */
+ 139:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       *pDst++ = __SSAT((*pSrc++ << shiftBits), 16);
+ 191              	 .loc 1 139 0
+ 192 0106 7B68     	 ldr r3,[r7,#4]
+ 193 0108 9A1C     	 adds r2,r3,#2
+ 194 010a 7A60     	 str r2,[r7,#4]
+ 195              	.LBB8:
+ 196 010c FA68     	 ldr r2,[r7,#12]
+ 197 010e 911C     	 adds r1,r2,#2
+ 198 0110 F960     	 str r1,[r7,#12]
+ 199 0112 1288     	 ldrh r2,[r2]
+ 200 0114 11B2     	 sxth r1,r2
+ 201 0116 97F90B20 	 ldrsb r2,[r7,#11]
+ 202 011a 01FA02F2 	 lsl r2,r1,r2
+ 203 011e 3A63     	 str r2,[r7,#48]
+ 204 0120 3A6B     	 ldr r2,[r7,#48]
+ 205              	
+ 206 0122 02F30F02 	 ssat r2,#16,r2
+ 207              	
+ 208              	 .thumb
+ 209 0126 FA62     	 str r2,[r7,#44]
+ 210 0128 FA6A     	 ldr r2,[r7,#44]
+ 211              	.LBE8:
+ 212 012a 92B2     	 uxth r2,r2
+ 213 012c 1A80     	 strh r2,[r3]
+ 140:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 141:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       /* Decrement the loop counter */
+ 142:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       blkCnt--;
+ 214              	 .loc 1 142 0
+ 215 012e 7B6F     	 ldr r3,[r7,#116]
+ 216 0130 013B     	 subs r3,r3,#1
+ 217 0132 7B67     	 str r3,[r7,#116]
+ 218              	.L5:
+ 135:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     {
+ 219              	 .loc 1 135 0
+ 220 0134 7B6F     	 ldr r3,[r7,#116]
+ 221 0136 002B     	 cmp r3,#0
+ 222 0138 E5D1     	 bne .L6
+ 223 013a 6EE0     	 b .L1
+ 224              	.L2:
+ 143:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     }
+ 144:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   }
+ 145:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   else
+ 146:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   {
+ 147:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
+ 148:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****      ** a second loop below computes the remaining 1 to 3 samples. */
+ 149:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     while(blkCnt > 0u)
+ 225              	 .loc 1 149 0
+ 226 013c 50E0     	 b .L8
+ 227              	.L9:
+ 150:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     {
+ 151:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       /* Read 2 inputs */
+ 152:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       in1 = *pSrc++;
+ 228              	 .loc 1 152 0
+ 229 013e FB68     	 ldr r3,[r7,#12]
+ 230 0140 9A1C     	 adds r2,r3,#2
+ 231 0142 FA60     	 str r2,[r7,#12]
+ 232 0144 1B88     	 ldrh r3,[r3]
+ 233 0146 A7F87030 	 strh r3,[r7,#112]
+ 153:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       in2 = *pSrc++;
+ 234              	 .loc 1 153 0
+ 235 014a FB68     	 ldr r3,[r7,#12]
+ 236 014c 9A1C     	 adds r2,r3,#2
+ 237 014e FA60     	 str r2,[r7,#12]
+ 238 0150 1B88     	 ldrh r3,[r3]
+ 239 0152 A7F86E30 	 strh r3,[r7,#110]
+ 154:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 155:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       /* C = A >> shiftBits */
+ 156:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       /* Shift the inputs and then store the results in the destination buffer. */
+ 157:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** #ifndef  ARM_MATH_BIG_ENDIAN
+ 158:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 159:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       *__SIMD32(pDst)++ = __PKHBT((in1 >> -shiftBits),
+ 240              	 .loc 1 159 0
+ 241 0156 3A1D     	 adds r2,r7,#4
+ 242 0158 1368     	 ldr r3,[r2]
+ 243 015a 191D     	 adds r1,r3,#4
+ 244 015c 1160     	 str r1,[r2]
+ 245              	.LBB9:
+ 246 015e B7F97010 	 ldrsh r1,[r7,#112]
+ 247 0162 97F90B20 	 ldrsb r2,[r7,#11]
+ 248 0166 5242     	 negs r2,r2
+ 249 0168 41FA02F2 	 asr r2,r1,r2
+ 250 016c BA62     	 str r2,[r7,#40]
+ 251 016e B7F96E10 	 ldrsh r1,[r7,#110]
+ 252 0172 97F90B20 	 ldrsb r2,[r7,#11]
+ 253 0176 5242     	 negs r2,r2
+ 254 0178 41FA02F2 	 asr r2,r1,r2
+ 255 017c 7A62     	 str r2,[r7,#36]
+ 256 017e BA6A     	 ldr r2,[r7,#40]
+ 257 0180 796A     	 ldr r1,[r7,#36]
+ 258              	
+ 259 0182 C2EA0142 	 pkhbt r2,r2,r1,lsl#16
+ 260              	
+ 261              	 .thumb
+ 262 0186 3A62     	 str r2,[r7,#32]
+ 263 0188 3A6A     	 ldr r2,[r7,#32]
+ 264              	.LBE9:
+ 265 018a 1A60     	 str r2,[r3]
+ 160:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****                                   (in2 >> -shiftBits), 16);
+ 161:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 162:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** #else
+ 163:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 164:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       *__SIMD32(pDst)++ = __PKHBT((in2 >> -shiftBits),
+ 165:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****                                   (in1 >> -shiftBits), 16);
+ 166:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 167:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** #endif /* #ifndef  ARM_MATH_BIG_ENDIAN    */
+ 168:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 169:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       in1 = *pSrc++;
+ 266              	 .loc 1 169 0
+ 267 018c FB68     	 ldr r3,[r7,#12]
+ 268 018e 9A1C     	 adds r2,r3,#2
+ 269 0190 FA60     	 str r2,[r7,#12]
+ 270 0192 1B88     	 ldrh r3,[r3]
+ 271 0194 A7F87030 	 strh r3,[r7,#112]
+ 170:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       in2 = *pSrc++;
+ 272              	 .loc 1 170 0
+ 273 0198 FB68     	 ldr r3,[r7,#12]
+ 274 019a 9A1C     	 adds r2,r3,#2
+ 275 019c FA60     	 str r2,[r7,#12]
+ 276 019e 1B88     	 ldrh r3,[r3]
+ 277 01a0 A7F86E30 	 strh r3,[r7,#110]
+ 171:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 172:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** #ifndef  ARM_MATH_BIG_ENDIAN
+ 173:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 174:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       *__SIMD32(pDst)++ = __PKHBT((in1 >> -shiftBits),
+ 278              	 .loc 1 174 0
+ 279 01a4 3A1D     	 adds r2,r7,#4
+ 280 01a6 1368     	 ldr r3,[r2]
+ 281 01a8 191D     	 adds r1,r3,#4
+ 282 01aa 1160     	 str r1,[r2]
+ 283              	.LBB10:
+ 284 01ac B7F97010 	 ldrsh r1,[r7,#112]
+ 285 01b0 97F90B20 	 ldrsb r2,[r7,#11]
+ 286 01b4 5242     	 negs r2,r2
+ 287 01b6 41FA02F2 	 asr r2,r1,r2
+ 288 01ba FA61     	 str r2,[r7,#28]
+ 289 01bc B7F96E10 	 ldrsh r1,[r7,#110]
+ 290 01c0 97F90B20 	 ldrsb r2,[r7,#11]
+ 291 01c4 5242     	 negs r2,r2
+ 292 01c6 41FA02F2 	 asr r2,r1,r2
+ 293 01ca BA61     	 str r2,[r7,#24]
+ 294 01cc FA69     	 ldr r2,[r7,#28]
+ 295 01ce B969     	 ldr r1,[r7,#24]
+ 296              	
+ 297 01d0 C2EA0142 	 pkhbt r2,r2,r1,lsl#16
+ 298              	
+ 299              	 .thumb
+ 300 01d4 7A61     	 str r2,[r7,#20]
+ 301 01d6 7A69     	 ldr r2,[r7,#20]
+ 302              	.LBE10:
+ 303 01d8 1A60     	 str r2,[r3]
+ 175:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****                                   (in2 >> -shiftBits), 16);
+ 176:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 177:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** #else
+ 178:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 179:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       *__SIMD32(pDst)++ = __PKHBT((in2 >> -shiftBits),
+ 180:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****                                   (in1 >> -shiftBits), 16);
+ 181:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 182:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** #endif /* #ifndef  ARM_MATH_BIG_ENDIAN    */
+ 183:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 184:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       /* Decrement the loop counter */
+ 185:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       blkCnt--;
+ 304              	 .loc 1 185 0
+ 305 01da 7B6F     	 ldr r3,[r7,#116]
+ 306 01dc 013B     	 subs r3,r3,#1
+ 307 01de 7B67     	 str r3,[r7,#116]
+ 308              	.L8:
+ 149:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     {
+ 309              	 .loc 1 149 0
+ 310 01e0 7B6F     	 ldr r3,[r7,#116]
+ 311 01e2 002B     	 cmp r3,#0
+ 312 01e4 ABD1     	 bne .L9
+ 186:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     }
+ 187:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 188:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     /* If the blockSize is not a multiple of 4, compute any remaining output samples here.    
+ 189:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****      ** No loop unrolling is used. */
+ 190:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     blkCnt = blockSize % 0x4u;
+ 313              	 .loc 1 190 0
+ 314 01e6 3B68     	 ldr r3,[r7]
+ 315 01e8 03F00303 	 and r3,r3,#3
+ 316 01ec 7B67     	 str r3,[r7,#116]
+ 191:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 192:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     while(blkCnt > 0u)
+ 317              	 .loc 1 192 0
+ 318 01ee 11E0     	 b .L10
+ 319              	.L11:
+ 193:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     {
+ 194:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       /* C = A >> shiftBits */
+ 195:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       /* Shift the inputs and then store the results in the destination buffer. */
+ 196:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       *pDst++ = (*pSrc++ >> -shiftBits);
+ 320              	 .loc 1 196 0
+ 321 01f0 7B68     	 ldr r3,[r7,#4]
+ 322 01f2 9A1C     	 adds r2,r3,#2
+ 323 01f4 7A60     	 str r2,[r7,#4]
+ 324 01f6 FA68     	 ldr r2,[r7,#12]
+ 325 01f8 911C     	 adds r1,r2,#2
+ 326 01fa F960     	 str r1,[r7,#12]
+ 327 01fc 1288     	 ldrh r2,[r2]
+ 328 01fe 11B2     	 sxth r1,r2
+ 329 0200 97F90B20 	 ldrsb r2,[r7,#11]
+ 330 0204 5242     	 negs r2,r2
+ 331 0206 41FA02F2 	 asr r2,r1,r2
+ 332 020a 92B2     	 uxth r2,r2
+ 333 020c 1A80     	 strh r2,[r3]
+ 197:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 198:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       /* Decrement the loop counter */
+ 199:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       blkCnt--;
+ 334              	 .loc 1 199 0
+ 335 020e 7B6F     	 ldr r3,[r7,#116]
+ 336 0210 013B     	 subs r3,r3,#1
+ 337 0212 7B67     	 str r3,[r7,#116]
+ 338              	.L10:
+ 192:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     {
+ 339              	 .loc 1 192 0
+ 340 0214 7B6F     	 ldr r3,[r7,#116]
+ 341 0216 002B     	 cmp r3,#0
+ 342 0218 EAD1     	 bne .L11
+ 343              	.L1:
+ 200:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     }
+ 201:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   }
+ 202:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 203:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** #else
+ 204:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 205:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   /* Run the below code for Cortex-M0 */
+ 206:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 207:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   /* Getting the sign of shiftBits */
+ 208:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   sign = (shiftBits & 0x80);
+ 209:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 210:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   /* If the shift value is positive then do right shift else left shift */
+ 211:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   if(sign == 0u)
+ 212:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   {
+ 213:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     /* Initialize blkCnt with number of samples */
+ 214:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     blkCnt = blockSize;
+ 215:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 216:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     while(blkCnt > 0u)
+ 217:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     {
+ 218:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       /* C = A << shiftBits */
+ 219:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       /* Shift and then store the results in the destination buffer. */
+ 220:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       *pDst++ = __SSAT(((q31_t) * pSrc++ << shiftBits), 16);
+ 221:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 222:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       /* Decrement the loop counter */
+ 223:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       blkCnt--;
+ 224:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     }
+ 225:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   }
+ 226:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   else
+ 227:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   {
+ 228:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     /* Initialize blkCnt with number of samples */
+ 229:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     blkCnt = blockSize;
+ 230:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 231:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     while(blkCnt > 0u)
+ 232:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     {
+ 233:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       /* C = A >> shiftBits */
+ 234:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       /* Shift the inputs and then store the results in the destination buffer. */
+ 235:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       *pDst++ = (*pSrc++ >> -shiftBits);
+ 236:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 237:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       /* Decrement the loop counter */
+ 238:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****       blkCnt--;
+ 239:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****     }
+ 240:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c ****   }
+ 241:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 242:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** #endif /* #ifndef ARM_MATH_CM0_FAMILY */
+ 243:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** 
+ 244:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_shift_q15.c **** }
+ 344              	 .loc 1 244 0
+ 345 021a 7C37     	 adds r7,r7,#124
+ 346              	.LCFI3:
+ 347              	 .cfi_def_cfa_offset 4
+ 348 021c BD46     	 mov sp,r7
+ 349              	.LCFI4:
+ 350              	 .cfi_def_cfa_register 13
+ 351              	 
+ 352 021e 5DF8047B 	 ldr r7,[sp],#4
+ 353              	.LCFI5:
+ 354              	 .cfi_restore 7
+ 355              	 .cfi_def_cfa_offset 0
+ 356 0222 7047     	 bx lr
+ 357              	 .cfi_endproc
+ 358              	.LFE139:
+ 360              	 .text
+ 361              	.Letext0:
+ 362              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 363              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 364              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_shift_q15.c
+    {standard input}:20     .text.arm_shift_q15:00000000 $t
+    {standard input}:25     .text.arm_shift_q15:00000000 arm_shift_q15
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

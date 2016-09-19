@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['c0',['c0',['../_d_p_s310_8c.html#a13b7d3080c01bd723ab1a6fe17b7e840',1,'DPS310.c']]],
+  ['c00',['c00',['../_d_p_s310_8c.html#a913266c7212fc488cf960c7f0f8f1065',1,'DPS310.c']]],
+  ['c01',['c01',['../_d_p_s310_8c.html#a5ef1692b14cd2e6d03faa9bd460d8af4',1,'DPS310.c']]],
+  ['c1',['c1',['../_d_p_s310_8c.html#a7e300c073e7360e62cc53374daf1a492',1,'DPS310.c']]],
+  ['c10',['c10',['../_d_p_s310_8c.html#a6427725362954ffc20aa81aa5bfa5d1a',1,'DPS310.c']]],
+  ['c11',['c11',['../_d_p_s310_8c.html#ad2e3230eaa557433a062ab8697d29b3b',1,'DPS310.c']]],
+  ['c20',['c20',['../_d_p_s310_8c.html#a42263a4235334344fea2d7718ec524b8',1,'DPS310.c']]],
+  ['c21',['c21',['../_d_p_s310_8c.html#afa481b1a972592afc414fc5474700c73',1,'DPS310.c']]],
+  ['c30',['c30',['../_d_p_s310_8c.html#ace8136eb85d2e094729a1968a5bb8e06',1,'DPS310.c']]],
+  ['cfg_5freg',['CFG_REG',['../_d_p_s310_8h.html#a8dfa8cb73c81b626fbffba155cc58564',1,'DPS310.h']]],
+  ['character_5fcount',['character_count',['../struct___d_a_t_a___p_a_c_k_e_t__.html#a8ac4ae9237e643e7da997113d49c452a',1,'_DATA_PACKET_']]],
+  ['checksum',['checksum',['../struct___c_o_n_t_r_o_l___v_a_l_u_e__.html#a68d00127e4faee90889365d11480449a',1,'_CONTROL_VALUE_']]],
+  ['checksum_5ferror',['CHECKSUM_ERROR',['../_bluetooth_protocol_8h.html#a066160741e06e94e9a4ed33b0d18f5ae',1,'BluetoothProtocol.h']]],
+  ['circ_5fbuff',['CIRC_BUFF',['../structstruct_f_i_r.html#a8879bfece08b846b099f3458e6634c18',1,'structFIR']]],
+  ['cmd',['cmd',['../struct___d_a_t_a___p_a_c_k_e_t__.html#aa49ae45ff84ed4ccde15cb0a69ae679f',1,'_DATA_PACKET_']]],
+  ['coef_5fsrc',['COEF_SRC',['../_d_p_s310_8h.html#a2e5fb4d1df052ed818c9518e33115e64',1,'DPS310.h']]],
+  ['config',['CONFIG',['../_m_p_u9150_8h.html#a76ea3cf49247a07c54b3db005a3c7f57',1,'MPU9150.h']]],
+  ['control_5forder',['CONTROL_ORDER',['../_attitude_controller_8h.html#aa99297ee655bea40e34535eeeb6eec96',1,'AttitudeController.h']]],
+  ['control_5ftimer_5fisr',['Control_Timer_ISR',['../_attitude_controller_8c.html#ab96e14da836dafe04a4924f5945c9198',1,'Control_Timer_ISR(void):&#160;AttitudeController.c'],['../_attitude_controller_8h.html#ab96e14da836dafe04a4924f5945c9198',1,'Control_Timer_ISR(void):&#160;AttitudeController.c']]],
+  ['control_5fvalue',['control_value',['../_bluetooth_protocol_8c.html#a63d944f490df81815f7860c7673e4dbc',1,'control_value():&#160;BluetoothProtocol.c'],['../_r_c_receive_8c.html#a63d944f490df81815f7860c7673e4dbc',1,'control_value():&#160;BluetoothProtocol.c']]],
+  ['controllerparameter',['CONTROLLERPARAMETER',['../struct_c_o_n_t_r_o_l_l_e_r_p_a_r_a_m_e_t_e_r.html',1,'']]],
+  ['controllerpolynomials',['CONTROLLERPOLYNOMIALS',['../struct_c_o_n_t_r_o_l_l_e_r_p_o_l_y_n_o_m_i_a_l_s.html',1,'']]],
+  ['controlvalue',['ControlValue',['../_bluetooth_protocol_8h.html#a6fdb7020ce88aa19cd0b6626a2b3aa2e',1,'BluetoothProtocol.h']]],
+  ['countersensor',['counterSensor',['../_m_p_u9150_8c.html#af07e8900ae774f4274340f2ca15d7098',1,'MPU9150.c']]],
+  ['createpulsewidth',['CreatePulseWidth',['../_attitude_controller_8c.html#a02e8a22fcd41ffe0ed5e4e637029d1c5',1,'CreatePulseWidth(float *u_phi, float *u_theta, float *u_psi_dot, float *u_hover, float *PWM_width):&#160;AttitudeController.c'],['../_attitude_controller_8h.html#a6bc801d308ace25e15275cd787b7572b',1,'CreatePulseWidth(float *u_phi, float *u_deta, float *u_psi_dot, float *u_hover, float *PWM_width):&#160;AttitudeController.c']]]
+];

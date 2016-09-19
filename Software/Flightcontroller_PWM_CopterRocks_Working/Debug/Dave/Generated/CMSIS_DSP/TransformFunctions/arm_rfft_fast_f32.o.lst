@@ -1,0 +1,897 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_rfft_fast_f32.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.stage_rfft_f32,"ax",%progbits
+  20              	 .align 2
+  21              	 .global stage_rfft_f32
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	stage_rfft_f32:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c"
+   1:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** /* ----------------------------------------------------------------------
+   2:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.
+   3:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** *
+   4:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * $Date:        12. March 2014
+   5:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * $Revision: 	V1.4.4
+   6:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** *
+   7:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * Project: 	    CMSIS DSP Library
+   8:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * Title:	    arm_rfft_f32.c
+   9:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** *
+  10:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * Description:	RFFT & RIFFT Floating point process function
+  11:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** *
+  12:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** *
+  14:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * Redistribution and use in source and binary forms, with or without
+  15:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** *     the documentation and/or other materials provided with the
+  22:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** *
+  27:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+  31:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * POSSIBILITY OF SUCH DAMAGE.
+  39:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * -------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+  41:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+  43:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** void stage_rfft_f32(
+  44:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****   arm_rfft_fast_instance_f32 * S,
+  45:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****   float32_t * p, float32_t * pOut)
+  46:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** {
+  28              	 .loc 1 46 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	 
+  33 0000 80B4     	 push {r7}
+  34              	.LCFI0:
+  35              	 .cfi_def_cfa_offset 4
+  36              	 .cfi_offset 7,-4
+  37 0002 95B0     	 sub sp,sp,#84
+  38              	.LCFI1:
+  39              	 .cfi_def_cfa_offset 88
+  40 0004 00AF     	 add r7,sp,#0
+  41              	.LCFI2:
+  42              	 .cfi_def_cfa_register 7
+  43 0006 F860     	 str r0,[r7,#12]
+  44 0008 B960     	 str r1,[r7,#8]
+  45 000a 7A60     	 str r2,[r7,#4]
+  47:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    uint32_t  k;								   /* Loop Counter                     */
+  48:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    float32_t twR, twI;						   /* RFFT Twiddle coefficients        */
+  49:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    float32_t * pCoeff = S->pTwiddleRFFT;  /* Points to RFFT Twiddle factors   */
+  46              	 .loc 1 49 0
+  47 000c FB68     	 ldr r3,[r7,#12]
+  48 000e 5B69     	 ldr r3,[r3,#20]
+  49 0010 BB64     	 str r3,[r7,#72]
+  50:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    float32_t *pA = p;						   /* increasing pointer               */
+  50              	 .loc 1 50 0
+  51 0012 BB68     	 ldr r3,[r7,#8]
+  52 0014 7B64     	 str r3,[r7,#68]
+  51:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    float32_t *pB = p;						   /* decreasing pointer               */
+  53              	 .loc 1 51 0
+  54 0016 BB68     	 ldr r3,[r7,#8]
+  55 0018 3B64     	 str r3,[r7,#64]
+  52:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    float32_t xAR, xAI, xBR, xBI;				/* temporary variables              */
+  53:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    float32_t t1a, t1b;				         /* temporary variables              */
+  54:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    float32_t p0, p1, p2, p3;				   /* temporary variables              */
+  55:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+  56:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+  57:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    k = (S->Sint).fftLen - 1;					
+  56              	 .loc 1 57 0
+  57 001a FB68     	 ldr r3,[r7,#12]
+  58 001c 1B88     	 ldrh r3,[r3]
+  59 001e 013B     	 subs r3,r3,#1
+  60 0020 FB64     	 str r3,[r7,#76]
+  58:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+  59:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    /* Pack first and last sample of the frequency domain together */
+  60:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+  61:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    xBR = pB[0];
+  61              	 .loc 1 61 0
+  62 0022 3B6C     	 ldr r3,[r7,#64]
+  63 0024 1B68     	 ldr r3,[r3]
+  64 0026 FB63     	 str r3,[r7,#60]
+  62:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    xBI = pB[1];
+  65              	 .loc 1 62 0
+  66 0028 3B6C     	 ldr r3,[r7,#64]
+  67 002a 5B68     	 ldr r3,[r3,#4]
+  68 002c BB63     	 str r3,[r7,#56]
+  63:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    xAR = pA[0];
+  69              	 .loc 1 63 0
+  70 002e 7B6C     	 ldr r3,[r7,#68]
+  71 0030 1B68     	 ldr r3,[r3]
+  72 0032 7B63     	 str r3,[r7,#52]
+  64:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    xAI = pA[1];
+  73              	 .loc 1 64 0
+  74 0034 7B6C     	 ldr r3,[r7,#68]
+  75 0036 5B68     	 ldr r3,[r3,#4]
+  76 0038 3B63     	 str r3,[r7,#48]
+  65:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+  66:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    twR = *pCoeff++ ;
+  77              	 .loc 1 66 0
+  78 003a BB6C     	 ldr r3,[r7,#72]
+  79 003c 1A1D     	 adds r2,r3,#4
+  80 003e BA64     	 str r2,[r7,#72]
+  81 0040 1B68     	 ldr r3,[r3]
+  82 0042 FB62     	 str r3,[r7,#44]
+  67:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    twI = *pCoeff++ ;
+  83              	 .loc 1 67 0
+  84 0044 BB6C     	 ldr r3,[r7,#72]
+  85 0046 1A1D     	 adds r2,r3,#4
+  86 0048 BA64     	 str r2,[r7,#72]
+  87 004a 1B68     	 ldr r3,[r3]
+  88 004c BB62     	 str r3,[r7,#40]
+  68:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    
+  69:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    // U1 = XA(1) + XB(1); % It is real
+  70:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    t1a = xBR + xAR  ;
+  89              	 .loc 1 70 0
+  90 004e 97ED0F7A 	 flds s14,[r7,#60]
+  91 0052 D7ED0D7A 	 flds s15,[r7,#52]
+  92 0056 77EE277A 	 fadds s15,s14,s15
+  93 005a C7ED097A 	 fsts s15,[r7,#36]
+  71:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    
+  72:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    // U2 = XB(1) - XA(1); % It is imaginary
+  73:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    t1b = xBI + xAI  ;
+  94              	 .loc 1 73 0
+  95 005e 97ED0E7A 	 flds s14,[r7,#56]
+  96 0062 D7ED0C7A 	 flds s15,[r7,#48]
+  97 0066 77EE277A 	 fadds s15,s14,s15
+  98 006a C7ED087A 	 fsts s15,[r7,#32]
+  74:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+  75:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    // real(tw * (xB - xA)) = twR * (xBR - xAR) - twI * (xBI - xAI);
+  76:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    // imag(tw * (xB - xA)) = twI * (xBR - xAR) + twR * (xBI - xAI);
+  77:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    *pOut++ = 0.5f * ( t1a + t1b );
+  99              	 .loc 1 77 0
+ 100 006e 7B68     	 ldr r3,[r7,#4]
+ 101 0070 1A1D     	 adds r2,r3,#4
+ 102 0072 7A60     	 str r2,[r7,#4]
+ 103 0074 97ED097A 	 flds s14,[r7,#36]
+ 104 0078 D7ED087A 	 flds s15,[r7,#32]
+ 105 007c 77EE277A 	 fadds s15,s14,s15
+ 106 0080 B6EE007A 	 fconsts s14,#96
+ 107 0084 67EE877A 	 fmuls s15,s15,s14
+ 108 0088 C3ED007A 	 fsts s15,[r3]
+  78:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    *pOut++ = 0.5f * ( t1a - t1b );
+ 109              	 .loc 1 78 0
+ 110 008c 7B68     	 ldr r3,[r7,#4]
+ 111 008e 1A1D     	 adds r2,r3,#4
+ 112 0090 7A60     	 str r2,[r7,#4]
+ 113 0092 97ED097A 	 flds s14,[r7,#36]
+ 114 0096 D7ED087A 	 flds s15,[r7,#32]
+ 115 009a 77EE677A 	 fsubs s15,s14,s15
+ 116 009e B6EE007A 	 fconsts s14,#96
+ 117 00a2 67EE877A 	 fmuls s15,s15,s14
+ 118 00a6 C3ED007A 	 fsts s15,[r3]
+  79:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+  80:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    // XA(1) = 1/2*( U1 - imag(U2) +  i*( U1 +imag(U2) ));
+  81:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    pB  = p + 2*k;
+ 119              	 .loc 1 81 0
+ 120 00aa FB6C     	 ldr r3,[r7,#76]
+ 121 00ac DB00     	 lsls r3,r3,#3
+ 122 00ae BA68     	 ldr r2,[r7,#8]
+ 123 00b0 1344     	 add r3,r3,r2
+ 124 00b2 3B64     	 str r3,[r7,#64]
+  82:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    pA += 2;
+ 125              	 .loc 1 82 0
+ 126 00b4 7B6C     	 ldr r3,[r7,#68]
+ 127 00b6 0833     	 adds r3,r3,#8
+ 128 00b8 7B64     	 str r3,[r7,#68]
+ 129              	.L2:
+  83:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+  84:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    do
+  85:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    {
+  86:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       /*
+  87:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****          function X = my_split_rfft(X, ifftFlag)
+  88:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****          % X is a series of real numbers
+  89:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****          L  = length(X);
+  90:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****          XC = X(1:2:end) +i*X(2:2:end);
+  91:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****          XA = fft(XC);
+  92:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****          XB = conj(XA([1 end:-1:2]));
+  93:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****          TW = i*exp(-2*pi*i*[0:L/2-1]/L).';
+  94:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****          for l = 2:L/2
+  95:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****             XA(l) = 1/2 * (XA(l) + XB(l) + TW(l) * (XB(l) - XA(l)));
+  96:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****          end
+  97:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****          XA(1) = 1/2* (XA(1) + XB(1) + TW(1) * (XB(1) - XA(1))) + i*( 1/2*( XA(1) + XB(1) + i*( XA(
+  98:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****          X = XA;
+  99:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       */
+ 100:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 101:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       xBI = pB[1];
+ 130              	 .loc 1 101 0 discriminator 1
+ 131 00ba 3B6C     	 ldr r3,[r7,#64]
+ 132 00bc 5B68     	 ldr r3,[r3,#4]
+ 133 00be BB63     	 str r3,[r7,#56]
+ 102:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       xBR = pB[0];
+ 134              	 .loc 1 102 0 discriminator 1
+ 135 00c0 3B6C     	 ldr r3,[r7,#64]
+ 136 00c2 1B68     	 ldr r3,[r3]
+ 137 00c4 FB63     	 str r3,[r7,#60]
+ 103:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       xAR = pA[0];
+ 138              	 .loc 1 103 0 discriminator 1
+ 139 00c6 7B6C     	 ldr r3,[r7,#68]
+ 140 00c8 1B68     	 ldr r3,[r3]
+ 141 00ca 7B63     	 str r3,[r7,#52]
+ 104:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       xAI = pA[1];
+ 142              	 .loc 1 104 0 discriminator 1
+ 143 00cc 7B6C     	 ldr r3,[r7,#68]
+ 144 00ce 5B68     	 ldr r3,[r3,#4]
+ 145 00d0 3B63     	 str r3,[r7,#48]
+ 105:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 106:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       twR = *pCoeff++;
+ 146              	 .loc 1 106 0 discriminator 1
+ 147 00d2 BB6C     	 ldr r3,[r7,#72]
+ 148 00d4 1A1D     	 adds r2,r3,#4
+ 149 00d6 BA64     	 str r2,[r7,#72]
+ 150 00d8 1B68     	 ldr r3,[r3]
+ 151 00da FB62     	 str r3,[r7,#44]
+ 107:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       twI = *pCoeff++;
+ 152              	 .loc 1 107 0 discriminator 1
+ 153 00dc BB6C     	 ldr r3,[r7,#72]
+ 154 00de 1A1D     	 adds r2,r3,#4
+ 155 00e0 BA64     	 str r2,[r7,#72]
+ 156 00e2 1B68     	 ldr r3,[r3]
+ 157 00e4 BB62     	 str r3,[r7,#40]
+ 108:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 109:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       t1a = xBR - xAR ;
+ 158              	 .loc 1 109 0 discriminator 1
+ 159 00e6 97ED0F7A 	 flds s14,[r7,#60]
+ 160 00ea D7ED0D7A 	 flds s15,[r7,#52]
+ 161 00ee 77EE677A 	 fsubs s15,s14,s15
+ 162 00f2 C7ED097A 	 fsts s15,[r7,#36]
+ 110:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       t1b = xBI + xAI ;
+ 163              	 .loc 1 110 0 discriminator 1
+ 164 00f6 97ED0E7A 	 flds s14,[r7,#56]
+ 165 00fa D7ED0C7A 	 flds s15,[r7,#48]
+ 166 00fe 77EE277A 	 fadds s15,s14,s15
+ 167 0102 C7ED087A 	 fsts s15,[r7,#32]
+ 111:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 112:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       // real(tw * (xB - xA)) = twR * (xBR - xAR) - twI * (xBI - xAI);
+ 113:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       // imag(tw * (xB - xA)) = twI * (xBR - xAR) + twR * (xBI - xAI);
+ 114:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       p0 = twR * t1a;
+ 168              	 .loc 1 114 0 discriminator 1
+ 169 0106 97ED0B7A 	 flds s14,[r7,#44]
+ 170 010a D7ED097A 	 flds s15,[r7,#36]
+ 171 010e 67EE277A 	 fmuls s15,s14,s15
+ 172 0112 C7ED077A 	 fsts s15,[r7,#28]
+ 115:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       p1 = twI * t1a;
+ 173              	 .loc 1 115 0 discriminator 1
+ 174 0116 97ED0A7A 	 flds s14,[r7,#40]
+ 175 011a D7ED097A 	 flds s15,[r7,#36]
+ 176 011e 67EE277A 	 fmuls s15,s14,s15
+ 177 0122 C7ED067A 	 fsts s15,[r7,#24]
+ 116:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       p2 = twR * t1b;
+ 178              	 .loc 1 116 0 discriminator 1
+ 179 0126 97ED0B7A 	 flds s14,[r7,#44]
+ 180 012a D7ED087A 	 flds s15,[r7,#32]
+ 181 012e 67EE277A 	 fmuls s15,s14,s15
+ 182 0132 C7ED057A 	 fsts s15,[r7,#20]
+ 117:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       p3 = twI * t1b;
+ 183              	 .loc 1 117 0 discriminator 1
+ 184 0136 97ED0A7A 	 flds s14,[r7,#40]
+ 185 013a D7ED087A 	 flds s15,[r7,#32]
+ 186 013e 67EE277A 	 fmuls s15,s14,s15
+ 187 0142 C7ED047A 	 fsts s15,[r7,#16]
+ 118:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 119:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       *pOut++ = 0.5f * (xAR + xBR + p0 + p3 ); //xAR
+ 188              	 .loc 1 119 0 discriminator 1
+ 189 0146 7B68     	 ldr r3,[r7,#4]
+ 190 0148 1A1D     	 adds r2,r3,#4
+ 191 014a 7A60     	 str r2,[r7,#4]
+ 192 014c 97ED0D7A 	 flds s14,[r7,#52]
+ 193 0150 D7ED0F7A 	 flds s15,[r7,#60]
+ 194 0154 37EE277A 	 fadds s14,s14,s15
+ 195 0158 D7ED077A 	 flds s15,[r7,#28]
+ 196 015c 37EE277A 	 fadds s14,s14,s15
+ 197 0160 D7ED047A 	 flds s15,[r7,#16]
+ 198 0164 77EE277A 	 fadds s15,s14,s15
+ 199 0168 B6EE007A 	 fconsts s14,#96
+ 200 016c 67EE877A 	 fmuls s15,s15,s14
+ 201 0170 C3ED007A 	 fsts s15,[r3]
+ 120:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       *pOut++ = 0.5f * (xAI - xBI + p1 - p2 ); //xAI
+ 202              	 .loc 1 120 0 discriminator 1
+ 203 0174 7B68     	 ldr r3,[r7,#4]
+ 204 0176 1A1D     	 adds r2,r3,#4
+ 205 0178 7A60     	 str r2,[r7,#4]
+ 206 017a 97ED0C7A 	 flds s14,[r7,#48]
+ 207 017e D7ED0E7A 	 flds s15,[r7,#56]
+ 208 0182 37EE677A 	 fsubs s14,s14,s15
+ 209 0186 D7ED067A 	 flds s15,[r7,#24]
+ 210 018a 37EE277A 	 fadds s14,s14,s15
+ 211 018e D7ED057A 	 flds s15,[r7,#20]
+ 212 0192 77EE677A 	 fsubs s15,s14,s15
+ 213 0196 B6EE007A 	 fconsts s14,#96
+ 214 019a 67EE877A 	 fmuls s15,s15,s14
+ 215 019e C3ED007A 	 fsts s15,[r3]
+ 121:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 122:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       pA += 2;
+ 216              	 .loc 1 122 0 discriminator 1
+ 217 01a2 7B6C     	 ldr r3,[r7,#68]
+ 218 01a4 0833     	 adds r3,r3,#8
+ 219 01a6 7B64     	 str r3,[r7,#68]
+ 123:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       pB -= 2;
+ 220              	 .loc 1 123 0 discriminator 1
+ 221 01a8 3B6C     	 ldr r3,[r7,#64]
+ 222 01aa 083B     	 subs r3,r3,#8
+ 223 01ac 3B64     	 str r3,[r7,#64]
+ 124:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       k--;
+ 224              	 .loc 1 124 0 discriminator 1
+ 225 01ae FB6C     	 ldr r3,[r7,#76]
+ 226 01b0 013B     	 subs r3,r3,#1
+ 227 01b2 FB64     	 str r3,[r7,#76]
+ 125:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    } while(k > 0u);
+ 228              	 .loc 1 125 0 discriminator 1
+ 229 01b4 FB6C     	 ldr r3,[r7,#76]
+ 230 01b6 002B     	 cmp r3,#0
+ 231 01b8 7FF47FAF 	 bne .L2
+ 126:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** }
+ 232              	 .loc 1 126 0
+ 233 01bc 5437     	 adds r7,r7,#84
+ 234              	.LCFI3:
+ 235              	 .cfi_def_cfa_offset 4
+ 236 01be BD46     	 mov sp,r7
+ 237              	.LCFI4:
+ 238              	 .cfi_def_cfa_register 13
+ 239              	 
+ 240 01c0 5DF8047B 	 ldr r7,[sp],#4
+ 241              	.LCFI5:
+ 242              	 .cfi_restore 7
+ 243              	 .cfi_def_cfa_offset 0
+ 244 01c4 7047     	 bx lr
+ 245              	 .cfi_endproc
+ 246              	.LFE139:
+ 248 01c6 00BF     	 .section .text.merge_rfft_f32,"ax",%progbits
+ 249              	 .align 2
+ 250              	 .global merge_rfft_f32
+ 251              	 .thumb
+ 252              	 .thumb_func
+ 254              	merge_rfft_f32:
+ 255              	.LFB140:
+ 127:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 128:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** /* Prepares data for inverse cfft */
+ 129:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** void merge_rfft_f32(
+ 130:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** arm_rfft_fast_instance_f32 * S,
+ 131:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** float32_t * p, float32_t * pOut)
+ 132:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** {
+ 256              	 .loc 1 132 0
+ 257              	 .cfi_startproc
+ 258              	 
+ 259              	 
+ 260              	 
+ 261 0000 80B4     	 push {r7}
+ 262              	.LCFI6:
+ 263              	 .cfi_def_cfa_offset 4
+ 264              	 .cfi_offset 7,-4
+ 265 0002 95B0     	 sub sp,sp,#84
+ 266              	.LCFI7:
+ 267              	 .cfi_def_cfa_offset 88
+ 268 0004 00AF     	 add r7,sp,#0
+ 269              	.LCFI8:
+ 270              	 .cfi_def_cfa_register 7
+ 271 0006 F860     	 str r0,[r7,#12]
+ 272 0008 B960     	 str r1,[r7,#8]
+ 273 000a 7A60     	 str r2,[r7,#4]
+ 133:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    uint32_t  k;								/* Loop Counter                     */
+ 134:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    float32_t twR, twI;						/* RFFT Twiddle coefficients        */
+ 135:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    float32_t *pCoeff = S->pTwiddleRFFT;		/* Points to RFFT Twiddle factors   */
+ 274              	 .loc 1 135 0
+ 275 000c FB68     	 ldr r3,[r7,#12]
+ 276 000e 5B69     	 ldr r3,[r3,#20]
+ 277 0010 BB64     	 str r3,[r7,#72]
+ 136:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    float32_t *pA = p;						/* increasing pointer               */
+ 278              	 .loc 1 136 0
+ 279 0012 BB68     	 ldr r3,[r7,#8]
+ 280 0014 7B64     	 str r3,[r7,#68]
+ 137:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    float32_t *pB = p;						/* decreasing pointer               */
+ 281              	 .loc 1 137 0
+ 282 0016 BB68     	 ldr r3,[r7,#8]
+ 283 0018 3B64     	 str r3,[r7,#64]
+ 138:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    float32_t xAR, xAI, xBR, xBI;			/* temporary variables              */
+ 139:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    float32_t t1a, t1b, r, s, t, u;			/* temporary variables              */
+ 140:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 141:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    k = (S->Sint).fftLen - 1;					
+ 284              	 .loc 1 141 0
+ 285 001a FB68     	 ldr r3,[r7,#12]
+ 286 001c 1B88     	 ldrh r3,[r3]
+ 287 001e 013B     	 subs r3,r3,#1
+ 288 0020 FB64     	 str r3,[r7,#76]
+ 142:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 143:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    xAR = pA[0];
+ 289              	 .loc 1 143 0
+ 290 0022 7B6C     	 ldr r3,[r7,#68]
+ 291 0024 1B68     	 ldr r3,[r3]
+ 292 0026 FB63     	 str r3,[r7,#60]
+ 144:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    xAI = pA[1];
+ 293              	 .loc 1 144 0
+ 294 0028 7B6C     	 ldr r3,[r7,#68]
+ 295 002a 5B68     	 ldr r3,[r3,#4]
+ 296 002c BB63     	 str r3,[r7,#56]
+ 145:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 146:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    pCoeff += 2 ;
+ 297              	 .loc 1 146 0
+ 298 002e BB6C     	 ldr r3,[r7,#72]
+ 299 0030 0833     	 adds r3,r3,#8
+ 300 0032 BB64     	 str r3,[r7,#72]
+ 147:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 148:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    *pOut++ = 0.5f * ( xAR + xAI );
+ 301              	 .loc 1 148 0
+ 302 0034 7B68     	 ldr r3,[r7,#4]
+ 303 0036 1A1D     	 adds r2,r3,#4
+ 304 0038 7A60     	 str r2,[r7,#4]
+ 305 003a 97ED0F7A 	 flds s14,[r7,#60]
+ 306 003e D7ED0E7A 	 flds s15,[r7,#56]
+ 307 0042 77EE277A 	 fadds s15,s14,s15
+ 308 0046 B6EE007A 	 fconsts s14,#96
+ 309 004a 67EE877A 	 fmuls s15,s15,s14
+ 310 004e C3ED007A 	 fsts s15,[r3]
+ 149:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    *pOut++ = 0.5f * ( xAR - xAI );
+ 311              	 .loc 1 149 0
+ 312 0052 7B68     	 ldr r3,[r7,#4]
+ 313 0054 1A1D     	 adds r2,r3,#4
+ 314 0056 7A60     	 str r2,[r7,#4]
+ 315 0058 97ED0F7A 	 flds s14,[r7,#60]
+ 316 005c D7ED0E7A 	 flds s15,[r7,#56]
+ 317 0060 77EE677A 	 fsubs s15,s14,s15
+ 318 0064 B6EE007A 	 fconsts s14,#96
+ 319 0068 67EE877A 	 fmuls s15,s15,s14
+ 320 006c C3ED007A 	 fsts s15,[r3]
+ 150:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 151:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    pB  =  p + 2*k ;
+ 321              	 .loc 1 151 0
+ 322 0070 FB6C     	 ldr r3,[r7,#76]
+ 323 0072 DB00     	 lsls r3,r3,#3
+ 324 0074 BA68     	 ldr r2,[r7,#8]
+ 325 0076 1344     	 add r3,r3,r2
+ 326 0078 3B64     	 str r3,[r7,#64]
+ 152:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    pA +=  2	   ;
+ 327              	 .loc 1 152 0
+ 328 007a 7B6C     	 ldr r3,[r7,#68]
+ 329 007c 0833     	 adds r3,r3,#8
+ 330 007e 7B64     	 str r3,[r7,#68]
+ 153:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 154:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    while(k > 0u)
+ 331              	 .loc 1 154 0
+ 332 0080 7CE0     	 b .L4
+ 333              	.L5:
+ 155:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    {
+ 156:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       /* G is half of the frequency complex spectrum */
+ 157:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       //for k = 2:N
+ 158:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       //    Xk(k) = 1/2 * (G(k) + conj(G(N-k+2)) + Tw(k)*( G(k) - conj(G(N-k+2))));
+ 159:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       xBI =   pB[1]    ;
+ 334              	 .loc 1 159 0
+ 335 0082 3B6C     	 ldr r3,[r7,#64]
+ 336 0084 5B68     	 ldr r3,[r3,#4]
+ 337 0086 7B63     	 str r3,[r7,#52]
+ 160:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       xBR =   pB[0]    ;
+ 338              	 .loc 1 160 0
+ 339 0088 3B6C     	 ldr r3,[r7,#64]
+ 340 008a 1B68     	 ldr r3,[r3]
+ 341 008c 3B63     	 str r3,[r7,#48]
+ 161:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       xAR =  pA[0];
+ 342              	 .loc 1 161 0
+ 343 008e 7B6C     	 ldr r3,[r7,#68]
+ 344 0090 1B68     	 ldr r3,[r3]
+ 345 0092 FB63     	 str r3,[r7,#60]
+ 162:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       xAI =  pA[1];
+ 346              	 .loc 1 162 0
+ 347 0094 7B6C     	 ldr r3,[r7,#68]
+ 348 0096 5B68     	 ldr r3,[r3,#4]
+ 349 0098 BB63     	 str r3,[r7,#56]
+ 163:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 164:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       twR = *pCoeff++;
+ 350              	 .loc 1 164 0
+ 351 009a BB6C     	 ldr r3,[r7,#72]
+ 352 009c 1A1D     	 adds r2,r3,#4
+ 353 009e BA64     	 str r2,[r7,#72]
+ 354 00a0 1B68     	 ldr r3,[r3]
+ 355 00a2 FB62     	 str r3,[r7,#44]
+ 165:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       twI = *pCoeff++;
+ 356              	 .loc 1 165 0
+ 357 00a4 BB6C     	 ldr r3,[r7,#72]
+ 358 00a6 1A1D     	 adds r2,r3,#4
+ 359 00a8 BA64     	 str r2,[r7,#72]
+ 360 00aa 1B68     	 ldr r3,[r3]
+ 361 00ac BB62     	 str r3,[r7,#40]
+ 166:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 167:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       t1a = xAR - xBR ;
+ 362              	 .loc 1 167 0
+ 363 00ae 97ED0F7A 	 flds s14,[r7,#60]
+ 364 00b2 D7ED0C7A 	 flds s15,[r7,#48]
+ 365 00b6 77EE677A 	 fsubs s15,s14,s15
+ 366 00ba C7ED097A 	 fsts s15,[r7,#36]
+ 168:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       t1b = xAI + xBI ;
+ 367              	 .loc 1 168 0
+ 368 00be 97ED0E7A 	 flds s14,[r7,#56]
+ 369 00c2 D7ED0D7A 	 flds s15,[r7,#52]
+ 370 00c6 77EE277A 	 fadds s15,s14,s15
+ 371 00ca C7ED087A 	 fsts s15,[r7,#32]
+ 169:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 170:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       r = twR * t1a;
+ 372              	 .loc 1 170 0
+ 373 00ce 97ED0B7A 	 flds s14,[r7,#44]
+ 374 00d2 D7ED097A 	 flds s15,[r7,#36]
+ 375 00d6 67EE277A 	 fmuls s15,s14,s15
+ 376 00da C7ED077A 	 fsts s15,[r7,#28]
+ 171:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       s = twI * t1b;
+ 377              	 .loc 1 171 0
+ 378 00de 97ED0A7A 	 flds s14,[r7,#40]
+ 379 00e2 D7ED087A 	 flds s15,[r7,#32]
+ 380 00e6 67EE277A 	 fmuls s15,s14,s15
+ 381 00ea C7ED067A 	 fsts s15,[r7,#24]
+ 172:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       t = twI * t1a;
+ 382              	 .loc 1 172 0
+ 383 00ee 97ED0A7A 	 flds s14,[r7,#40]
+ 384 00f2 D7ED097A 	 flds s15,[r7,#36]
+ 385 00f6 67EE277A 	 fmuls s15,s14,s15
+ 386 00fa C7ED057A 	 fsts s15,[r7,#20]
+ 173:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       u = twR * t1b;
+ 387              	 .loc 1 173 0
+ 388 00fe 97ED0B7A 	 flds s14,[r7,#44]
+ 389 0102 D7ED087A 	 flds s15,[r7,#32]
+ 390 0106 67EE277A 	 fmuls s15,s14,s15
+ 391 010a C7ED047A 	 fsts s15,[r7,#16]
+ 174:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 175:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       // real(tw * (xA - xB)) = twR * (xAR - xBR) - twI * (xAI - xBI);
+ 176:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       // imag(tw * (xA - xB)) = twI * (xAR - xBR) + twR * (xAI - xBI);
+ 177:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       *pOut++ = 0.5f * (xAR + xBR - r - s ); //xAR
+ 392              	 .loc 1 177 0
+ 393 010e 7B68     	 ldr r3,[r7,#4]
+ 394 0110 1A1D     	 adds r2,r3,#4
+ 395 0112 7A60     	 str r2,[r7,#4]
+ 396 0114 97ED0F7A 	 flds s14,[r7,#60]
+ 397 0118 D7ED0C7A 	 flds s15,[r7,#48]
+ 398 011c 37EE277A 	 fadds s14,s14,s15
+ 399 0120 D7ED077A 	 flds s15,[r7,#28]
+ 400 0124 37EE677A 	 fsubs s14,s14,s15
+ 401 0128 D7ED067A 	 flds s15,[r7,#24]
+ 402 012c 77EE677A 	 fsubs s15,s14,s15
+ 403 0130 B6EE007A 	 fconsts s14,#96
+ 404 0134 67EE877A 	 fmuls s15,s15,s14
+ 405 0138 C3ED007A 	 fsts s15,[r3]
+ 178:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       *pOut++ = 0.5f * (xAI - xBI + t - u ); //xAI
+ 406              	 .loc 1 178 0
+ 407 013c 7B68     	 ldr r3,[r7,#4]
+ 408 013e 1A1D     	 adds r2,r3,#4
+ 409 0140 7A60     	 str r2,[r7,#4]
+ 410 0142 97ED0E7A 	 flds s14,[r7,#56]
+ 411 0146 D7ED0D7A 	 flds s15,[r7,#52]
+ 412 014a 37EE677A 	 fsubs s14,s14,s15
+ 413 014e D7ED057A 	 flds s15,[r7,#20]
+ 414 0152 37EE277A 	 fadds s14,s14,s15
+ 415 0156 D7ED047A 	 flds s15,[r7,#16]
+ 416 015a 77EE677A 	 fsubs s15,s14,s15
+ 417 015e B6EE007A 	 fconsts s14,#96
+ 418 0162 67EE877A 	 fmuls s15,s15,s14
+ 419 0166 C3ED007A 	 fsts s15,[r3]
+ 179:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 180:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       pA += 2;
+ 420              	 .loc 1 180 0
+ 421 016a 7B6C     	 ldr r3,[r7,#68]
+ 422 016c 0833     	 adds r3,r3,#8
+ 423 016e 7B64     	 str r3,[r7,#68]
+ 181:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       pB -= 2;
+ 424              	 .loc 1 181 0
+ 425 0170 3B6C     	 ldr r3,[r7,#64]
+ 426 0172 083B     	 subs r3,r3,#8
+ 427 0174 3B64     	 str r3,[r7,#64]
+ 182:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       k--;
+ 428              	 .loc 1 182 0
+ 429 0176 FB6C     	 ldr r3,[r7,#76]
+ 430 0178 013B     	 subs r3,r3,#1
+ 431 017a FB64     	 str r3,[r7,#76]
+ 432              	.L4:
+ 154:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    {
+ 433              	 .loc 1 154 0
+ 434 017c FB6C     	 ldr r3,[r7,#76]
+ 435 017e 002B     	 cmp r3,#0
+ 436 0180 7FF47FAF 	 bne .L5
+ 183:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    }
+ 184:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 185:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** }
+ 437              	 .loc 1 185 0
+ 438 0184 5437     	 adds r7,r7,#84
+ 439              	.LCFI9:
+ 440              	 .cfi_def_cfa_offset 4
+ 441 0186 BD46     	 mov sp,r7
+ 442              	.LCFI10:
+ 443              	 .cfi_def_cfa_register 13
+ 444              	 
+ 445 0188 5DF8047B 	 ldr r7,[sp],#4
+ 446              	.LCFI11:
+ 447              	 .cfi_restore 7
+ 448              	 .cfi_def_cfa_offset 0
+ 449 018c 7047     	 bx lr
+ 450              	 .cfi_endproc
+ 451              	.LFE140:
+ 453 018e 00BF     	 .section .text.arm_rfft_fast_f32,"ax",%progbits
+ 454              	 .align 2
+ 455              	 .global arm_rfft_fast_f32
+ 456              	 .thumb
+ 457              	 .thumb_func
+ 459              	arm_rfft_fast_f32:
+ 460              	.LFB141:
+ 186:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 187:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** /**
+ 188:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * @ingroup groupTransforms
+ 189:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** */
+ 190:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 191:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** /**
+ 192:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * @defgroup Fast Real FFT Functions
+ 193:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *
+ 194:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * \par
+ 195:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * The CMSIS DSP library includes specialized algorithms for computing the
+ 196:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * FFT of real data sequences.  The FFT is defined over complex data but
+ 197:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * in many applications the input is real.  Real FFT algorithms take advantage
+ 198:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * of the symmetry properties of the FFT and have a speed advantage over complex
+ 199:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * algorithms of the same length.
+ 200:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * \par
+ 201:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * The Fast RFFT algorith relays on the mixed radix CFFT that save processor usage.
+ 202:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * \par
+ 203:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * The real length N forward FFT of a sequence is computed using the steps shown below.
+ 204:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * \par
+ 205:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * \image html RFFT.gif "Real Fast Fourier Transform"
+ 206:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * \par
+ 207:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * The real sequence is initially treated as if it were complex to perform a CFFT.
+ 208:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * Later, a processing stage reshapes the data to obtain half of the frequency spectrum
+ 209:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * in complex format. Except the first complex number that contains the two real numbers
+ 210:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * X[0] and X[N/2] all the data is complex. In other words, the first complex sample
+ 211:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * contains two real values packed.
+ 212:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * \par
+ 213:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * The input for the inverse RFFT should keep the same format as the output of the 
+ 214:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * forward RFFT. A first processing stage pre-process the data to later perform an
+ 215:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * inverse CFFT.
+ 216:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * \par    
+ 217:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * \image html RIFFT.gif "Real Inverse Fast Fourier Transform"    
+ 218:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * \par    
+ 219:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * The algorithms for floating-point, Q15, and Q31 data are slightly different
+ 220:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * and we describe each algorithm in turn.
+ 221:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * \par Floating-point
+ 222:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * The main functions are <code>arm_rfft_fast_f32()</code>
+ 223:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * and <code>arm_rfft_fast_init_f32()</code>.  The older functions
+ 224:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * <code>arm_rfft_f32()</code> and <code>arm_rfft_init_f32()</code> have been
+ 225:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * deprecated but are still documented.
+ 226:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * \par
+ 227:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * The FFT of a real N-point sequence has even symmetry in the frequency
+ 228:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * domain.  The second half of the data equals the conjugate of the first half
+ 229:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * flipped in frequency:
+ 230:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * <pre>
+ 231:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *X[0] - real data
+ 232:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *X[1] - complex data
+ 233:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *X[2] - complex data
+ 234:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *... 
+ 235:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *X[fftLen/2-1] - complex data
+ 236:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *X[fftLen/2] - real data
+ 237:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *X[fftLen/2+1] - conjugate of X[fftLen/2-1]
+ 238:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *X[fftLen/2+2] - conjugate of X[fftLen/2-2]
+ 239:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *... 
+ 240:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *X[fftLen-1] - conjugate of X[1]
+ 241:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * </pre>
+ 242:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * Looking at the data, we see that we can uniquely represent the FFT using only
+ 243:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * <pre>
+ 244:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *N/2+1 samples:
+ 245:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *X[0] - real data
+ 246:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *X[1] - complex data
+ 247:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *X[2] - complex data
+ 248:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *... 
+ 249:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *X[fftLen/2-1] - complex data
+ 250:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *X[fftLen/2] - real data
+ 251:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * </pre>
+ 252:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * Looking more closely we see that the first and last samples are real valued.
+ 253:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * They can be packed together and we can thus represent the FFT of an N-point
+ 254:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * real sequence by N/2 complex values:
+ 255:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * <pre>
+ 256:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *X[0],X[N/2] - packed real data: X[0] + jX[N/2]
+ 257:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *X[1] - complex data
+ 258:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *X[2] - complex data
+ 259:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *... 
+ 260:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *X[fftLen/2-1] - complex data
+ 261:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * </pre>
+ 262:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * The real FFT functions pack the frequency domain data in this fashion.  The
+ 263:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * forward transform outputs the data in this form and the inverse transform
+ 264:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * expects input data in this form.  The function always performs the needed
+ 265:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * bitreversal so that the input and output data is always in normal order.  The 
+ 266:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * functions support lengths of [32, 64, 128, ..., 4096] samples.
+ 267:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * \par
+ 268:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * The forward and inverse real FFT functions apply the standard FFT scaling; no
+ 269:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * scaling on the forward transform and 1/fftLen scaling on the inverse
+ 270:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * transform.
+ 271:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * \par Q15 and Q31
+ 272:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * The real algorithms are defined in a similar manner and utilize N/2 complex
+ 273:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * transforms behind the scenes.  In the case of fixed-point data, a radix-4
+ 274:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * complex transform is performed and this limits the allows sequence lengths to
+ 275:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * 128, 512, and 2048 samples.
+ 276:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * \par
+ 277:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * TBD.  We need to document input and output order of data.
+ 278:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * \par
+ 279:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * The complex transforms used internally include scaling to prevent fixed-point
+ 280:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * overflows.  The overall scaling equals 1/(fftLen/2).
+ 281:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * \par
+ 282:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * A separate instance structure must be defined for each transform used but 
+ 283:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * twiddle factor and bit reversal tables can be reused.
+ 284:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * \par
+ 285:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * There is also an associated initialization function for each data type. 
+ 286:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * The initialization function performs the following operations:
+ 287:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * - Sets the values of the internal structure fields.   
+ 288:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * - Initializes twiddle factor table and bit reversal table pointers.
+ 289:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * - Initializes the internal complex FFT data structure.
+ 290:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * \par   
+ 291:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * Use of the initialization function is optional.   
+ 292:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * However, if the initialization function is used, then the instance structure 
+ 293:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * cannot be placed into a const data section. To place an instance structure 
+ 294:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * into a const data section, the instance structure should be manually 
+ 295:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * initialized as follows:
+ 296:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * <pre>
+ 297:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *arm_rfft_instance_q31 S = {fftLenReal, fftLenBy2, ifftFlagR, bitReverseFlagR, twidCoefRModifier, 
+ 298:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  *arm_rfft_instance_q15 S = {fftLenReal, fftLenBy2, ifftFlagR, bitReverseFlagR, twidCoefRModifier, 
+ 299:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * </pre>
+ 300:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * where <code>fftLenReal</code> is the length of the real transform;
+ 301:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * <code>fftLenBy2</code> length of  the internal complex transform.
+ 302:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * <code>ifftFlagR</code> Selects forward (=0) or inverse (=1) transform.
+ 303:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * <code>bitReverseFlagR</code> Selects bit reversed output (=0) or normal order
+ 304:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * output (=1).
+ 305:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * <code>twidCoefRModifier</code> stride modifier for the twiddle factor table.
+ 306:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * The value is based on the FFT length;
+ 307:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * <code>pTwiddleAReal</code>points to the A array of twiddle coefficients; 
+ 308:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * <code>pTwiddleBReal</code>points to the B array of twiddle coefficients;    
+ 309:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * <code>pCfft</code> points to the CFFT Instance structure. The CFFT structure
+ 310:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * must also be initialized.  Refer to arm_cfft_radix4_f32() for details regarding    
+ 311:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  * static initialization of the complex FFT instance structure.    
+ 312:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****  */
+ 313:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 314:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** /**
+ 315:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * @addtogroup RealFFT
+ 316:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * @{
+ 317:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** */
+ 318:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 319:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** /**
+ 320:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * @brief Processing function for the floating-point real FFT.
+ 321:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * @param[in]  *S              points to an arm_rfft_fast_instance_f32 structure.
+ 322:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * @param[in]  *p              points to the input buffer.
+ 323:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * @param[in]  *pOut           points to the output buffer.
+ 324:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * @param[in]  ifftFlag        RFFT if flag is 0, RIFFT if flag is 1
+ 325:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** * @return none.
+ 326:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** */
+ 327:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 328:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** void arm_rfft_fast_f32(
+ 329:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** arm_rfft_fast_instance_f32 * S,
+ 330:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** float32_t * p, float32_t * pOut,
+ 331:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** uint8_t ifftFlag)
+ 332:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** {
+ 461              	 .loc 1 332 0
+ 462              	 .cfi_startproc
+ 463              	 
+ 464              	 
+ 465 0000 80B5     	 push {r7,lr}
+ 466              	.LCFI12:
+ 467              	 .cfi_def_cfa_offset 8
+ 468              	 .cfi_offset 7,-8
+ 469              	 .cfi_offset 14,-4
+ 470 0002 86B0     	 sub sp,sp,#24
+ 471              	.LCFI13:
+ 472              	 .cfi_def_cfa_offset 32
+ 473 0004 00AF     	 add r7,sp,#0
+ 474              	.LCFI14:
+ 475              	 .cfi_def_cfa_register 7
+ 476 0006 F860     	 str r0,[r7,#12]
+ 477 0008 B960     	 str r1,[r7,#8]
+ 478 000a 7A60     	 str r2,[r7,#4]
+ 479 000c FB70     	 strb r3,[r7,#3]
+ 333:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    arm_cfft_instance_f32 * Sint = &(S->Sint);
+ 480              	 .loc 1 333 0
+ 481 000e FB68     	 ldr r3,[r7,#12]
+ 482 0010 7B61     	 str r3,[r7,#20]
+ 334:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    Sint->fftLen = S->fftLenRFFT / 2;
+ 483              	 .loc 1 334 0
+ 484 0012 FB68     	 ldr r3,[r7,#12]
+ 485 0014 1B8A     	 ldrh r3,[r3,#16]
+ 486 0016 5B08     	 lsrs r3,r3,#1
+ 487 0018 9AB2     	 uxth r2,r3
+ 488 001a 7B69     	 ldr r3,[r7,#20]
+ 489 001c 1A80     	 strh r2,[r3]
+ 335:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 336:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    /* Calculation of Real FFT */
+ 337:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    if(ifftFlag)
+ 490              	 .loc 1 337 0
+ 491 001e FB78     	 ldrb r3,[r7,#3]
+ 492 0020 002B     	 cmp r3,#0
+ 493 0022 0CD0     	 beq .L7
+ 338:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    {
+ 339:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       /*  Real FFT compression */
+ 340:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       merge_rfft_f32(S, p, pOut);
+ 494              	 .loc 1 340 0
+ 495 0024 F868     	 ldr r0,[r7,#12]
+ 496 0026 B968     	 ldr r1,[r7,#8]
+ 497 0028 7A68     	 ldr r2,[r7,#4]
+ 498 002a FFF7FEFF 	 bl merge_rfft_f32
+ 341:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** 
+ 342:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       /* Complex radix-4 IFFT process */
+ 343:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       arm_cfft_f32( Sint, pOut, ifftFlag, 1);
+ 499              	 .loc 1 343 0
+ 500 002e FB78     	 ldrb r3,[r7,#3]
+ 501 0030 7869     	 ldr r0,[r7,#20]
+ 502 0032 7968     	 ldr r1,[r7,#4]
+ 503 0034 1A46     	 mov r2,r3
+ 504 0036 0123     	 movs r3,#1
+ 505 0038 FFF7FEFF 	 bl arm_cfft_f32
+ 506 003c 0BE0     	 b .L6
+ 507              	.L7:
+ 344:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    }
+ 345:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    else
+ 346:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    {
+ 347:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       /* Calculation of RFFT of input */
+ 348:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       arm_cfft_f32( Sint, p, ifftFlag, 1);
+ 508              	 .loc 1 348 0
+ 509 003e FB78     	 ldrb r3,[r7,#3]
+ 510 0040 7869     	 ldr r0,[r7,#20]
+ 511 0042 B968     	 ldr r1,[r7,#8]
+ 512 0044 1A46     	 mov r2,r3
+ 513 0046 0123     	 movs r3,#1
+ 514 0048 FFF7FEFF 	 bl arm_cfft_f32
+ 349:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    
+ 350:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       /*  Real FFT extraction */
+ 351:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****       stage_rfft_f32(S, p, pOut);
+ 515              	 .loc 1 351 0
+ 516 004c F868     	 ldr r0,[r7,#12]
+ 517 004e B968     	 ldr r1,[r7,#8]
+ 518 0050 7A68     	 ldr r2,[r7,#4]
+ 519 0052 FFF7FEFF 	 bl stage_rfft_f32
+ 520              	.L6:
+ 352:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c ****    }
+ 353:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_rfft_fast_f32.c **** }
+ 521              	 .loc 1 353 0
+ 522 0056 1837     	 adds r7,r7,#24
+ 523              	.LCFI15:
+ 524              	 .cfi_def_cfa_offset 8
+ 525 0058 BD46     	 mov sp,r7
+ 526              	.LCFI16:
+ 527              	 .cfi_def_cfa_register 13
+ 528              	 
+ 529 005a 80BD     	 pop {r7,pc}
+ 530              	 .cfi_endproc
+ 531              	.LFE141:
+ 533              	 .text
+ 534              	.Letext0:
+ 535              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 536              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 537              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_rfft_fast_f32.c
+    {standard input}:20     .text.stage_rfft_f32:00000000 $t
+    {standard input}:25     .text.stage_rfft_f32:00000000 stage_rfft_f32
+    {standard input}:249    .text.merge_rfft_f32:00000000 $t
+    {standard input}:254    .text.merge_rfft_f32:00000000 merge_rfft_f32
+    {standard input}:454    .text.arm_rfft_fast_f32:00000000 $t
+    {standard input}:459    .text.arm_rfft_fast_f32:00000000 arm_rfft_fast_f32
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+arm_cfft_f32

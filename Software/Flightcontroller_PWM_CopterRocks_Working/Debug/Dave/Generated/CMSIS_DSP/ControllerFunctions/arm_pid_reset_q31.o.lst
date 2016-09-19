@@ -1,0 +1,134 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_pid_reset_q31.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.arm_pid_reset_q31,"ax",%progbits
+  20              	 .align 2
+  21              	 .global arm_pid_reset_q31
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	arm_pid_reset_q31:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c"
+   1:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** /* ----------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * $Date:        12. March 2014
+   5:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * $Revision: 	V1.4.4
+   6:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * Title:	    arm_pid_reset_q31.c    
+   9:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * Description:	Q31 PID Control reset function   
+  11:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** *
+  27:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * POSSIBILITY OF SUCH DAMAGE.    
+  39:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * ------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** 
+  41:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** 
+  43:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c ****  /**    
+  44:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c ****  * @addtogroup PID    
+  45:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c ****  * @{    
+  46:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c ****  */
+  47:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** 
+  48:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** /**    
+  49:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * @brief  Reset function for the Q31 PID Control.   
+  50:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * @param[in] *S	Instance pointer of PID control data structure.   
+  51:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * @return none.    
+  52:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * \par Description:   
+  53:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** * The function resets the state buffer to zeros.    
+  54:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** */
+  55:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** void arm_pid_reset_q31(
+  56:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c ****   arm_pid_instance_q31 * S)
+  57:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** {
+  28              	 .loc 1 57 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32 0000 80B5     	 push {r7,lr}
+  33              	.LCFI0:
+  34              	 .cfi_def_cfa_offset 8
+  35              	 .cfi_offset 7,-8
+  36              	 .cfi_offset 14,-4
+  37 0002 82B0     	 sub sp,sp,#8
+  38              	.LCFI1:
+  39              	 .cfi_def_cfa_offset 16
+  40 0004 00AF     	 add r7,sp,#0
+  41              	.LCFI2:
+  42              	 .cfi_def_cfa_register 7
+  43 0006 7860     	 str r0,[r7,#4]
+  58:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** 
+  59:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c ****   /* Clear the state buffer.  The size will be always 3 samples */
+  60:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c ****   memset(S->state, 0, 3u * sizeof(q31_t));
+  44              	 .loc 1 60 0
+  45 0008 7B68     	 ldr r3,[r7,#4]
+  46 000a 0C33     	 adds r3,r3,#12
+  47 000c 1846     	 mov r0,r3
+  48 000e 0021     	 movs r1,#0
+  49 0010 0C22     	 movs r2,#12
+  50 0012 FFF7FEFF 	 bl memset
+  61:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_pid_reset_q31.c **** }
+  51              	 .loc 1 61 0
+  52 0016 0837     	 adds r7,r7,#8
+  53              	.LCFI3:
+  54              	 .cfi_def_cfa_offset 8
+  55 0018 BD46     	 mov sp,r7
+  56              	.LCFI4:
+  57              	 .cfi_def_cfa_register 13
+  58              	 
+  59 001a 80BD     	 pop {r7,pc}
+  60              	 .cfi_endproc
+  61              	.LFE139:
+  63              	 .text
+  64              	.Letext0:
+  65              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+  66              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+  67              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_pid_reset_q31.c
+    {standard input}:20     .text.arm_pid_reset_q31:00000000 $t
+    {standard input}:25     .text.arm_pid_reset_q31:00000000 arm_pid_reset_q31
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+memset

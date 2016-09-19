@@ -1,0 +1,259 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_fir_init_q15.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.arm_fir_init_q15,"ax",%progbits
+  20              	 .align 2
+  21              	 .global arm_fir_init_q15
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	arm_fir_init_q15:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c"
+   1:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** /* ----------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * $Date:        12. March 2014
+   5:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * $Revision: 	V1.4.4
+   6:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * Title:        arm_fir_init_q15.c    
+   9:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * Description:  Q15 FIR filter initialization function.    
+  11:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** *
+  27:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * POSSIBILITY OF SUCH DAMAGE.  
+  39:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** * ------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+  41:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+  43:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** /**    
+  44:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * @ingroup groupFilters    
+  45:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  */
+  46:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+  47:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** /**    
+  48:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * @addtogroup FIR    
+  49:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * @{    
+  50:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  */
+  51:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+  52:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** /**    
+  53:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * @param[in,out]  *S points to an instance of the Q15 FIR filter structure.    
+  54:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * @param[in] 	   numTaps  Number of filter coefficients in the filter. Must be even and greater th
+  55:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * @param[in]      *pCoeffs points to the filter coefficients buffer.    
+  56:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * @param[in]      *pState points to the state buffer.    
+  57:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * @param[in]      blockSize is number of samples processed per call.    
+  58:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * @return The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_ARGUME
+  59:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * <code>numTaps</code> is not greater than or equal to 4 and even.    
+  60:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  *    
+  61:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * <b>Description:</b>    
+  62:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * \par    
+  63:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * <code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order:  
+  64:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * <pre>    
+  65:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  *    {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}    
+  66:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * </pre>    
+  67:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * Note that <code>numTaps</code> must be even and greater than or equal to 4.    
+  68:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * To implement an odd length filter simply increase <code>numTaps</code> by 1 and set the last coe
+  69:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * For example, to implement a filter with <code>numTaps=3</code> and coefficients    
+  70:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * <pre>    
+  71:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  *     {0.3, -0.8, 0.3}    
+  72:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * </pre>    
+  73:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * set <code>numTaps=4</code> and use the coefficients:    
+  74:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * <pre>    
+  75:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  *     {0.3, -0.8, 0.3, 0}.    
+  76:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * </pre>    
+  77:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * Similarly, to implement a two point filter    
+  78:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * <pre>    
+  79:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  *     {0.3, -0.3}    
+  80:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * </pre>    
+  81:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * set <code>numTaps=4</code> and use the coefficients:    
+  82:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * <pre>    
+  83:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  *     {0.3, -0.3, 0, 0}.    
+  84:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * </pre>    
+  85:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * \par    
+  86:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * <code>pState</code> points to the array of state variables.    
+  87:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  * <code>pState</code> is of length <code>numTaps+blockSize</code>, when running on Cortex-M4 and C
+  88:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****  */
+  89:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+  90:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** arm_status arm_fir_init_q15(
+  91:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   arm_fir_instance_q15 * S,
+  92:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   uint16_t numTaps,
+  93:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   q15_t * pCoeffs,
+  94:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   q15_t * pState,
+  95:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   uint32_t blockSize)
+  96:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** {
+  28              	 .loc 1 96 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32 0000 80B5     	 push {r7,lr}
+  33              	.LCFI0:
+  34              	 .cfi_def_cfa_offset 8
+  35              	 .cfi_offset 7,-8
+  36              	 .cfi_offset 14,-4
+  37 0002 86B0     	 sub sp,sp,#24
+  38              	.LCFI1:
+  39              	 .cfi_def_cfa_offset 32
+  40 0004 00AF     	 add r7,sp,#0
+  41              	.LCFI2:
+  42              	 .cfi_def_cfa_register 7
+  43 0006 F860     	 str r0,[r7,#12]
+  44 0008 7A60     	 str r2,[r7,#4]
+  45 000a 3B60     	 str r3,[r7]
+  46 000c 0B46     	 mov r3,r1
+  47 000e 7B81     	 strh r3,[r7,#10]
+  97:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   arm_status status;
+  98:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+  99:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+ 100:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** #ifndef ARM_MATH_CM0_FAMILY
+ 101:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+ 102:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   /* Run the below code for Cortex-M4 and Cortex-M3 */
+ 103:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+ 104:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   /* The Number of filter coefficients in the filter must be even and at least 4 */
+ 105:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   if(numTaps & 0x1u)
+  48              	 .loc 1 105 0
+  49 0010 7B89     	 ldrh r3,[r7,#10]
+  50 0012 03F00103 	 and r3,r3,#1
+  51 0016 002B     	 cmp r3,#0
+  52 0018 02D0     	 beq .L2
+ 106:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   {
+ 107:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****     status = ARM_MATH_ARGUMENT_ERROR;
+  53              	 .loc 1 107 0
+  54 001a FF23     	 movs r3,#255
+  55 001c FB75     	 strb r3,[r7,#23]
+  56 001e 13E0     	 b .L3
+  57              	.L2:
+ 108:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   }
+ 109:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   else
+ 110:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   {
+ 111:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****     /* Assign filter taps */
+ 112:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****     S->numTaps = numTaps;
+  58              	 .loc 1 112 0
+  59 0020 FB68     	 ldr r3,[r7,#12]
+  60 0022 7A89     	 ldrh r2,[r7,#10]
+  61 0024 1A80     	 strh r2,[r3]
+ 113:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+ 114:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****     /* Assign coefficient pointer */
+ 115:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****     S->pCoeffs = pCoeffs;
+  62              	 .loc 1 115 0
+  63 0026 FB68     	 ldr r3,[r7,#12]
+  64 0028 7A68     	 ldr r2,[r7,#4]
+  65 002a 9A60     	 str r2,[r3,#8]
+ 116:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+ 117:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****     /* Clear the state buffer.  The size is always (blockSize + numTaps ) */
+ 118:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****     memset(pState, 0, (numTaps + (blockSize)) * sizeof(q15_t));
+  66              	 .loc 1 118 0
+  67 002c 7A89     	 ldrh r2,[r7,#10]
+  68 002e 3B6A     	 ldr r3,[r7,#32]
+  69 0030 1344     	 add r3,r3,r2
+  70 0032 5B00     	 lsls r3,r3,#1
+  71 0034 3868     	 ldr r0,[r7]
+  72 0036 0021     	 movs r1,#0
+  73 0038 1A46     	 mov r2,r3
+  74 003a FFF7FEFF 	 bl memset
+ 119:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+ 120:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****     /* Assign state pointer */
+ 121:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****     S->pState = pState;
+  75              	 .loc 1 121 0
+  76 003e FB68     	 ldr r3,[r7,#12]
+  77 0040 3A68     	 ldr r2,[r7]
+  78 0042 5A60     	 str r2,[r3,#4]
+ 122:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+ 123:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****     status = ARM_MATH_SUCCESS;
+  79              	 .loc 1 123 0
+  80 0044 0023     	 movs r3,#0
+  81 0046 FB75     	 strb r3,[r7,#23]
+  82              	.L3:
+ 124:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   }
+ 125:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+ 126:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   return (status);
+  83              	 .loc 1 126 0
+  84 0048 FB7D     	 ldrb r3,[r7,#23]
+  85 004a 5BB2     	 sxtb r3,r3
+ 127:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+ 128:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** #else
+ 129:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+ 130:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   /* Run the below code for Cortex-M0 */
+ 131:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+ 132:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   /* Assign filter taps */
+ 133:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   S->numTaps = numTaps;
+ 134:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+ 135:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   /* Assign coefficient pointer */
+ 136:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   S->pCoeffs = pCoeffs;
+ 137:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+ 138:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   /* Clear the state buffer.  The size is always (blockSize + numTaps - 1) */
+ 139:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   memset(pState, 0, (numTaps + (blockSize - 1u)) * sizeof(q15_t));
+ 140:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+ 141:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   /* Assign state pointer */
+ 142:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   S->pState = pState;
+ 143:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+ 144:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   status = ARM_MATH_SUCCESS;
+ 145:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+ 146:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c ****   return (status);
+ 147:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+ 148:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** #endif /*  #ifndef ARM_MATH_CM0_FAMILY */
+ 149:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** 
+ 150:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_fir_init_q15.c **** }
+  86              	 .loc 1 150 0
+  87 004c 1846     	 mov r0,r3
+  88 004e 1837     	 adds r7,r7,#24
+  89              	.LCFI3:
+  90              	 .cfi_def_cfa_offset 8
+  91 0050 BD46     	 mov sp,r7
+  92              	.LCFI4:
+  93              	 .cfi_def_cfa_register 13
+  94              	 
+  95 0052 80BD     	 pop {r7,pc}
+  96              	 .cfi_endproc
+  97              	.LFE139:
+  99              	 .text
+ 100              	.Letext0:
+ 101              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 102              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 103              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_fir_init_q15.c
+    {standard input}:20     .text.arm_fir_init_q15:00000000 $t
+    {standard input}:25     .text.arm_fir_init_q15:00000000 arm_fir_init_q15
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+memset

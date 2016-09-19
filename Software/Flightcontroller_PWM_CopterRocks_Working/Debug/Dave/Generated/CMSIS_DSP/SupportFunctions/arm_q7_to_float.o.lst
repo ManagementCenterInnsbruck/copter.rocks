@@ -1,0 +1,310 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_q7_to_float.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.arm_q7_to_float,"ax",%progbits
+  20              	 .align 2
+  21              	 .global arm_q7_to_float
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	arm_q7_to_float:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c"
+   1:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** /* ----------------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * $Date:        31. July 2014
+   5:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * $Revision: 	V1.4.4  
+   6:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * Title:		arm_q7_to_float.c    
+   9:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * Description:	Converts the elements of the Q7 vector to floating-point vector.    
+  11:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** *
+  27:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * POSSIBILITY OF SUCH DAMAGE.  
+  39:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** * ---------------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** 
+  41:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** 
+  43:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** /**    
+  44:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  * @ingroup groupSupport    
+  45:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  */
+  46:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** 
+  47:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** /**    
+  48:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  * @defgroup q7_to_x  Convert 8-bit Integer value    
+  49:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  */
+  50:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** 
+  51:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** /**    
+  52:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  * @addtogroup q7_to_x    
+  53:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  * @{    
+  54:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  */
+  55:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** 
+  56:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** /**    
+  57:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  * @brief Converts the elements of the Q7 vector to floating-point vector.    
+  58:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  * @param[in]       *pSrc points to the Q7 input vector    
+  59:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  * @param[out]      *pDst points to the floating-point output vector   
+  60:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  * @param[in]       blockSize length of the input vector    
+  61:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  * @return none.    
+  62:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  *		     
+  63:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  * \par Description:    
+  64:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  *    
+  65:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  * The equation used for the conversion process is:    
+  66:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  *   
+  67:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  * <pre>    
+  68:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  * 	pDst[n] = (float32_t) pSrc[n] / 128;   0 <= n < blockSize.    
+  69:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  * </pre>    
+  70:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  *   
+  71:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****  */
+  72:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** 
+  73:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** 
+  74:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** void arm_q7_to_float(
+  75:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   q7_t * pSrc,
+  76:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   float32_t * pDst,
+  77:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   uint32_t blockSize)
+  78:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** {
+  28              	 .loc 1 78 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	 
+  33 0000 80B4     	 push {r7}
+  34              	.LCFI0:
+  35              	 .cfi_def_cfa_offset 4
+  36              	 .cfi_offset 7,-4
+  37 0002 87B0     	 sub sp,sp,#28
+  38              	.LCFI1:
+  39              	 .cfi_def_cfa_offset 32
+  40 0004 00AF     	 add r7,sp,#0
+  41              	.LCFI2:
+  42              	 .cfi_def_cfa_register 7
+  43 0006 F860     	 str r0,[r7,#12]
+  44 0008 B960     	 str r1,[r7,#8]
+  45 000a 7A60     	 str r2,[r7,#4]
+  79:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   q7_t *pIn = pSrc;                              /* Src pointer */
+  46              	 .loc 1 79 0
+  47 000c FB68     	 ldr r3,[r7,#12]
+  48 000e 7B61     	 str r3,[r7,#20]
+  80:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   uint32_t blkCnt;                               /* loop counter */
+  81:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** 
+  82:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** 
+  83:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** #ifndef ARM_MATH_CM0_FAMILY
+  84:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** 
+  85:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   /* Run the below code for Cortex-M4 and Cortex-M3 */
+  86:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** 
+  87:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   /*loop Unrolling */
+  88:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   blkCnt = blockSize >> 2u;
+  49              	 .loc 1 88 0
+  50 0010 7B68     	 ldr r3,[r7,#4]
+  51 0012 9B08     	 lsrs r3,r3,#2
+  52 0014 3B61     	 str r3,[r7,#16]
+  89:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** 
+  90:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
+  91:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****    ** a second loop below computes the remaining 1 to 3 samples. */
+  92:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   while(blkCnt > 0u)
+  53              	 .loc 1 92 0
+  54 0016 4AE0     	 b .L2
+  55              	.L3:
+  93:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   {
+  94:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****     /* C = (float32_t) A / 128 */
+  95:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****     /* convert from q7 to float and then store the results in the destination buffer */
+  96:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****     *pDst++ = ((float32_t) * pIn++ / 128.0f);
+  56              	 .loc 1 96 0
+  57 0018 BB68     	 ldr r3,[r7,#8]
+  58 001a 1A1D     	 adds r2,r3,#4
+  59 001c BA60     	 str r2,[r7,#8]
+  60 001e 7A69     	 ldr r2,[r7,#20]
+  61 0020 511C     	 adds r1,r2,#1
+  62 0022 7961     	 str r1,[r7,#20]
+  63 0024 1278     	 ldrb r2,[r2]
+  64 0026 52B2     	 sxtb r2,r2
+  65 0028 07EE902A 	 fmsr s15,r2
+  66 002c F8EEE77A 	 fsitos s15,s15
+  67 0030 9FED317A 	 flds s14,.L6
+  68 0034 C7EE877A 	 fdivs s15,s15,s14
+  69 0038 C3ED007A 	 fsts s15,[r3]
+  97:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****     *pDst++ = ((float32_t) * pIn++ / 128.0f);
+  70              	 .loc 1 97 0
+  71 003c BB68     	 ldr r3,[r7,#8]
+  72 003e 1A1D     	 adds r2,r3,#4
+  73 0040 BA60     	 str r2,[r7,#8]
+  74 0042 7A69     	 ldr r2,[r7,#20]
+  75 0044 511C     	 adds r1,r2,#1
+  76 0046 7961     	 str r1,[r7,#20]
+  77 0048 1278     	 ldrb r2,[r2]
+  78 004a 52B2     	 sxtb r2,r2
+  79 004c 07EE902A 	 fmsr s15,r2
+  80 0050 F8EEE77A 	 fsitos s15,s15
+  81 0054 9FED287A 	 flds s14,.L6
+  82 0058 C7EE877A 	 fdivs s15,s15,s14
+  83 005c C3ED007A 	 fsts s15,[r3]
+  98:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****     *pDst++ = ((float32_t) * pIn++ / 128.0f);
+  84              	 .loc 1 98 0
+  85 0060 BB68     	 ldr r3,[r7,#8]
+  86 0062 1A1D     	 adds r2,r3,#4
+  87 0064 BA60     	 str r2,[r7,#8]
+  88 0066 7A69     	 ldr r2,[r7,#20]
+  89 0068 511C     	 adds r1,r2,#1
+  90 006a 7961     	 str r1,[r7,#20]
+  91 006c 1278     	 ldrb r2,[r2]
+  92 006e 52B2     	 sxtb r2,r2
+  93 0070 07EE902A 	 fmsr s15,r2
+  94 0074 F8EEE77A 	 fsitos s15,s15
+  95 0078 9FED1F7A 	 flds s14,.L6
+  96 007c C7EE877A 	 fdivs s15,s15,s14
+  97 0080 C3ED007A 	 fsts s15,[r3]
+  99:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****     *pDst++ = ((float32_t) * pIn++ / 128.0f);
+  98              	 .loc 1 99 0
+  99 0084 BB68     	 ldr r3,[r7,#8]
+ 100 0086 1A1D     	 adds r2,r3,#4
+ 101 0088 BA60     	 str r2,[r7,#8]
+ 102 008a 7A69     	 ldr r2,[r7,#20]
+ 103 008c 511C     	 adds r1,r2,#1
+ 104 008e 7961     	 str r1,[r7,#20]
+ 105 0090 1278     	 ldrb r2,[r2]
+ 106 0092 52B2     	 sxtb r2,r2
+ 107 0094 07EE902A 	 fmsr s15,r2
+ 108 0098 F8EEE77A 	 fsitos s15,s15
+ 109 009c 9FED167A 	 flds s14,.L6
+ 110 00a0 C7EE877A 	 fdivs s15,s15,s14
+ 111 00a4 C3ED007A 	 fsts s15,[r3]
+ 100:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** 
+ 101:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****     /* Decrement the loop counter */
+ 102:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****     blkCnt--;
+ 112              	 .loc 1 102 0
+ 113 00a8 3B69     	 ldr r3,[r7,#16]
+ 114 00aa 013B     	 subs r3,r3,#1
+ 115 00ac 3B61     	 str r3,[r7,#16]
+ 116              	.L2:
+  92:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   {
+ 117              	 .loc 1 92 0
+ 118 00ae 3B69     	 ldr r3,[r7,#16]
+ 119 00b0 002B     	 cmp r3,#0
+ 120 00b2 B1D1     	 bne .L3
+ 103:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   }
+ 104:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** 
+ 105:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.    
+ 106:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****    ** No loop unrolling is used. */
+ 107:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   blkCnt = blockSize % 0x4u;
+ 121              	 .loc 1 107 0
+ 122 00b4 7B68     	 ldr r3,[r7,#4]
+ 123 00b6 03F00303 	 and r3,r3,#3
+ 124 00ba 3B61     	 str r3,[r7,#16]
+ 108:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** 
+ 109:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** #else
+ 110:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** 
+ 111:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   /* Run the below code for Cortex-M0 */
+ 112:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** 
+ 113:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   /* Loop over blockSize number of values */
+ 114:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   blkCnt = blockSize;
+ 115:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** 
+ 116:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** #endif /* #ifndef ARM_MATH_CM0_FAMILY */
+ 117:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** 
+ 118:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   while(blkCnt > 0u)
+ 125              	 .loc 1 118 0
+ 126 00bc 14E0     	 b .L4
+ 127              	.L5:
+ 119:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   {
+ 120:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****     /* C = (float32_t) A / 128 */
+ 121:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****     /* convert from q7 to float and then store the results in the destination buffer */
+ 122:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****     *pDst++ = ((float32_t) * pIn++ / 128.0f);
+ 128              	 .loc 1 122 0
+ 129 00be BB68     	 ldr r3,[r7,#8]
+ 130 00c0 1A1D     	 adds r2,r3,#4
+ 131 00c2 BA60     	 str r2,[r7,#8]
+ 132 00c4 7A69     	 ldr r2,[r7,#20]
+ 133 00c6 511C     	 adds r1,r2,#1
+ 134 00c8 7961     	 str r1,[r7,#20]
+ 135 00ca 1278     	 ldrb r2,[r2]
+ 136 00cc 52B2     	 sxtb r2,r2
+ 137 00ce 07EE902A 	 fmsr s15,r2
+ 138 00d2 F8EEE77A 	 fsitos s15,s15
+ 139 00d6 9FED087A 	 flds s14,.L6
+ 140 00da C7EE877A 	 fdivs s15,s15,s14
+ 141 00de C3ED007A 	 fsts s15,[r3]
+ 123:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** 
+ 124:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****     /* Decrement the loop counter */
+ 125:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****     blkCnt--;
+ 142              	 .loc 1 125 0
+ 143 00e2 3B69     	 ldr r3,[r7,#16]
+ 144 00e4 013B     	 subs r3,r3,#1
+ 145 00e6 3B61     	 str r3,[r7,#16]
+ 146              	.L4:
+ 118:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   {
+ 147              	 .loc 1 118 0
+ 148 00e8 3B69     	 ldr r3,[r7,#16]
+ 149 00ea 002B     	 cmp r3,#0
+ 150 00ec E7D1     	 bne .L5
+ 126:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c ****   }
+ 127:../Dave/Generated/CMSIS_DSP/SupportFunctions/arm_q7_to_float.c **** }
+ 151              	 .loc 1 127 0
+ 152 00ee 1C37     	 adds r7,r7,#28
+ 153              	.LCFI3:
+ 154              	 .cfi_def_cfa_offset 4
+ 155 00f0 BD46     	 mov sp,r7
+ 156              	.LCFI4:
+ 157              	 .cfi_def_cfa_register 13
+ 158              	 
+ 159 00f2 5DF8047B 	 ldr r7,[sp],#4
+ 160              	.LCFI5:
+ 161              	 .cfi_restore 7
+ 162              	 .cfi_def_cfa_offset 0
+ 163 00f6 7047     	 bx lr
+ 164              	.L7:
+ 165              	 .align 2
+ 166              	.L6:
+ 167 00f8 00000043 	 .word 1124073472
+ 168              	 .cfi_endproc
+ 169              	.LFE139:
+ 171              	 .text
+ 172              	.Letext0:
+ 173              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 174              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 175              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_q7_to_float.c
+    {standard input}:20     .text.arm_q7_to_float:00000000 $t
+    {standard input}:25     .text.arm_q7_to_float:00000000 arm_q7_to_float
+    {standard input}:167    .text.arm_q7_to_float:000000f8 $d
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

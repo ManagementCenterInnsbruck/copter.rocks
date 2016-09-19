@@ -1,0 +1,824 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_scale_q31.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.arm_scale_q31,"ax",%progbits
+  20              	 .align 2
+  21              	 .global arm_scale_q31
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	arm_scale_q31:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c"
+   1:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** /* ----------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * $Date:        12. March 2014
+   5:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * $Revision: 	V1.4.4
+   6:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * Title:		arm_scale_q31.c    
+   9:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * Description:	Multiplies a Q31 vector by a scalar.    
+  11:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** *
+  27:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * POSSIBILITY OF SUCH DAMAGE.   
+  39:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** * -------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+  41:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+  43:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** /**       
+  44:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****  * @ingroup groupMath       
+  45:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****  */
+  46:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+  47:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** /**       
+  48:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****  * @addtogroup scale       
+  49:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****  * @{       
+  50:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****  */
+  51:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+  52:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** /**       
+  53:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****  * @brief Multiplies a Q31 vector by a scalar.       
+  54:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****  * @param[in]       *pSrc points to the input vector       
+  55:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****  * @param[in]       scaleFract fractional portion of the scale value       
+  56:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****  * @param[in]       shift number of bits to shift the result by       
+  57:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****  * @param[out]      *pDst points to the output vector       
+  58:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****  * @param[in]       blockSize number of samples in the vector       
+  59:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****  * @return none.       
+  60:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****  *       
+  61:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****  * <b>Scaling and Overflow Behavior:</b>       
+  62:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****  * \par       
+  63:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****  * The input data <code>*pSrc</code> and <code>scaleFract</code> are in 1.31 format.       
+  64:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****  * These are multiplied to yield a 2.62 intermediate result and this is shifted with saturation to 
+  65:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****  */
+  66:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+  67:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** void arm_scale_q31(
+  68:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   q31_t * pSrc,
+  69:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   q31_t scaleFract,
+  70:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   int8_t shift,
+  71:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   q31_t * pDst,
+  72:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   uint32_t blockSize)
+  73:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** {
+  28              	 .loc 1 73 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	 
+  33 0000 2DE9B00F 	 push {r4,r5,r7,r8,r9,r10,fp}
+  34              	.LCFI0:
+  35              	 .cfi_def_cfa_offset 28
+  36              	 .cfi_offset 4,-28
+  37              	 .cfi_offset 5,-24
+  38              	 .cfi_offset 7,-20
+  39              	 .cfi_offset 8,-16
+  40              	 .cfi_offset 9,-12
+  41              	 .cfi_offset 10,-8
+  42              	 .cfi_offset 11,-4
+  43 0004 A1B0     	 sub sp,sp,#132
+  44              	.LCFI1:
+  45              	 .cfi_def_cfa_offset 160
+  46 0006 00AF     	 add r7,sp,#0
+  47              	.LCFI2:
+  48              	 .cfi_def_cfa_register 7
+  49 0008 F864     	 str r0,[r7,#76]
+  50 000a B964     	 str r1,[r7,#72]
+  51 000c 3B64     	 str r3,[r7,#64]
+  52 000e 1346     	 mov r3,r2
+  53 0010 87F84730 	 strb r3,[r7,#71]
+  74:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   int8_t kShift = shift + 1;                     /* Shift to apply after scaling */
+  54              	 .loc 1 74 0
+  55 0014 97F84730 	 ldrb r3,[r7,#71]
+  56 0018 0133     	 adds r3,r3,#1
+  57 001a DBB2     	 uxtb r3,r3
+  58 001c 87F86730 	 strb r3,[r7,#103]
+  75:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   int8_t sign = (kShift & 0x80);
+  59              	 .loc 1 75 0
+  60 0020 97F86730 	 ldrb r3,[r7,#103]
+  61 0024 23F07F03 	 bic r3,r3,#127
+  62 0028 87F86630 	 strb r3,[r7,#102]
+  76:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   uint32_t blkCnt;                               /* loop counter */
+  77:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   q31_t in, out;
+  78:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+  79:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** #ifndef ARM_MATH_CM0_FAMILY
+  80:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+  81:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** /* Run the below code for Cortex-M4 and Cortex-M3 */
+  82:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+  83:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   q31_t in1, in2, in3, in4;                      /* temporary input variables */
+  84:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   q31_t out1, out2, out3, out4;                  /* temporary output variabels */
+  85:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+  86:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+  87:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   /*loop Unrolling */
+  88:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   blkCnt = blockSize >> 2u;
+  63              	 .loc 1 88 0
+  64 002c D7F8A030 	 ldr r3,[r7,#160]
+  65 0030 9B08     	 lsrs r3,r3,#2
+  66 0032 FB67     	 str r3,[r7,#124]
+  89:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+  90:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   if(sign == 0u)
+  67              	 .loc 1 90 0
+  68 0034 97F96630 	 ldrsb r3,[r7,#102]
+  69 0038 002B     	 cmp r3,#0
+  70 003a 40F0D280 	 bne .L2
+  91:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   {
+  92:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.       
+  93:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****      ** a second loop below computes the remaining 1 to 3 samples. */
+  94:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****     while(blkCnt > 0u)
+  71              	 .loc 1 94 0
+  72 003e CBE0     	 b .L3
+  73              	.L8:
+  95:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****     {
+  96:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       /* read four inputs from source */
+  97:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       in1 = *pSrc;
+  74              	 .loc 1 97 0
+  75 0040 FB6C     	 ldr r3,[r7,#76]
+  76 0042 1B68     	 ldr r3,[r3]
+  77 0044 3B66     	 str r3,[r7,#96]
+  98:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       in2 = *(pSrc + 1);
+  78              	 .loc 1 98 0
+  79 0046 FB6C     	 ldr r3,[r7,#76]
+  80 0048 5B68     	 ldr r3,[r3,#4]
+  81 004a FB65     	 str r3,[r7,#92]
+  99:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       in3 = *(pSrc + 2);
+  82              	 .loc 1 99 0
+  83 004c FB6C     	 ldr r3,[r7,#76]
+  84 004e 9B68     	 ldr r3,[r3,#8]
+  85 0050 BB65     	 str r3,[r7,#88]
+ 100:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       in4 = *(pSrc + 3);
+  86              	 .loc 1 100 0
+  87 0052 FB6C     	 ldr r3,[r7,#76]
+  88 0054 DB68     	 ldr r3,[r3,#12]
+  89 0056 7B65     	 str r3,[r7,#84]
+ 101:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 102:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       /* multiply input with scaler value */
+ 103:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       in1 = ((q63_t) in1 * scaleFract) >> 32;
+  90              	 .loc 1 103 0
+  91 0058 3B6E     	 ldr r3,[r7,#96]
+  92 005a 1846     	 mov r0,r3
+  93 005c 4FEAE071 	 asr r1,r0,#31
+  94 0060 BB6C     	 ldr r3,[r7,#72]
+  95 0062 1A46     	 mov r2,r3
+  96 0064 4FEAE273 	 asr r3,r2,#31
+  97 0068 02FB01F5 	 mul r5,r2,r1
+  98 006c 00FB03F4 	 mul r4,r0,r3
+  99 0070 2C44     	 add r4,r4,r5
+ 100 0072 A0FB0223 	 umull r2,r3,r0,r2
+ 101 0076 E118     	 adds r1,r4,r3
+ 102 0078 0B46     	 mov r3,r1
+ 103 007a 1900     	 movs r1,r3
+ 104 007c B963     	 str r1,[r7,#56]
+ 105 007e DB17     	 asrs r3,r3,#31
+ 106 0080 FB63     	 str r3,[r7,#60]
+ 107 0082 BB6B     	 ldr r3,[r7,#56]
+ 108 0084 3B66     	 str r3,[r7,#96]
+ 104:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       in2 = ((q63_t) in2 * scaleFract) >> 32;
+ 109              	 .loc 1 104 0
+ 110 0086 FB6D     	 ldr r3,[r7,#92]
+ 111 0088 1846     	 mov r0,r3
+ 112 008a 4FEAE071 	 asr r1,r0,#31
+ 113 008e BB6C     	 ldr r3,[r7,#72]
+ 114 0090 1A46     	 mov r2,r3
+ 115 0092 4FEAE273 	 asr r3,r2,#31
+ 116 0096 02FB01F5 	 mul r5,r2,r1
+ 117 009a 00FB03F4 	 mul r4,r0,r3
+ 118 009e 2C44     	 add r4,r4,r5
+ 119 00a0 A0FB0223 	 umull r2,r3,r0,r2
+ 120 00a4 E118     	 adds r1,r4,r3
+ 121 00a6 0B46     	 mov r3,r1
+ 122 00a8 1900     	 movs r1,r3
+ 123 00aa 3963     	 str r1,[r7,#48]
+ 124 00ac DB17     	 asrs r3,r3,#31
+ 125 00ae 7B63     	 str r3,[r7,#52]
+ 126 00b0 3B6B     	 ldr r3,[r7,#48]
+ 127 00b2 FB65     	 str r3,[r7,#92]
+ 105:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       in3 = ((q63_t) in3 * scaleFract) >> 32;
+ 128              	 .loc 1 105 0
+ 129 00b4 BB6D     	 ldr r3,[r7,#88]
+ 130 00b6 1846     	 mov r0,r3
+ 131 00b8 4FEAE071 	 asr r1,r0,#31
+ 132 00bc BB6C     	 ldr r3,[r7,#72]
+ 133 00be 1A46     	 mov r2,r3
+ 134 00c0 4FEAE273 	 asr r3,r2,#31
+ 135 00c4 02FB01F5 	 mul r5,r2,r1
+ 136 00c8 00FB03F4 	 mul r4,r0,r3
+ 137 00cc 2C44     	 add r4,r4,r5
+ 138 00ce A0FB0223 	 umull r2,r3,r0,r2
+ 139 00d2 E118     	 adds r1,r4,r3
+ 140 00d4 0B46     	 mov r3,r1
+ 141 00d6 1900     	 movs r1,r3
+ 142 00d8 B962     	 str r1,[r7,#40]
+ 143 00da DB17     	 asrs r3,r3,#31
+ 144 00dc FB62     	 str r3,[r7,#44]
+ 145 00de BB6A     	 ldr r3,[r7,#40]
+ 146 00e0 BB65     	 str r3,[r7,#88]
+ 106:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       in4 = ((q63_t) in4 * scaleFract) >> 32;
+ 147              	 .loc 1 106 0
+ 148 00e2 7B6D     	 ldr r3,[r7,#84]
+ 149 00e4 1846     	 mov r0,r3
+ 150 00e6 4FEAE071 	 asr r1,r0,#31
+ 151 00ea BB6C     	 ldr r3,[r7,#72]
+ 152 00ec 1A46     	 mov r2,r3
+ 153 00ee 4FEAE273 	 asr r3,r2,#31
+ 154 00f2 02FB01F5 	 mul r5,r2,r1
+ 155 00f6 00FB03F4 	 mul r4,r0,r3
+ 156 00fa 2C44     	 add r4,r4,r5
+ 157 00fc A0FB0223 	 umull r2,r3,r0,r2
+ 158 0100 E118     	 adds r1,r4,r3
+ 159 0102 0B46     	 mov r3,r1
+ 160 0104 1900     	 movs r1,r3
+ 161 0106 3962     	 str r1,[r7,#32]
+ 162 0108 DB17     	 asrs r3,r3,#31
+ 163 010a 7B62     	 str r3,[r7,#36]
+ 164 010c 3B6A     	 ldr r3,[r7,#32]
+ 165 010e 7B65     	 str r3,[r7,#84]
+ 107:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 108:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       /* apply shifting */
+ 109:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       out1 = in1 << kShift;
+ 166              	 .loc 1 109 0
+ 167 0110 97F96730 	 ldrsb r3,[r7,#103]
+ 168 0114 3A6E     	 ldr r2,[r7,#96]
+ 169 0116 02FA03F3 	 lsl r3,r2,r3
+ 170 011a 7B67     	 str r3,[r7,#116]
+ 110:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       out2 = in2 << kShift;
+ 171              	 .loc 1 110 0
+ 172 011c 97F96730 	 ldrsb r3,[r7,#103]
+ 173 0120 FA6D     	 ldr r2,[r7,#92]
+ 174 0122 02FA03F3 	 lsl r3,r2,r3
+ 175 0126 3B67     	 str r3,[r7,#112]
+ 111:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 112:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       /* saturate the results. */
+ 113:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       if(in1 != (out1 >> kShift))
+ 176              	 .loc 1 113 0
+ 177 0128 97F96730 	 ldrsb r3,[r7,#103]
+ 178 012c 7A6F     	 ldr r2,[r7,#116]
+ 179 012e 1A41     	 asrs r2,r2,r3
+ 180 0130 3B6E     	 ldr r3,[r7,#96]
+ 181 0132 9A42     	 cmp r2,r3
+ 182 0134 05D0     	 beq .L4
+ 114:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****         out1 = 0x7FFFFFFF ^ (in1 >> 31);
+ 183              	 .loc 1 114 0
+ 184 0136 3B6E     	 ldr r3,[r7,#96]
+ 185 0138 DB17     	 asrs r3,r3,#31
+ 186 013a 83F00043 	 eor r3,r3,#-2147483648
+ 187 013e DB43     	 mvns r3,r3
+ 188 0140 7B67     	 str r3,[r7,#116]
+ 189              	.L4:
+ 115:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 116:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       if(in2 != (out2 >> kShift))
+ 190              	 .loc 1 116 0
+ 191 0142 97F96730 	 ldrsb r3,[r7,#103]
+ 192 0146 3A6F     	 ldr r2,[r7,#112]
+ 193 0148 1A41     	 asrs r2,r2,r3
+ 194 014a FB6D     	 ldr r3,[r7,#92]
+ 195 014c 9A42     	 cmp r2,r3
+ 196 014e 05D0     	 beq .L5
+ 117:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****         out2 = 0x7FFFFFFF ^ (in2 >> 31);
+ 197              	 .loc 1 117 0
+ 198 0150 FB6D     	 ldr r3,[r7,#92]
+ 199 0152 DB17     	 asrs r3,r3,#31
+ 200 0154 83F00043 	 eor r3,r3,#-2147483648
+ 201 0158 DB43     	 mvns r3,r3
+ 202 015a 3B67     	 str r3,[r7,#112]
+ 203              	.L5:
+ 118:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 119:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       out3 = in3 << kShift;
+ 204              	 .loc 1 119 0
+ 205 015c 97F96730 	 ldrsb r3,[r7,#103]
+ 206 0160 BA6D     	 ldr r2,[r7,#88]
+ 207 0162 02FA03F3 	 lsl r3,r2,r3
+ 208 0166 FB66     	 str r3,[r7,#108]
+ 120:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       out4 = in4 << kShift;
+ 209              	 .loc 1 120 0
+ 210 0168 97F96730 	 ldrsb r3,[r7,#103]
+ 211 016c 7A6D     	 ldr r2,[r7,#84]
+ 212 016e 02FA03F3 	 lsl r3,r2,r3
+ 213 0172 BB66     	 str r3,[r7,#104]
+ 121:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 122:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       *pDst = out1;
+ 214              	 .loc 1 122 0
+ 215 0174 3B6C     	 ldr r3,[r7,#64]
+ 216 0176 7A6F     	 ldr r2,[r7,#116]
+ 217 0178 1A60     	 str r2,[r3]
+ 123:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       *(pDst + 1) = out2;
+ 218              	 .loc 1 123 0
+ 219 017a 3B6C     	 ldr r3,[r7,#64]
+ 220 017c 0433     	 adds r3,r3,#4
+ 221 017e 3A6F     	 ldr r2,[r7,#112]
+ 222 0180 1A60     	 str r2,[r3]
+ 124:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 125:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       if(in3 != (out3 >> kShift))
+ 223              	 .loc 1 125 0
+ 224 0182 97F96730 	 ldrsb r3,[r7,#103]
+ 225 0186 FA6E     	 ldr r2,[r7,#108]
+ 226 0188 1A41     	 asrs r2,r2,r3
+ 227 018a BB6D     	 ldr r3,[r7,#88]
+ 228 018c 9A42     	 cmp r2,r3
+ 229 018e 05D0     	 beq .L6
+ 126:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****         out3 = 0x7FFFFFFF ^ (in3 >> 31);
+ 230              	 .loc 1 126 0
+ 231 0190 BB6D     	 ldr r3,[r7,#88]
+ 232 0192 DB17     	 asrs r3,r3,#31
+ 233 0194 83F00043 	 eor r3,r3,#-2147483648
+ 234 0198 DB43     	 mvns r3,r3
+ 235 019a FB66     	 str r3,[r7,#108]
+ 236              	.L6:
+ 127:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 128:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       if(in4 != (out4 >> kShift))
+ 237              	 .loc 1 128 0
+ 238 019c 97F96730 	 ldrsb r3,[r7,#103]
+ 239 01a0 BA6E     	 ldr r2,[r7,#104]
+ 240 01a2 1A41     	 asrs r2,r2,r3
+ 241 01a4 7B6D     	 ldr r3,[r7,#84]
+ 242 01a6 9A42     	 cmp r2,r3
+ 243 01a8 05D0     	 beq .L7
+ 129:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****         out4 = 0x7FFFFFFF ^ (in4 >> 31);
+ 244              	 .loc 1 129 0
+ 245 01aa 7B6D     	 ldr r3,[r7,#84]
+ 246 01ac DB17     	 asrs r3,r3,#31
+ 247 01ae 83F00043 	 eor r3,r3,#-2147483648
+ 248 01b2 DB43     	 mvns r3,r3
+ 249 01b4 BB66     	 str r3,[r7,#104]
+ 250              	.L7:
+ 130:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 131:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       /* Store result destination */
+ 132:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       *(pDst + 2) = out3;
+ 251              	 .loc 1 132 0
+ 252 01b6 3B6C     	 ldr r3,[r7,#64]
+ 253 01b8 0833     	 adds r3,r3,#8
+ 254 01ba FA6E     	 ldr r2,[r7,#108]
+ 255 01bc 1A60     	 str r2,[r3]
+ 133:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       *(pDst + 3) = out4;
+ 256              	 .loc 1 133 0
+ 257 01be 3B6C     	 ldr r3,[r7,#64]
+ 258 01c0 0C33     	 adds r3,r3,#12
+ 259 01c2 BA6E     	 ldr r2,[r7,#104]
+ 260 01c4 1A60     	 str r2,[r3]
+ 134:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 135:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       /* Update pointers to process next sampels */
+ 136:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       pSrc += 4u;
+ 261              	 .loc 1 136 0
+ 262 01c6 FB6C     	 ldr r3,[r7,#76]
+ 263 01c8 1033     	 adds r3,r3,#16
+ 264 01ca FB64     	 str r3,[r7,#76]
+ 137:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       pDst += 4u;
+ 265              	 .loc 1 137 0
+ 266 01cc 3B6C     	 ldr r3,[r7,#64]
+ 267 01ce 1033     	 adds r3,r3,#16
+ 268 01d0 3B64     	 str r3,[r7,#64]
+ 138:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 139:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       /* Decrement the loop counter */
+ 140:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       blkCnt--;
+ 269              	 .loc 1 140 0
+ 270 01d2 FB6F     	 ldr r3,[r7,#124]
+ 271 01d4 013B     	 subs r3,r3,#1
+ 272 01d6 FB67     	 str r3,[r7,#124]
+ 273              	.L3:
+  94:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****     {
+ 274              	 .loc 1 94 0
+ 275 01d8 FB6F     	 ldr r3,[r7,#124]
+ 276 01da 002B     	 cmp r3,#0
+ 277 01dc 7FF430AF 	 bne .L8
+ 278 01e0 9EE0     	 b .L9
+ 279              	.L2:
+ 141:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****     }
+ 142:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 143:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   }
+ 144:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   else
+ 145:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   {
+ 146:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.       
+ 147:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****      ** a second loop below computes the remaining 1 to 3 samples. */
+ 148:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****     while(blkCnt > 0u)
+ 280              	 .loc 1 148 0
+ 281 01e2 99E0     	 b .L10
+ 282              	.L11:
+ 149:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****     {
+ 150:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       /* read four inputs from source */
+ 151:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       in1 = *pSrc;
+ 283              	 .loc 1 151 0
+ 284 01e4 FB6C     	 ldr r3,[r7,#76]
+ 285 01e6 1B68     	 ldr r3,[r3]
+ 286 01e8 3B66     	 str r3,[r7,#96]
+ 152:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       in2 = *(pSrc + 1);
+ 287              	 .loc 1 152 0
+ 288 01ea FB6C     	 ldr r3,[r7,#76]
+ 289 01ec 5B68     	 ldr r3,[r3,#4]
+ 290 01ee FB65     	 str r3,[r7,#92]
+ 153:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       in3 = *(pSrc + 2);
+ 291              	 .loc 1 153 0
+ 292 01f0 FB6C     	 ldr r3,[r7,#76]
+ 293 01f2 9B68     	 ldr r3,[r3,#8]
+ 294 01f4 BB65     	 str r3,[r7,#88]
+ 154:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       in4 = *(pSrc + 3);
+ 295              	 .loc 1 154 0
+ 296 01f6 FB6C     	 ldr r3,[r7,#76]
+ 297 01f8 DB68     	 ldr r3,[r3,#12]
+ 298 01fa 7B65     	 str r3,[r7,#84]
+ 155:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 156:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       /* multiply input with scaler value */
+ 157:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       in1 = ((q63_t) in1 * scaleFract) >> 32;
+ 299              	 .loc 1 157 0
+ 300 01fc 3B6E     	 ldr r3,[r7,#96]
+ 301 01fe 1846     	 mov r0,r3
+ 302 0200 4FEAE071 	 asr r1,r0,#31
+ 303 0204 BB6C     	 ldr r3,[r7,#72]
+ 304 0206 1A46     	 mov r2,r3
+ 305 0208 4FEAE273 	 asr r3,r2,#31
+ 306 020c 02FB01F5 	 mul r5,r2,r1
+ 307 0210 00FB03F4 	 mul r4,r0,r3
+ 308 0214 2C44     	 add r4,r4,r5
+ 309 0216 A0FB0223 	 umull r2,r3,r0,r2
+ 310 021a E118     	 adds r1,r4,r3
+ 311 021c 0B46     	 mov r3,r1
+ 312 021e 9846     	 mov r8,r3
+ 313 0220 4FEAE379 	 asr r9,r3,#31
+ 314 0224 4346     	 mov r3,r8
+ 315 0226 3B66     	 str r3,[r7,#96]
+ 158:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       in2 = ((q63_t) in2 * scaleFract) >> 32;
+ 316              	 .loc 1 158 0
+ 317 0228 FB6D     	 ldr r3,[r7,#92]
+ 318 022a 1846     	 mov r0,r3
+ 319 022c 4FEAE071 	 asr r1,r0,#31
+ 320 0230 BB6C     	 ldr r3,[r7,#72]
+ 321 0232 1A46     	 mov r2,r3
+ 322 0234 4FEAE273 	 asr r3,r2,#31
+ 323 0238 02FB01F5 	 mul r5,r2,r1
+ 324 023c 00FB03F4 	 mul r4,r0,r3
+ 325 0240 2C44     	 add r4,r4,r5
+ 326 0242 A0FB0223 	 umull r2,r3,r0,r2
+ 327 0246 E118     	 adds r1,r4,r3
+ 328 0248 0B46     	 mov r3,r1
+ 329 024a 9A46     	 mov r10,r3
+ 330 024c 4FEAE37B 	 asr fp,r3,#31
+ 331 0250 5346     	 mov r3,r10
+ 332 0252 FB65     	 str r3,[r7,#92]
+ 159:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       in3 = ((q63_t) in3 * scaleFract) >> 32;
+ 333              	 .loc 1 159 0
+ 334 0254 BB6D     	 ldr r3,[r7,#88]
+ 335 0256 1846     	 mov r0,r3
+ 336 0258 4FEAE071 	 asr r1,r0,#31
+ 337 025c BB6C     	 ldr r3,[r7,#72]
+ 338 025e 1A46     	 mov r2,r3
+ 339 0260 4FEAE273 	 asr r3,r2,#31
+ 340 0264 02FB01F5 	 mul r5,r2,r1
+ 341 0268 00FB03F4 	 mul r4,r0,r3
+ 342 026c 2C44     	 add r4,r4,r5
+ 343 026e A0FB0223 	 umull r2,r3,r0,r2
+ 344 0272 E118     	 adds r1,r4,r3
+ 345 0274 0B46     	 mov r3,r1
+ 346 0276 1900     	 movs r1,r3
+ 347 0278 B961     	 str r1,[r7,#24]
+ 348 027a DB17     	 asrs r3,r3,#31
+ 349 027c FB61     	 str r3,[r7,#28]
+ 350 027e BB69     	 ldr r3,[r7,#24]
+ 351 0280 BB65     	 str r3,[r7,#88]
+ 160:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       in4 = ((q63_t) in4 * scaleFract) >> 32;
+ 352              	 .loc 1 160 0
+ 353 0282 7B6D     	 ldr r3,[r7,#84]
+ 354 0284 1846     	 mov r0,r3
+ 355 0286 4FEAE071 	 asr r1,r0,#31
+ 356 028a BB6C     	 ldr r3,[r7,#72]
+ 357 028c 1A46     	 mov r2,r3
+ 358 028e 4FEAE273 	 asr r3,r2,#31
+ 359 0292 02FB01F5 	 mul r5,r2,r1
+ 360 0296 00FB03F4 	 mul r4,r0,r3
+ 361 029a 2C44     	 add r4,r4,r5
+ 362 029c A0FB0223 	 umull r2,r3,r0,r2
+ 363 02a0 E118     	 adds r1,r4,r3
+ 364 02a2 0B46     	 mov r3,r1
+ 365 02a4 1900     	 movs r1,r3
+ 366 02a6 3961     	 str r1,[r7,#16]
+ 367 02a8 DB17     	 asrs r3,r3,#31
+ 368 02aa 7B61     	 str r3,[r7,#20]
+ 369 02ac 3B69     	 ldr r3,[r7,#16]
+ 370 02ae 7B65     	 str r3,[r7,#84]
+ 161:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 162:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       /* apply shifting */
+ 163:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       out1 = in1 >> -kShift;
+ 371              	 .loc 1 163 0
+ 372 02b0 97F96730 	 ldrsb r3,[r7,#103]
+ 373 02b4 5B42     	 negs r3,r3
+ 374 02b6 3A6E     	 ldr r2,[r7,#96]
+ 375 02b8 42FA03F3 	 asr r3,r2,r3
+ 376 02bc 7B67     	 str r3,[r7,#116]
+ 164:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       out2 = in2 >> -kShift;
+ 377              	 .loc 1 164 0
+ 378 02be 97F96730 	 ldrsb r3,[r7,#103]
+ 379 02c2 5B42     	 negs r3,r3
+ 380 02c4 FA6D     	 ldr r2,[r7,#92]
+ 381 02c6 42FA03F3 	 asr r3,r2,r3
+ 382 02ca 3B67     	 str r3,[r7,#112]
+ 165:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 166:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       out3 = in3 >> -kShift;
+ 383              	 .loc 1 166 0
+ 384 02cc 97F96730 	 ldrsb r3,[r7,#103]
+ 385 02d0 5B42     	 negs r3,r3
+ 386 02d2 BA6D     	 ldr r2,[r7,#88]
+ 387 02d4 42FA03F3 	 asr r3,r2,r3
+ 388 02d8 FB66     	 str r3,[r7,#108]
+ 167:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       out4 = in4 >> -kShift;
+ 389              	 .loc 1 167 0
+ 390 02da 97F96730 	 ldrsb r3,[r7,#103]
+ 391 02de 5B42     	 negs r3,r3
+ 392 02e0 7A6D     	 ldr r2,[r7,#84]
+ 393 02e2 42FA03F3 	 asr r3,r2,r3
+ 394 02e6 BB66     	 str r3,[r7,#104]
+ 168:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 169:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       /* Store result destination */
+ 170:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       *pDst = out1;
+ 395              	 .loc 1 170 0
+ 396 02e8 3B6C     	 ldr r3,[r7,#64]
+ 397 02ea 7A6F     	 ldr r2,[r7,#116]
+ 398 02ec 1A60     	 str r2,[r3]
+ 171:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       *(pDst + 1) = out2;
+ 399              	 .loc 1 171 0
+ 400 02ee 3B6C     	 ldr r3,[r7,#64]
+ 401 02f0 0433     	 adds r3,r3,#4
+ 402 02f2 3A6F     	 ldr r2,[r7,#112]
+ 403 02f4 1A60     	 str r2,[r3]
+ 172:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 173:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       *(pDst + 2) = out3;
+ 404              	 .loc 1 173 0
+ 405 02f6 3B6C     	 ldr r3,[r7,#64]
+ 406 02f8 0833     	 adds r3,r3,#8
+ 407 02fa FA6E     	 ldr r2,[r7,#108]
+ 408 02fc 1A60     	 str r2,[r3]
+ 174:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       *(pDst + 3) = out4;
+ 409              	 .loc 1 174 0
+ 410 02fe 3B6C     	 ldr r3,[r7,#64]
+ 411 0300 0C33     	 adds r3,r3,#12
+ 412 0302 BA6E     	 ldr r2,[r7,#104]
+ 413 0304 1A60     	 str r2,[r3]
+ 175:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 176:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       /* Update pointers to process next sampels */
+ 177:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       pSrc += 4u;
+ 414              	 .loc 1 177 0
+ 415 0306 FB6C     	 ldr r3,[r7,#76]
+ 416 0308 1033     	 adds r3,r3,#16
+ 417 030a FB64     	 str r3,[r7,#76]
+ 178:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       pDst += 4u;
+ 418              	 .loc 1 178 0
+ 419 030c 3B6C     	 ldr r3,[r7,#64]
+ 420 030e 1033     	 adds r3,r3,#16
+ 421 0310 3B64     	 str r3,[r7,#64]
+ 179:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 180:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       /* Decrement the loop counter */
+ 181:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****       blkCnt--;
+ 422              	 .loc 1 181 0
+ 423 0312 FB6F     	 ldr r3,[r7,#124]
+ 424 0314 013B     	 subs r3,r3,#1
+ 425 0316 FB67     	 str r3,[r7,#124]
+ 426              	.L10:
+ 148:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****     {
+ 427              	 .loc 1 148 0
+ 428 0318 FB6F     	 ldr r3,[r7,#124]
+ 429 031a 002B     	 cmp r3,#0
+ 430 031c 7FF462AF 	 bne .L11
+ 431              	.L9:
+ 182:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****     }
+ 183:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   }
+ 184:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.       
+ 185:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****    ** No loop unrolling is used. */
+ 186:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   blkCnt = blockSize % 0x4u;
+ 432              	 .loc 1 186 0
+ 433 0320 D7F8A030 	 ldr r3,[r7,#160]
+ 434 0324 03F00303 	 and r3,r3,#3
+ 435 0328 FB67     	 str r3,[r7,#124]
+ 187:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 188:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** #else
+ 189:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 190:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   /* Run the below code for Cortex-M0 */
+ 191:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 192:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   /* Initialize blkCnt with number of samples */
+ 193:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   blkCnt = blockSize;
+ 194:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 195:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** #endif /* #ifndef ARM_MATH_CM0_FAMILY */
+ 196:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 197:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   if(sign == 0)
+ 436              	 .loc 1 197 0
+ 437 032a 97F96630 	 ldrsb r3,[r7,#102]
+ 438 032e 002B     	 cmp r3,#0
+ 439 0330 3BD1     	 bne .L12
+ 198:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   {
+ 199:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 	  while(blkCnt > 0u)
+ 440              	 .loc 1 199 0
+ 441 0332 36E0     	 b .L13
+ 442              	.L15:
+ 200:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 	  {
+ 201:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 		/* C = A * scale */
+ 202:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 		/* Scale the input and then store the result in the destination buffer. */
+ 203:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 		in = *pSrc++;
+ 443              	 .loc 1 203 0
+ 444 0334 FB6C     	 ldr r3,[r7,#76]
+ 445 0336 1A1D     	 adds r2,r3,#4
+ 446 0338 FA64     	 str r2,[r7,#76]
+ 447 033a 1B68     	 ldr r3,[r3]
+ 448 033c 3B65     	 str r3,[r7,#80]
+ 204:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 		in = ((q63_t) in * scaleFract) >> 32;
+ 449              	 .loc 1 204 0
+ 450 033e 3B6D     	 ldr r3,[r7,#80]
+ 451 0340 1846     	 mov r0,r3
+ 452 0342 4FEAE071 	 asr r1,r0,#31
+ 453 0346 BB6C     	 ldr r3,[r7,#72]
+ 454 0348 1A46     	 mov r2,r3
+ 455 034a 4FEAE273 	 asr r3,r2,#31
+ 456 034e 02FB01F5 	 mul r5,r2,r1
+ 457 0352 00FB03F4 	 mul r4,r0,r3
+ 458 0356 2C44     	 add r4,r4,r5
+ 459 0358 A0FB0223 	 umull r2,r3,r0,r2
+ 460 035c E118     	 adds r1,r4,r3
+ 461 035e 0B46     	 mov r3,r1
+ 462 0360 1900     	 movs r1,r3
+ 463 0362 B960     	 str r1,[r7,#8]
+ 464 0364 DB17     	 asrs r3,r3,#31
+ 465 0366 FB60     	 str r3,[r7,#12]
+ 466 0368 BB68     	 ldr r3,[r7,#8]
+ 467 036a 3B65     	 str r3,[r7,#80]
+ 205:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 206:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 		out = in << kShift;
+ 468              	 .loc 1 206 0
+ 469 036c 97F96730 	 ldrsb r3,[r7,#103]
+ 470 0370 3A6D     	 ldr r2,[r7,#80]
+ 471 0372 02FA03F3 	 lsl r3,r2,r3
+ 472 0376 BB67     	 str r3,[r7,#120]
+ 207:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 		
+ 208:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 		if(in != (out >> kShift))
+ 473              	 .loc 1 208 0
+ 474 0378 97F96730 	 ldrsb r3,[r7,#103]
+ 475 037c BA6F     	 ldr r2,[r7,#120]
+ 476 037e 1A41     	 asrs r2,r2,r3
+ 477 0380 3B6D     	 ldr r3,[r7,#80]
+ 478 0382 9A42     	 cmp r2,r3
+ 479 0384 05D0     	 beq .L14
+ 209:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 			out = 0x7FFFFFFF ^ (in >> 31);
+ 480              	 .loc 1 209 0
+ 481 0386 3B6D     	 ldr r3,[r7,#80]
+ 482 0388 DB17     	 asrs r3,r3,#31
+ 483 038a 83F00043 	 eor r3,r3,#-2147483648
+ 484 038e DB43     	 mvns r3,r3
+ 485 0390 BB67     	 str r3,[r7,#120]
+ 486              	.L14:
+ 210:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 211:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 		*pDst++ = out;
+ 487              	 .loc 1 211 0
+ 488 0392 3B6C     	 ldr r3,[r7,#64]
+ 489 0394 1A1D     	 adds r2,r3,#4
+ 490 0396 3A64     	 str r2,[r7,#64]
+ 491 0398 BA6F     	 ldr r2,[r7,#120]
+ 492 039a 1A60     	 str r2,[r3]
+ 212:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 213:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 		/* Decrement the loop counter */
+ 214:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 		blkCnt--;
+ 493              	 .loc 1 214 0
+ 494 039c FB6F     	 ldr r3,[r7,#124]
+ 495 039e 013B     	 subs r3,r3,#1
+ 496 03a0 FB67     	 str r3,[r7,#124]
+ 497              	.L13:
+ 199:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 	  {
+ 498              	 .loc 1 199 0
+ 499 03a2 FB6F     	 ldr r3,[r7,#124]
+ 500 03a4 002B     	 cmp r3,#0
+ 501 03a6 C5D1     	 bne .L15
+ 502 03a8 2EE0     	 b .L1
+ 503              	.L12:
+ 215:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 	  }
+ 216:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   }
+ 217:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   else
+ 218:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   {
+ 219:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 	  while(blkCnt > 0u)
+ 504              	 .loc 1 219 0
+ 505 03aa 2AE0     	 b .L17
+ 506              	.L18:
+ 220:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 	  {
+ 221:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 		/* C = A * scale */
+ 222:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 		/* Scale the input and then store the result in the destination buffer. */
+ 223:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 		in = *pSrc++;
+ 507              	 .loc 1 223 0
+ 508 03ac FB6C     	 ldr r3,[r7,#76]
+ 509 03ae 1A1D     	 adds r2,r3,#4
+ 510 03b0 FA64     	 str r2,[r7,#76]
+ 511 03b2 1B68     	 ldr r3,[r3]
+ 512 03b4 3B65     	 str r3,[r7,#80]
+ 224:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 		in = ((q63_t) in * scaleFract) >> 32;
+ 513              	 .loc 1 224 0
+ 514 03b6 3B6D     	 ldr r3,[r7,#80]
+ 515 03b8 1846     	 mov r0,r3
+ 516 03ba 4FEAE071 	 asr r1,r0,#31
+ 517 03be BB6C     	 ldr r3,[r7,#72]
+ 518 03c0 1A46     	 mov r2,r3
+ 519 03c2 4FEAE273 	 asr r3,r2,#31
+ 520 03c6 02FB01F5 	 mul r5,r2,r1
+ 521 03ca 00FB03F4 	 mul r4,r0,r3
+ 522 03ce 2C44     	 add r4,r4,r5
+ 523 03d0 A0FB0223 	 umull r2,r3,r0,r2
+ 524 03d4 E118     	 adds r1,r4,r3
+ 525 03d6 0B46     	 mov r3,r1
+ 526 03d8 1900     	 movs r1,r3
+ 527 03da 3960     	 str r1,[r7]
+ 528 03dc DB17     	 asrs r3,r3,#31
+ 529 03de 7B60     	 str r3,[r7,#4]
+ 530 03e0 3B68     	 ldr r3,[r7]
+ 531 03e2 3B65     	 str r3,[r7,#80]
+ 225:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 226:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 		out = in >> -kShift;
+ 532              	 .loc 1 226 0
+ 533 03e4 97F96730 	 ldrsb r3,[r7,#103]
+ 534 03e8 5B42     	 negs r3,r3
+ 535 03ea 3A6D     	 ldr r2,[r7,#80]
+ 536 03ec 42FA03F3 	 asr r3,r2,r3
+ 537 03f0 BB67     	 str r3,[r7,#120]
+ 227:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 228:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 		*pDst++ = out;
+ 538              	 .loc 1 228 0
+ 539 03f2 3B6C     	 ldr r3,[r7,#64]
+ 540 03f4 1A1D     	 adds r2,r3,#4
+ 541 03f6 3A64     	 str r2,[r7,#64]
+ 542 03f8 BA6F     	 ldr r2,[r7,#120]
+ 543 03fa 1A60     	 str r2,[r3]
+ 229:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 
+ 230:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 		/* Decrement the loop counter */
+ 231:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 		blkCnt--;
+ 544              	 .loc 1 231 0
+ 545 03fc FB6F     	 ldr r3,[r7,#124]
+ 546 03fe 013B     	 subs r3,r3,#1
+ 547 0400 FB67     	 str r3,[r7,#124]
+ 548              	.L17:
+ 219:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 	  {
+ 549              	 .loc 1 219 0
+ 550 0402 FB6F     	 ldr r3,[r7,#124]
+ 551 0404 002B     	 cmp r3,#0
+ 552 0406 D1D1     	 bne .L18
+ 553              	.L1:
+ 232:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** 	  }
+ 233:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   
+ 234:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c ****   }
+ 235:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q31.c **** }
+ 554              	 .loc 1 235 0
+ 555 0408 8437     	 adds r7,r7,#132
+ 556              	.LCFI3:
+ 557              	 .cfi_def_cfa_offset 28
+ 558 040a BD46     	 mov sp,r7
+ 559              	.LCFI4:
+ 560              	 .cfi_def_cfa_register 13
+ 561              	 
+ 562 040c BDE8B00F 	 pop {r4,r5,r7,r8,r9,r10,fp}
+ 563              	.LCFI5:
+ 564              	 .cfi_restore 11
+ 565              	 .cfi_restore 10
+ 566              	 .cfi_restore 9
+ 567              	 .cfi_restore 8
+ 568              	 .cfi_restore 7
+ 569              	 .cfi_restore 5
+ 570              	 .cfi_restore 4
+ 571              	 .cfi_def_cfa_offset 0
+ 572 0410 7047     	 bx lr
+ 573              	 .cfi_endproc
+ 574              	.LFE139:
+ 576 0412 00BF     	 .text
+ 577              	.Letext0:
+ 578              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 579              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 580              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_scale_q31.c
+    {standard input}:20     .text.arm_scale_q31:00000000 $t
+    {standard input}:25     .text.arm_scale_q31:00000000 arm_scale_q31
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

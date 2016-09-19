@@ -1,0 +1,271 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "BatterySafety.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.VADC0_C0_2_IRQHandler,"ax",%progbits
+  20              	 .align 2
+  21              	 .global VADC0_C0_2_IRQHandler
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	VADC0_C0_2_IRQHandler:
+  26              	.LFB440:
+  27              	 .file 1 "../_Quadrocopter/BatterySafety/BatterySafety.c"
+   1:../_Quadrocopter/BatterySafety/BatterySafety.c **** /*******************************************************************************
+   2:../_Quadrocopter/BatterySafety/BatterySafety.c **** **                      Author(s) Identity                                    **
+   3:../_Quadrocopter/BatterySafety/BatterySafety.c **** ********************************************************************************
+   4:../_Quadrocopter/BatterySafety/BatterySafety.c **** **                                                                            **
+   5:../_Quadrocopter/BatterySafety/BatterySafety.c **** ** Initials     Name                                                          **
+   6:../_Quadrocopter/BatterySafety/BatterySafety.c **** ** ---------------------------------------------------------------------------**
+   7:../_Quadrocopter/BatterySafety/BatterySafety.c **** ** RT           Rafael  Tschinder                                             **
+   8:../_Quadrocopter/BatterySafety/BatterySafety.c **** ** DW           Dominik Wieland                                               **
+   9:../_Quadrocopter/BatterySafety/BatterySafety.c **** **                                                                            **
+  10:../_Quadrocopter/BatterySafety/BatterySafety.c **** **                                                                            **
+  11:../_Quadrocopter/BatterySafety/BatterySafety.c **** *******************************************************************************/
+  12:../_Quadrocopter/BatterySafety/BatterySafety.c **** 
+  13:../_Quadrocopter/BatterySafety/BatterySafety.c **** /*******************************************************************************
+  14:../_Quadrocopter/BatterySafety/BatterySafety.c **** **                      Revision Control History                              **
+  15:../_Quadrocopter/BatterySafety/BatterySafety.c **** *******************************************************************************/
+  16:../_Quadrocopter/BatterySafety/BatterySafety.c **** /*
+  17:../_Quadrocopter/BatterySafety/BatterySafety.c ****  * V0.0: 16-03-2016, RT:  Initial Version
+  18:../_Quadrocopter/BatterySafety/BatterySafety.c ****  * V0.1: 21-07-2016, DW:  Port of SW from DAVE3 to DAVE4
+  19:../_Quadrocopter/BatterySafety/BatterySafety.c ****  */
+  20:../_Quadrocopter/BatterySafety/BatterySafety.c **** 
+  21:../_Quadrocopter/BatterySafety/BatterySafety.c **** 
+  22:../_Quadrocopter/BatterySafety/BatterySafety.c **** /*******************************************************************************
+  23:../_Quadrocopter/BatterySafety/BatterySafety.c **** **                      Includes                                              **
+  24:../_Quadrocopter/BatterySafety/BatterySafety.c **** *******************************************************************************/
+  25:../_Quadrocopter/BatterySafety/BatterySafety.c **** #include "BatterySafety.h"
+  26:../_Quadrocopter/BatterySafety/BatterySafety.c **** 
+  27:../_Quadrocopter/BatterySafety/BatterySafety.c **** /*******************************************************************************
+  28:../_Quadrocopter/BatterySafety/BatterySafety.c **** **                      Private Constant Definitions to be changed            **
+  29:../_Quadrocopter/BatterySafety/BatterySafety.c **** *******************************************************************************/
+  30:../_Quadrocopter/BatterySafety/BatterySafety.c **** 
+  31:../_Quadrocopter/BatterySafety/BatterySafety.c **** /*******************************************************************************
+  32:../_Quadrocopter/BatterySafety/BatterySafety.c **** **                      Private Macro Definitions                             **
+  33:../_Quadrocopter/BatterySafety/BatterySafety.c **** *******************************************************************************/
+  34:../_Quadrocopter/BatterySafety/BatterySafety.c **** 
+  35:../_Quadrocopter/BatterySafety/BatterySafety.c **** /*******************************************************************************
+  36:../_Quadrocopter/BatterySafety/BatterySafety.c **** **                      Global Type Definitions                               **
+  37:../_Quadrocopter/BatterySafety/BatterySafety.c **** *******************************************************************************/
+  38:../_Quadrocopter/BatterySafety/BatterySafety.c **** 
+  39:../_Quadrocopter/BatterySafety/BatterySafety.c **** /*******************************************************************************
+  40:../_Quadrocopter/BatterySafety/BatterySafety.c **** **                      Private Type Definitions                              **
+  41:../_Quadrocopter/BatterySafety/BatterySafety.c **** *******************************************************************************/
+  42:../_Quadrocopter/BatterySafety/BatterySafety.c **** 
+  43:../_Quadrocopter/BatterySafety/BatterySafety.c **** /*******************************************************************************
+  44:../_Quadrocopter/BatterySafety/BatterySafety.c **** **                      Global Function Declarations                          **
+  45:../_Quadrocopter/BatterySafety/BatterySafety.c **** *******************************************************************************/
+  46:../_Quadrocopter/BatterySafety/BatterySafety.c **** 
+  47:../_Quadrocopter/BatterySafety/BatterySafety.c **** /*******************************************************************************
+  48:../_Quadrocopter/BatterySafety/BatterySafety.c **** **                      Private Function Declarations                         **
+  49:../_Quadrocopter/BatterySafety/BatterySafety.c **** *******************************************************************************/
+  50:../_Quadrocopter/BatterySafety/BatterySafety.c **** 
+  51:../_Quadrocopter/BatterySafety/BatterySafety.c **** /*******************************************************************************
+  52:../_Quadrocopter/BatterySafety/BatterySafety.c **** **                      Global Constant Definitions                           **
+  53:../_Quadrocopter/BatterySafety/BatterySafety.c **** *******************************************************************************/
+  54:../_Quadrocopter/BatterySafety/BatterySafety.c **** 
+  55:../_Quadrocopter/BatterySafety/BatterySafety.c **** /*******************************************************************************
+  56:../_Quadrocopter/BatterySafety/BatterySafety.c **** **                      Private Constant Definitions                          **
+  57:../_Quadrocopter/BatterySafety/BatterySafety.c **** *******************************************************************************/
+  58:../_Quadrocopter/BatterySafety/BatterySafety.c **** 
+  59:../_Quadrocopter/BatterySafety/BatterySafety.c **** /*******************************************************************************
+  60:../_Quadrocopter/BatterySafety/BatterySafety.c **** **                      Global Variable Definitions                           **
+  61:../_Quadrocopter/BatterySafety/BatterySafety.c **** *******************************************************************************/
+  62:../_Quadrocopter/BatterySafety/BatterySafety.c **** 
+  63:../_Quadrocopter/BatterySafety/BatterySafety.c **** /*******************************************************************************
+  64:../_Quadrocopter/BatterySafety/BatterySafety.c **** **                      Private Variable Definitions                          **
+  65:../_Quadrocopter/BatterySafety/BatterySafety.c **** *******************************************************************************/
+  66:../_Quadrocopter/BatterySafety/BatterySafety.c **** 
+  67:../_Quadrocopter/BatterySafety/BatterySafety.c **** /*******************************************************************************
+  68:../_Quadrocopter/BatterySafety/BatterySafety.c **** **                      Global Function Definitions                           **
+  69:../_Quadrocopter/BatterySafety/BatterySafety.c **** *******************************************************************************/
+  70:../_Quadrocopter/BatterySafety/BatterySafety.c **** 
+  71:../_Quadrocopter/BatterySafety/BatterySafety.c **** /*******************************************************************************
+  72:../_Quadrocopter/BatterySafety/BatterySafety.c **** **                      Private Function Definitions                          **
+  73:../_Quadrocopter/BatterySafety/BatterySafety.c **** *******************************************************************************/
+  74:../_Quadrocopter/BatterySafety/BatterySafety.c **** /**
+  75:../_Quadrocopter/BatterySafety/BatterySafety.c ****  *  \brief ADC result interrupt service routine
+  76:../_Quadrocopter/BatterySafety/BatterySafety.c ****  *  
+  77:../_Quadrocopter/BatterySafety/BatterySafety.c ****  *  
+  78:../_Quadrocopter/BatterySafety/BatterySafety.c ****  *  \details switches on the right LEDs for each charge stand\n
+  79:../_Quadrocopter/BatterySafety/BatterySafety.c ****  * All LEDs on -> Battery Voltage > 12V \n
+  80:../_Quadrocopter/BatterySafety/BatterySafety.c ****  * Yellow and Red LED on -> Battery Voltage 12V - 11V\n
+  81:../_Quadrocopter/BatterySafety/BatterySafety.c ****  * Red LED on -> Battery Voltage 11V - 10.5V\n
+  82:../_Quadrocopter/BatterySafety/BatterySafety.c ****  * Red LED flashing -> Battery Voltage < 10.5V\n
+  83:../_Quadrocopter/BatterySafety/BatterySafety.c ****  * The VBat Pin has to be connected to the right Pin of the Bat Safety Connector, and R13 must be m
+  84:../_Quadrocopter/BatterySafety/BatterySafety.c ****  */
+  85:../_Quadrocopter/BatterySafety/BatterySafety.c **** 
+  86:../_Quadrocopter/BatterySafety/BatterySafety.c **** void VBat_Measurement_ISR(void)
+  87:../_Quadrocopter/BatterySafety/BatterySafety.c **** {
+  28              	 .loc 1 87 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32 0000 80B5     	 push {r7,lr}
+  33              	.LCFI0:
+  34              	 .cfi_def_cfa_offset 8
+  35              	 .cfi_offset 7,-8
+  36              	 .cfi_offset 14,-4
+  37 0002 82B0     	 sub sp,sp,#8
+  38              	.LCFI1:
+  39              	 .cfi_def_cfa_offset 16
+  40 0004 00AF     	 add r7,sp,#0
+  41              	.LCFI2:
+  42              	 .cfi_def_cfa_register 7
+  88:../_Quadrocopter/BatterySafety/BatterySafety.c **** 	XMC_VADC_RESULT_SIZE_t ADC_Result = ADC_MEASUREMENT_GetResult(&ADC_MEASUREMENT_Channel_VBat);
+  43              	 .loc 1 88 0
+  44 0006 2248     	 ldr r0,.L6
+  45 0008 FFF7FEFF 	 bl ADC_MEASUREMENT_GetResult
+  46 000c 0346     	 mov r3,r0
+  47 000e FB80     	 strh r3,[r7,#6]
+  89:../_Quadrocopter/BatterySafety/BatterySafety.c **** 
+  90:../_Quadrocopter/BatterySafety/BatterySafety.c **** 	//LED Display
+  91:../_Quadrocopter/BatterySafety/BatterySafety.c **** 	if (ADC_Result > Battery_State1)
+  48              	 .loc 1 91 0
+  49 0010 FB88     	 ldrh r3,[r7,#6]
+  50 0012 40F68C62 	 movw r2,#3724
+  51 0016 9342     	 cmp r3,r2
+  52 0018 09D9     	 bls .L2
+  92:../_Quadrocopter/BatterySafety/BatterySafety.c **** 	{
+  93:../_Quadrocopter/BatterySafety/BatterySafety.c **** 		Set(P3_0); 		 //VBat_LED_Green
+  53              	 .loc 1 93 0
+  54 001a 1E4B     	 ldr r3,.L6+4
+  55 001c 0122     	 movs r2,#1
+  56 001e 5A60     	 str r2,[r3,#4]
+  94:../_Quadrocopter/BatterySafety/BatterySafety.c **** 		Set(P3_1);		 //VBat_LED_Yellow
+  57              	 .loc 1 94 0
+  58 0020 1C4B     	 ldr r3,.L6+4
+  59 0022 0222     	 movs r2,#2
+  60 0024 5A60     	 str r2,[r3,#4]
+  95:../_Quadrocopter/BatterySafety/BatterySafety.c **** 		Set(P3_2);		 //VBat_LED_Red
+  61              	 .loc 1 95 0
+  62 0026 1B4B     	 ldr r3,.L6+4
+  63 0028 0422     	 movs r2,#4
+  64 002a 5A60     	 str r2,[r3,#4]
+  65 002c 2CE0     	 b .L1
+  66              	.L2:
+  96:../_Quadrocopter/BatterySafety/BatterySafety.c **** 	}
+  97:../_Quadrocopter/BatterySafety/BatterySafety.c **** 	else if (ADC_Result > Battery_State2)
+  67              	 .loc 1 97 0
+  68 002e FB88     	 ldrh r3,[r7,#6]
+  69 0030 40F65552 	 movw r2,#3413
+  70 0034 9342     	 cmp r3,r2
+  71 0036 0AD9     	 bls .L4
+  98:../_Quadrocopter/BatterySafety/BatterySafety.c **** 	{
+  99:../_Quadrocopter/BatterySafety/BatterySafety.c **** 		Reset(P3_0);	//VBat_LED_Green
+  72              	 .loc 1 99 0
+  73 0038 164B     	 ldr r3,.L6+4
+  74 003a 4FF48032 	 mov r2,#65536
+  75 003e 5A60     	 str r2,[r3,#4]
+ 100:../_Quadrocopter/BatterySafety/BatterySafety.c **** 		Set(P3_1);		//VBat_LED_Yellow
+  76              	 .loc 1 100 0
+  77 0040 144B     	 ldr r3,.L6+4
+  78 0042 0222     	 movs r2,#2
+  79 0044 5A60     	 str r2,[r3,#4]
+ 101:../_Quadrocopter/BatterySafety/BatterySafety.c **** 		Set(P3_2);		//VBat_LED_Red
+  80              	 .loc 1 101 0
+  81 0046 134B     	 ldr r3,.L6+4
+  82 0048 0422     	 movs r2,#4
+  83 004a 5A60     	 str r2,[r3,#4]
+  84 004c 1CE0     	 b .L1
+  85              	.L4:
+ 102:../_Quadrocopter/BatterySafety/BatterySafety.c **** 	}
+ 103:../_Quadrocopter/BatterySafety/BatterySafety.c **** 	else if (ADC_Result > Battery_State3)
+  86              	 .loc 1 103 0
+  87 004e FB88     	 ldrh r3,[r7,#6]
+  88 0050 40F6BA42 	 movw r2,#3258
+  89 0054 9342     	 cmp r3,r2
+  90 0056 0BD9     	 bls .L5
+ 104:../_Quadrocopter/BatterySafety/BatterySafety.c **** 	{
+ 105:../_Quadrocopter/BatterySafety/BatterySafety.c **** 		Reset(P3_0);	//VBat_LED_Green
+  91              	 .loc 1 105 0
+  92 0058 0E4B     	 ldr r3,.L6+4
+  93 005a 4FF48032 	 mov r2,#65536
+  94 005e 5A60     	 str r2,[r3,#4]
+ 106:../_Quadrocopter/BatterySafety/BatterySafety.c **** 		Reset(P3_1);	//VBat_LED_Yellow
+  95              	 .loc 1 106 0
+  96 0060 0C4B     	 ldr r3,.L6+4
+  97 0062 4FF40032 	 mov r2,#131072
+  98 0066 5A60     	 str r2,[r3,#4]
+ 107:../_Quadrocopter/BatterySafety/BatterySafety.c **** 		Set(P3_2);		//VBat_LED_Red
+  99              	 .loc 1 107 0
+ 100 0068 0A4B     	 ldr r3,.L6+4
+ 101 006a 0422     	 movs r2,#4
+ 102 006c 5A60     	 str r2,[r3,#4]
+ 103 006e 0BE0     	 b .L1
+ 104              	.L5:
+ 108:../_Quadrocopter/BatterySafety/BatterySafety.c **** 	}
+ 109:../_Quadrocopter/BatterySafety/BatterySafety.c **** 	else
+ 110:../_Quadrocopter/BatterySafety/BatterySafety.c **** 	{
+ 111:../_Quadrocopter/BatterySafety/BatterySafety.c **** 		Reset(P3_0);	//VBat_LED_Green
+ 105              	 .loc 1 111 0
+ 106 0070 084B     	 ldr r3,.L6+4
+ 107 0072 4FF48032 	 mov r2,#65536
+ 108 0076 5A60     	 str r2,[r3,#4]
+ 112:../_Quadrocopter/BatterySafety/BatterySafety.c **** 		Reset(P3_1);	//VBat_LED_Yellow
+ 109              	 .loc 1 112 0
+ 110 0078 064B     	 ldr r3,.L6+4
+ 111 007a 4FF40032 	 mov r2,#131072
+ 112 007e 5A60     	 str r2,[r3,#4]
+ 113:../_Quadrocopter/BatterySafety/BatterySafety.c **** 		Toggle(P3_2);	//VBat_LED_Red
+ 113              	 .loc 1 113 0
+ 114 0080 044B     	 ldr r3,.L6+4
+ 115 0082 4FF00412 	 mov r2,#262148
+ 116 0086 5A60     	 str r2,[r3,#4]
+ 117              	.L1:
+ 114:../_Quadrocopter/BatterySafety/BatterySafety.c **** 	}
+ 115:../_Quadrocopter/BatterySafety/BatterySafety.c **** }
+ 118              	 .loc 1 115 0
+ 119 0088 0837     	 adds r7,r7,#8
+ 120              	.LCFI3:
+ 121              	 .cfi_def_cfa_offset 8
+ 122 008a BD46     	 mov sp,r7
+ 123              	.LCFI4:
+ 124              	 .cfi_def_cfa_register 13
+ 125              	 
+ 126 008c 80BD     	 pop {r7,pc}
+ 127              	.L7:
+ 128 008e 00BF     	 .align 2
+ 129              	.L6:
+ 130 0090 00000000 	 .word ADC_MEASUREMENT_Channel_VBat_handle
+ 131 0094 00830248 	 .word 1208124160
+ 132              	 .cfi_endproc
+ 133              	.LFE440:
+ 135              	 .text
+ 136              	.Letext0:
+ 137              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 138              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 139              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working/Libraries/CMSIS/Infineon/XMC4500_series/Include/XMC4500.h"
+ 140              	 .file 5 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Libraries\\XMCLib\\inc/xmc_vadc.h"
+ 141              	 .file 6 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/ADC_MEASUREMENT/adc_measurement.h"
+ 142              	 .file 7 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Libraries\\XMCLib\\inc/xmc_usbd_regs.h"
+ 143              	 .file 8 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Libraries\\XMCLib\\inc/xmc_usbd.h"
+ 144              	 .file 9 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/USBD/usbd.h"
+ 145              	 .file 10 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working/Libraries/CMSIS/Include/core_cm4.h"
+ 146              	 .file 11 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working/Libraries/CMSIS/Infineon/XMC4500_series/Include/system_XMC4500.h"
+ 147              	 .file 12 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/ADC_MEASUREMENT/ADC_MEASUREMENT_Extern.h"
+ 148              	 .file 13 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/USBD/usbd_extern.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 BatterySafety.c
+    {standard input}:20     .text.VADC0_C0_2_IRQHandler:00000000 $t
+    {standard input}:25     .text.VADC0_C0_2_IRQHandler:00000000 VADC0_C0_2_IRQHandler
+    {standard input}:130    .text.VADC0_C0_2_IRQHandler:00000090 $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+ADC_MEASUREMENT_GetResult
+ADC_MEASUREMENT_Channel_VBat_handle

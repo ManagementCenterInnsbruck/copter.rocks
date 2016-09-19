@@ -1,0 +1,477 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_cfft_radix2_init_q15.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.arm_cfft_radix2_init_q15,"ax",%progbits
+  20              	 .align 2
+  21              	 .global arm_cfft_radix2_init_q15
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	arm_cfft_radix2_init_q15:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c"
+   1:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** /* ----------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * $Date:        31. July 2014
+   5:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * $Revision: 	V1.4.4   
+   6:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * Title:	    arm_cfft_radix2_init_q15.c    
+   9:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * Description:	Radix-2 Decimation in Frequency Q15 FFT & IFFT initialization function    
+  11:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** *
+  27:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * POSSIBILITY OF SUCH DAMAGE.     
+  39:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * -------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+  41:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** #include "CMSIS_DSP/arm_common_tables.h"
+  43:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+  44:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** /**    
+  45:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****  * @ingroup groupTransforms    
+  46:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****  */
+  47:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+  48:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+  49:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** /**    
+  50:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****  * @addtogroup ComplexFFT    
+  51:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****  * @{    
+  52:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****  */
+  53:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+  54:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** /**   
+  55:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * @brief Initialization function for the Q15 CFFT/CIFFT.   
+  56:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * @deprecated Do not use this function.  It has been superseded by \ref arm_cfft_q15 and will be re
+  57:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * @param[in,out] *S             points to an instance of the Q15 CFFT/CIFFT structure.   
+  58:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * @param[in]     fftLen         length of the FFT.   
+  59:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * @param[in]     ifftFlag       flag that selects forward (ifftFlag=0) or inverse (ifftFlag=1) tran
+  60:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * @param[in]     bitReverseFlag flag that enables (bitReverseFlag=1) or disables (bitReverseFlag=0)
+  61:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * @return        The function returns ARM_MATH_SUCCESS if initialization is successful or ARM_MATH_
+  62:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** *   
+  63:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * \par Description:  
+  64:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * \par   
+  65:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * The parameter <code>ifftFlag</code> controls whether a forward or inverse transform is computed. 
+  66:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * Set(=1) ifftFlag for calculation of CIFFT otherwise  CFFT is calculated  
+  67:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * \par   
+  68:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * The parameter <code>bitReverseFlag</code> controls whether output is in normal order or bit rever
+  69:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * Set(=1) bitReverseFlag for output to be in normal order otherwise output is in bit reversed order
+  70:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * \par   
+  71:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * The parameter <code>fftLen</code>	Specifies length of CFFT/CIFFT process. Supported FFT Lengths a
+  72:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * \par   
+  73:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** * This Function also initializes Twiddle factor table pointer and Bit reversal table pointer.   
+  74:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** */
+  75:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+  76:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** arm_status arm_cfft_radix2_init_q15(
+  77:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   arm_cfft_radix2_instance_q15 * S,
+  78:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   uint16_t fftLen,
+  79:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   uint8_t ifftFlag,
+  80:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   uint8_t bitReverseFlag)
+  81:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** {
+  28              	 .loc 1 81 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	 
+  33 0000 80B4     	 push {r7}
+  34              	.LCFI0:
+  35              	 .cfi_def_cfa_offset 4
+  36              	 .cfi_offset 7,-4
+  37 0002 85B0     	 sub sp,sp,#20
+  38              	.LCFI1:
+  39              	 .cfi_def_cfa_offset 24
+  40 0004 00AF     	 add r7,sp,#0
+  41              	.LCFI2:
+  42              	 .cfi_def_cfa_register 7
+  43 0006 7860     	 str r0,[r7,#4]
+  44 0008 0846     	 mov r0,r1
+  45 000a 1146     	 mov r1,r2
+  46 000c 1A46     	 mov r2,r3
+  47 000e 0346     	 mov r3,r0
+  48 0010 7B80     	 strh r3,[r7,#2]
+  49 0012 0B46     	 mov r3,r1
+  50 0014 7B70     	 strb r3,[r7,#1]
+  51 0016 1346     	 mov r3,r2
+  52 0018 3B70     	 strb r3,[r7]
+  82:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   /*  Initialise the default arm status */
+  83:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   arm_status status = ARM_MATH_SUCCESS;
+  53              	 .loc 1 83 0
+  54 001a 0023     	 movs r3,#0
+  55 001c FB73     	 strb r3,[r7,#15]
+  84:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+  85:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   /*  Initialise the FFT length */
+  86:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   S->fftLen = fftLen;
+  56              	 .loc 1 86 0
+  57 001e 7B68     	 ldr r3,[r7,#4]
+  58 0020 7A88     	 ldrh r2,[r7,#2]
+  59 0022 1A80     	 strh r2,[r3]
+  87:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+  88:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   /*  Initialise the Twiddle coefficient pointer */
+  89:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   S->pTwiddle = (q15_t *) twiddleCoef_4096_q15;
+  60              	 .loc 1 89 0
+  61 0024 7B68     	 ldr r3,[r7,#4]
+  62 0026 494A     	 ldr r2,.L17
+  63 0028 5A60     	 str r2,[r3,#4]
+  90:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   /*  Initialise the Flag for selection of CFFT or CIFFT */
+  91:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   S->ifftFlag = ifftFlag;
+  64              	 .loc 1 91 0
+  65 002a 7B68     	 ldr r3,[r7,#4]
+  66 002c 7A78     	 ldrb r2,[r7,#1]
+  67 002e 9A70     	 strb r2,[r3,#2]
+  92:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   /*  Initialise the Flag for calculation Bit reversal or not */
+  93:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   S->bitReverseFlag = bitReverseFlag;
+  68              	 .loc 1 93 0
+  69 0030 7B68     	 ldr r3,[r7,#4]
+  70 0032 3A78     	 ldrb r2,[r7]
+  71 0034 DA70     	 strb r2,[r3,#3]
+  94:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+  95:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   /*  Initializations of structure parameters depending on the FFT length */
+  96:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   switch (S->fftLen)
+  72              	 .loc 1 96 0
+  73 0036 7B68     	 ldr r3,[r7,#4]
+  74 0038 1B88     	 ldrh r3,[r3]
+  75 003a B3F5807F 	 cmp r3,#256
+  76 003e 46D0     	 beq .L3
+  77 0040 B3F5807F 	 cmp r3,#256
+  78 0044 0BDC     	 bgt .L4
+  79 0046 202B     	 cmp r3,#32
+  80 0048 5FD0     	 beq .L5
+  81 004a 202B     	 cmp r3,#32
+  82 004c 02DC     	 bgt .L6
+  83 004e 102B     	 cmp r3,#16
+  84 0050 65D0     	 beq .L7
+  85 0052 70E0     	 b .L2
+  86              	.L6:
+  87 0054 402B     	 cmp r3,#64
+  88 0056 4ED0     	 beq .L8
+  89 0058 802B     	 cmp r3,#128
+  90 005a 42D0     	 beq .L9
+  91 005c 6BE0     	 b .L2
+  92              	.L4:
+  93 005e B3F5806F 	 cmp r3,#1024
+  94 0062 20D0     	 beq .L10
+  95 0064 B3F5806F 	 cmp r3,#1024
+  96 0068 03DC     	 bgt .L11
+  97 006a B3F5007F 	 cmp r3,#512
+  98 006e 24D0     	 beq .L12
+  99 0070 61E0     	 b .L2
+ 100              	.L11:
+ 101 0072 B3F5006F 	 cmp r3,#2048
+ 102 0076 0CD0     	 beq .L13
+ 103 0078 B3F5805F 	 cmp r3,#4096
+ 104 007c 5BD1     	 bne .L2
+  97:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   {
+  98:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   case 4096u:
+  99:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     /*  Initializations of structure parameters for 4096 point FFT */
+ 100:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+ 101:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     /*  Initialise the twiddle coef modifier value */
+ 102:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->twidCoefModifier = 1u;
+ 105              	 .loc 1 102 0
+ 106 007e 7B68     	 ldr r3,[r7,#4]
+ 107 0080 0122     	 movs r2,#1
+ 108 0082 9A81     	 strh r2,[r3,#12]
+ 103:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     /*  Initialise the bit reversal table modifier */
+ 104:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->bitRevFactor = 1u;
+ 109              	 .loc 1 104 0
+ 110 0084 7B68     	 ldr r3,[r7,#4]
+ 111 0086 0122     	 movs r2,#1
+ 112 0088 DA81     	 strh r2,[r3,#14]
+ 105:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     /*  Initialise the bit reversal table pointer */
+ 106:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->pBitRevTable = (uint16_t *) armBitRevTable;
+ 113              	 .loc 1 106 0
+ 114 008a 7B68     	 ldr r3,[r7,#4]
+ 115 008c 304A     	 ldr r2,.L17+4
+ 116 008e 9A60     	 str r2,[r3,#8]
+ 107:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+ 108:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     break;
+ 117              	 .loc 1 108 0
+ 118 0090 54E0     	 b .L15
+ 119              	.L13:
+ 109:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+ 110:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   case 2048u:
+ 111:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     /*  Initializations of structure parameters for 2048 point FFT */
+ 112:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+ 113:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     /*  Initialise the twiddle coef modifier value */
+ 114:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->twidCoefModifier = 2u;
+ 120              	 .loc 1 114 0
+ 121 0092 7B68     	 ldr r3,[r7,#4]
+ 122 0094 0222     	 movs r2,#2
+ 123 0096 9A81     	 strh r2,[r3,#12]
+ 115:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     /*  Initialise the bit reversal table modifier */
+ 116:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->bitRevFactor = 2u;
+ 124              	 .loc 1 116 0
+ 125 0098 7B68     	 ldr r3,[r7,#4]
+ 126 009a 0222     	 movs r2,#2
+ 127 009c DA81     	 strh r2,[r3,#14]
+ 117:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     /*  Initialise the bit reversal table pointer */
+ 118:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->pBitRevTable = (uint16_t *) & armBitRevTable[1];
+ 128              	 .loc 1 118 0
+ 129 009e 7B68     	 ldr r3,[r7,#4]
+ 130 00a0 2C4A     	 ldr r2,.L17+8
+ 131 00a2 9A60     	 str r2,[r3,#8]
+ 119:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+ 120:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     break;
+ 132              	 .loc 1 120 0
+ 133 00a4 4AE0     	 b .L15
+ 134              	.L10:
+ 121:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+ 122:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   case 1024u:
+ 123:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     /*  Initializations of structure parameters for 1024 point FFT */
+ 124:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->twidCoefModifier = 4u;
+ 135              	 .loc 1 124 0
+ 136 00a6 7B68     	 ldr r3,[r7,#4]
+ 137 00a8 0422     	 movs r2,#4
+ 138 00aa 9A81     	 strh r2,[r3,#12]
+ 125:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->bitRevFactor = 4u;
+ 139              	 .loc 1 125 0
+ 140 00ac 7B68     	 ldr r3,[r7,#4]
+ 141 00ae 0422     	 movs r2,#4
+ 142 00b0 DA81     	 strh r2,[r3,#14]
+ 126:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->pBitRevTable = (uint16_t *) & armBitRevTable[3];
+ 143              	 .loc 1 126 0
+ 144 00b2 7B68     	 ldr r3,[r7,#4]
+ 145 00b4 284A     	 ldr r2,.L17+12
+ 146 00b6 9A60     	 str r2,[r3,#8]
+ 127:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+ 128:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     break;
+ 147              	 .loc 1 128 0
+ 148 00b8 40E0     	 b .L15
+ 149              	.L12:
+ 129:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+ 130:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   case 512u:
+ 131:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     /*  Initializations of structure parameters for 512 point FFT */
+ 132:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->twidCoefModifier = 8u;
+ 150              	 .loc 1 132 0
+ 151 00ba 7B68     	 ldr r3,[r7,#4]
+ 152 00bc 0822     	 movs r2,#8
+ 153 00be 9A81     	 strh r2,[r3,#12]
+ 133:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->bitRevFactor = 8u;
+ 154              	 .loc 1 133 0
+ 155 00c0 7B68     	 ldr r3,[r7,#4]
+ 156 00c2 0822     	 movs r2,#8
+ 157 00c4 DA81     	 strh r2,[r3,#14]
+ 134:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->pBitRevTable = (uint16_t *) & armBitRevTable[7];
+ 158              	 .loc 1 134 0
+ 159 00c6 7B68     	 ldr r3,[r7,#4]
+ 160 00c8 244A     	 ldr r2,.L17+16
+ 161 00ca 9A60     	 str r2,[r3,#8]
+ 135:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+ 136:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     break;
+ 162              	 .loc 1 136 0
+ 163 00cc 36E0     	 b .L15
+ 164              	.L3:
+ 137:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+ 138:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   case 256u:
+ 139:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     /*  Initializations of structure parameters for 256 point FFT */
+ 140:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->twidCoefModifier = 16u;
+ 165              	 .loc 1 140 0
+ 166 00ce 7B68     	 ldr r3,[r7,#4]
+ 167 00d0 1022     	 movs r2,#16
+ 168 00d2 9A81     	 strh r2,[r3,#12]
+ 141:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->bitRevFactor = 16u;
+ 169              	 .loc 1 141 0
+ 170 00d4 7B68     	 ldr r3,[r7,#4]
+ 171 00d6 1022     	 movs r2,#16
+ 172 00d8 DA81     	 strh r2,[r3,#14]
+ 142:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->pBitRevTable = (uint16_t *) & armBitRevTable[15];
+ 173              	 .loc 1 142 0
+ 174 00da 7B68     	 ldr r3,[r7,#4]
+ 175 00dc 204A     	 ldr r2,.L17+20
+ 176 00de 9A60     	 str r2,[r3,#8]
+ 143:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+ 144:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     break;
+ 177              	 .loc 1 144 0
+ 178 00e0 2CE0     	 b .L15
+ 179              	.L9:
+ 145:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+ 146:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   case 128u:
+ 147:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     /*  Initializations of structure parameters for 128 point FFT */
+ 148:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->twidCoefModifier = 32u;
+ 180              	 .loc 1 148 0
+ 181 00e2 7B68     	 ldr r3,[r7,#4]
+ 182 00e4 2022     	 movs r2,#32
+ 183 00e6 9A81     	 strh r2,[r3,#12]
+ 149:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->bitRevFactor = 32u;
+ 184              	 .loc 1 149 0
+ 185 00e8 7B68     	 ldr r3,[r7,#4]
+ 186 00ea 2022     	 movs r2,#32
+ 187 00ec DA81     	 strh r2,[r3,#14]
+ 150:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->pBitRevTable = (uint16_t *) & armBitRevTable[31];
+ 188              	 .loc 1 150 0
+ 189 00ee 7B68     	 ldr r3,[r7,#4]
+ 190 00f0 1C4A     	 ldr r2,.L17+24
+ 191 00f2 9A60     	 str r2,[r3,#8]
+ 151:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+ 152:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     break;
+ 192              	 .loc 1 152 0
+ 193 00f4 22E0     	 b .L15
+ 194              	.L8:
+ 153:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+ 154:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   case 64u:
+ 155:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     /*  Initializations of structure parameters for 64 point FFT */
+ 156:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->twidCoefModifier = 64u;
+ 195              	 .loc 1 156 0
+ 196 00f6 7B68     	 ldr r3,[r7,#4]
+ 197 00f8 4022     	 movs r2,#64
+ 198 00fa 9A81     	 strh r2,[r3,#12]
+ 157:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->bitRevFactor = 64u;
+ 199              	 .loc 1 157 0
+ 200 00fc 7B68     	 ldr r3,[r7,#4]
+ 201 00fe 4022     	 movs r2,#64
+ 202 0100 DA81     	 strh r2,[r3,#14]
+ 158:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->pBitRevTable = (uint16_t *) & armBitRevTable[63];
+ 203              	 .loc 1 158 0
+ 204 0102 7B68     	 ldr r3,[r7,#4]
+ 205 0104 184A     	 ldr r2,.L17+28
+ 206 0106 9A60     	 str r2,[r3,#8]
+ 159:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+ 160:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     break;
+ 207              	 .loc 1 160 0
+ 208 0108 18E0     	 b .L15
+ 209              	.L5:
+ 161:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+ 162:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   case 32u:
+ 163:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     /*  Initializations of structure parameters for 32 point FFT */
+ 164:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->twidCoefModifier = 128u;
+ 210              	 .loc 1 164 0
+ 211 010a 7B68     	 ldr r3,[r7,#4]
+ 212 010c 8022     	 movs r2,#128
+ 213 010e 9A81     	 strh r2,[r3,#12]
+ 165:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->bitRevFactor = 128u;
+ 214              	 .loc 1 165 0
+ 215 0110 7B68     	 ldr r3,[r7,#4]
+ 216 0112 8022     	 movs r2,#128
+ 217 0114 DA81     	 strh r2,[r3,#14]
+ 166:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->pBitRevTable = (uint16_t *) & armBitRevTable[127];
+ 218              	 .loc 1 166 0
+ 219 0116 7B68     	 ldr r3,[r7,#4]
+ 220 0118 144A     	 ldr r2,.L17+32
+ 221 011a 9A60     	 str r2,[r3,#8]
+ 167:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+ 168:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     break;
+ 222              	 .loc 1 168 0
+ 223 011c 0EE0     	 b .L15
+ 224              	.L7:
+ 169:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+ 170:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   case 16u:
+ 171:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     /*  Initializations of structure parameters for 16 point FFT */
+ 172:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->twidCoefModifier = 256u;
+ 225              	 .loc 1 172 0
+ 226 011e 7B68     	 ldr r3,[r7,#4]
+ 227 0120 4FF48072 	 mov r2,#256
+ 228 0124 9A81     	 strh r2,[r3,#12]
+ 173:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->bitRevFactor = 256u;
+ 229              	 .loc 1 173 0
+ 230 0126 7B68     	 ldr r3,[r7,#4]
+ 231 0128 4FF48072 	 mov r2,#256
+ 232 012c DA81     	 strh r2,[r3,#14]
+ 174:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     S->pBitRevTable = (uint16_t *) & armBitRevTable[255];
+ 233              	 .loc 1 174 0
+ 234 012e 7B68     	 ldr r3,[r7,#4]
+ 235 0130 0F4A     	 ldr r2,.L17+36
+ 236 0132 9A60     	 str r2,[r3,#8]
+ 175:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+ 176:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     break;
+ 237              	 .loc 1 176 0
+ 238 0134 02E0     	 b .L15
+ 239              	.L2:
+ 177:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+ 178:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   default:
+ 179:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     /*  Reporting argument error if fftSize is not valid value */
+ 180:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     status = ARM_MATH_ARGUMENT_ERROR;
+ 240              	 .loc 1 180 0
+ 241 0136 FF23     	 movs r3,#255
+ 242 0138 FB73     	 strb r3,[r7,#15]
+ 181:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****     break;
+ 243              	 .loc 1 181 0
+ 244 013a 00BF     	 nop
+ 245              	.L15:
+ 182:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   }
+ 183:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** 
+ 184:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c ****   return (status);
+ 246              	 .loc 1 184 0
+ 247 013c FB7B     	 ldrb r3,[r7,#15]
+ 248 013e 5BB2     	 sxtb r3,r3
+ 185:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_cfft_radix2_init_q15.c **** }
+ 249              	 .loc 1 185 0
+ 250 0140 1846     	 mov r0,r3
+ 251 0142 1437     	 adds r7,r7,#20
+ 252              	.LCFI3:
+ 253              	 .cfi_def_cfa_offset 4
+ 254 0144 BD46     	 mov sp,r7
+ 255              	.LCFI4:
+ 256              	 .cfi_def_cfa_register 13
+ 257              	 
+ 258 0146 5DF8047B 	 ldr r7,[sp],#4
+ 259              	.LCFI5:
+ 260              	 .cfi_restore 7
+ 261              	 .cfi_def_cfa_offset 0
+ 262 014a 7047     	 bx lr
+ 263              	.L18:
+ 264              	 .align 2
+ 265              	.L17:
+ 266 014c 00000000 	 .word twiddleCoef_4096_q15
+ 267 0150 00000000 	 .word armBitRevTable
+ 268 0154 02000000 	 .word armBitRevTable+2
+ 269 0158 06000000 	 .word armBitRevTable+6
+ 270 015c 0E000000 	 .word armBitRevTable+14
+ 271 0160 1E000000 	 .word armBitRevTable+30
+ 272 0164 3E000000 	 .word armBitRevTable+62
+ 273 0168 7E000000 	 .word armBitRevTable+126
+ 274 016c FE000000 	 .word armBitRevTable+254
+ 275 0170 FE010000 	 .word armBitRevTable+510
+ 276              	 .cfi_endproc
+ 277              	.LFE139:
+ 279              	 .text
+ 280              	.Letext0:
+ 281              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 282              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 283              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+ 284              	 .file 5 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_common_tables.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_cfft_radix2_init_q15.c
+    {standard input}:20     .text.arm_cfft_radix2_init_q15:00000000 $t
+    {standard input}:25     .text.arm_cfft_radix2_init_q15:00000000 arm_cfft_radix2_init_q15
+    {standard input}:266    .text.arm_cfft_radix2_init_q15:0000014c $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+twiddleCoef_4096_q15
+armBitRevTable

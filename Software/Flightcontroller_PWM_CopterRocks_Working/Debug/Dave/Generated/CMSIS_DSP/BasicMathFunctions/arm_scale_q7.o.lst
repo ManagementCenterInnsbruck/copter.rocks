@@ -1,0 +1,394 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_scale_q7.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.arm_scale_q7,"ax",%progbits
+  20              	 .align 2
+  21              	 .global arm_scale_q7
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	arm_scale_q7:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c"
+   1:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** /* ----------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * $Date:        12. March 2014
+   5:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * $Revision: 	V1.4.4
+   6:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * Title:		arm_scale_q7.c    
+   9:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * Description:	Multiplies a Q7 vector by a scalar.    
+  11:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** *
+  27:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * POSSIBILITY OF SUCH DAMAGE.  
+  39:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** * -------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+  41:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+  43:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** /**    
+  44:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****  * @ingroup groupMath    
+  45:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****  */
+  46:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+  47:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** /**    
+  48:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****  * @addtogroup scale    
+  49:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****  * @{    
+  50:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****  */
+  51:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+  52:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** /**    
+  53:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****  * @brief Multiplies a Q7 vector by a scalar.    
+  54:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****  * @param[in]       *pSrc points to the input vector    
+  55:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****  * @param[in]       scaleFract fractional portion of the scale value    
+  56:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****  * @param[in]       shift number of bits to shift the result by    
+  57:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****  * @param[out]      *pDst points to the output vector    
+  58:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****  * @param[in]       blockSize number of samples in the vector    
+  59:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****  * @return none.    
+  60:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****  *    
+  61:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****  * <b>Scaling and Overflow Behavior:</b>    
+  62:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****  * \par    
+  63:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****  * The input data <code>*pSrc</code> and <code>scaleFract</code> are in 1.7 format.    
+  64:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****  * These are multiplied to yield a 2.14 intermediate result and this is shifted with saturation to 
+  65:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****  */
+  66:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+  67:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** void arm_scale_q7(
+  68:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   q7_t * pSrc,
+  69:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   q7_t scaleFract,
+  70:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   int8_t shift,
+  71:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   q7_t * pDst,
+  72:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   uint32_t blockSize)
+  73:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** {
+  28              	 .loc 1 73 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	 
+  33 0000 80B4     	 push {r7}
+  34              	.LCFI0:
+  35              	 .cfi_def_cfa_offset 4
+  36              	 .cfi_offset 7,-4
+  37 0002 97B0     	 sub sp,sp,#92
+  38              	.LCFI1:
+  39              	 .cfi_def_cfa_offset 96
+  40 0004 00AF     	 add r7,sp,#0
+  41              	.LCFI2:
+  42              	 .cfi_def_cfa_register 7
+  43 0006 F860     	 str r0,[r7,#12]
+  44 0008 7B60     	 str r3,[r7,#4]
+  45 000a 0B46     	 mov r3,r1
+  46 000c FB72     	 strb r3,[r7,#11]
+  47 000e 1346     	 mov r3,r2
+  48 0010 BB72     	 strb r3,[r7,#10]
+  74:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   int8_t kShift = 7 - shift;                     /* shift to apply after scaling */
+  49              	 .loc 1 74 0
+  50 0012 BB7A     	 ldrb r3,[r7,#10]
+  51 0014 C3F10703 	 rsb r3,r3,#7
+  52 0018 DBB2     	 uxtb r3,r3
+  53 001a 87F85330 	 strb r3,[r7,#83]
+  75:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   uint32_t blkCnt;                               /* loop counter */
+  76:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+  77:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** #ifndef ARM_MATH_CM0_FAMILY
+  78:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+  79:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** /* Run the below code for Cortex-M4 and Cortex-M3 */
+  80:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   q7_t in1, in2, in3, in4, out1, out2, out3, out4;      /* Temporary variables to store input & out
+  81:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+  82:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+  83:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   /*loop Unrolling */
+  84:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   blkCnt = blockSize >> 2u;
+  54              	 .loc 1 84 0
+  55 001e 3B6E     	 ldr r3,[r7,#96]
+  56 0020 9B08     	 lsrs r3,r3,#2
+  57 0022 7B65     	 str r3,[r7,#84]
+  85:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+  86:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+  87:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
+  88:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****    ** a second loop below computes the remaining 1 to 3 samples. */
+  89:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   while(blkCnt > 0u)
+  58              	 .loc 1 89 0
+  59 0024 78E0     	 b .L2
+  60              	.L3:
+  90:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   {
+  91:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     /* Reading 4 inputs from memory */
+  92:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     in1 = *pSrc++;
+  61              	 .loc 1 92 0
+  62 0026 FB68     	 ldr r3,[r7,#12]
+  63 0028 5A1C     	 adds r2,r3,#1
+  64 002a FA60     	 str r2,[r7,#12]
+  65 002c 1B78     	 ldrb r3,[r3]
+  66 002e 87F85230 	 strb r3,[r7,#82]
+  93:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     in2 = *pSrc++;
+  67              	 .loc 1 93 0
+  68 0032 FB68     	 ldr r3,[r7,#12]
+  69 0034 5A1C     	 adds r2,r3,#1
+  70 0036 FA60     	 str r2,[r7,#12]
+  71 0038 1B78     	 ldrb r3,[r3]
+  72 003a 87F85130 	 strb r3,[r7,#81]
+  94:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     in3 = *pSrc++;
+  73              	 .loc 1 94 0
+  74 003e FB68     	 ldr r3,[r7,#12]
+  75 0040 5A1C     	 adds r2,r3,#1
+  76 0042 FA60     	 str r2,[r7,#12]
+  77 0044 1B78     	 ldrb r3,[r3]
+  78 0046 87F85030 	 strb r3,[r7,#80]
+  95:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     in4 = *pSrc++;
+  79              	 .loc 1 95 0
+  80 004a FB68     	 ldr r3,[r7,#12]
+  81 004c 5A1C     	 adds r2,r3,#1
+  82 004e FA60     	 str r2,[r7,#12]
+  83 0050 1B78     	 ldrb r3,[r3]
+  84 0052 87F84F30 	 strb r3,[r7,#79]
+  85              	.LBB2:
+  96:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+  97:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     /* C = A * scale */
+  98:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     /* Scale the inputs and then store the results in the temporary variables. */
+  99:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     out1 = (q7_t) (__SSAT(((in1) * scaleFract) >> kShift, 8));
+  86              	 .loc 1 99 0
+  87 0056 97F95230 	 ldrsb r3,[r7,#82]
+  88 005a 97F90B20 	 ldrsb r2,[r7,#11]
+  89 005e 02FB03F2 	 mul r2,r2,r3
+  90 0062 97F95330 	 ldrsb r3,[r7,#83]
+  91 0066 42FA03F3 	 asr r3,r2,r3
+  92 006a BB64     	 str r3,[r7,#72]
+  93 006c BB6C     	 ldr r3,[r7,#72]
+  94              	
+  95 006e 03F30703 	 ssat r3,#8,r3
+  96              	
+  97              	 .thumb
+  98 0072 7B64     	 str r3,[r7,#68]
+  99 0074 7B6C     	 ldr r3,[r7,#68]
+ 100              	.LBE2:
+ 101 0076 87F84330 	 strb r3,[r7,#67]
+ 102              	.LBB3:
+ 100:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     out2 = (q7_t) (__SSAT(((in2) * scaleFract) >> kShift, 8));
+ 103              	 .loc 1 100 0
+ 104 007a 97F95130 	 ldrsb r3,[r7,#81]
+ 105 007e 97F90B20 	 ldrsb r2,[r7,#11]
+ 106 0082 02FB03F2 	 mul r2,r2,r3
+ 107 0086 97F95330 	 ldrsb r3,[r7,#83]
+ 108 008a 42FA03F3 	 asr r3,r2,r3
+ 109 008e FB63     	 str r3,[r7,#60]
+ 110 0090 FB6B     	 ldr r3,[r7,#60]
+ 111              	
+ 112 0092 03F30703 	 ssat r3,#8,r3
+ 113              	
+ 114              	 .thumb
+ 115 0096 BB63     	 str r3,[r7,#56]
+ 116 0098 BB6B     	 ldr r3,[r7,#56]
+ 117              	.LBE3:
+ 118 009a 87F83730 	 strb r3,[r7,#55]
+ 119              	.LBB4:
+ 101:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     out3 = (q7_t) (__SSAT(((in3) * scaleFract) >> kShift, 8));
+ 120              	 .loc 1 101 0
+ 121 009e 97F95030 	 ldrsb r3,[r7,#80]
+ 122 00a2 97F90B20 	 ldrsb r2,[r7,#11]
+ 123 00a6 02FB03F2 	 mul r2,r2,r3
+ 124 00aa 97F95330 	 ldrsb r3,[r7,#83]
+ 125 00ae 42FA03F3 	 asr r3,r2,r3
+ 126 00b2 3B63     	 str r3,[r7,#48]
+ 127 00b4 3B6B     	 ldr r3,[r7,#48]
+ 128              	
+ 129 00b6 03F30703 	 ssat r3,#8,r3
+ 130              	
+ 131              	 .thumb
+ 132 00ba FB62     	 str r3,[r7,#44]
+ 133 00bc FB6A     	 ldr r3,[r7,#44]
+ 134              	.LBE4:
+ 135 00be 87F82B30 	 strb r3,[r7,#43]
+ 136              	.LBB5:
+ 102:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     out4 = (q7_t) (__SSAT(((in4) * scaleFract) >> kShift, 8));
+ 137              	 .loc 1 102 0
+ 138 00c2 97F94F30 	 ldrsb r3,[r7,#79]
+ 139 00c6 97F90B20 	 ldrsb r2,[r7,#11]
+ 140 00ca 02FB03F2 	 mul r2,r2,r3
+ 141 00ce 97F95330 	 ldrsb r3,[r7,#83]
+ 142 00d2 42FA03F3 	 asr r3,r2,r3
+ 143 00d6 7B62     	 str r3,[r7,#36]
+ 144 00d8 7B6A     	 ldr r3,[r7,#36]
+ 145              	
+ 146 00da 03F30703 	 ssat r3,#8,r3
+ 147              	
+ 148              	 .thumb
+ 149 00de 3B62     	 str r3,[r7,#32]
+ 150 00e0 3B6A     	 ldr r3,[r7,#32]
+ 151              	.LBE5:
+ 152 00e2 FB77     	 strb r3,[r7,#31]
+ 103:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+ 104:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     /* Packing the individual outputs into 32bit and storing in    
+ 105:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****      * destination buffer in single write */
+ 106:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     *__SIMD32(pDst)++ = __PACKq7(out1, out2, out3, out4);
+ 153              	 .loc 1 106 0
+ 154 00e4 3A1D     	 adds r2,r7,#4
+ 155 00e6 1368     	 ldr r3,[r2]
+ 156 00e8 191D     	 adds r1,r3,#4
+ 157 00ea 1160     	 str r1,[r2]
+ 158 00ec 97F94320 	 ldrsb r2,[r7,#67]
+ 159 00f0 D1B2     	 uxtb r1,r2
+ 160 00f2 97F93720 	 ldrsb r2,[r7,#55]
+ 161 00f6 1202     	 lsls r2,r2,#8
+ 162 00f8 92B2     	 uxth r2,r2
+ 163 00fa 1143     	 orrs r1,r1,r2
+ 164 00fc 97F92B20 	 ldrsb r2,[r7,#43]
+ 165 0100 1204     	 lsls r2,r2,#16
+ 166 0102 02F47F02 	 and r2,r2,#16711680
+ 167 0106 1143     	 orrs r1,r1,r2
+ 168 0108 97F91F20 	 ldrsb r2,[r7,#31]
+ 169 010c 1206     	 lsls r2,r2,#24
+ 170 010e 0A43     	 orrs r2,r2,r1
+ 171 0110 1A60     	 str r2,[r3]
+ 107:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+ 108:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     /* Decrement the loop counter */
+ 109:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     blkCnt--;
+ 172              	 .loc 1 109 0
+ 173 0112 7B6D     	 ldr r3,[r7,#84]
+ 174 0114 013B     	 subs r3,r3,#1
+ 175 0116 7B65     	 str r3,[r7,#84]
+ 176              	.L2:
+  89:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   {
+ 177              	 .loc 1 89 0
+ 178 0118 7B6D     	 ldr r3,[r7,#84]
+ 179 011a 002B     	 cmp r3,#0
+ 180 011c 83D1     	 bne .L3
+ 110:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   }
+ 111:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+ 112:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.    
+ 113:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****    ** No loop unrolling is used. */
+ 114:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   blkCnt = blockSize % 0x4u;
+ 181              	 .loc 1 114 0
+ 182 011e 3B6E     	 ldr r3,[r7,#96]
+ 183 0120 03F00303 	 and r3,r3,#3
+ 184 0124 7B65     	 str r3,[r7,#84]
+ 115:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+ 116:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   while(blkCnt > 0u)
+ 185              	 .loc 1 116 0
+ 186 0126 1AE0     	 b .L4
+ 187              	.L5:
+ 117:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   {
+ 118:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     /* C = A * scale */
+ 119:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     /* Scale the input and then store the result in the destination buffer. */
+ 120:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     *pDst++ = (q7_t) (__SSAT(((*pSrc++) * scaleFract) >> kShift, 8));
+ 188              	 .loc 1 120 0
+ 189 0128 7B68     	 ldr r3,[r7,#4]
+ 190 012a 5A1C     	 adds r2,r3,#1
+ 191 012c 7A60     	 str r2,[r7,#4]
+ 192              	.LBB6:
+ 193 012e FA68     	 ldr r2,[r7,#12]
+ 194 0130 511C     	 adds r1,r2,#1
+ 195 0132 F960     	 str r1,[r7,#12]
+ 196 0134 1278     	 ldrb r2,[r2]
+ 197 0136 52B2     	 sxtb r2,r2
+ 198 0138 97F90B10 	 ldrsb r1,[r7,#11]
+ 199 013c 01FB02F1 	 mul r1,r1,r2
+ 200 0140 97F95320 	 ldrsb r2,[r7,#83]
+ 201 0144 41FA02F2 	 asr r2,r1,r2
+ 202 0148 BA61     	 str r2,[r7,#24]
+ 203 014a BA69     	 ldr r2,[r7,#24]
+ 204              	
+ 205 014c 02F30702 	 ssat r2,#8,r2
+ 206              	
+ 207              	 .thumb
+ 208 0150 7A61     	 str r2,[r7,#20]
+ 209 0152 7A69     	 ldr r2,[r7,#20]
+ 210              	.LBE6:
+ 211 0154 D2B2     	 uxtb r2,r2
+ 212 0156 1A70     	 strb r2,[r3]
+ 121:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+ 122:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     /* Decrement the loop counter */
+ 123:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     blkCnt--;
+ 213              	 .loc 1 123 0
+ 214 0158 7B6D     	 ldr r3,[r7,#84]
+ 215 015a 013B     	 subs r3,r3,#1
+ 216 015c 7B65     	 str r3,[r7,#84]
+ 217              	.L4:
+ 116:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   {
+ 218              	 .loc 1 116 0
+ 219 015e 7B6D     	 ldr r3,[r7,#84]
+ 220 0160 002B     	 cmp r3,#0
+ 221 0162 E1D1     	 bne .L5
+ 124:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   }
+ 125:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+ 126:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** #else
+ 127:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+ 128:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   /* Run the below code for Cortex-M0 */
+ 129:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+ 130:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   /* Initialize blkCnt with number of samples */
+ 131:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   blkCnt = blockSize;
+ 132:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+ 133:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   while(blkCnt > 0u)
+ 134:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   {
+ 135:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     /* C = A * scale */
+ 136:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     /* Scale the input and then store the result in the destination buffer. */
+ 137:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     *pDst++ = (q7_t) (__SSAT((((q15_t) * pSrc++ * scaleFract) >> kShift), 8));
+ 138:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+ 139:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     /* Decrement the loop counter */
+ 140:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****     blkCnt--;
+ 141:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c ****   }
+ 142:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+ 143:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** #endif /* #ifndef ARM_MATH_CM0_FAMILY */
+ 144:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** 
+ 145:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_scale_q7.c **** }
+ 222              	 .loc 1 145 0
+ 223 0164 5C37     	 adds r7,r7,#92
+ 224              	.LCFI3:
+ 225              	 .cfi_def_cfa_offset 4
+ 226 0166 BD46     	 mov sp,r7
+ 227              	.LCFI4:
+ 228              	 .cfi_def_cfa_register 13
+ 229              	 
+ 230 0168 5DF8047B 	 ldr r7,[sp],#4
+ 231              	.LCFI5:
+ 232              	 .cfi_restore 7
+ 233              	 .cfi_def_cfa_offset 0
+ 234 016c 7047     	 bx lr
+ 235              	 .cfi_endproc
+ 236              	.LFE139:
+ 238 016e 00BF     	 .text
+ 239              	.Letext0:
+ 240              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 241              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 242              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_scale_q7.c
+    {standard input}:20     .text.arm_scale_q7:00000000 $t
+    {standard input}:25     .text.arm_scale_q7:00000000 arm_scale_q7
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

@@ -1,0 +1,1494 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_mat_inverse_f64.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .global __aeabi_dcmpgt
+  20              	 .global __aeabi_dcmpeq
+  21              	 .global __aeabi_ddiv
+  22              	 .global __aeabi_dmul
+  23              	 .global __aeabi_dsub
+  24              	 .section .text.arm_mat_inverse_f64,"ax",%progbits
+  25              	 .align 2
+  26              	 .global arm_mat_inverse_f64
+  27              	 .thumb
+  28              	 .thumb_func
+  30              	arm_mat_inverse_f64:
+  31              	.LFB139:
+  32              	 .file 1 "../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c"
+   1:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** /* ----------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * $Date:        12. March 2014
+   5:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * $Revision: 	V1.4.4
+   6:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * Title:	    arm_mat_inverse_f64.c    
+   9:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * Description:	Floating-point matrix inverse.    
+  11:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** *
+  27:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * POSSIBILITY OF SUCH DAMAGE.    
+  39:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** * -------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+  41:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+  43:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** /**    
+  44:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * @ingroup groupMatrix    
+  45:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  */
+  46:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+  47:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** /**    
+  48:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * @defgroup MatrixInv Matrix Inverse    
+  49:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  *    
+  50:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * Computes the inverse of a matrix.    
+  51:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  *    
+  52:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * The inverse is defined only if the input matrix is square and non-singular (the determinant    
+  53:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * is non-zero). The function checks that the input and output matrices are square and of the    
+  54:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * same size.    
+  55:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  *    
+  56:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * Matrix inversion is numerically sensitive and the CMSIS DSP library only supports matrix    
+  57:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * inversion of floating-point matrices.    
+  58:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  *    
+  59:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * \par Algorithm    
+  60:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * The Gauss-Jordan method is used to find the inverse.    
+  61:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * The algorithm performs a sequence of elementary row-operations until it    
+  62:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * reduces the input matrix to an identity matrix. Applying the same sequence    
+  63:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * of elementary row-operations to an identity matrix yields the inverse matrix.    
+  64:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * If the input matrix is singular, then the algorithm terminates and returns error status    
+  65:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * <code>ARM_MATH_SINGULAR</code>.    
+  66:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * \image html MatrixInverse.gif "Matrix Inverse of a 3 x 3 matrix using Gauss-Jordan Method"    
+  67:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  */
+  68:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+  69:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** /**    
+  70:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * @addtogroup MatrixInv    
+  71:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * @{    
+  72:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  */
+  73:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+  74:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** /**    
+  75:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * @brief Floating-point matrix inverse.    
+  76:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * @param[in]       *pSrc points to input matrix structure    
+  77:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * @param[out]      *pDst points to output matrix structure    
+  78:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * @return     		The function returns    
+  79:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * <code>ARM_MATH_SIZE_MISMATCH</code> if the input matrix is not square or if the size    
+  80:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * of the output matrix does not match the size of the input matrix.    
+  81:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * If the input matrix is found to be singular (non-invertible), then the function returns    
+  82:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  * <code>ARM_MATH_SINGULAR</code>.  Otherwise, the function returns <code>ARM_MATH_SUCCESS</code>. 
+  83:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****  */
+  84:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+  85:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** arm_status arm_mat_inverse_f64(
+  86:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   const arm_matrix_instance_f64 * pSrc,
+  87:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   arm_matrix_instance_f64 * pDst)
+  88:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** {
+  33              	 .loc 1 88 0
+  34              	 .cfi_startproc
+  35              	 
+  36              	 
+  37 0000 2DE9904F 	 push {r4,r7,r8,r9,r10,fp,lr}
+  38              	.LCFI0:
+  39              	 .cfi_def_cfa_offset 28
+  40              	 .cfi_offset 4,-28
+  41              	 .cfi_offset 7,-24
+  42              	 .cfi_offset 8,-20
+  43              	 .cfi_offset 9,-16
+  44              	 .cfi_offset 10,-12
+  45              	 .cfi_offset 11,-8
+  46              	 .cfi_offset 14,-4
+  47 0004 A5B0     	 sub sp,sp,#148
+  48              	.LCFI1:
+  49              	 .cfi_def_cfa_offset 176
+  50 0006 00AF     	 add r7,sp,#0
+  51              	.LCFI2:
+  52              	 .cfi_def_cfa_register 7
+  53 0008 7861     	 str r0,[r7,#20]
+  54 000a 3961     	 str r1,[r7,#16]
+  89:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   float64_t *pIn = pSrc->pData;                  /* input data matrix pointer */
+  55              	 .loc 1 89 0
+  56 000c 7B69     	 ldr r3,[r7,#20]
+  57 000e 5B68     	 ldr r3,[r3,#4]
+  58 0010 C7F88C30 	 str r3,[r7,#140]
+  90:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   float64_t *pOut = pDst->pData;                 /* output data matrix pointer */
+  59              	 .loc 1 90 0
+  60 0014 3B69     	 ldr r3,[r7,#16]
+  61 0016 5B68     	 ldr r3,[r3,#4]
+  62 0018 FB63     	 str r3,[r7,#60]
+  91:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   float64_t *pInT1, *pInT2;                      /* Temporary input data matrix pointer */
+  92:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   float64_t *pOutT1, *pOutT2;                    /* Temporary output data matrix pointer */
+  93:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   float64_t *pPivotRowIn, *pPRT_in, *pPivotRowDst, *pPRT_pDst;  /* Temporary input and output data 
+  94:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   uint32_t numRows = pSrc->numRows;              /* Number of rows in the matrix  */
+  63              	 .loc 1 94 0
+  64 001a 7B69     	 ldr r3,[r7,#20]
+  65 001c 1B88     	 ldrh r3,[r3]
+  66 001e BB63     	 str r3,[r7,#56]
+  95:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   uint32_t numCols = pSrc->numCols;              /* Number of Cols in the matrix  */
+  67              	 .loc 1 95 0
+  68 0020 7B69     	 ldr r3,[r7,#20]
+  69 0022 5B88     	 ldrh r3,[r3,#2]
+  70 0024 7B63     	 str r3,[r7,#52]
+  96:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+  97:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** #ifndef ARM_MATH_CM0_FAMILY
+  98:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   float64_t maxC;                                /* maximum value in the column */
+  99:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 100:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   /* Run the below code for Cortex-M4 and Cortex-M3 */
+ 101:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 102:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   float64_t Xchg, in = 0.0f, in1;                /* Temporary input values  */
+  71              	 .loc 1 102 0
+  72 0026 4FF00002 	 mov r2,#0
+  73 002a 4FF00003 	 mov r3,#0
+  74 002e C7E91823 	 strd r2,[r7,#96]
+ 103:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   uint32_t i, rowCnt, flag = 0u, j, loopCnt, k, l;      /* loop counters */
+  75              	 .loc 1 103 0
+  76 0032 0023     	 movs r3,#0
+  77 0034 7B65     	 str r3,[r7,#84]
+ 104:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   arm_status status;                             /* status of matrix inverse */
+ 105:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 106:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** #ifdef ARM_MATH_MATRIX_CHECK
+ 107:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 108:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 109:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   /* Check for matrix mismatch condition */
+ 110:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   if((pSrc->numRows != pSrc->numCols) || (pDst->numRows != pDst->numCols)
+  78              	 .loc 1 110 0
+  79 0036 7B69     	 ldr r3,[r7,#20]
+  80 0038 1A88     	 ldrh r2,[r3]
+  81 003a 7B69     	 ldr r3,[r7,#20]
+  82 003c 5B88     	 ldrh r3,[r3,#2]
+  83 003e 9A42     	 cmp r2,r3
+  84 0040 0BD1     	 bne .L2
+  85              	 .loc 1 110 0 is_stmt 0 discriminator 1
+  86 0042 3B69     	 ldr r3,[r7,#16]
+  87 0044 1A88     	 ldrh r2,[r3]
+  88 0046 3B69     	 ldr r3,[r7,#16]
+  89 0048 5B88     	 ldrh r3,[r3,#2]
+  90 004a 9A42     	 cmp r2,r3
+  91 004c 05D1     	 bne .L2
+ 111:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****      || (pSrc->numRows != pDst->numRows))
+  92              	 .loc 1 111 0 is_stmt 1
+  93 004e 7B69     	 ldr r3,[r7,#20]
+  94 0050 1A88     	 ldrh r2,[r3]
+  95 0052 3B69     	 ldr r3,[r7,#16]
+  96 0054 1B88     	 ldrh r3,[r3]
+  97 0056 9A42     	 cmp r2,r3
+  98 0058 03D0     	 beq .L3
+  99              	.L2:
+ 112:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   {
+ 113:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     /* Set status as ARM_MATH_SIZE_MISMATCH */
+ 114:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     status = ARM_MATH_SIZE_MISMATCH;
+ 100              	 .loc 1 114 0
+ 101 005a FD23     	 movs r3,#253
+ 102 005c 87F84330 	 strb r3,[r7,#67]
+ 103 0060 A5E2     	 b .L4
+ 104              	.L3:
+ 115:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   }
+ 116:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   else
+ 117:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** #endif /*    #ifdef ARM_MATH_MATRIX_CHECK    */
+ 118:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 119:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   {
+ 120:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 121:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     /*---------------------------------------------------------------------------------------------
+ 122:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 * Matrix Inverse can be solved using elementary row operations.    
+ 123:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *    
+ 124:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *	Gauss-Jordan Method:    
+ 125:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *    
+ 126:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *	   1. First combine the identity matrix and the input matrix separated by a bar to form an    
+ 127:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *        augmented matrix as follows:    
+ 128:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *				        _ 	      	       _         _	       _    
+ 129:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *					   |  a11  a12 | 1   0  |       |  X11 X12  |    
+ 130:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *					   |           |        |   =   |           |    
+ 131:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *					   |_ a21  a22 | 0   1 _|       |_ X21 X21 _|    
+ 132:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *    
+ 133:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		2. In our implementation, pDst Matrix is used as identity matrix.    
+ 134:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *    
+ 135:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		3. Begin with the first row. Let i = 1.    
+ 136:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *    
+ 137:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *	    4. Check to see if the pivot for column i is the greatest of the column.    
+ 138:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		   The pivot is the element of the main diagonal that is on the current row.    
+ 139:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		   For instance, if working with row i, then the pivot element is aii.    
+ 140:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		   If the pivot is not the most significant of the columns, exchange that row with a row
+ 141:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		   below it that does contain the most significant value in column i. If the most
+ 142:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *         significant value of the column is zero, then an inverse to that matrix does not exist.
+ 143:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		   The most significant value of the column is the absolute maximum.
+ 144:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *    
+ 145:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *	    5. Divide every element of row i by the pivot.    
+ 146:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *    
+ 147:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *	    6. For every row below and  row i, replace that row with the sum of that row and    
+ 148:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		   a multiple of row i so that each new element in column i below row i is zero.    
+ 149:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *    
+ 150:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *	    7. Move to the next row and column and repeat steps 2 through 5 until you have zeros    
+ 151:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		   for every element below and above the main diagonal.    
+ 152:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *    
+ 153:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		8. Now an identical matrix is formed to the left of the bar(input matrix, pSrc).    
+ 154:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		   Therefore, the matrix to the right of the bar is our solution(pDst matrix, pDst).    
+ 155:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *------------------------------------------------------------------------------------------------
+ 156:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 157:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     /* Working pointer for destination matrix */
+ 158:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     pOutT1 = pOut;
+ 105              	 .loc 1 158 0
+ 106 0062 FB6B     	 ldr r3,[r7,#60]
+ 107 0064 C7F88030 	 str r3,[r7,#128]
+ 159:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 160:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     /* Loop over the number of rows */
+ 161:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     rowCnt = numRows;
+ 108              	 .loc 1 161 0
+ 109 0068 BB6B     	 ldr r3,[r7,#56]
+ 110 006a BB65     	 str r3,[r7,#88]
+ 162:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 163:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     /* Making the destination matrix as identity matrix */
+ 164:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     while(rowCnt > 0u)
+ 111              	 .loc 1 164 0
+ 112 006c 3AE0     	 b .L5
+ 113              	.L10:
+ 165:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     {
+ 166:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Writing all zeroes in lower triangle of the destination matrix */
+ 167:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       j = numRows - rowCnt;
+ 114              	 .loc 1 167 0
+ 115 006e BA6B     	 ldr r2,[r7,#56]
+ 116 0070 BB6D     	 ldr r3,[r7,#88]
+ 117 0072 D31A     	 subs r3,r2,r3
+ 118 0074 3B65     	 str r3,[r7,#80]
+ 168:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       while(j > 0u)
+ 119              	 .loc 1 168 0
+ 120 0076 0EE0     	 b .L6
+ 121              	.L7:
+ 169:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       {
+ 170:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         *pOutT1++ = 0.0f;
+ 122              	 .loc 1 170 0
+ 123 0078 D7F88030 	 ldr r3,[r7,#128]
+ 124 007c 03F10802 	 add r2,r3,#8
+ 125 0080 C7F88020 	 str r2,[r7,#128]
+ 126 0084 4FF00000 	 mov r0,#0
+ 127 0088 4FF00001 	 mov r1,#0
+ 128 008c C3E90001 	 strd r0,[r3]
+ 171:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         j--;
+ 129              	 .loc 1 171 0
+ 130 0090 3B6D     	 ldr r3,[r7,#80]
+ 131 0092 013B     	 subs r3,r3,#1
+ 132 0094 3B65     	 str r3,[r7,#80]
+ 133              	.L6:
+ 168:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       while(j > 0u)
+ 134              	 .loc 1 168 0
+ 135 0096 3B6D     	 ldr r3,[r7,#80]
+ 136 0098 002B     	 cmp r3,#0
+ 137 009a EDD1     	 bne .L7
+ 172:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       }
+ 173:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 174:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Writing all ones in the diagonal of the destination matrix */
+ 175:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       *pOutT1++ = 1.0f;
+ 138              	 .loc 1 175 0
+ 139 009c D7F88030 	 ldr r3,[r7,#128]
+ 140 00a0 03F10802 	 add r2,r3,#8
+ 141 00a4 C7F88020 	 str r2,[r7,#128]
+ 142 00a8 4FF00000 	 mov r0,#0
+ 143 00ac A849     	 ldr r1,.L75
+ 144 00ae C3E90001 	 strd r0,[r3]
+ 176:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 177:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Writing all zeroes in upper triangle of the destination matrix */
+ 178:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       j = rowCnt - 1u;
+ 145              	 .loc 1 178 0
+ 146 00b2 BB6D     	 ldr r3,[r7,#88]
+ 147 00b4 013B     	 subs r3,r3,#1
+ 148 00b6 3B65     	 str r3,[r7,#80]
+ 179:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       while(j > 0u)
+ 149              	 .loc 1 179 0
+ 150 00b8 0EE0     	 b .L8
+ 151              	.L9:
+ 180:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       {
+ 181:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         *pOutT1++ = 0.0f;
+ 152              	 .loc 1 181 0
+ 153 00ba D7F88030 	 ldr r3,[r7,#128]
+ 154 00be 03F10802 	 add r2,r3,#8
+ 155 00c2 C7F88020 	 str r2,[r7,#128]
+ 156 00c6 4FF00000 	 mov r0,#0
+ 157 00ca 4FF00001 	 mov r1,#0
+ 158 00ce C3E90001 	 strd r0,[r3]
+ 182:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         j--;
+ 159              	 .loc 1 182 0
+ 160 00d2 3B6D     	 ldr r3,[r7,#80]
+ 161 00d4 013B     	 subs r3,r3,#1
+ 162 00d6 3B65     	 str r3,[r7,#80]
+ 163              	.L8:
+ 179:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       while(j > 0u)
+ 164              	 .loc 1 179 0
+ 165 00d8 3B6D     	 ldr r3,[r7,#80]
+ 166 00da 002B     	 cmp r3,#0
+ 167 00dc EDD1     	 bne .L9
+ 183:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       }
+ 184:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 185:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Decrement the loop counter */
+ 186:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       rowCnt--;
+ 168              	 .loc 1 186 0
+ 169 00de BB6D     	 ldr r3,[r7,#88]
+ 170 00e0 013B     	 subs r3,r3,#1
+ 171 00e2 BB65     	 str r3,[r7,#88]
+ 172              	.L5:
+ 164:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     {
+ 173              	 .loc 1 164 0
+ 174 00e4 BB6D     	 ldr r3,[r7,#88]
+ 175 00e6 002B     	 cmp r3,#0
+ 176 00e8 C1D1     	 bne .L10
+ 187:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     }
+ 188:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 189:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     /* Loop over the number of columns of the input matrix.    
+ 190:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****        All the elements in each column are processed by the row operations */
+ 191:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     loopCnt = numCols;
+ 177              	 .loc 1 191 0
+ 178 00ea 7B6B     	 ldr r3,[r7,#52]
+ 179 00ec FB64     	 str r3,[r7,#76]
+ 192:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 193:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     /* Index modifier to navigate through the columns */
+ 194:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     l = 0u;
+ 180              	 .loc 1 194 0
+ 181 00ee 0023     	 movs r3,#0
+ 182 00f0 7B64     	 str r3,[r7,#68]
+ 195:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 196:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     while(loopCnt > 0u)
+ 183              	 .loc 1 196 0
+ 184 00f2 44E2     	 b .L11
+ 185              	.L56:
+ 197:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     {
+ 198:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Check if the pivot element is zero..    
+ 199:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****        * If it is zero then interchange the row with non zero row below.    
+ 200:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****        * If there is no non zero element to replace in the rows below,    
+ 201:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****        * then the matrix is Singular. */
+ 202:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 203:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Working pointer for the input matrix that points    
+ 204:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****        * to the pivot element of the particular row  */
+ 205:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       pInT1 = pIn + (l * numCols);
+ 186              	 .loc 1 205 0
+ 187 00f4 7B6C     	 ldr r3,[r7,#68]
+ 188 00f6 7A6B     	 ldr r2,[r7,#52]
+ 189 00f8 02FB03F3 	 mul r3,r2,r3
+ 190 00fc DB00     	 lsls r3,r3,#3
+ 191 00fe D7F88C20 	 ldr r2,[r7,#140]
+ 192 0102 1344     	 add r3,r3,r2
+ 193 0104 C7F88830 	 str r3,[r7,#136]
+ 206:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 207:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Working pointer for the destination matrix that points    
+ 208:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****        * to the pivot element of the particular row  */
+ 209:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       pOutT1 = pOut + (l * numCols);
+ 194              	 .loc 1 209 0
+ 195 0108 7B6C     	 ldr r3,[r7,#68]
+ 196 010a 7A6B     	 ldr r2,[r7,#52]
+ 197 010c 02FB03F3 	 mul r3,r2,r3
+ 198 0110 DB00     	 lsls r3,r3,#3
+ 199 0112 FA6B     	 ldr r2,[r7,#60]
+ 200 0114 1344     	 add r3,r3,r2
+ 201 0116 C7F88030 	 str r3,[r7,#128]
+ 210:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 211:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Temporary variable to hold the pivot value */
+ 212:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       in = *pInT1;
+ 202              	 .loc 1 212 0
+ 203 011a D7F88830 	 ldr r3,[r7,#136]
+ 204 011e D3E90023 	 ldrd r2,[r3]
+ 205 0122 C7E91823 	 strd r2,[r7,#96]
+ 213:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 214:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Grab the most significant value from column l */
+ 215:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       maxC = 0;
+ 206              	 .loc 1 215 0
+ 207 0126 4FF00002 	 mov r2,#0
+ 208 012a 4FF00003 	 mov r3,#0
+ 209 012e C7E91A23 	 strd r2,[r7,#104]
+ 216:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       for (i = l; i < numRows; i++)
+ 210              	 .loc 1 216 0
+ 211 0132 7B6C     	 ldr r3,[r7,#68]
+ 212 0134 FB65     	 str r3,[r7,#92]
+ 213 0136 4AE0     	 b .L12
+ 214              	.L22:
+ 217:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       {
+ 218:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         maxC = *pInT1 > 0 ? (*pInT1 > maxC ? *pInT1 : maxC) : (-*pInT1 > maxC ? -*pInT1 : maxC);
+ 215              	 .loc 1 218 0
+ 216 0138 D7F88830 	 ldr r3,[r7,#136]
+ 217 013c D3E90023 	 ldrd r2,[r3]
+ 218 0140 1046     	 mov r0,r2
+ 219 0142 1946     	 mov r1,r3
+ 220 0144 4FF00002 	 mov r2,#0
+ 221 0148 4FF00003 	 mov r3,#0
+ 222 014c FFF7FEFF 	 bl __aeabi_dcmpgt
+ 223 0150 0346     	 mov r3,r0
+ 224 0152 002B     	 cmp r3,#0
+ 225 0154 14D0     	 beq .L68
+ 226              	 .loc 1 218 0 is_stmt 0 discriminator 1
+ 227 0156 D7F88830 	 ldr r3,[r7,#136]
+ 228 015a D3E90023 	 ldrd r2,[r3]
+ 229 015e 1046     	 mov r0,r2
+ 230 0160 1946     	 mov r1,r3
+ 231 0162 D7E91A23 	 ldrd r2,[r7,#104]
+ 232 0166 FFF7FEFF 	 bl __aeabi_dcmpgt
+ 233 016a 0346     	 mov r3,r0
+ 234 016c 002B     	 cmp r3,#0
+ 235 016e 04D0     	 beq .L69
+ 236              	 .loc 1 218 0 discriminator 3
+ 237 0170 D7F88830 	 ldr r3,[r7,#136]
+ 238 0174 D3E90089 	 ldrd r8,[r3]
+ 239 0178 1DE0     	 b .L18
+ 240              	.L69:
+ 241              	 .loc 1 218 0 discriminator 4
+ 242 017a D7E91A89 	 ldrd r8,[r7,#104]
+ 243 017e 1AE0     	 b .L18
+ 244              	.L68:
+ 245              	 .loc 1 218 0 discriminator 2
+ 246 0180 D7F88830 	 ldr r3,[r7,#136]
+ 247 0184 D3E90023 	 ldrd r2,[r3]
+ 248 0188 3A60     	 str r2,[r7]
+ 249 018a 83F00043 	 eor r3,r3,#-2147483648
+ 250 018e 7B60     	 str r3,[r7,#4]
+ 251 0190 D7E90001 	 ldrd r0,[r7]
+ 252 0194 D7E91A23 	 ldrd r2,[r7,#104]
+ 253 0198 FFF7FEFF 	 bl __aeabi_dcmpgt
+ 254 019c 0346     	 mov r3,r0
+ 255 019e 002B     	 cmp r3,#0
+ 256 01a0 07D0     	 beq .L70
+ 257              	 .loc 1 218 0 discriminator 8
+ 258 01a2 D7F88830 	 ldr r3,[r7,#136]
+ 259 01a6 D3E90023 	 ldrd r2,[r3]
+ 260 01aa 9046     	 mov r8,r2
+ 261 01ac 83F00049 	 eor r9,r3,#-2147483648
+ 262 01b0 01E0     	 b .L18
+ 263              	.L70:
+ 264              	 .loc 1 218 0 discriminator 9
+ 265 01b2 D7E91A89 	 ldrd r8,[r7,#104]
+ 266              	.L18:
+ 267              	 .loc 1 218 0 discriminator 12
+ 268 01b6 C7E91A89 	 strd r8,[r7,#104]
+ 219:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         pInT1 += numCols;
+ 269              	 .loc 1 219 0 is_stmt 1 discriminator 12
+ 270 01ba 7B6B     	 ldr r3,[r7,#52]
+ 271 01bc DB00     	 lsls r3,r3,#3
+ 272 01be D7F88820 	 ldr r2,[r7,#136]
+ 273 01c2 1344     	 add r3,r3,r2
+ 274 01c4 C7F88830 	 str r3,[r7,#136]
+ 216:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       for (i = l; i < numRows; i++)
+ 275              	 .loc 1 216 0 discriminator 12
+ 276 01c8 FB6D     	 ldr r3,[r7,#92]
+ 277 01ca 0133     	 adds r3,r3,#1
+ 278 01cc FB65     	 str r3,[r7,#92]
+ 279              	.L12:
+ 216:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       for (i = l; i < numRows; i++)
+ 280              	 .loc 1 216 0 is_stmt 0 discriminator 2
+ 281 01ce FA6D     	 ldr r2,[r7,#92]
+ 282 01d0 BB6B     	 ldr r3,[r7,#56]
+ 283 01d2 9A42     	 cmp r2,r3
+ 284 01d4 B0D3     	 bcc .L22
+ 220:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       }
+ 221:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 222:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Update the status if the matrix is singular */
+ 223:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       if(maxC == 0.0f)
+ 285              	 .loc 1 223 0 is_stmt 1
+ 286 01d6 D7E91A01 	 ldrd r0,[r7,#104]
+ 287 01da 4FF00002 	 mov r2,#0
+ 288 01de 4FF00003 	 mov r3,#0
+ 289 01e2 FFF7FEFF 	 bl __aeabi_dcmpeq
+ 290 01e6 0346     	 mov r3,r0
+ 291 01e8 002B     	 cmp r3,#0
+ 292 01ea 01D0     	 beq .L71
+ 224:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       {
+ 225:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         return ARM_MATH_SINGULAR;
+ 293              	 .loc 1 225 0
+ 294 01ec FB23     	 movs r3,#251
+ 295 01ee E0E1     	 b .L25
+ 296              	.L71:
+ 226:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       }
+ 227:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 228:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Restore pInT1  */
+ 229:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       pInT1 = pIn;
+ 297              	 .loc 1 229 0
+ 298 01f0 D7F88C30 	 ldr r3,[r7,#140]
+ 299 01f4 C7F88830 	 str r3,[r7,#136]
+ 230:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 231:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Destination pointer modifier */
+ 232:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       k = 1u;
+ 300              	 .loc 1 232 0
+ 301 01f8 0123     	 movs r3,#1
+ 302 01fa BB64     	 str r3,[r7,#72]
+ 233:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       
+ 234:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Check if the pivot element is the most significant of the column */
+ 235:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       if( (in > 0.0f ? in : -in) != maxC)
+ 303              	 .loc 1 235 0
+ 304 01fc D7E91801 	 ldrd r0,[r7,#96]
+ 305 0200 4FF00002 	 mov r2,#0
+ 306 0204 4FF00003 	 mov r3,#0
+ 307 0208 FFF7FEFF 	 bl __aeabi_dcmpgt
+ 308 020c 0346     	 mov r3,r0
+ 309 020e 002B     	 cmp r3,#0
+ 310 0210 02D0     	 beq .L72
+ 311              	 .loc 1 235 0 is_stmt 0 discriminator 1
+ 312 0212 D7E918AB 	 ldrd r10,[r7,#96]
+ 313 0216 04E0     	 b .L28
+ 314              	.L72:
+ 315              	 .loc 1 235 0 discriminator 2
+ 316 0218 D7F860A0 	 ldr r10,[r7,#96]
+ 317 021c 7B6E     	 ldr r3,[r7,#100]
+ 318 021e 83F0004B 	 eor fp,r3,#-2147483648
+ 319              	.L28:
+ 320              	 .loc 1 235 0 discriminator 4
+ 321 0222 5046     	 mov r0,r10
+ 322 0224 5946     	 mov r1,fp
+ 323 0226 D7E91A23 	 ldrd r2,[r7,#104]
+ 324 022a FFF7FEFF 	 bl __aeabi_dcmpeq
+ 325 022e 0346     	 mov r3,r0
+ 326 0230 002B     	 cmp r3,#0
+ 327 0232 40F09980 	 bne .L29
+ 236:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       {
+ 237:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         /* Loop over the number rows present below */
+ 238:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         i = numRows - (l + 1u);
+ 328              	 .loc 1 238 0 is_stmt 1
+ 329 0236 BA6B     	 ldr r2,[r7,#56]
+ 330 0238 7B6C     	 ldr r3,[r7,#68]
+ 331 023a D31A     	 subs r3,r2,r3
+ 332 023c 013B     	 subs r3,r3,#1
+ 333 023e FB65     	 str r3,[r7,#92]
+ 239:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 240:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         while(i > 0u)
+ 334              	 .loc 1 240 0
+ 335 0240 8EE0     	 b .L31
+ 336              	.L41:
+ 241:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         {
+ 242:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           /* Update the input and destination pointers */
+ 243:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           pInT2 = pInT1 + (numCols * l);
+ 337              	 .loc 1 243 0
+ 338 0242 7B6B     	 ldr r3,[r7,#52]
+ 339 0244 7A6C     	 ldr r2,[r7,#68]
+ 340 0246 02FB03F3 	 mul r3,r2,r3
+ 341 024a DB00     	 lsls r3,r3,#3
+ 342 024c D7F88820 	 ldr r2,[r7,#136]
+ 343 0250 1344     	 add r3,r3,r2
+ 344 0252 C7F88430 	 str r3,[r7,#132]
+ 244:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           pOutT2 = pOutT1 + (numCols * k);
+ 345              	 .loc 1 244 0
+ 346 0256 7B6B     	 ldr r3,[r7,#52]
+ 347 0258 BA6C     	 ldr r2,[r7,#72]
+ 348 025a 02FB03F3 	 mul r3,r2,r3
+ 349 025e DB00     	 lsls r3,r3,#3
+ 350 0260 D7F88020 	 ldr r2,[r7,#128]
+ 351 0264 1344     	 add r3,r3,r2
+ 352 0266 FB67     	 str r3,[r7,#124]
+ 245:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 246:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           /* Look for the most significant element to    
+ 247:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****            * replace in the rows below */
+ 248:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           if((*pInT2 > 0.0f ? *pInT2: -*pInT2) == maxC)
+ 353              	 .loc 1 248 0
+ 354 0268 D7F88430 	 ldr r3,[r7,#132]
+ 355 026c D3E90023 	 ldrd r2,[r3]
+ 356 0270 1046     	 mov r0,r2
+ 357 0272 1946     	 mov r1,r3
+ 358 0274 4FF00002 	 mov r2,#0
+ 359 0278 4FF00003 	 mov r3,#0
+ 360 027c FFF7FEFF 	 bl __aeabi_dcmpgt
+ 361 0280 0346     	 mov r3,r0
+ 362 0282 002B     	 cmp r3,#0
+ 363 0284 06D0     	 beq .L73
+ 364              	 .loc 1 248 0 is_stmt 0 discriminator 1
+ 365 0286 D7F88430 	 ldr r3,[r7,#132]
+ 366 028a 93ED007B 	 fldd d7,[r3]
+ 367 028e 87ED027B 	 fstd d7,[r7,#8]
+ 368 0292 07E0     	 b .L34
+ 369              	.L73:
+ 370              	 .loc 1 248 0 discriminator 2
+ 371 0294 D7F88430 	 ldr r3,[r7,#132]
+ 372 0298 D3E90023 	 ldrd r2,[r3]
+ 373 029c BA60     	 str r2,[r7,#8]
+ 374 029e 83F00043 	 eor r3,r3,#-2147483648
+ 375 02a2 FB60     	 str r3,[r7,#12]
+ 376              	.L34:
+ 377              	 .loc 1 248 0 discriminator 4
+ 378 02a4 D7E90201 	 ldrd r0,[r7,#8]
+ 379 02a8 D7E91A23 	 ldrd r2,[r7,#104]
+ 380 02ac FFF7FEFF 	 bl __aeabi_dcmpeq
+ 381 02b0 0346     	 mov r3,r0
+ 382 02b2 002B     	 cmp r3,#0
+ 383 02b4 4ED0     	 beq .L74
+ 249:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           {
+ 250:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             /* Loop over number of columns    
+ 251:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****              * to the right of the pilot element */
+ 252:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             j = numCols - l;
+ 384              	 .loc 1 252 0 is_stmt 1
+ 385 02b6 7A6B     	 ldr r2,[r7,#52]
+ 386 02b8 7B6C     	 ldr r3,[r7,#68]
+ 387 02ba D31A     	 subs r3,r2,r3
+ 388 02bc 3B65     	 str r3,[r7,#80]
+ 253:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 254:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             while(j > 0u)
+ 389              	 .loc 1 254 0
+ 390 02be 1EE0     	 b .L37
+ 391              	.L38:
+ 255:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             {
+ 256:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****               /* Exchange the row elements of the input matrix */
+ 257:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****               Xchg = *pInT2;
+ 392              	 .loc 1 257 0
+ 393 02c0 D7F88430 	 ldr r3,[r7,#132]
+ 394 02c4 D3E90023 	 ldrd r2,[r3]
+ 395 02c8 C7E90A23 	 strd r2,[r7,#40]
+ 258:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****               *pInT2++ = *pInT1;
+ 396              	 .loc 1 258 0
+ 397 02cc D7F88410 	 ldr r1,[r7,#132]
+ 398 02d0 01F10803 	 add r3,r1,#8
+ 399 02d4 C7F88430 	 str r3,[r7,#132]
+ 400 02d8 D7F88830 	 ldr r3,[r7,#136]
+ 401 02dc D3E90023 	 ldrd r2,[r3]
+ 402 02e0 C1E90023 	 strd r2,[r1]
+ 259:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****               *pInT1++ = Xchg;
+ 403              	 .loc 1 259 0
+ 404 02e4 D7F88810 	 ldr r1,[r7,#136]
+ 405 02e8 01F10803 	 add r3,r1,#8
+ 406 02ec C7F88830 	 str r3,[r7,#136]
+ 407 02f0 D7E90A23 	 ldrd r2,[r7,#40]
+ 408 02f4 C1E90023 	 strd r2,[r1]
+ 260:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 261:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****               /* Decrement the loop counter */
+ 262:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****               j--;
+ 409              	 .loc 1 262 0
+ 410 02f8 3B6D     	 ldr r3,[r7,#80]
+ 411 02fa 013B     	 subs r3,r3,#1
+ 412 02fc 3B65     	 str r3,[r7,#80]
+ 413              	.L37:
+ 254:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             {
+ 414              	 .loc 1 254 0
+ 415 02fe 3B6D     	 ldr r3,[r7,#80]
+ 416 0300 002B     	 cmp r3,#0
+ 417 0302 DDD1     	 bne .L38
+ 263:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             }
+ 264:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 265:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             /* Loop over number of columns of the destination matrix */
+ 266:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             j = numCols;
+ 418              	 .loc 1 266 0
+ 419 0304 7B6B     	 ldr r3,[r7,#52]
+ 420 0306 3B65     	 str r3,[r7,#80]
+ 267:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 268:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             while(j > 0u)
+ 421              	 .loc 1 268 0
+ 422 0308 1BE0     	 b .L39
+ 423              	.L40:
+ 269:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             {
+ 270:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****               /* Exchange the row elements of the destination matrix */
+ 271:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****               Xchg = *pOutT2;
+ 424              	 .loc 1 271 0
+ 425 030a FB6F     	 ldr r3,[r7,#124]
+ 426 030c D3E90023 	 ldrd r2,[r3]
+ 427 0310 C7E90A23 	 strd r2,[r7,#40]
+ 272:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****               *pOutT2++ = *pOutT1;
+ 428              	 .loc 1 272 0
+ 429 0314 F96F     	 ldr r1,[r7,#124]
+ 430 0316 01F10803 	 add r3,r1,#8
+ 431 031a FB67     	 str r3,[r7,#124]
+ 432 031c D7F88030 	 ldr r3,[r7,#128]
+ 433 0320 D3E90023 	 ldrd r2,[r3]
+ 434 0324 C1E90023 	 strd r2,[r1]
+ 273:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****               *pOutT1++ = Xchg;
+ 435              	 .loc 1 273 0
+ 436 0328 D7F88010 	 ldr r1,[r7,#128]
+ 437 032c 01F10803 	 add r3,r1,#8
+ 438 0330 C7F88030 	 str r3,[r7,#128]
+ 439 0334 D7E90A23 	 ldrd r2,[r7,#40]
+ 440 0338 C1E90023 	 strd r2,[r1]
+ 274:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 275:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****               /* Decrement the loop counter */
+ 276:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****               j--;
+ 441              	 .loc 1 276 0
+ 442 033c 3B6D     	 ldr r3,[r7,#80]
+ 443 033e 013B     	 subs r3,r3,#1
+ 444 0340 3B65     	 str r3,[r7,#80]
+ 445              	.L39:
+ 268:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             {
+ 446              	 .loc 1 268 0
+ 447 0342 3B6D     	 ldr r3,[r7,#80]
+ 448 0344 002B     	 cmp r3,#0
+ 449 0346 E0D1     	 bne .L40
+ 277:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             }
+ 278:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 279:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             /* Flag to indicate whether exchange is done or not */
+ 280:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             flag = 1u;
+ 450              	 .loc 1 280 0
+ 451 0348 0123     	 movs r3,#1
+ 452 034a 7B65     	 str r3,[r7,#84]
+ 281:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 282:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             /* Break after exchange is done */
+ 283:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             break;
+ 453              	 .loc 1 283 0
+ 454 034c 0CE0     	 b .L29
+ 455              	.L76:
+ 456 034e 00BF     	 .align 2
+ 457              	.L75:
+ 458 0350 0000F03F 	 .word 1072693248
+ 459              	.L74:
+ 284:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           }
+ 285:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 286:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           /* Update the destination pointer modifier */
+ 287:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           k++;
+ 460              	 .loc 1 287 0
+ 461 0354 BB6C     	 ldr r3,[r7,#72]
+ 462 0356 0133     	 adds r3,r3,#1
+ 463 0358 BB64     	 str r3,[r7,#72]
+ 288:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 289:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           /* Decrement the loop counter */
+ 290:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           i--;
+ 464              	 .loc 1 290 0
+ 465 035a FB6D     	 ldr r3,[r7,#92]
+ 466 035c 013B     	 subs r3,r3,#1
+ 467 035e FB65     	 str r3,[r7,#92]
+ 468              	.L31:
+ 240:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         {
+ 469              	 .loc 1 240 0
+ 470 0360 FB6D     	 ldr r3,[r7,#92]
+ 471 0362 002B     	 cmp r3,#0
+ 472 0364 7FF46DAF 	 bne .L41
+ 473              	.L29:
+ 291:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         }
+ 292:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       }
+ 293:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 294:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Update the status if the matrix is singular */
+ 295:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       if((flag != 1u) && (in == 0.0f))
+ 474              	 .loc 1 295 0
+ 475 0368 7B6D     	 ldr r3,[r7,#84]
+ 476 036a 012B     	 cmp r3,#1
+ 477 036c 0CD0     	 beq .L42
+ 478              	 .loc 1 295 0 is_stmt 0 discriminator 1
+ 479 036e D7E91801 	 ldrd r0,[r7,#96]
+ 480 0372 4FF00002 	 mov r2,#0
+ 481 0376 4FF00003 	 mov r3,#0
+ 482 037a FFF7FEFF 	 bl __aeabi_dcmpeq
+ 483 037e 0346     	 mov r3,r0
+ 484 0380 002B     	 cmp r3,#0
+ 485 0382 01D0     	 beq .L42
+ 296:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       {
+ 297:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         return ARM_MATH_SINGULAR;
+ 486              	 .loc 1 297 0 is_stmt 1
+ 487 0384 FB23     	 movs r3,#251
+ 488 0386 14E1     	 b .L25
+ 489              	.L42:
+ 298:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       }
+ 299:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 300:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Points to the pivot row of input and destination matrices */
+ 301:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       pPivotRowIn = pIn + (l * numCols);
+ 490              	 .loc 1 301 0
+ 491 0388 7B6C     	 ldr r3,[r7,#68]
+ 492 038a 7A6B     	 ldr r2,[r7,#52]
+ 493 038c 02FB03F3 	 mul r3,r2,r3
+ 494 0390 DB00     	 lsls r3,r3,#3
+ 495 0392 D7F88C20 	 ldr r2,[r7,#140]
+ 496 0396 1344     	 add r3,r3,r2
+ 497 0398 7B62     	 str r3,[r7,#36]
+ 302:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       pPivotRowDst = pOut + (l * numCols);
+ 498              	 .loc 1 302 0
+ 499 039a 7B6C     	 ldr r3,[r7,#68]
+ 500 039c 7A6B     	 ldr r2,[r7,#52]
+ 501 039e 02FB03F3 	 mul r3,r2,r3
+ 502 03a2 DB00     	 lsls r3,r3,#3
+ 503 03a4 FA6B     	 ldr r2,[r7,#60]
+ 504 03a6 1344     	 add r3,r3,r2
+ 505 03a8 3B62     	 str r3,[r7,#32]
+ 303:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 304:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Temporary pointers to the pivot row pointers */
+ 305:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       pInT1 = pPivotRowIn;
+ 506              	 .loc 1 305 0
+ 507 03aa 7B6A     	 ldr r3,[r7,#36]
+ 508 03ac C7F88830 	 str r3,[r7,#136]
+ 306:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       pInT2 = pPivotRowDst;
+ 509              	 .loc 1 306 0
+ 510 03b0 3B6A     	 ldr r3,[r7,#32]
+ 511 03b2 C7F88430 	 str r3,[r7,#132]
+ 307:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 308:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Pivot element of the row */
+ 309:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       in = *pPivotRowIn;
+ 512              	 .loc 1 309 0
+ 513 03b6 7B6A     	 ldr r3,[r7,#36]
+ 514 03b8 D3E90023 	 ldrd r2,[r3]
+ 515 03bc C7E91823 	 strd r2,[r7,#96]
+ 310:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 311:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Loop over number of columns    
+ 312:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****        * to the right of the pilot element */
+ 313:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       j = (numCols - l);
+ 516              	 .loc 1 313 0
+ 517 03c0 7A6B     	 ldr r2,[r7,#52]
+ 518 03c2 7B6C     	 ldr r3,[r7,#68]
+ 519 03c4 D31A     	 subs r3,r2,r3
+ 520 03c6 3B65     	 str r3,[r7,#80]
+ 314:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 315:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       while(j > 0u)
+ 521              	 .loc 1 315 0
+ 522 03c8 18E0     	 b .L44
+ 523              	.L45:
+ 316:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       {
+ 317:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         /* Divide each element of the row of the input matrix    
+ 318:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****          * by the pivot element */
+ 319:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         in1 = *pInT1;
+ 524              	 .loc 1 319 0
+ 525 03ca D7F88830 	 ldr r3,[r7,#136]
+ 526 03ce D3E90023 	 ldrd r2,[r3]
+ 527 03d2 C7E90623 	 strd r2,[r7,#24]
+ 320:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         *pInT1++ = in1 / in;
+ 528              	 .loc 1 320 0
+ 529 03d6 D7F88840 	 ldr r4,[r7,#136]
+ 530 03da 04F10803 	 add r3,r4,#8
+ 531 03de C7F88830 	 str r3,[r7,#136]
+ 532 03e2 D7E90601 	 ldrd r0,[r7,#24]
+ 533 03e6 D7E91823 	 ldrd r2,[r7,#96]
+ 534 03ea FFF7FEFF 	 bl __aeabi_ddiv
+ 535 03ee 0246     	 mov r2,r0
+ 536 03f0 0B46     	 mov r3,r1
+ 537 03f2 C4E90023 	 strd r2,[r4]
+ 321:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 322:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         /* Decrement the loop counter */
+ 323:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         j--;
+ 538              	 .loc 1 323 0
+ 539 03f6 3B6D     	 ldr r3,[r7,#80]
+ 540 03f8 013B     	 subs r3,r3,#1
+ 541 03fa 3B65     	 str r3,[r7,#80]
+ 542              	.L44:
+ 315:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       {
+ 543              	 .loc 1 315 0
+ 544 03fc 3B6D     	 ldr r3,[r7,#80]
+ 545 03fe 002B     	 cmp r3,#0
+ 546 0400 E3D1     	 bne .L45
+ 324:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       }
+ 325:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 326:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Loop over number of columns of the destination matrix */
+ 327:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       j = numCols;
+ 547              	 .loc 1 327 0
+ 548 0402 7B6B     	 ldr r3,[r7,#52]
+ 549 0404 3B65     	 str r3,[r7,#80]
+ 328:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 329:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       while(j > 0u)
+ 550              	 .loc 1 329 0
+ 551 0406 18E0     	 b .L46
+ 552              	.L47:
+ 330:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       {
+ 331:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         /* Divide each element of the row of the destination matrix    
+ 332:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****          * by the pivot element */
+ 333:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         in1 = *pInT2;
+ 553              	 .loc 1 333 0
+ 554 0408 D7F88430 	 ldr r3,[r7,#132]
+ 555 040c D3E90023 	 ldrd r2,[r3]
+ 556 0410 C7E90623 	 strd r2,[r7,#24]
+ 334:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         *pInT2++ = in1 / in;
+ 557              	 .loc 1 334 0
+ 558 0414 D7F88440 	 ldr r4,[r7,#132]
+ 559 0418 04F10803 	 add r3,r4,#8
+ 560 041c C7F88430 	 str r3,[r7,#132]
+ 561 0420 D7E90601 	 ldrd r0,[r7,#24]
+ 562 0424 D7E91823 	 ldrd r2,[r7,#96]
+ 563 0428 FFF7FEFF 	 bl __aeabi_ddiv
+ 564 042c 0246     	 mov r2,r0
+ 565 042e 0B46     	 mov r3,r1
+ 566 0430 C4E90023 	 strd r2,[r4]
+ 335:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 336:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         /* Decrement the loop counter */
+ 337:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         j--;
+ 567              	 .loc 1 337 0
+ 568 0434 3B6D     	 ldr r3,[r7,#80]
+ 569 0436 013B     	 subs r3,r3,#1
+ 570 0438 3B65     	 str r3,[r7,#80]
+ 571              	.L46:
+ 329:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       {
+ 572              	 .loc 1 329 0
+ 573 043a 3B6D     	 ldr r3,[r7,#80]
+ 574 043c 002B     	 cmp r3,#0
+ 575 043e E3D1     	 bne .L47
+ 338:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       }
+ 339:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 340:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Replace the rows with the sum of that row and a multiple of row i    
+ 341:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****        * so that each new element in column i above row i is zero.*/
+ 342:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 343:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Temporary pointers for input and destination matrices */
+ 344:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       pInT1 = pIn;
+ 576              	 .loc 1 344 0
+ 577 0440 D7F88C30 	 ldr r3,[r7,#140]
+ 578 0444 C7F88830 	 str r3,[r7,#136]
+ 345:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       pInT2 = pOut;
+ 579              	 .loc 1 345 0
+ 580 0448 FB6B     	 ldr r3,[r7,#60]
+ 581 044a C7F88430 	 str r3,[r7,#132]
+ 346:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 347:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* index used to check for pivot element */
+ 348:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       i = 0u;
+ 582              	 .loc 1 348 0
+ 583 044e 0023     	 movs r3,#0
+ 584 0450 FB65     	 str r3,[r7,#92]
+ 349:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 350:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Loop over number of rows */
+ 351:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /*  to be replaced by the sum of that row and a multiple of row i */
+ 352:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       k = numRows;
+ 585              	 .loc 1 352 0
+ 586 0452 BB6B     	 ldr r3,[r7,#56]
+ 587 0454 BB64     	 str r3,[r7,#72]
+ 353:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 354:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       while(k > 0u)
+ 588              	 .loc 1 354 0
+ 589 0456 83E0     	 b .L48
+ 590              	.L55:
+ 355:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       {
+ 356:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         /* Check for the pivot element */
+ 357:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         if(i == l)
+ 591              	 .loc 1 357 0
+ 592 0458 FA6D     	 ldr r2,[r7,#92]
+ 593 045a 7B6C     	 ldr r3,[r7,#68]
+ 594 045c 9A42     	 cmp r2,r3
+ 595 045e 10D1     	 bne .L49
+ 358:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         {
+ 359:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           /* If the processing element is the pivot element,    
+ 360:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****              only the columns to the right are to be processed */
+ 361:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           pInT1 += numCols - l;
+ 596              	 .loc 1 361 0
+ 597 0460 7A6B     	 ldr r2,[r7,#52]
+ 598 0462 7B6C     	 ldr r3,[r7,#68]
+ 599 0464 D31A     	 subs r3,r2,r3
+ 600 0466 DB00     	 lsls r3,r3,#3
+ 601 0468 D7F88820 	 ldr r2,[r7,#136]
+ 602 046c 1344     	 add r3,r3,r2
+ 603 046e C7F88830 	 str r3,[r7,#136]
+ 362:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 363:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           pInT2 += numCols;
+ 604              	 .loc 1 363 0
+ 605 0472 7B6B     	 ldr r3,[r7,#52]
+ 606 0474 DB00     	 lsls r3,r3,#3
+ 607 0476 D7F88420 	 ldr r2,[r7,#132]
+ 608 047a 1344     	 add r3,r3,r2
+ 609 047c C7F88430 	 str r3,[r7,#132]
+ 610 0480 61E0     	 b .L50
+ 611              	.L49:
+ 364:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         }
+ 365:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         else
+ 366:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         {
+ 367:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           /* Element of the reference row */
+ 368:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           in = *pInT1;
+ 612              	 .loc 1 368 0
+ 613 0482 D7F88830 	 ldr r3,[r7,#136]
+ 614 0486 D3E90023 	 ldrd r2,[r3]
+ 615 048a C7E91823 	 strd r2,[r7,#96]
+ 369:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 370:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           /* Working pointers for input and destination pivot rows */
+ 371:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           pPRT_in = pPivotRowIn;
+ 616              	 .loc 1 371 0
+ 617 048e 7B6A     	 ldr r3,[r7,#36]
+ 618 0490 BB67     	 str r3,[r7,#120]
+ 372:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           pPRT_pDst = pPivotRowDst;
+ 619              	 .loc 1 372 0
+ 620 0492 3B6A     	 ldr r3,[r7,#32]
+ 621 0494 7B67     	 str r3,[r7,#116]
+ 373:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 374:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           /* Loop over the number of columns to the right of the pivot element,    
+ 375:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****              to replace the elements in the input matrix */
+ 376:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           j = (numCols - l);
+ 622              	 .loc 1 376 0
+ 623 0496 7A6B     	 ldr r2,[r7,#52]
+ 624 0498 7B6C     	 ldr r3,[r7,#68]
+ 625 049a D31A     	 subs r3,r2,r3
+ 626 049c 3B65     	 str r3,[r7,#80]
+ 377:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 378:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           while(j > 0u)
+ 627              	 .loc 1 378 0
+ 628 049e 24E0     	 b .L51
+ 629              	.L52:
+ 379:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           {
+ 380:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             /* Replace the element by the sum of that row    
+ 381:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****                and a multiple of the reference row  */
+ 382:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             in1 = *pInT1;
+ 630              	 .loc 1 382 0
+ 631 04a0 D7F88830 	 ldr r3,[r7,#136]
+ 632 04a4 D3E90023 	 ldrd r2,[r3]
+ 633 04a8 C7E90623 	 strd r2,[r7,#24]
+ 383:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             *pInT1++ = in1 - (in * *pPRT_in++);
+ 634              	 .loc 1 383 0
+ 635 04ac D7F88840 	 ldr r4,[r7,#136]
+ 636 04b0 04F10803 	 add r3,r4,#8
+ 637 04b4 C7F88830 	 str r3,[r7,#136]
+ 638 04b8 BB6F     	 ldr r3,[r7,#120]
+ 639 04ba 03F10802 	 add r2,r3,#8
+ 640 04be BA67     	 str r2,[r7,#120]
+ 641 04c0 D3E90023 	 ldrd r2,[r3]
+ 642 04c4 1046     	 mov r0,r2
+ 643 04c6 1946     	 mov r1,r3
+ 644 04c8 D7E91823 	 ldrd r2,[r7,#96]
+ 645 04cc FFF7FEFF 	 bl __aeabi_dmul
+ 646 04d0 0246     	 mov r2,r0
+ 647 04d2 0B46     	 mov r3,r1
+ 648 04d4 D7E90601 	 ldrd r0,[r7,#24]
+ 649 04d8 FFF7FEFF 	 bl __aeabi_dsub
+ 650 04dc 0246     	 mov r2,r0
+ 651 04de 0B46     	 mov r3,r1
+ 652 04e0 C4E90023 	 strd r2,[r4]
+ 384:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 385:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             /* Decrement the loop counter */
+ 386:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             j--;
+ 653              	 .loc 1 386 0
+ 654 04e4 3B6D     	 ldr r3,[r7,#80]
+ 655 04e6 013B     	 subs r3,r3,#1
+ 656 04e8 3B65     	 str r3,[r7,#80]
+ 657              	.L51:
+ 378:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           {
+ 658              	 .loc 1 378 0
+ 659 04ea 3B6D     	 ldr r3,[r7,#80]
+ 660 04ec 002B     	 cmp r3,#0
+ 661 04ee D7D1     	 bne .L52
+ 387:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           }
+ 388:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 389:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           /* Loop over the number of columns to    
+ 390:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****              replace the elements in the destination matrix */
+ 391:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           j = numCols;
+ 662              	 .loc 1 391 0
+ 663 04f0 7B6B     	 ldr r3,[r7,#52]
+ 664 04f2 3B65     	 str r3,[r7,#80]
+ 392:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 393:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           while(j > 0u)
+ 665              	 .loc 1 393 0
+ 666 04f4 24E0     	 b .L53
+ 667              	.L54:
+ 394:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           {
+ 395:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             /* Replace the element by the sum of that row    
+ 396:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****                and a multiple of the reference row  */
+ 397:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             in1 = *pInT2;
+ 668              	 .loc 1 397 0
+ 669 04f6 D7F88430 	 ldr r3,[r7,#132]
+ 670 04fa D3E90023 	 ldrd r2,[r3]
+ 671 04fe C7E90623 	 strd r2,[r7,#24]
+ 398:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             *pInT2++ = in1 - (in * *pPRT_pDst++);
+ 672              	 .loc 1 398 0
+ 673 0502 D7F88440 	 ldr r4,[r7,#132]
+ 674 0506 04F10803 	 add r3,r4,#8
+ 675 050a C7F88430 	 str r3,[r7,#132]
+ 676 050e 7B6F     	 ldr r3,[r7,#116]
+ 677 0510 03F10802 	 add r2,r3,#8
+ 678 0514 7A67     	 str r2,[r7,#116]
+ 679 0516 D3E90023 	 ldrd r2,[r3]
+ 680 051a 1046     	 mov r0,r2
+ 681 051c 1946     	 mov r1,r3
+ 682 051e D7E91823 	 ldrd r2,[r7,#96]
+ 683 0522 FFF7FEFF 	 bl __aeabi_dmul
+ 684 0526 0246     	 mov r2,r0
+ 685 0528 0B46     	 mov r3,r1
+ 686 052a D7E90601 	 ldrd r0,[r7,#24]
+ 687 052e FFF7FEFF 	 bl __aeabi_dsub
+ 688 0532 0246     	 mov r2,r0
+ 689 0534 0B46     	 mov r3,r1
+ 690 0536 C4E90023 	 strd r2,[r4]
+ 399:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 400:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             /* Decrement the loop counter */
+ 401:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             j--;
+ 691              	 .loc 1 401 0
+ 692 053a 3B6D     	 ldr r3,[r7,#80]
+ 693 053c 013B     	 subs r3,r3,#1
+ 694 053e 3B65     	 str r3,[r7,#80]
+ 695              	.L53:
+ 393:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           {
+ 696              	 .loc 1 393 0
+ 697 0540 3B6D     	 ldr r3,[r7,#80]
+ 698 0542 002B     	 cmp r3,#0
+ 699 0544 D7D1     	 bne .L54
+ 700              	.L50:
+ 402:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           }
+ 403:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 404:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         }
+ 405:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 406:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         /* Increment the temporary input pointer */
+ 407:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         pInT1 = pInT1 + l;
+ 701              	 .loc 1 407 0
+ 702 0546 7B6C     	 ldr r3,[r7,#68]
+ 703 0548 DB00     	 lsls r3,r3,#3
+ 704 054a D7F88820 	 ldr r2,[r7,#136]
+ 705 054e 1344     	 add r3,r3,r2
+ 706 0550 C7F88830 	 str r3,[r7,#136]
+ 408:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 409:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         /* Decrement the loop counter */
+ 410:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         k--;
+ 707              	 .loc 1 410 0
+ 708 0554 BB6C     	 ldr r3,[r7,#72]
+ 709 0556 013B     	 subs r3,r3,#1
+ 710 0558 BB64     	 str r3,[r7,#72]
+ 411:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 412:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         /* Increment the pivot index */
+ 413:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         i++;
+ 711              	 .loc 1 413 0
+ 712 055a FB6D     	 ldr r3,[r7,#92]
+ 713 055c 0133     	 adds r3,r3,#1
+ 714 055e FB65     	 str r3,[r7,#92]
+ 715              	.L48:
+ 354:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       {
+ 716              	 .loc 1 354 0
+ 717 0560 BB6C     	 ldr r3,[r7,#72]
+ 718 0562 002B     	 cmp r3,#0
+ 719 0564 7FF478AF 	 bne .L55
+ 414:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       }
+ 415:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 416:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Increment the input pointer */
+ 417:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       pIn++;
+ 720              	 .loc 1 417 0
+ 721 0568 D7F88C30 	 ldr r3,[r7,#140]
+ 722 056c 0833     	 adds r3,r3,#8
+ 723 056e C7F88C30 	 str r3,[r7,#140]
+ 418:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 419:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Decrement the loop counter */
+ 420:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       loopCnt--;
+ 724              	 .loc 1 420 0
+ 725 0572 FB6C     	 ldr r3,[r7,#76]
+ 726 0574 013B     	 subs r3,r3,#1
+ 727 0576 FB64     	 str r3,[r7,#76]
+ 421:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 422:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Increment the index modifier */
+ 423:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       l++;
+ 728              	 .loc 1 423 0
+ 729 0578 7B6C     	 ldr r3,[r7,#68]
+ 730 057a 0133     	 adds r3,r3,#1
+ 731 057c 7B64     	 str r3,[r7,#68]
+ 732              	.L11:
+ 196:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     {
+ 733              	 .loc 1 196 0
+ 734 057e FB6C     	 ldr r3,[r7,#76]
+ 735 0580 002B     	 cmp r3,#0
+ 736 0582 7FF4B7AD 	 bne .L56
+ 424:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     }
+ 425:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 426:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 427:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** #else
+ 428:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 429:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   /* Run the below code for Cortex-M0 */
+ 430:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 431:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   float64_t Xchg, in = 0.0f;                     /* Temporary input values  */
+ 432:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   uint32_t i, rowCnt, flag = 0u, j, loopCnt, k, l;      /* loop counters */
+ 433:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   arm_status status;                             /* status of matrix inverse */
+ 434:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 435:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** #ifdef ARM_MATH_MATRIX_CHECK
+ 436:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 437:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   /* Check for matrix mismatch condition */
+ 438:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   if((pSrc->numRows != pSrc->numCols) || (pDst->numRows != pDst->numCols)
+ 439:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****      || (pSrc->numRows != pDst->numRows))
+ 440:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   {
+ 441:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     /* Set status as ARM_MATH_SIZE_MISMATCH */
+ 442:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     status = ARM_MATH_SIZE_MISMATCH;
+ 443:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   }
+ 444:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   else
+ 445:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** #endif /*      #ifdef ARM_MATH_MATRIX_CHECK    */
+ 446:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   {
+ 447:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 448:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     /*---------------------------------------------------------------------------------------------
+ 449:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 * Matrix Inverse can be solved using elementary row operations.        
+ 450:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *        
+ 451:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *	Gauss-Jordan Method:       
+ 452:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *	 	       
+ 453:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *	   1. First combine the identity matrix and the input matrix separated by a bar to form an     
+ 454:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *        augmented matrix as follows:        
+ 455:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *				        _  _	      _	    _	   _   _         _	       _       
+ 456:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *					   |  |  a11  a12  | | | 1   0  |   |       |  X11 X12  |         
+ 457:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *					   |  |            | | |        |   |   =   |           |        
+ 458:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *					   |_ |_ a21  a22 _| | |_0   1 _|  _|       |_ X21 X21 _|       
+ 459:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *					          
+ 460:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		2. In our implementation, pDst Matrix is used as identity matrix.    
+ 461:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *       
+ 462:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		3. Begin with the first row. Let i = 1.       
+ 463:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *       
+ 464:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *	    4. Check to see if the pivot for row i is zero.       
+ 465:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		   The pivot is the element of the main diagonal that is on the current row.       
+ 466:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		   For instance, if working with row i, then the pivot element is aii.       
+ 467:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		   If the pivot is zero, exchange that row with a row below it that does not        
+ 468:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		   contain a zero in column i. If this is not possible, then an inverse        
+ 469:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		   to that matrix does not exist.       
+ 470:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *	       
+ 471:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *	    5. Divide every element of row i by the pivot.       
+ 472:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *	       
+ 473:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *	    6. For every row below and  row i, replace that row with the sum of that row and        
+ 474:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		   a multiple of row i so that each new element in column i below row i is zero.       
+ 475:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *	       
+ 476:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *	    7. Move to the next row and column and repeat steps 2 through 5 until you have zeros       
+ 477:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		   for every element below and above the main diagonal.        
+ 478:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		   		          
+ 479:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		8. Now an identical matrix is formed to the left of the bar(input matrix, src).       
+ 480:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *		   Therefore, the matrix to the right of the bar is our solution(dst matrix, dst).         
+ 481:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 	 *------------------------------------------------------------------------------------------------
+ 482:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 483:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     /* Working pointer for destination matrix */
+ 484:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     pOutT1 = pOut;
+ 485:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 486:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     /* Loop over the number of rows */
+ 487:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     rowCnt = numRows;
+ 488:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 489:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     /* Making the destination matrix as identity matrix */
+ 490:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     while(rowCnt > 0u)
+ 491:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     {
+ 492:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Writing all zeroes in lower triangle of the destination matrix */
+ 493:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       j = numRows - rowCnt;
+ 494:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       while(j > 0u)
+ 495:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       {
+ 496:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         *pOutT1++ = 0.0f;
+ 497:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         j--;
+ 498:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       }
+ 499:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 500:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Writing all ones in the diagonal of the destination matrix */
+ 501:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       *pOutT1++ = 1.0f;
+ 502:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 503:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Writing all zeroes in upper triangle of the destination matrix */
+ 504:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       j = rowCnt - 1u;
+ 505:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       while(j > 0u)
+ 506:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       {
+ 507:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         *pOutT1++ = 0.0f;
+ 508:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         j--;
+ 509:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       }
+ 510:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 511:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Decrement the loop counter */
+ 512:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       rowCnt--;
+ 513:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     }
+ 514:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 515:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     /* Loop over the number of columns of the input matrix.     
+ 516:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****        All the elements in each column are processed by the row operations */
+ 517:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     loopCnt = numCols;
+ 518:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 519:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     /* Index modifier to navigate through the columns */
+ 520:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     l = 0u;
+ 521:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     //for(loopCnt = 0u; loopCnt < numCols; loopCnt++)   
+ 522:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     while(loopCnt > 0u)
+ 523:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     {
+ 524:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Check if the pivot element is zero..    
+ 525:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****        * If it is zero then interchange the row with non zero row below.   
+ 526:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****        * If there is no non zero element to replace in the rows below,   
+ 527:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****        * then the matrix is Singular. */
+ 528:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 529:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Working pointer for the input matrix that points     
+ 530:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****        * to the pivot element of the particular row  */
+ 531:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       pInT1 = pIn + (l * numCols);
+ 532:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 533:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Working pointer for the destination matrix that points     
+ 534:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****        * to the pivot element of the particular row  */
+ 535:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       pOutT1 = pOut + (l * numCols);
+ 536:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 537:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Temporary variable to hold the pivot value */
+ 538:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       in = *pInT1;
+ 539:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 540:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Destination pointer modifier */
+ 541:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       k = 1u;
+ 542:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 543:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Check if the pivot element is zero */
+ 544:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       if(*pInT1 == 0.0f)
+ 545:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       {
+ 546:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         /* Loop over the number rows present below */
+ 547:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         for (i = (l + 1u); i < numRows; i++)
+ 548:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         {
+ 549:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           /* Update the input and destination pointers */
+ 550:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           pInT2 = pInT1 + (numCols * l);
+ 551:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           pOutT2 = pOutT1 + (numCols * k);
+ 552:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 553:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           /* Check if there is a non zero pivot element to     
+ 554:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****            * replace in the rows below */
+ 555:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           if(*pInT2 != 0.0f)
+ 556:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           {
+ 557:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             /* Loop over number of columns     
+ 558:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****              * to the right of the pilot element */
+ 559:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             for (j = 0u; j < (numCols - l); j++)
+ 560:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             {
+ 561:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****               /* Exchange the row elements of the input matrix */
+ 562:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****               Xchg = *pInT2;
+ 563:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****               *pInT2++ = *pInT1;
+ 564:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****               *pInT1++ = Xchg;
+ 565:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             }
+ 566:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 567:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             for (j = 0u; j < numCols; j++)
+ 568:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             {
+ 569:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****               Xchg = *pOutT2;
+ 570:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****               *pOutT2++ = *pOutT1;
+ 571:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****               *pOutT1++ = Xchg;
+ 572:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             }
+ 573:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 574:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             /* Flag to indicate whether exchange is done or not */
+ 575:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             flag = 1u;
+ 576:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 577:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             /* Break after exchange is done */
+ 578:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             break;
+ 579:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           }
+ 580:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 581:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           /* Update the destination pointer modifier */
+ 582:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           k++;
+ 583:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         }
+ 584:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       }
+ 585:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 586:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Update the status if the matrix is singular */
+ 587:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       if((flag != 1u) && (in == 0.0f))
+ 588:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       {
+ 589:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         return ARM_MATH_SINGULAR;
+ 590:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       }
+ 591:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 592:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Points to the pivot row of input and destination matrices */
+ 593:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       pPivotRowIn = pIn + (l * numCols);
+ 594:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       pPivotRowDst = pOut + (l * numCols);
+ 595:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 596:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Temporary pointers to the pivot row pointers */
+ 597:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       pInT1 = pPivotRowIn;
+ 598:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       pOutT1 = pPivotRowDst;
+ 599:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 600:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Pivot element of the row */
+ 601:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       in = *(pIn + (l * numCols));
+ 602:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 603:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Loop over number of columns     
+ 604:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****        * to the right of the pilot element */
+ 605:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       for (j = 0u; j < (numCols - l); j++)
+ 606:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       {
+ 607:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         /* Divide each element of the row of the input matrix     
+ 608:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****          * by the pivot element */
+ 609:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         *pInT1 = *pInT1 / in;
+ 610:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         pInT1++;
+ 611:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       }
+ 612:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       for (j = 0u; j < numCols; j++)
+ 613:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       {
+ 614:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         /* Divide each element of the row of the destination matrix     
+ 615:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****          * by the pivot element */
+ 616:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         *pOutT1 = *pOutT1 / in;
+ 617:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         pOutT1++;
+ 618:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       }
+ 619:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 620:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Replace the rows with the sum of that row and a multiple of row i     
+ 621:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****        * so that each new element in column i above row i is zero.*/
+ 622:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 623:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Temporary pointers for input and destination matrices */
+ 624:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       pInT1 = pIn;
+ 625:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       pOutT1 = pOut;
+ 626:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 627:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       for (i = 0u; i < numRows; i++)
+ 628:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       {
+ 629:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         /* Check for the pivot element */
+ 630:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         if(i == l)
+ 631:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         {
+ 632:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           /* If the processing element is the pivot element,     
+ 633:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****              only the columns to the right are to be processed */
+ 634:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           pInT1 += numCols - l;
+ 635:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           pOutT1 += numCols;
+ 636:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         }
+ 637:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         else
+ 638:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         {
+ 639:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           /* Element of the reference row */
+ 640:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           in = *pInT1;
+ 641:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 642:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           /* Working pointers for input and destination pivot rows */
+ 643:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           pPRT_in = pPivotRowIn;
+ 644:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           pPRT_pDst = pPivotRowDst;
+ 645:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 646:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           /* Loop over the number of columns to the right of the pivot element,     
+ 647:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****              to replace the elements in the input matrix */
+ 648:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           for (j = 0u; j < (numCols - l); j++)
+ 649:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           {
+ 650:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             /* Replace the element by the sum of that row     
+ 651:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****                and a multiple of the reference row  */
+ 652:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             *pInT1 = *pInT1 - (in * *pPRT_in++);
+ 653:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             pInT1++;
+ 654:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           }
+ 655:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           /* Loop over the number of columns to     
+ 656:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****              replace the elements in the destination matrix */
+ 657:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           for (j = 0u; j < numCols; j++)
+ 658:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           {
+ 659:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             /* Replace the element by the sum of that row     
+ 660:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****                and a multiple of the reference row  */
+ 661:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             *pOutT1 = *pOutT1 - (in * *pPRT_pDst++);
+ 662:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****             pOutT1++;
+ 663:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****           }
+ 664:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 665:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         }
+ 666:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         /* Increment the temporary input pointer */
+ 667:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****         pInT1 = pInT1 + l;
+ 668:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       }
+ 669:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Increment the input pointer */
+ 670:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       pIn++;
+ 671:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 672:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Decrement the loop counter */
+ 673:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       loopCnt--;
+ 674:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       /* Increment the index modifier */
+ 675:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       l++;
+ 676:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     }
+ 677:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 678:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 679:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** #endif /* #ifndef ARM_MATH_CM0_FAMILY */
+ 680:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 681:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     /* Set status as ARM_MATH_SUCCESS */
+ 682:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     status = ARM_MATH_SUCCESS;
+ 737              	 .loc 1 682 0
+ 738 0586 0023     	 movs r3,#0
+ 739 0588 87F84330 	 strb r3,[r7,#67]
+ 683:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** 
+ 684:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     if((flag != 1u) && (in == 0.0f))
+ 740              	 .loc 1 684 0
+ 741 058c 7B6D     	 ldr r3,[r7,#84]
+ 742 058e 012B     	 cmp r3,#1
+ 743 0590 0DD0     	 beq .L4
+ 744              	 .loc 1 684 0 is_stmt 0 discriminator 1
+ 745 0592 D7E91801 	 ldrd r0,[r7,#96]
+ 746 0596 4FF00002 	 mov r2,#0
+ 747 059a 4FF00003 	 mov r3,#0
+ 748 059e FFF7FEFF 	 bl __aeabi_dcmpeq
+ 749 05a2 0346     	 mov r3,r0
+ 750 05a4 002B     	 cmp r3,#0
+ 751 05a6 02D0     	 beq .L4
+ 685:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     {
+ 686:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****       status = ARM_MATH_SINGULAR;
+ 752              	 .loc 1 686 0 is_stmt 1
+ 753 05a8 FB23     	 movs r3,#251
+ 754 05aa 87F84330 	 strb r3,[r7,#67]
+ 755              	.L4:
+ 687:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****     }
+ 688:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   }
+ 689:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   /* Return to application */
+ 690:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c ****   return (status);
+ 756              	 .loc 1 690 0
+ 757 05ae 97F84330 	 ldrb r3,[r7,#67]
+ 758              	.L25:
+ 759 05b2 5BB2     	 sxtb r3,r3
+ 691:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_inverse_f64.c **** }
+ 760              	 .loc 1 691 0
+ 761 05b4 1846     	 mov r0,r3
+ 762 05b6 9437     	 adds r7,r7,#148
+ 763              	.LCFI3:
+ 764              	 .cfi_def_cfa_offset 28
+ 765 05b8 BD46     	 mov sp,r7
+ 766              	.LCFI4:
+ 767              	 .cfi_def_cfa_register 13
+ 768              	 
+ 769 05ba BDE8908F 	 pop {r4,r7,r8,r9,r10,fp,pc}
+ 770              	 .cfi_endproc
+ 771              	.LFE139:
+ 773 05be 00BF     	 .text
+ 774              	.Letext0:
+ 775              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 776              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 777              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_mat_inverse_f64.c
+    {standard input}:25     .text.arm_mat_inverse_f64:00000000 $t
+    {standard input}:30     .text.arm_mat_inverse_f64:00000000 arm_mat_inverse_f64
+    {standard input}:458    .text.arm_mat_inverse_f64:00000350 $d
+    {standard input}:461    .text.arm_mat_inverse_f64:00000354 $t
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+__aeabi_dcmpgt
+__aeabi_dcmpeq
+__aeabi_ddiv
+__aeabi_dmul
+__aeabi_dsub

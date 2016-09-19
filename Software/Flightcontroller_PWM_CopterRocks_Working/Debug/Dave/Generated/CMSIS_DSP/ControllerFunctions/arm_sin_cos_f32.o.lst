@@ -1,0 +1,441 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_sin_cos_f32.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.arm_sin_cos_f32,"ax",%progbits
+  20              	 .align 2
+  21              	 .global arm_sin_cos_f32
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	arm_sin_cos_f32:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c"
+   1:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** /* ----------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * $Date:        12. March 2014
+   5:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * $Revision: 	V1.4.4
+   6:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * Title:		arm_sin_cos_f32.c    
+   9:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * Description:	Sine and Cosine calculation for floating-point values.   
+  11:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** *
+  27:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * POSSIBILITY OF SUCH DAMAGE.   
+  39:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** * -------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** 
+  41:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** #include "CMSIS_DSP/arm_common_tables.h"
+  43:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** 
+  44:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** /**    
+  45:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  * @ingroup groupController    
+  46:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  */
+  47:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** 
+  48:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** /**    
+  49:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  * @defgroup SinCos Sine Cosine   
+  50:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  *    
+  51:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  * Computes the trigonometric sine and cosine values using a combination of table lookup   
+  52:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  * and linear interpolation.     
+  53:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  * There are separate functions for Q31 and floating-point data types.   
+  54:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  * The input to the floating-point version is in degrees while the   
+  55:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  * fixed-point Q31 have a scaled input with the range   
+  56:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  * [-1 0.9999] mapping to [-180 +180] degrees.   
+  57:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  *
+  58:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  * The floating point function also allows values that are out of the usual range. When this happen
+  59:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  * take extra time to adjust the input value to the range of [-180 180].
+  60:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  *   
+  61:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  * The implementation is based on table lookup using 360 values together with linear interpolation.
+  62:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  * The steps used are:   
+  63:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  *  -# Calculation of the nearest integer table index.   
+  64:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  *  -# Compute the fractional portion (fract) of the input.   
+  65:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  *  -# Fetch the value corresponding to \c index from sine table to \c y0 and also value from \c in
+  66:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  *  -# Sine value is computed as <code> *psinVal = y0 + (fract * (y1 - y0))</code>.    
+  67:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  *  -# Fetch the value corresponding to \c index from cosine table to \c y0 and also value from \c 
+  68:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  *  -# Cosine value is computed as <code> *pcosVal = y0 + (fract * (y1 - y0))</code>.    
+  69:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  */
+  70:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** 
+  71:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  /**    
+  72:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  * @addtogroup SinCos    
+  73:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  * @{    
+  74:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  */
+  75:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** 
+  76:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** /**    
+  77:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  * @brief  Floating-point sin_cos function.   
+  78:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  * @param[in]  theta    input value in degrees    
+  79:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  * @param[out] *pSinVal points to the processed sine output.    
+  80:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  * @param[out] *pCosVal points to the processed cos output.    
+  81:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  * @return none.   
+  82:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****  */
+  83:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** 
+  84:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** void arm_sin_cos_f32(
+  85:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   float32_t theta,
+  86:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   float32_t * pSinVal,
+  87:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   float32_t * pCosVal)
+  88:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** {
+  28              	 .loc 1 88 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	 
+  33 0000 80B4     	 push {r7}
+  34              	.LCFI0:
+  35              	 .cfi_def_cfa_offset 4
+  36              	 .cfi_offset 7,-4
+  37 0002 91B0     	 sub sp,sp,#68
+  38              	.LCFI1:
+  39              	 .cfi_def_cfa_offset 72
+  40 0004 00AF     	 add r7,sp,#0
+  41              	.LCFI2:
+  42              	 .cfi_def_cfa_register 7
+  43 0006 F860     	 str r0,[r7,#12]
+  44 0008 B960     	 str r1,[r7,#8]
+  45 000a 7A60     	 str r2,[r7,#4]
+  89:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   float32_t fract, in;                             /* Temporary variables for input, output */
+  90:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   uint16_t indexS, indexC;                         /* Index variable */
+  91:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   float32_t f1, f2, d1, d2;                        /* Two nearest output values */
+  92:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   int32_t n;
+  93:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   float32_t findex, Dn, Df, temp;
+  94:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** 
+  95:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   /* input x is in degrees */
+  96:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   /* Scale the input, divide input by 360, for cosine add 0.25 (pi/2) to read sine table */
+  97:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   in = theta * 0.00277777777778f;
+  46              	 .loc 1 97 0
+  47 000c D7ED037A 	 flds s15,[r7,#12]
+  48 0010 9FED997A 	 flds s14,.L5
+  49 0014 67EE877A 	 fmuls s15,s15,s14
+  50 0018 C7ED0E7A 	 fsts s15,[r7,#56]
+  98:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** 
+  99:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   /* Calculation of floor value of input */
+ 100:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   n = (int32_t) in;
+  51              	 .loc 1 100 0
+  52 001c D7ED0E7A 	 flds s15,[r7,#56]
+  53 0020 FDEEE77A 	 ftosizs s15,s15
+  54 0024 17EE903A 	 fmrs r3,s15
+  55 0028 FB63     	 str r3,[r7,#60]
+ 101:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** 
+ 102:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   /* Make negative values towards -infinity */
+ 103:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   if(in < 0.0f)
+  56              	 .loc 1 103 0
+  57 002a D7ED0E7A 	 flds s15,[r7,#56]
+  58 002e F5EEC07A 	 fcmpezs s15
+  59 0032 F1EE10FA 	 fmstat
+  60 0036 02D5     	 bpl .L2
+ 104:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   {
+ 105:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****     n--;
+  61              	 .loc 1 105 0
+  62 0038 FB6B     	 ldr r3,[r7,#60]
+  63 003a 013B     	 subs r3,r3,#1
+  64 003c FB63     	 str r3,[r7,#60]
+  65              	.L2:
+ 106:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   }
+ 107:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   /* Map input value to [0 1] */
+ 108:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   in = in - (float32_t) n;
+  66              	 .loc 1 108 0
+  67 003e FB6B     	 ldr r3,[r7,#60]
+  68 0040 07EE903A 	 fmsr s15,r3
+  69 0044 F8EEE77A 	 fsitos s15,s15
+  70 0048 97ED0E7A 	 flds s14,[r7,#56]
+  71 004c 77EE677A 	 fsubs s15,s14,s15
+  72 0050 C7ED0E7A 	 fsts s15,[r7,#56]
+ 109:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** 
+ 110:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   /* Calculation of index of the table */
+ 111:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   findex = (float32_t) FAST_MATH_TABLE_SIZE * in;
+  73              	 .loc 1 111 0
+  74 0054 D7ED0E7A 	 flds s15,[r7,#56]
+  75 0058 9FED887A 	 flds s14,.L5+4
+  76 005c 67EE877A 	 fmuls s15,s15,s14
+  77 0060 C7ED0D7A 	 fsts s15,[r7,#52]
+ 112:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   indexS = ((uint16_t)findex) & 0x1ff;
+  78              	 .loc 1 112 0
+  79 0064 D7ED0D7A 	 flds s15,[r7,#52]
+  80 0068 FCEEE77A 	 ftouizs s15,s15
+  81 006c C7ED007A 	 fsts s15,[r7]
+  82 0070 3B88     	 ldrh r3,[r7]
+  83 0072 9BB2     	 uxth r3,r3
+  84 0074 C3F30803 	 ubfx r3,r3,#0,#9
+  85 0078 7B86     	 strh r3,[r7,#50]
+ 113:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   indexC = (indexS + (FAST_MATH_TABLE_SIZE / 4)) & 0x1ff;
+  86              	 .loc 1 113 0
+  87 007a 7B8E     	 ldrh r3,[r7,#50]
+  88 007c 8033     	 adds r3,r3,#128
+  89 007e 9BB2     	 uxth r3,r3
+  90 0080 C3F30803 	 ubfx r3,r3,#0,#9
+  91 0084 3B86     	 strh r3,[r7,#48]
+ 114:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** 
+ 115:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   /* fractional value calculation */
+ 116:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   fract = findex - (float32_t) indexS;
+  92              	 .loc 1 116 0
+  93 0086 7B8E     	 ldrh r3,[r7,#50]
+  94 0088 07EE903A 	 fmsr s15,r3
+  95 008c F8EE677A 	 fuitos s15,s15
+  96 0090 97ED0D7A 	 flds s14,[r7,#52]
+  97 0094 77EE677A 	 fsubs s15,s14,s15
+  98 0098 C7ED0B7A 	 fsts s15,[r7,#44]
+ 117:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** 
+ 118:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   /* Read two nearest values of input value from the cos & sin tables */
+ 119:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   f1 = sinTable_f32[indexC+0];
+  99              	 .loc 1 119 0
+ 100 009c 3B8E     	 ldrh r3,[r7,#48]
+ 101 009e 784A     	 ldr r2,.L5+8
+ 102 00a0 9B00     	 lsls r3,r3,#2
+ 103 00a2 1344     	 add r3,r3,r2
+ 104 00a4 1B68     	 ldr r3,[r3]
+ 105 00a6 BB62     	 str r3,[r7,#40]
+ 120:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   f2 = sinTable_f32[indexC+1];
+ 106              	 .loc 1 120 0
+ 107 00a8 3B8E     	 ldrh r3,[r7,#48]
+ 108 00aa 0133     	 adds r3,r3,#1
+ 109 00ac 744A     	 ldr r2,.L5+8
+ 110 00ae 9B00     	 lsls r3,r3,#2
+ 111 00b0 1344     	 add r3,r3,r2
+ 112 00b2 1B68     	 ldr r3,[r3]
+ 113 00b4 7B62     	 str r3,[r7,#36]
+ 121:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   d1 = -sinTable_f32[indexS+0];
+ 114              	 .loc 1 121 0
+ 115 00b6 7B8E     	 ldrh r3,[r7,#50]
+ 116 00b8 714A     	 ldr r2,.L5+8
+ 117 00ba 9B00     	 lsls r3,r3,#2
+ 118 00bc 1344     	 add r3,r3,r2
+ 119 00be D3ED007A 	 flds s15,[r3]
+ 120 00c2 F1EE677A 	 fnegs s15,s15
+ 121 00c6 C7ED087A 	 fsts s15,[r7,#32]
+ 122:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   d2 = -sinTable_f32[indexS+1];
+ 122              	 .loc 1 122 0
+ 123 00ca 7B8E     	 ldrh r3,[r7,#50]
+ 124 00cc 0133     	 adds r3,r3,#1
+ 125 00ce 6C4A     	 ldr r2,.L5+8
+ 126 00d0 9B00     	 lsls r3,r3,#2
+ 127 00d2 1344     	 add r3,r3,r2
+ 128 00d4 D3ED007A 	 flds s15,[r3]
+ 129 00d8 F1EE677A 	 fnegs s15,s15
+ 130 00dc C7ED077A 	 fsts s15,[r7,#28]
+ 123:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** 
+ 124:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   Dn = 0.0122718463030f; // delta between the two points (fixed), in this case 2*pi/FAST_MATH_TABLE
+ 131              	 .loc 1 124 0
+ 132 00e0 684B     	 ldr r3,.L5+12
+ 133 00e2 BB61     	 str r3,[r7,#24]
+ 125:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   Df = f2 - f1; // delta between the values of the functions
+ 134              	 .loc 1 125 0
+ 135 00e4 97ED097A 	 flds s14,[r7,#36]
+ 136 00e8 D7ED0A7A 	 flds s15,[r7,#40]
+ 137 00ec 77EE677A 	 fsubs s15,s14,s15
+ 138 00f0 C7ED057A 	 fsts s15,[r7,#20]
+ 126:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   temp = Dn*(d1 + d2) - 2*Df;
+ 139              	 .loc 1 126 0
+ 140 00f4 97ED087A 	 flds s14,[r7,#32]
+ 141 00f8 D7ED077A 	 flds s15,[r7,#28]
+ 142 00fc 37EE277A 	 fadds s14,s14,s15
+ 143 0100 D7ED067A 	 flds s15,[r7,#24]
+ 144 0104 27EE277A 	 fmuls s14,s14,s15
+ 145 0108 D7ED057A 	 flds s15,[r7,#20]
+ 146 010c 77EEA77A 	 fadds s15,s15,s15
+ 147 0110 77EE677A 	 fsubs s15,s14,s15
+ 148 0114 C7ED047A 	 fsts s15,[r7,#16]
+ 127:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   temp = fract*temp + (3*Df - (d2 + 2*d1)*Dn);
+ 149              	 .loc 1 127 0
+ 150 0118 97ED0B7A 	 flds s14,[r7,#44]
+ 151 011c D7ED047A 	 flds s15,[r7,#16]
+ 152 0120 27EE277A 	 fmuls s14,s14,s15
+ 153 0124 D7ED057A 	 flds s15,[r7,#20]
+ 154 0128 F0EE086A 	 fconsts s13,#8
+ 155 012c 67EEA66A 	 fmuls s13,s15,s13
+ 156 0130 D7ED087A 	 flds s15,[r7,#32]
+ 157 0134 37EEA76A 	 fadds s12,s15,s15
+ 158 0138 D7ED077A 	 flds s15,[r7,#28]
+ 159 013c 36EE276A 	 fadds s12,s12,s15
+ 160 0140 D7ED067A 	 flds s15,[r7,#24]
+ 161 0144 66EE277A 	 fmuls s15,s12,s15
+ 162 0148 76EEE77A 	 fsubs s15,s13,s15
+ 163 014c 77EE277A 	 fadds s15,s14,s15
+ 164 0150 C7ED047A 	 fsts s15,[r7,#16]
+ 128:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   temp = fract*temp + d1*Dn;
+ 165              	 .loc 1 128 0
+ 166 0154 97ED0B7A 	 flds s14,[r7,#44]
+ 167 0158 D7ED047A 	 flds s15,[r7,#16]
+ 168 015c 27EE277A 	 fmuls s14,s14,s15
+ 169 0160 D7ED086A 	 flds s13,[r7,#32]
+ 170 0164 D7ED067A 	 flds s15,[r7,#24]
+ 171 0168 66EEA77A 	 fmuls s15,s13,s15
+ 172 016c 77EE277A 	 fadds s15,s14,s15
+ 173 0170 C7ED047A 	 fsts s15,[r7,#16]
+ 129:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** 
+ 130:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   /* Calculation of cosine value */
+ 131:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   *pCosVal = fract*temp + f1;
+ 174              	 .loc 1 131 0
+ 175 0174 97ED0B7A 	 flds s14,[r7,#44]
+ 176 0178 D7ED047A 	 flds s15,[r7,#16]
+ 177 017c 27EE277A 	 fmuls s14,s14,s15
+ 178 0180 D7ED0A7A 	 flds s15,[r7,#40]
+ 179 0184 77EE277A 	 fadds s15,s14,s15
+ 180 0188 7B68     	 ldr r3,[r7,#4]
+ 181 018a C3ED007A 	 fsts s15,[r3]
+ 132:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   
+ 133:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   /* Read two nearest values of input value from the cos & sin tables */
+ 134:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   f1 = sinTable_f32[indexS+0];
+ 182              	 .loc 1 134 0
+ 183 018e 7B8E     	 ldrh r3,[r7,#50]
+ 184 0190 3B4A     	 ldr r2,.L5+8
+ 185 0192 9B00     	 lsls r3,r3,#2
+ 186 0194 1344     	 add r3,r3,r2
+ 187 0196 1B68     	 ldr r3,[r3]
+ 188 0198 BB62     	 str r3,[r7,#40]
+ 135:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   f2 = sinTable_f32[indexS+1];
+ 189              	 .loc 1 135 0
+ 190 019a 7B8E     	 ldrh r3,[r7,#50]
+ 191 019c 0133     	 adds r3,r3,#1
+ 192 019e 384A     	 ldr r2,.L5+8
+ 193 01a0 9B00     	 lsls r3,r3,#2
+ 194 01a2 1344     	 add r3,r3,r2
+ 195 01a4 1B68     	 ldr r3,[r3]
+ 196 01a6 7B62     	 str r3,[r7,#36]
+ 136:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   d1 = sinTable_f32[indexC+0];
+ 197              	 .loc 1 136 0
+ 198 01a8 3B8E     	 ldrh r3,[r7,#48]
+ 199 01aa 354A     	 ldr r2,.L5+8
+ 200 01ac 9B00     	 lsls r3,r3,#2
+ 201 01ae 1344     	 add r3,r3,r2
+ 202 01b0 1B68     	 ldr r3,[r3]
+ 203 01b2 3B62     	 str r3,[r7,#32]
+ 137:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   d2 = sinTable_f32[indexC+1];
+ 204              	 .loc 1 137 0
+ 205 01b4 3B8E     	 ldrh r3,[r7,#48]
+ 206 01b6 0133     	 adds r3,r3,#1
+ 207 01b8 314A     	 ldr r2,.L5+8
+ 208 01ba 9B00     	 lsls r3,r3,#2
+ 209 01bc 1344     	 add r3,r3,r2
+ 210 01be 1B68     	 ldr r3,[r3]
+ 211 01c0 FB61     	 str r3,[r7,#28]
+ 138:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** 
+ 139:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   Df = f2 - f1; // delta between the values of the functions
+ 212              	 .loc 1 139 0
+ 213 01c2 97ED097A 	 flds s14,[r7,#36]
+ 214 01c6 D7ED0A7A 	 flds s15,[r7,#40]
+ 215 01ca 77EE677A 	 fsubs s15,s14,s15
+ 216 01ce C7ED057A 	 fsts s15,[r7,#20]
+ 140:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   temp = Dn*(d1 + d2) - 2*Df;
+ 217              	 .loc 1 140 0
+ 218 01d2 97ED087A 	 flds s14,[r7,#32]
+ 219 01d6 D7ED077A 	 flds s15,[r7,#28]
+ 220 01da 37EE277A 	 fadds s14,s14,s15
+ 221 01de D7ED067A 	 flds s15,[r7,#24]
+ 222 01e2 27EE277A 	 fmuls s14,s14,s15
+ 223 01e6 D7ED057A 	 flds s15,[r7,#20]
+ 224 01ea 77EEA77A 	 fadds s15,s15,s15
+ 225 01ee 77EE677A 	 fsubs s15,s14,s15
+ 226 01f2 C7ED047A 	 fsts s15,[r7,#16]
+ 141:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   temp = fract*temp + (3*Df - (d2 + 2*d1)*Dn);
+ 227              	 .loc 1 141 0
+ 228 01f6 97ED0B7A 	 flds s14,[r7,#44]
+ 229 01fa D7ED047A 	 flds s15,[r7,#16]
+ 230 01fe 27EE277A 	 fmuls s14,s14,s15
+ 231 0202 D7ED057A 	 flds s15,[r7,#20]
+ 232 0206 F0EE086A 	 fconsts s13,#8
+ 233 020a 67EEA66A 	 fmuls s13,s15,s13
+ 234 020e D7ED087A 	 flds s15,[r7,#32]
+ 235 0212 37EEA76A 	 fadds s12,s15,s15
+ 236 0216 D7ED077A 	 flds s15,[r7,#28]
+ 237 021a 36EE276A 	 fadds s12,s12,s15
+ 238 021e D7ED067A 	 flds s15,[r7,#24]
+ 239 0222 66EE277A 	 fmuls s15,s12,s15
+ 240 0226 76EEE77A 	 fsubs s15,s13,s15
+ 241 022a 77EE277A 	 fadds s15,s14,s15
+ 242 022e C7ED047A 	 fsts s15,[r7,#16]
+ 142:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   temp = fract*temp + d1*Dn;
+ 243              	 .loc 1 142 0
+ 244 0232 97ED0B7A 	 flds s14,[r7,#44]
+ 245 0236 D7ED047A 	 flds s15,[r7,#16]
+ 246 023a 27EE277A 	 fmuls s14,s14,s15
+ 247 023e D7ED086A 	 flds s13,[r7,#32]
+ 248 0242 D7ED067A 	 flds s15,[r7,#24]
+ 249 0246 66EEA77A 	 fmuls s15,s13,s15
+ 250 024a 77EE277A 	 fadds s15,s14,s15
+ 251 024e C7ED047A 	 fsts s15,[r7,#16]
+ 143:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   
+ 144:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   /* Calculation of sine value */
+ 145:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c ****   *pSinVal = fract*temp + f1;
+ 252              	 .loc 1 145 0
+ 253 0252 97ED0B7A 	 flds s14,[r7,#44]
+ 254 0256 D7ED047A 	 flds s15,[r7,#16]
+ 255 025a 27EE277A 	 fmuls s14,s14,s15
+ 256 025e D7ED0A7A 	 flds s15,[r7,#40]
+ 257 0262 77EE277A 	 fadds s15,s14,s15
+ 258 0266 BB68     	 ldr r3,[r7,#8]
+ 259 0268 C3ED007A 	 fsts s15,[r3]
+ 146:../Dave/Generated/CMSIS_DSP/ControllerFunctions/arm_sin_cos_f32.c **** }
+ 260              	 .loc 1 146 0
+ 261 026c 4437     	 adds r7,r7,#68
+ 262              	.LCFI3:
+ 263              	 .cfi_def_cfa_offset 4
+ 264 026e BD46     	 mov sp,r7
+ 265              	.LCFI4:
+ 266              	 .cfi_def_cfa_register 13
+ 267              	 
+ 268 0270 5DF8047B 	 ldr r7,[sp],#4
+ 269              	.LCFI5:
+ 270              	 .cfi_restore 7
+ 271              	 .cfi_def_cfa_offset 0
+ 272 0274 7047     	 bx lr
+ 273              	.L6:
+ 274 0276 00BF     	 .align 2
+ 275              	.L5:
+ 276 0278 610B363B 	 .word 993397601
+ 277 027c 00000044 	 .word 1140850688
+ 278 0280 00000000 	 .word sinTable_f32
+ 279 0284 DB0F493C 	 .word 1011421147
+ 280              	 .cfi_endproc
+ 281              	.LFE139:
+ 283              	 .text
+ 284              	.Letext0:
+ 285              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 286              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 287              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+ 288              	 .file 5 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_common_tables.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_sin_cos_f32.c
+    {standard input}:20     .text.arm_sin_cos_f32:00000000 $t
+    {standard input}:25     .text.arm_sin_cos_f32:00000000 arm_sin_cos_f32
+    {standard input}:276    .text.arm_sin_cos_f32:00000278 $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+sinTable_f32

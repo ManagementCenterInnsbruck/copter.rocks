@@ -1,0 +1,440 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_dot_prod_q31.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.arm_dot_prod_q31,"ax",%progbits
+  20              	 .align 2
+  21              	 .global arm_dot_prod_q31
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	arm_dot_prod_q31:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c"
+   1:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** /* ----------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * $Date:        12. March 2014
+   5:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * $Revision: 	V1.4.4
+   6:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * Title:		arm_dot_prod_q31.c    
+   9:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * Description:	Q31 dot product.    
+  11:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** *
+  27:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * POSSIBILITY OF SUCH DAMAGE. 
+  39:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** * -------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** 
+  41:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** 
+  43:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** /**    
+  44:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****  * @ingroup groupMath    
+  45:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****  */
+  46:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** 
+  47:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** /**    
+  48:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****  * @addtogroup dot_prod    
+  49:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****  * @{    
+  50:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****  */
+  51:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** 
+  52:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** /**    
+  53:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****  * @brief Dot product of Q31 vectors.    
+  54:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****  * @param[in]       *pSrcA points to the first input vector    
+  55:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****  * @param[in]       *pSrcB points to the second input vector    
+  56:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****  * @param[in]       blockSize number of samples in each vector    
+  57:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****  * @param[out]      *result output result returned here    
+  58:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****  * @return none.    
+  59:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****  *    
+  60:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****  * <b>Scaling and Overflow Behavior:</b>    
+  61:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****  * \par    
+  62:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****  * The intermediate multiplications are in 1.31 x 1.31 = 2.62 format and these    
+  63:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****  * are truncated to 2.48 format by discarding the lower 14 bits.    
+  64:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****  * The 2.48 result is then added without saturation to a 64-bit accumulator in 16.48 format.    
+  65:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****  * There are 15 guard bits in the accumulator and there is no risk of overflow as long as    
+  66:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****  * the length of the vectors is less than 2^16 elements.    
+  67:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****  * The return result is in 16.48 format.    
+  68:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****  */
+  69:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** 
+  70:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** void arm_dot_prod_q31(
+  71:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   q31_t * pSrcA,
+  72:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   q31_t * pSrcB,
+  73:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   uint32_t blockSize,
+  74:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   q63_t * result)
+  75:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** {
+  28              	 .loc 1 75 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	 
+  33 0000 2DE9B00F 	 push {r4,r5,r7,r8,r9,r10,fp}
+  34              	.LCFI0:
+  35              	 .cfi_def_cfa_offset 28
+  36              	 .cfi_offset 4,-28
+  37              	 .cfi_offset 5,-24
+  38              	 .cfi_offset 7,-20
+  39              	 .cfi_offset 8,-16
+  40              	 .cfi_offset 9,-12
+  41              	 .cfi_offset 10,-8
+  42              	 .cfi_offset 11,-4
+  43 0004 97B0     	 sub sp,sp,#92
+  44              	.LCFI1:
+  45              	 .cfi_def_cfa_offset 120
+  46 0006 00AF     	 add r7,sp,#0
+  47              	.LCFI2:
+  48              	 .cfi_def_cfa_register 7
+  49 0008 7862     	 str r0,[r7,#36]
+  50 000a 3962     	 str r1,[r7,#32]
+  51 000c FA61     	 str r2,[r7,#28]
+  52 000e BB61     	 str r3,[r7,#24]
+  76:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   q63_t sum = 0;                                 /* Temporary result storage */
+  53              	 .loc 1 76 0
+  54 0010 4FF00002 	 mov r2,#0
+  55 0014 4FF00003 	 mov r3,#0
+  56 0018 C7E91423 	 strd r2,[r7,#80]
+  77:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   uint32_t blkCnt;                               /* loop counter */
+  78:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** 
+  79:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** 
+  80:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** #ifndef ARM_MATH_CM0_FAMILY
+  81:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** 
+  82:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** /* Run the below code for Cortex-M4 and Cortex-M3 */
+  83:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   q31_t inA1, inA2, inA3, inA4;
+  84:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   q31_t inB1, inB2, inB3, inB4;
+  85:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** 
+  86:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   /*loop Unrolling */
+  87:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   blkCnt = blockSize >> 2u;
+  57              	 .loc 1 87 0
+  58 001c FB69     	 ldr r3,[r7,#28]
+  59 001e 9B08     	 lsrs r3,r3,#2
+  60 0020 FB64     	 str r3,[r7,#76]
+  88:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** 
+  89:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
+  90:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****    ** a second loop below computes the remaining 1 to 3 samples. */
+  91:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   while(blkCnt > 0u)
+  61              	 .loc 1 91 0
+  62 0022 B5E0     	 b .L2
+  63              	.L3:
+  92:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   {
+  93:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****     /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
+  94:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****     /* Calculate dot product and then store the result in a temporary buffer. */
+  95:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****     inA1 = *pSrcA++;
+  64              	 .loc 1 95 0
+  65 0024 7B6A     	 ldr r3,[r7,#36]
+  66 0026 1A1D     	 adds r2,r3,#4
+  67 0028 7A62     	 str r2,[r7,#36]
+  68 002a 1B68     	 ldr r3,[r3]
+  69 002c BB64     	 str r3,[r7,#72]
+  96:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****     inA2 = *pSrcA++;
+  70              	 .loc 1 96 0
+  71 002e 7B6A     	 ldr r3,[r7,#36]
+  72 0030 1A1D     	 adds r2,r3,#4
+  73 0032 7A62     	 str r2,[r7,#36]
+  74 0034 1B68     	 ldr r3,[r3]
+  75 0036 7B64     	 str r3,[r7,#68]
+  97:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****     inA3 = *pSrcA++;
+  76              	 .loc 1 97 0
+  77 0038 7B6A     	 ldr r3,[r7,#36]
+  78 003a 1A1D     	 adds r2,r3,#4
+  79 003c 7A62     	 str r2,[r7,#36]
+  80 003e 1B68     	 ldr r3,[r3]
+  81 0040 3B64     	 str r3,[r7,#64]
+  98:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****     inA4 = *pSrcA++;
+  82              	 .loc 1 98 0
+  83 0042 7B6A     	 ldr r3,[r7,#36]
+  84 0044 1A1D     	 adds r2,r3,#4
+  85 0046 7A62     	 str r2,[r7,#36]
+  86 0048 1B68     	 ldr r3,[r3]
+  87 004a FB63     	 str r3,[r7,#60]
+  99:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****     inB1 = *pSrcB++;
+  88              	 .loc 1 99 0
+  89 004c 3B6A     	 ldr r3,[r7,#32]
+  90 004e 1A1D     	 adds r2,r3,#4
+  91 0050 3A62     	 str r2,[r7,#32]
+  92 0052 1B68     	 ldr r3,[r3]
+  93 0054 BB63     	 str r3,[r7,#56]
+ 100:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****     inB2 = *pSrcB++;
+  94              	 .loc 1 100 0
+  95 0056 3B6A     	 ldr r3,[r7,#32]
+  96 0058 1A1D     	 adds r2,r3,#4
+  97 005a 3A62     	 str r2,[r7,#32]
+  98 005c 1B68     	 ldr r3,[r3]
+  99 005e 7B63     	 str r3,[r7,#52]
+ 101:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****     inB3 = *pSrcB++;
+ 100              	 .loc 1 101 0
+ 101 0060 3B6A     	 ldr r3,[r7,#32]
+ 102 0062 1A1D     	 adds r2,r3,#4
+ 103 0064 3A62     	 str r2,[r7,#32]
+ 104 0066 1B68     	 ldr r3,[r3]
+ 105 0068 3B63     	 str r3,[r7,#48]
+ 102:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****     inB4 = *pSrcB++;
+ 106              	 .loc 1 102 0
+ 107 006a 3B6A     	 ldr r3,[r7,#32]
+ 108 006c 1A1D     	 adds r2,r3,#4
+ 109 006e 3A62     	 str r2,[r7,#32]
+ 110 0070 1B68     	 ldr r3,[r3]
+ 111 0072 FB62     	 str r3,[r7,#44]
+ 103:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** 
+ 104:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****     sum += ((q63_t) inA1 * inB1) >> 14u;
+ 112              	 .loc 1 104 0
+ 113 0074 BB6C     	 ldr r3,[r7,#72]
+ 114 0076 1A46     	 mov r2,r3
+ 115 0078 4FEAE273 	 asr r3,r2,#31
+ 116 007c B96B     	 ldr r1,[r7,#56]
+ 117 007e 0846     	 mov r0,r1
+ 118 0080 4FEAE071 	 asr r1,r0,#31
+ 119 0084 00FB03F5 	 mul r5,r0,r3
+ 120 0088 02FB01F4 	 mul r4,r2,r1
+ 121 008c 2C44     	 add r4,r4,r5
+ 122 008e A2FB0023 	 umull r2,r3,r2,r0
+ 123 0092 E118     	 adds r1,r4,r3
+ 124 0094 0B46     	 mov r3,r1
+ 125 0096 4FEA923A 	 lsr r10,r2,#14
+ 126 009a 4AEA834A 	 orr r10,r10,r3,lsl#18
+ 127 009e 4FEAA33B 	 asr fp,r3,#14
+ 128 00a2 D7E91423 	 ldrd r2,[r7,#80]
+ 129 00a6 12EB0A02 	 adds r2,r2,r10
+ 130 00aa 43EB0B03 	 adc r3,r3,fp
+ 131 00ae C7E91423 	 strd r2,[r7,#80]
+ 105:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****     sum += ((q63_t) inA2 * inB2) >> 14u;
+ 132              	 .loc 1 105 0
+ 133 00b2 7B6C     	 ldr r3,[r7,#68]
+ 134 00b4 1A46     	 mov r2,r3
+ 135 00b6 4FEAE273 	 asr r3,r2,#31
+ 136 00ba 796B     	 ldr r1,[r7,#52]
+ 137 00bc 0846     	 mov r0,r1
+ 138 00be 4FEAE071 	 asr r1,r0,#31
+ 139 00c2 00FB03F5 	 mul r5,r0,r3
+ 140 00c6 02FB01F4 	 mul r4,r2,r1
+ 141 00ca 2C44     	 add r4,r4,r5
+ 142 00cc A2FB0023 	 umull r2,r3,r2,r0
+ 143 00d0 E118     	 adds r1,r4,r3
+ 144 00d2 0B46     	 mov r3,r1
+ 145 00d4 910B     	 lsrs r1,r2,#14
+ 146 00d6 3961     	 str r1,[r7,#16]
+ 147 00d8 3969     	 ldr r1,[r7,#16]
+ 148 00da 41EA8341 	 orr r1,r1,r3,lsl#18
+ 149 00de 3961     	 str r1,[r7,#16]
+ 150 00e0 9B13     	 asrs r3,r3,#14
+ 151 00e2 7B61     	 str r3,[r7,#20]
+ 152 00e4 D7E91423 	 ldrd r2,[r7,#80]
+ 153 00e8 D7E90401 	 ldrd r0,[r7,#16]
+ 154 00ec 8018     	 adds r0,r0,r2
+ 155 00ee 41EB0301 	 adc r1,r1,r3
+ 156 00f2 0246     	 mov r2,r0
+ 157 00f4 0B46     	 mov r3,r1
+ 158 00f6 C7E91423 	 strd r2,[r7,#80]
+ 106:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****     sum += ((q63_t) inA3 * inB3) >> 14u;
+ 159              	 .loc 1 106 0
+ 160 00fa 3B6C     	 ldr r3,[r7,#64]
+ 161 00fc 1A46     	 mov r2,r3
+ 162 00fe 4FEAE273 	 asr r3,r2,#31
+ 163 0102 396B     	 ldr r1,[r7,#48]
+ 164 0104 0846     	 mov r0,r1
+ 165 0106 4FEAE071 	 asr r1,r0,#31
+ 166 010a 00FB03F5 	 mul r5,r0,r3
+ 167 010e 02FB01F4 	 mul r4,r2,r1
+ 168 0112 2C44     	 add r4,r4,r5
+ 169 0114 A2FB0023 	 umull r2,r3,r2,r0
+ 170 0118 E118     	 adds r1,r4,r3
+ 171 011a 0B46     	 mov r3,r1
+ 172 011c 910B     	 lsrs r1,r2,#14
+ 173 011e B960     	 str r1,[r7,#8]
+ 174 0120 B968     	 ldr r1,[r7,#8]
+ 175 0122 41EA8341 	 orr r1,r1,r3,lsl#18
+ 176 0126 B960     	 str r1,[r7,#8]
+ 177 0128 9B13     	 asrs r3,r3,#14
+ 178 012a FB60     	 str r3,[r7,#12]
+ 179 012c D7E91423 	 ldrd r2,[r7,#80]
+ 180 0130 D7E90201 	 ldrd r0,[r7,#8]
+ 181 0134 8018     	 adds r0,r0,r2
+ 182 0136 41EB0301 	 adc r1,r1,r3
+ 183 013a 0246     	 mov r2,r0
+ 184 013c 0B46     	 mov r3,r1
+ 185 013e C7E91423 	 strd r2,[r7,#80]
+ 107:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****     sum += ((q63_t) inA4 * inB4) >> 14u;
+ 186              	 .loc 1 107 0
+ 187 0142 FB6B     	 ldr r3,[r7,#60]
+ 188 0144 1A46     	 mov r2,r3
+ 189 0146 4FEAE273 	 asr r3,r2,#31
+ 190 014a F96A     	 ldr r1,[r7,#44]
+ 191 014c 0846     	 mov r0,r1
+ 192 014e 4FEAE071 	 asr r1,r0,#31
+ 193 0152 00FB03F5 	 mul r5,r0,r3
+ 194 0156 02FB01F4 	 mul r4,r2,r1
+ 195 015a 2C44     	 add r4,r4,r5
+ 196 015c A2FB0023 	 umull r2,r3,r2,r0
+ 197 0160 E118     	 adds r1,r4,r3
+ 198 0162 0B46     	 mov r3,r1
+ 199 0164 910B     	 lsrs r1,r2,#14
+ 200 0166 3960     	 str r1,[r7]
+ 201 0168 3968     	 ldr r1,[r7]
+ 202 016a 41EA8341 	 orr r1,r1,r3,lsl#18
+ 203 016e 3960     	 str r1,[r7]
+ 204 0170 9B13     	 asrs r3,r3,#14
+ 205 0172 7B60     	 str r3,[r7,#4]
+ 206 0174 D7E91423 	 ldrd r2,[r7,#80]
+ 207 0178 D7E90001 	 ldrd r0,[r7]
+ 208 017c 8018     	 adds r0,r0,r2
+ 209 017e 41EB0301 	 adc r1,r1,r3
+ 210 0182 0246     	 mov r2,r0
+ 211 0184 0B46     	 mov r3,r1
+ 212 0186 C7E91423 	 strd r2,[r7,#80]
+ 108:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** 
+ 109:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****     /* Decrement the loop counter */
+ 110:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****     blkCnt--;
+ 213              	 .loc 1 110 0
+ 214 018a FB6C     	 ldr r3,[r7,#76]
+ 215 018c 013B     	 subs r3,r3,#1
+ 216 018e FB64     	 str r3,[r7,#76]
+ 217              	.L2:
+  91:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   {
+ 218              	 .loc 1 91 0
+ 219 0190 FB6C     	 ldr r3,[r7,#76]
+ 220 0192 002B     	 cmp r3,#0
+ 221 0194 7FF446AF 	 bne .L3
+ 111:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   }
+ 112:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** 
+ 113:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.    
+ 114:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****    ** No loop unrolling is used. */
+ 115:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   blkCnt = blockSize % 0x4u;
+ 222              	 .loc 1 115 0
+ 223 0198 FB69     	 ldr r3,[r7,#28]
+ 224 019a 03F00303 	 and r3,r3,#3
+ 225 019e FB64     	 str r3,[r7,#76]
+ 116:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** 
+ 117:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** #else
+ 118:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** 
+ 119:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   /* Run the below code for Cortex-M0 */
+ 120:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** 
+ 121:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   /* Initialize blkCnt with number of samples */
+ 122:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   blkCnt = blockSize;
+ 123:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** 
+ 124:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** #endif /* #ifndef ARM_MATH_CM0_FAMILY */
+ 125:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** 
+ 126:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** 
+ 127:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   while(blkCnt > 0u)
+ 226              	 .loc 1 127 0
+ 227 01a0 27E0     	 b .L4
+ 228              	.L5:
+ 128:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   {
+ 129:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****     /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
+ 130:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****     /* Calculate dot product and then store the result in a temporary buffer. */
+ 131:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****     sum += ((q63_t) * pSrcA++ * *pSrcB++) >> 14u;
+ 229              	 .loc 1 131 0
+ 230 01a2 7B6A     	 ldr r3,[r7,#36]
+ 231 01a4 1A1D     	 adds r2,r3,#4
+ 232 01a6 7A62     	 str r2,[r7,#36]
+ 233 01a8 1B68     	 ldr r3,[r3]
+ 234 01aa 1846     	 mov r0,r3
+ 235 01ac 4FEAE071 	 asr r1,r0,#31
+ 236 01b0 3B6A     	 ldr r3,[r7,#32]
+ 237 01b2 1A1D     	 adds r2,r3,#4
+ 238 01b4 3A62     	 str r2,[r7,#32]
+ 239 01b6 1B68     	 ldr r3,[r3]
+ 240 01b8 1A46     	 mov r2,r3
+ 241 01ba 4FEAE273 	 asr r3,r2,#31
+ 242 01be 02FB01F5 	 mul r5,r2,r1
+ 243 01c2 00FB03F4 	 mul r4,r0,r3
+ 244 01c6 2C44     	 add r4,r4,r5
+ 245 01c8 A0FB0223 	 umull r2,r3,r0,r2
+ 246 01cc E118     	 adds r1,r4,r3
+ 247 01ce 0B46     	 mov r3,r1
+ 248 01d0 4FEA9238 	 lsr r8,r2,#14
+ 249 01d4 48EA8348 	 orr r8,r8,r3,lsl#18
+ 250 01d8 4FEAA339 	 asr r9,r3,#14
+ 251 01dc D7E91423 	 ldrd r2,[r7,#80]
+ 252 01e0 12EB0802 	 adds r2,r2,r8
+ 253 01e4 43EB0903 	 adc r3,r3,r9
+ 254 01e8 C7E91423 	 strd r2,[r7,#80]
+ 132:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** 
+ 133:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****     /* Decrement the loop counter */
+ 134:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****     blkCnt--;
+ 255              	 .loc 1 134 0
+ 256 01ec FB6C     	 ldr r3,[r7,#76]
+ 257 01ee 013B     	 subs r3,r3,#1
+ 258 01f0 FB64     	 str r3,[r7,#76]
+ 259              	.L4:
+ 127:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   {
+ 260              	 .loc 1 127 0
+ 261 01f2 FB6C     	 ldr r3,[r7,#76]
+ 262 01f4 002B     	 cmp r3,#0
+ 263 01f6 D4D1     	 bne .L5
+ 135:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   }
+ 136:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** 
+ 137:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   /* Store the result in the destination buffer in 16.48 format */
+ 138:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c ****   *result = sum;
+ 264              	 .loc 1 138 0
+ 265 01f8 B969     	 ldr r1,[r7,#24]
+ 266 01fa D7E91423 	 ldrd r2,[r7,#80]
+ 267 01fe C1E90023 	 strd r2,[r1]
+ 139:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_dot_prod_q31.c **** }
+ 268              	 .loc 1 139 0
+ 269 0202 5C37     	 adds r7,r7,#92
+ 270              	.LCFI3:
+ 271              	 .cfi_def_cfa_offset 28
+ 272 0204 BD46     	 mov sp,r7
+ 273              	.LCFI4:
+ 274              	 .cfi_def_cfa_register 13
+ 275              	 
+ 276 0206 BDE8B00F 	 pop {r4,r5,r7,r8,r9,r10,fp}
+ 277              	.LCFI5:
+ 278              	 .cfi_restore 11
+ 279              	 .cfi_restore 10
+ 280              	 .cfi_restore 9
+ 281              	 .cfi_restore 8
+ 282              	 .cfi_restore 7
+ 283              	 .cfi_restore 5
+ 284              	 .cfi_restore 4
+ 285              	 .cfi_def_cfa_offset 0
+ 286 020a 7047     	 bx lr
+ 287              	 .cfi_endproc
+ 288              	.LFE139:
+ 290              	 .text
+ 291              	.Letext0:
+ 292              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 293              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 294              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_dot_prod_q31.c
+    {standard input}:20     .text.arm_dot_prod_q31:00000000 $t
+    {standard input}:25     .text.arm_dot_prod_q31:00000000 arm_dot_prod_q31
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

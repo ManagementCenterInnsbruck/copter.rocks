@@ -1,0 +1,611 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_cmplx_mag_q31.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.arm_cmplx_mag_q31,"ax",%progbits
+  20              	 .align 2
+  21              	 .global arm_cmplx_mag_q31
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	arm_cmplx_mag_q31:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c"
+   1:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** /* ----------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * $Date:        12. March 2014
+   5:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * $Revision: 	V1.4.4
+   6:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * Title:		arm_cmplx_mag_q31.c    
+   9:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * Description:	Q31 complex magnitude    
+  11:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** *
+  27:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * POSSIBILITY OF SUCH DAMAGE.  
+  39:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** * ---------------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+  41:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+  43:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** /**        
+  44:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****  * @ingroup groupCmplxMath        
+  45:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****  */
+  46:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+  47:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** /**        
+  48:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****  * @addtogroup cmplx_mag        
+  49:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****  * @{        
+  50:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****  */
+  51:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+  52:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** /**        
+  53:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****  * @brief  Q31 complex magnitude        
+  54:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****  * @param  *pSrc points to the complex input vector        
+  55:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****  * @param  *pDst points to the real output vector        
+  56:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****  * @param  numSamples number of complex samples in the input vector        
+  57:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****  * @return none.        
+  58:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****  *        
+  59:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****  * <b>Scaling and Overflow Behavior:</b>        
+  60:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****  * \par        
+  61:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****  * The function implements 1.31 by 1.31 multiplications and finally output is converted into 2.30 f
+  62:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****  * Input down scaling is not required.        
+  63:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****  */
+  64:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+  65:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** void arm_cmplx_mag_q31(
+  66:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   q31_t * pSrc,
+  67:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   q31_t * pDst,
+  68:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   uint32_t numSamples)
+  69:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** {
+  28              	 .loc 1 69 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32 0000 2DE9B04F 	 push {r4,r5,r7,r8,r9,r10,fp,lr}
+  33              	.LCFI0:
+  34              	 .cfi_def_cfa_offset 32
+  35              	 .cfi_offset 4,-32
+  36              	 .cfi_offset 5,-28
+  37              	 .cfi_offset 7,-24
+  38              	 .cfi_offset 8,-20
+  39              	 .cfi_offset 9,-16
+  40              	 .cfi_offset 10,-12
+  41              	 .cfi_offset 11,-8
+  42              	 .cfi_offset 14,-4
+  43 0004 AAB0     	 sub sp,sp,#168
+  44              	.LCFI1:
+  45              	 .cfi_def_cfa_offset 200
+  46 0006 00AF     	 add r7,sp,#0
+  47              	.LCFI2:
+  48              	 .cfi_def_cfa_register 7
+  49 0008 F864     	 str r0,[r7,#76]
+  50 000a B964     	 str r1,[r7,#72]
+  51 000c 7A64     	 str r2,[r7,#68]
+  70:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   q31_t real, imag;                              /* Temporary variables to hold input values */
+  71:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   q31_t acc0, acc1;                              /* Accumulators */
+  72:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   uint32_t blkCnt;                               /* loop counter */
+  73:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+  74:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** #ifndef ARM_MATH_CM0_FAMILY
+  75:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+  76:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   /* Run the below code for Cortex-M4 and Cortex-M3 */
+  77:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   q31_t real1, real2, imag1, imag2;              /* Temporary variables to hold input values */
+  78:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   q31_t out1, out2, out3, out4;                  /* Accumulators */
+  79:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   q63_t mul1, mul2, mul3, mul4;                  /* Temporary variables */
+  80:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+  81:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+  82:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   /*loop Unrolling */
+  83:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   blkCnt = numSamples >> 2u;
+  52              	 .loc 1 83 0
+  53 000e 7B6C     	 ldr r3,[r7,#68]
+  54 0010 9B08     	 lsrs r3,r3,#2
+  55 0012 C7F8A430 	 str r3,[r7,#164]
+  84:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+  85:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.        
+  86:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****    ** a second loop below computes the remaining 1 to 3 samples. */
+  87:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   while(blkCnt > 0u)
+  56              	 .loc 1 87 0
+  57 0016 48E1     	 b .L2
+  58              	.L3:
+  88:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   {
+  89:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     /* read complex input from source buffer */
+  90:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     real1 = pSrc[0];
+  59              	 .loc 1 90 0
+  60 0018 FB6C     	 ldr r3,[r7,#76]
+  61 001a 1B68     	 ldr r3,[r3]
+  62 001c C7F8A030 	 str r3,[r7,#160]
+  91:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     imag1 = pSrc[1];
+  63              	 .loc 1 91 0
+  64 0020 FB6C     	 ldr r3,[r7,#76]
+  65 0022 5B68     	 ldr r3,[r3,#4]
+  66 0024 C7F89C30 	 str r3,[r7,#156]
+  92:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     real2 = pSrc[2];
+  67              	 .loc 1 92 0
+  68 0028 FB6C     	 ldr r3,[r7,#76]
+  69 002a 9B68     	 ldr r3,[r3,#8]
+  70 002c C7F89830 	 str r3,[r7,#152]
+  93:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     imag2 = pSrc[3];
+  71              	 .loc 1 93 0
+  72 0030 FB6C     	 ldr r3,[r7,#76]
+  73 0032 DB68     	 ldr r3,[r3,#12]
+  74 0034 C7F89430 	 str r3,[r7,#148]
+  94:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+  95:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     /* calculate power of input values */
+  96:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     mul1 = (q63_t) real1 *real1;
+  75              	 .loc 1 96 0
+  76 0038 D7F8A030 	 ldr r3,[r7,#160]
+  77 003c 1846     	 mov r0,r3
+  78 003e 4FEAE071 	 asr r1,r0,#31
+  79 0042 D7F8A030 	 ldr r3,[r7,#160]
+  80 0046 1A46     	 mov r2,r3
+  81 0048 4FEAE273 	 asr r3,r2,#31
+  82 004c 02FB01F5 	 mul r5,r2,r1
+  83 0050 00FB03F4 	 mul r4,r0,r3
+  84 0054 2C44     	 add r4,r4,r5
+  85 0056 A0FB0223 	 umull r2,r3,r0,r2
+  86 005a E118     	 adds r1,r4,r3
+  87 005c 0B46     	 mov r3,r1
+  88 005e C7E92223 	 strd r2,[r7,#136]
+  89 0062 C7E92223 	 strd r2,[r7,#136]
+  97:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     mul2 = (q63_t) imag1 *imag1;
+  90              	 .loc 1 97 0
+  91 0066 D7F89C30 	 ldr r3,[r7,#156]
+  92 006a 1846     	 mov r0,r3
+  93 006c 4FEAE071 	 asr r1,r0,#31
+  94 0070 D7F89C30 	 ldr r3,[r7,#156]
+  95 0074 1A46     	 mov r2,r3
+  96 0076 4FEAE273 	 asr r3,r2,#31
+  97 007a 02FB01F5 	 mul r5,r2,r1
+  98 007e 00FB03F4 	 mul r4,r0,r3
+  99 0082 2C44     	 add r4,r4,r5
+ 100 0084 A0FB0223 	 umull r2,r3,r0,r2
+ 101 0088 E118     	 adds r1,r4,r3
+ 102 008a 0B46     	 mov r3,r1
+ 103 008c C7E92023 	 strd r2,[r7,#128]
+ 104 0090 C7E92023 	 strd r2,[r7,#128]
+  98:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     mul3 = (q63_t) real2 *real2;
+ 105              	 .loc 1 98 0
+ 106 0094 D7F89830 	 ldr r3,[r7,#152]
+ 107 0098 1846     	 mov r0,r3
+ 108 009a 4FEAE071 	 asr r1,r0,#31
+ 109 009e D7F89830 	 ldr r3,[r7,#152]
+ 110 00a2 1A46     	 mov r2,r3
+ 111 00a4 4FEAE273 	 asr r3,r2,#31
+ 112 00a8 02FB01F5 	 mul r5,r2,r1
+ 113 00ac 00FB03F4 	 mul r4,r0,r3
+ 114 00b0 2C44     	 add r4,r4,r5
+ 115 00b2 A0FB0223 	 umull r2,r3,r0,r2
+ 116 00b6 E118     	 adds r1,r4,r3
+ 117 00b8 0B46     	 mov r3,r1
+ 118 00ba C7E91E23 	 strd r2,[r7,#120]
+ 119 00be C7E91E23 	 strd r2,[r7,#120]
+  99:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     mul4 = (q63_t) imag2 *imag2;
+ 120              	 .loc 1 99 0
+ 121 00c2 D7F89430 	 ldr r3,[r7,#148]
+ 122 00c6 1846     	 mov r0,r3
+ 123 00c8 4FEAE071 	 asr r1,r0,#31
+ 124 00cc D7F89430 	 ldr r3,[r7,#148]
+ 125 00d0 1A46     	 mov r2,r3
+ 126 00d2 4FEAE273 	 asr r3,r2,#31
+ 127 00d6 02FB01F5 	 mul r5,r2,r1
+ 128 00da 00FB03F4 	 mul r4,r0,r3
+ 129 00de 2C44     	 add r4,r4,r5
+ 130 00e0 A0FB0223 	 umull r2,r3,r0,r2
+ 131 00e4 E118     	 adds r1,r4,r3
+ 132 00e6 0B46     	 mov r3,r1
+ 133 00e8 C7E91C23 	 strd r2,[r7,#112]
+ 134 00ec C7E91C23 	 strd r2,[r7,#112]
+ 100:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+ 101:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     /* get the result to 3.29 format */
+ 102:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     out1 = (q31_t) (mul1 >> 33);
+ 135              	 .loc 1 102 0
+ 136 00f0 D7E92223 	 ldrd r2,[r7,#136]
+ 137 00f4 5910     	 asrs r1,r3,#1
+ 138 00f6 B963     	 str r1,[r7,#56]
+ 139 00f8 DB17     	 asrs r3,r3,#31
+ 140 00fa FB63     	 str r3,[r7,#60]
+ 141 00fc BB6B     	 ldr r3,[r7,#56]
+ 142 00fe FB66     	 str r3,[r7,#108]
+ 103:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     out2 = (q31_t) (mul2 >> 33);
+ 143              	 .loc 1 103 0
+ 144 0100 D7E92023 	 ldrd r2,[r7,#128]
+ 145 0104 5910     	 asrs r1,r3,#1
+ 146 0106 3963     	 str r1,[r7,#48]
+ 147 0108 DB17     	 asrs r3,r3,#31
+ 148 010a 7B63     	 str r3,[r7,#52]
+ 149 010c 3B6B     	 ldr r3,[r7,#48]
+ 150 010e BB66     	 str r3,[r7,#104]
+ 104:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     out3 = (q31_t) (mul3 >> 33);
+ 151              	 .loc 1 104 0
+ 152 0110 D7E91E23 	 ldrd r2,[r7,#120]
+ 153 0114 5910     	 asrs r1,r3,#1
+ 154 0116 B962     	 str r1,[r7,#40]
+ 155 0118 DB17     	 asrs r3,r3,#31
+ 156 011a FB62     	 str r3,[r7,#44]
+ 157 011c BB6A     	 ldr r3,[r7,#40]
+ 158 011e 7B66     	 str r3,[r7,#100]
+ 105:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     out4 = (q31_t) (mul4 >> 33);
+ 159              	 .loc 1 105 0
+ 160 0120 D7E91C23 	 ldrd r2,[r7,#112]
+ 161 0124 5910     	 asrs r1,r3,#1
+ 162 0126 3962     	 str r1,[r7,#32]
+ 163 0128 DB17     	 asrs r3,r3,#31
+ 164 012a 7B62     	 str r3,[r7,#36]
+ 165 012c 3B6A     	 ldr r3,[r7,#32]
+ 166 012e 3B66     	 str r3,[r7,#96]
+ 106:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+ 107:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     /* add real and imaginary accumulators */
+ 108:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     out1 = out1 + out2;
+ 167              	 .loc 1 108 0
+ 168 0130 FA6E     	 ldr r2,[r7,#108]
+ 169 0132 BB6E     	 ldr r3,[r7,#104]
+ 170 0134 1344     	 add r3,r3,r2
+ 171 0136 FB66     	 str r3,[r7,#108]
+ 109:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     out3 = out3 + out4;
+ 172              	 .loc 1 109 0
+ 173 0138 7A6E     	 ldr r2,[r7,#100]
+ 174 013a 3B6E     	 ldr r3,[r7,#96]
+ 175 013c 1344     	 add r3,r3,r2
+ 176 013e 7B66     	 str r3,[r7,#100]
+ 110:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+ 111:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     /* read complex input from source buffer */
+ 112:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     real1 = pSrc[4];
+ 177              	 .loc 1 112 0
+ 178 0140 FB6C     	 ldr r3,[r7,#76]
+ 179 0142 1B69     	 ldr r3,[r3,#16]
+ 180 0144 C7F8A030 	 str r3,[r7,#160]
+ 113:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     imag1 = pSrc[5];
+ 181              	 .loc 1 113 0
+ 182 0148 FB6C     	 ldr r3,[r7,#76]
+ 183 014a 5B69     	 ldr r3,[r3,#20]
+ 184 014c C7F89C30 	 str r3,[r7,#156]
+ 114:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     real2 = pSrc[6];
+ 185              	 .loc 1 114 0
+ 186 0150 FB6C     	 ldr r3,[r7,#76]
+ 187 0152 9B69     	 ldr r3,[r3,#24]
+ 188 0154 C7F89830 	 str r3,[r7,#152]
+ 115:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     imag2 = pSrc[7];
+ 189              	 .loc 1 115 0
+ 190 0158 FB6C     	 ldr r3,[r7,#76]
+ 191 015a DB69     	 ldr r3,[r3,#28]
+ 192 015c C7F89430 	 str r3,[r7,#148]
+ 116:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+ 117:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     /* calculate square root */
+ 118:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     arm_sqrt_q31(out1, &pDst[0]);
+ 193              	 .loc 1 118 0
+ 194 0160 F86E     	 ldr r0,[r7,#108]
+ 195 0162 B96C     	 ldr r1,[r7,#72]
+ 196 0164 FFF7FEFF 	 bl arm_sqrt_q31
+ 119:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+ 120:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     /* calculate power of input values */
+ 121:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     mul1 = (q63_t) real1 *real1;
+ 197              	 .loc 1 121 0
+ 198 0168 D7F8A030 	 ldr r3,[r7,#160]
+ 199 016c 1846     	 mov r0,r3
+ 200 016e 4FEAE071 	 asr r1,r0,#31
+ 201 0172 D7F8A030 	 ldr r3,[r7,#160]
+ 202 0176 1A46     	 mov r2,r3
+ 203 0178 4FEAE273 	 asr r3,r2,#31
+ 204 017c 02FB01F5 	 mul r5,r2,r1
+ 205 0180 00FB03F4 	 mul r4,r0,r3
+ 206 0184 2C44     	 add r4,r4,r5
+ 207 0186 A0FB0223 	 umull r2,r3,r0,r2
+ 208 018a E118     	 adds r1,r4,r3
+ 209 018c 0B46     	 mov r3,r1
+ 210 018e C7E92223 	 strd r2,[r7,#136]
+ 211 0192 C7E92223 	 strd r2,[r7,#136]
+ 122:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+ 123:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     /* calculate square root */
+ 124:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     arm_sqrt_q31(out3, &pDst[1]);
+ 212              	 .loc 1 124 0
+ 213 0196 BB6C     	 ldr r3,[r7,#72]
+ 214 0198 0433     	 adds r3,r3,#4
+ 215 019a 786E     	 ldr r0,[r7,#100]
+ 216 019c 1946     	 mov r1,r3
+ 217 019e FFF7FEFF 	 bl arm_sqrt_q31
+ 125:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+ 126:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     /* calculate power of input values */
+ 127:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     mul2 = (q63_t) imag1 *imag1;
+ 218              	 .loc 1 127 0
+ 219 01a2 D7F89C30 	 ldr r3,[r7,#156]
+ 220 01a6 1846     	 mov r0,r3
+ 221 01a8 4FEAE071 	 asr r1,r0,#31
+ 222 01ac D7F89C30 	 ldr r3,[r7,#156]
+ 223 01b0 1A46     	 mov r2,r3
+ 224 01b2 4FEAE273 	 asr r3,r2,#31
+ 225 01b6 02FB01F5 	 mul r5,r2,r1
+ 226 01ba 00FB03F4 	 mul r4,r0,r3
+ 227 01be 2C44     	 add r4,r4,r5
+ 228 01c0 A0FB0223 	 umull r2,r3,r0,r2
+ 229 01c4 E118     	 adds r1,r4,r3
+ 230 01c6 0B46     	 mov r3,r1
+ 231 01c8 C7E92023 	 strd r2,[r7,#128]
+ 232 01cc C7E92023 	 strd r2,[r7,#128]
+ 128:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     mul3 = (q63_t) real2 *real2;
+ 233              	 .loc 1 128 0
+ 234 01d0 D7F89830 	 ldr r3,[r7,#152]
+ 235 01d4 1846     	 mov r0,r3
+ 236 01d6 4FEAE071 	 asr r1,r0,#31
+ 237 01da D7F89830 	 ldr r3,[r7,#152]
+ 238 01de 1A46     	 mov r2,r3
+ 239 01e0 4FEAE273 	 asr r3,r2,#31
+ 240 01e4 02FB01F5 	 mul r5,r2,r1
+ 241 01e8 00FB03F4 	 mul r4,r0,r3
+ 242 01ec 2C44     	 add r4,r4,r5
+ 243 01ee A0FB0223 	 umull r2,r3,r0,r2
+ 244 01f2 E118     	 adds r1,r4,r3
+ 245 01f4 0B46     	 mov r3,r1
+ 246 01f6 C7E91E23 	 strd r2,[r7,#120]
+ 247 01fa C7E91E23 	 strd r2,[r7,#120]
+ 129:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     mul4 = (q63_t) imag2 *imag2;
+ 248              	 .loc 1 129 0
+ 249 01fe D7F89430 	 ldr r3,[r7,#148]
+ 250 0202 1846     	 mov r0,r3
+ 251 0204 4FEAE071 	 asr r1,r0,#31
+ 252 0208 D7F89430 	 ldr r3,[r7,#148]
+ 253 020c 1A46     	 mov r2,r3
+ 254 020e 4FEAE273 	 asr r3,r2,#31
+ 255 0212 02FB01F5 	 mul r5,r2,r1
+ 256 0216 00FB03F4 	 mul r4,r0,r3
+ 257 021a 2C44     	 add r4,r4,r5
+ 258 021c A0FB0223 	 umull r2,r3,r0,r2
+ 259 0220 E118     	 adds r1,r4,r3
+ 260 0222 0B46     	 mov r3,r1
+ 261 0224 C7E91C23 	 strd r2,[r7,#112]
+ 262 0228 C7E91C23 	 strd r2,[r7,#112]
+ 130:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+ 131:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     /* get the result to 3.29 format */
+ 132:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     out1 = (q31_t) (mul1 >> 33);
+ 263              	 .loc 1 132 0
+ 264 022c D7E92223 	 ldrd r2,[r7,#136]
+ 265 0230 5910     	 asrs r1,r3,#1
+ 266 0232 B961     	 str r1,[r7,#24]
+ 267 0234 DB17     	 asrs r3,r3,#31
+ 268 0236 FB61     	 str r3,[r7,#28]
+ 269 0238 BB69     	 ldr r3,[r7,#24]
+ 270 023a FB66     	 str r3,[r7,#108]
+ 133:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     out2 = (q31_t) (mul2 >> 33);
+ 271              	 .loc 1 133 0
+ 272 023c D7E92023 	 ldrd r2,[r7,#128]
+ 273 0240 5910     	 asrs r1,r3,#1
+ 274 0242 3961     	 str r1,[r7,#16]
+ 275 0244 DB17     	 asrs r3,r3,#31
+ 276 0246 7B61     	 str r3,[r7,#20]
+ 277 0248 3B69     	 ldr r3,[r7,#16]
+ 278 024a BB66     	 str r3,[r7,#104]
+ 134:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     out3 = (q31_t) (mul3 >> 33);
+ 279              	 .loc 1 134 0
+ 280 024c D7E91E23 	 ldrd r2,[r7,#120]
+ 281 0250 5910     	 asrs r1,r3,#1
+ 282 0252 B960     	 str r1,[r7,#8]
+ 283 0254 DB17     	 asrs r3,r3,#31
+ 284 0256 FB60     	 str r3,[r7,#12]
+ 285 0258 BB68     	 ldr r3,[r7,#8]
+ 286 025a 7B66     	 str r3,[r7,#100]
+ 135:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     out4 = (q31_t) (mul4 >> 33);
+ 287              	 .loc 1 135 0
+ 288 025c D7E91C23 	 ldrd r2,[r7,#112]
+ 289 0260 5910     	 asrs r1,r3,#1
+ 290 0262 3960     	 str r1,[r7]
+ 291 0264 DB17     	 asrs r3,r3,#31
+ 292 0266 7B60     	 str r3,[r7,#4]
+ 293 0268 3B68     	 ldr r3,[r7]
+ 294 026a 3B66     	 str r3,[r7,#96]
+ 136:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+ 137:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     /* add real and imaginary accumulators */
+ 138:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     out1 = out1 + out2;
+ 295              	 .loc 1 138 0
+ 296 026c FA6E     	 ldr r2,[r7,#108]
+ 297 026e BB6E     	 ldr r3,[r7,#104]
+ 298 0270 1344     	 add r3,r3,r2
+ 299 0272 FB66     	 str r3,[r7,#108]
+ 139:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     out3 = out3 + out4;
+ 300              	 .loc 1 139 0
+ 301 0274 7A6E     	 ldr r2,[r7,#100]
+ 302 0276 3B6E     	 ldr r3,[r7,#96]
+ 303 0278 1344     	 add r3,r3,r2
+ 304 027a 7B66     	 str r3,[r7,#100]
+ 140:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+ 141:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     /* calculate square root */
+ 142:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     arm_sqrt_q31(out1, &pDst[2]);
+ 305              	 .loc 1 142 0
+ 306 027c BB6C     	 ldr r3,[r7,#72]
+ 307 027e 0833     	 adds r3,r3,#8
+ 308 0280 F86E     	 ldr r0,[r7,#108]
+ 309 0282 1946     	 mov r1,r3
+ 310 0284 FFF7FEFF 	 bl arm_sqrt_q31
+ 143:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+ 144:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     /* increment destination by 8 to process next samples */
+ 145:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     pSrc += 8u;
+ 311              	 .loc 1 145 0
+ 312 0288 FB6C     	 ldr r3,[r7,#76]
+ 313 028a 2033     	 adds r3,r3,#32
+ 314 028c FB64     	 str r3,[r7,#76]
+ 146:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+ 147:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     /* calculate square root */
+ 148:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     arm_sqrt_q31(out3, &pDst[3]);
+ 315              	 .loc 1 148 0
+ 316 028e BB6C     	 ldr r3,[r7,#72]
+ 317 0290 0C33     	 adds r3,r3,#12
+ 318 0292 786E     	 ldr r0,[r7,#100]
+ 319 0294 1946     	 mov r1,r3
+ 320 0296 FFF7FEFF 	 bl arm_sqrt_q31
+ 149:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+ 150:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     /* increment destination by 4 to process next samples */
+ 151:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     pDst += 4u;
+ 321              	 .loc 1 151 0
+ 322 029a BB6C     	 ldr r3,[r7,#72]
+ 323 029c 1033     	 adds r3,r3,#16
+ 324 029e BB64     	 str r3,[r7,#72]
+ 152:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+ 153:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     /* Decrement the loop counter */
+ 154:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     blkCnt--;
+ 325              	 .loc 1 154 0
+ 326 02a0 D7F8A430 	 ldr r3,[r7,#164]
+ 327 02a4 013B     	 subs r3,r3,#1
+ 328 02a6 C7F8A430 	 str r3,[r7,#164]
+ 329              	.L2:
+  87:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   {
+ 330              	 .loc 1 87 0
+ 331 02aa D7F8A430 	 ldr r3,[r7,#164]
+ 332 02ae 002B     	 cmp r3,#0
+ 333 02b0 7FF4B2AE 	 bne .L3
+ 155:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   }
+ 156:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+ 157:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   /* If the numSamples is not a multiple of 4, compute any remaining output samples here.        
+ 158:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****    ** No loop unrolling is used. */
+ 159:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   blkCnt = numSamples % 0x4u;
+ 334              	 .loc 1 159 0
+ 335 02b4 7B6C     	 ldr r3,[r7,#68]
+ 336 02b6 03F00303 	 and r3,r3,#3
+ 337 02ba C7F8A430 	 str r3,[r7,#164]
+ 160:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+ 161:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** #else
+ 162:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+ 163:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   /* Run the below code for Cortex-M0 */
+ 164:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   blkCnt = numSamples;
+ 165:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+ 166:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** #endif /* #ifndef ARM_MATH_CM0_FAMILY */
+ 167:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+ 168:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   while(blkCnt > 0u)
+ 338              	 .loc 1 168 0
+ 339 02be 46E0     	 b .L4
+ 340              	.L5:
+ 169:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   {
+ 170:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     /* C[0] = sqrt(A[0] * A[0] + A[1] * A[1]) */
+ 171:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     real = *pSrc++;
+ 341              	 .loc 1 171 0
+ 342 02c0 FB6C     	 ldr r3,[r7,#76]
+ 343 02c2 1A1D     	 adds r2,r3,#4
+ 344 02c4 FA64     	 str r2,[r7,#76]
+ 345 02c6 1B68     	 ldr r3,[r3]
+ 346 02c8 FB65     	 str r3,[r7,#92]
+ 172:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     imag = *pSrc++;
+ 347              	 .loc 1 172 0
+ 348 02ca FB6C     	 ldr r3,[r7,#76]
+ 349 02cc 1A1D     	 adds r2,r3,#4
+ 350 02ce FA64     	 str r2,[r7,#76]
+ 351 02d0 1B68     	 ldr r3,[r3]
+ 352 02d2 BB65     	 str r3,[r7,#88]
+ 173:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     acc0 = (q31_t) (((q63_t) real * real) >> 33);
+ 353              	 .loc 1 173 0
+ 354 02d4 FB6D     	 ldr r3,[r7,#92]
+ 355 02d6 1846     	 mov r0,r3
+ 356 02d8 4FEAE071 	 asr r1,r0,#31
+ 357 02dc FB6D     	 ldr r3,[r7,#92]
+ 358 02de 1A46     	 mov r2,r3
+ 359 02e0 4FEAE273 	 asr r3,r2,#31
+ 360 02e4 02FB01F5 	 mul r5,r2,r1
+ 361 02e8 00FB03F4 	 mul r4,r0,r3
+ 362 02ec 2C44     	 add r4,r4,r5
+ 363 02ee A0FB0223 	 umull r2,r3,r0,r2
+ 364 02f2 E118     	 adds r1,r4,r3
+ 365 02f4 0B46     	 mov r3,r1
+ 366 02f6 4FEA6308 	 asr r8,r3,#1
+ 367 02fa 4FEAE379 	 asr r9,r3,#31
+ 368 02fe 4346     	 mov r3,r8
+ 369 0300 7B65     	 str r3,[r7,#84]
+ 174:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     acc1 = (q31_t) (((q63_t) imag * imag) >> 33);
+ 370              	 .loc 1 174 0
+ 371 0302 BB6D     	 ldr r3,[r7,#88]
+ 372 0304 1846     	 mov r0,r3
+ 373 0306 4FEAE071 	 asr r1,r0,#31
+ 374 030a BB6D     	 ldr r3,[r7,#88]
+ 375 030c 1A46     	 mov r2,r3
+ 376 030e 4FEAE273 	 asr r3,r2,#31
+ 377 0312 02FB01F5 	 mul r5,r2,r1
+ 378 0316 00FB03F4 	 mul r4,r0,r3
+ 379 031a 2C44     	 add r4,r4,r5
+ 380 031c A0FB0223 	 umull r2,r3,r0,r2
+ 381 0320 E118     	 adds r1,r4,r3
+ 382 0322 0B46     	 mov r3,r1
+ 383 0324 4FEA630A 	 asr r10,r3,#1
+ 384 0328 4FEAE37B 	 asr fp,r3,#31
+ 385 032c 5346     	 mov r3,r10
+ 386 032e 3B65     	 str r3,[r7,#80]
+ 175:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     /* store the result in 2.30 format in the destination buffer. */
+ 176:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     arm_sqrt_q31(acc0 + acc1, pDst++);
+ 387              	 .loc 1 176 0
+ 388 0330 7A6D     	 ldr r2,[r7,#84]
+ 389 0332 3B6D     	 ldr r3,[r7,#80]
+ 390 0334 D118     	 adds r1,r2,r3
+ 391 0336 BB6C     	 ldr r3,[r7,#72]
+ 392 0338 1A1D     	 adds r2,r3,#4
+ 393 033a BA64     	 str r2,[r7,#72]
+ 394 033c 0846     	 mov r0,r1
+ 395 033e 1946     	 mov r1,r3
+ 396 0340 FFF7FEFF 	 bl arm_sqrt_q31
+ 177:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** 
+ 178:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     /* Decrement the loop counter */
+ 179:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****     blkCnt--;
+ 397              	 .loc 1 179 0
+ 398 0344 D7F8A430 	 ldr r3,[r7,#164]
+ 399 0348 013B     	 subs r3,r3,#1
+ 400 034a C7F8A430 	 str r3,[r7,#164]
+ 401              	.L4:
+ 168:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   {
+ 402              	 .loc 1 168 0
+ 403 034e D7F8A430 	 ldr r3,[r7,#164]
+ 404 0352 002B     	 cmp r3,#0
+ 405 0354 B4D1     	 bne .L5
+ 180:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c ****   }
+ 181:../Dave/Generated/CMSIS_DSP/ComplexMathFunctions/arm_cmplx_mag_q31.c **** }
+ 406              	 .loc 1 181 0
+ 407 0356 A837     	 adds r7,r7,#168
+ 408              	.LCFI3:
+ 409              	 .cfi_def_cfa_offset 32
+ 410 0358 BD46     	 mov sp,r7
+ 411              	.LCFI4:
+ 412              	 .cfi_def_cfa_register 13
+ 413              	 
+ 414 035a BDE8B08F 	 pop {r4,r5,r7,r8,r9,r10,fp,pc}
+ 415              	 .cfi_endproc
+ 416              	.LFE139:
+ 418 035e 00BF     	 .text
+ 419              	.Letext0:
+ 420              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 421              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 422              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_cmplx_mag_q31.c
+    {standard input}:20     .text.arm_cmplx_mag_q31:00000000 $t
+    {standard input}:25     .text.arm_cmplx_mag_q31:00000000 arm_cmplx_mag_q31
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+arm_sqrt_q31

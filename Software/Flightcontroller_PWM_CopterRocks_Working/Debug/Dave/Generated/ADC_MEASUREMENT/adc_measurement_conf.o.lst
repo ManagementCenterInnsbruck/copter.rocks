@@ -1,0 +1,121 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "adc_measurement_conf.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .global global_iclass_config
+  20              	 .section .rodata.global_iclass_config,"a",%progbits
+  21              	 .align 2
+  24              	global_iclass_config:
+  25 0000 00000000 	 .space 4
+  26              	 .global Channel_VBat_ch_config
+  27              	 .section .data.Channel_VBat_ch_config,"aw",%progbits
+  28              	 .align 2
+  31              	Channel_VBat_ch_config:
+  32 0000 02       	 .byte 2
+  33 0001 00       	 .byte 0
+  34 0002 20       	 .byte 32
+  35 0003 00       	 .byte 0
+  36 0004 00000000 	 .word 0
+  37 0008 00       	 .byte 0
+  38 0009 01       	 .byte 1
+  39 000a 0000     	 .space 2
+  40              	 .global Channel_VBat_res_config
+  41              	 .section .bss.Channel_VBat_res_config,"aw",%nobits
+  42              	 .align 2
+  45              	Channel_VBat_res_config:
+  46 0000 00000000 	 .space 4
+  47              	 .global ADC_MEASUREMENT_Channel_VBat_handle
+  48              	 .section .data.ADC_MEASUREMENT_Channel_VBat_handle,"aw",%progbits
+  49              	 .align 2
+  52              	ADC_MEASUREMENT_Channel_VBat_handle:
+  53 0000 00000000 	 .word Channel_VBat_ch_config
+  54 0004 00000000 	 .word Channel_VBat_res_config
+  55 0008 004C0040 	 .word 1073761280
+  56 000c 02       	 .byte 2
+  57 000d 00       	 .byte 0
+  58 000e 0000     	 .space 2
+  59              	 .global ADC_MEASUREMENT_channel_array
+  60              	 .section .data.ADC_MEASUREMENT_channel_array,"aw",%progbits
+  61              	 .align 2
+  64              	ADC_MEASUREMENT_channel_array:
+  65 0000 00000000 	 .word ADC_MEASUREMENT_Channel_VBat_handle
+  66              	 .global backgnd_rs_intr_handle
+  67              	 .section .rodata.backgnd_rs_intr_handle,"a",%progbits
+  68              	 .align 2
+  71              	backgnd_rs_intr_handle:
+  72 0000 10000000 	 .word 16
+  73 0004 1E000000 	 .word 30
+  74 0008 00000000 	 .word 0
+  75              	 .global backgnd_config
+  76              	 .section .rodata.backgnd_config,"a",%progbits
+  77              	 .align 2
+  80              	backgnd_config:
+  81 0000 05       	 .byte 5
+  82 0001 000000   	 .space 3
+  83 0004 00       	 .space 1
+  84 0005 42       	 .byte 66
+  85 0006 00       	 .byte 0
+  86 0007 00       	 .byte 0
+  87 0008 0C       	 .byte 12
+  88 0009 000000   	 .space 3
+  89              	 .global VBat_Measurement_Handle
+  90              	 .section .data.VBat_Measurement_Handle,"aw",%progbits
+  91              	 .align 2
+  94              	VBat_Measurement_Handle:
+  95 0000 00000000 	 .word ADC_MEASUREMENT_channel_array
+  96 0004 00000000 	 .word backgnd_config
+  97 0008 00000000 	 .word global_iclass_config
+  98 000c 00000000 	 .word GLOBAL_ADC_0
+  99 0010 00000000 	 .word backgnd_rs_intr_handle
+ 100 0014 00000000 	 .word 0
+ 101 0018 02       	 .byte 2
+ 102 0019 06       	 .byte 6
+ 103 001a 00       	 .byte 0
+ 104 001b 00       	 .space 1
+ 105              	 .text
+ 106              	.Letext0:
+ 107              	 .file 1 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 108              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 109              	 .file 3 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working/Libraries/CMSIS/Infineon/XMC4500_series/Include/XMC4500.h"
+ 110              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Libraries\\XMCLib\\inc/xmc_vadc.h"
+ 111              	 .file 5 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/GLOBAL_ADC/global_adc.h"
+ 112              	 .file 6 "../Dave/Generated/ADC_MEASUREMENT/adc_measurement.h"
+ 113              	 .file 7 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working/Libraries/CMSIS/Include/core_cm4.h"
+ 114              	 .file 8 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working/Libraries/CMSIS/Infineon/XMC4500_series/Include/system_XMC4500.h"
+ 115              	 .file 9 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/GLOBAL_ADC/global_adc_extern.h"
+ 116              	 .file 10 "../Dave/Generated/ADC_MEASUREMENT/adc_measurement_conf.c"
+DEFINED SYMBOLS
+                            *ABS*:00000000 adc_measurement_conf.c
+    {standard input}:24     .rodata.global_iclass_config:00000000 global_iclass_config
+    {standard input}:21     .rodata.global_iclass_config:00000000 $d
+    {standard input}:31     .data.Channel_VBat_ch_config:00000000 Channel_VBat_ch_config
+    {standard input}:28     .data.Channel_VBat_ch_config:00000000 $d
+    {standard input}:45     .bss.Channel_VBat_res_config:00000000 Channel_VBat_res_config
+    {standard input}:42     .bss.Channel_VBat_res_config:00000000 $d
+    {standard input}:52     .data.ADC_MEASUREMENT_Channel_VBat_handle:00000000 ADC_MEASUREMENT_Channel_VBat_handle
+    {standard input}:49     .data.ADC_MEASUREMENT_Channel_VBat_handle:00000000 $d
+    {standard input}:64     .data.ADC_MEASUREMENT_channel_array:00000000 ADC_MEASUREMENT_channel_array
+    {standard input}:61     .data.ADC_MEASUREMENT_channel_array:00000000 $d
+    {standard input}:71     .rodata.backgnd_rs_intr_handle:00000000 backgnd_rs_intr_handle
+    {standard input}:68     .rodata.backgnd_rs_intr_handle:00000000 $d
+    {standard input}:80     .rodata.backgnd_config:00000000 backgnd_config
+    {standard input}:77     .rodata.backgnd_config:00000000 $d
+    {standard input}:94     .data.VBat_Measurement_Handle:00000000 VBat_Measurement_Handle
+    {standard input}:91     .data.VBat_Measurement_Handle:00000000 $d
+
+UNDEFINED SYMBOLS
+GLOBAL_ADC_0

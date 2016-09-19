@@ -1,0 +1,629 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_mat_mult_f32.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.arm_mat_mult_f32,"ax",%progbits
+  20              	 .align 2
+  21              	 .global arm_mat_mult_f32
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	arm_mat_mult_f32:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c"
+   1:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** /* ----------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * $Date:        31. July 2014
+   5:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * $Revision: 	V1.4.4
+   6:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * Title:	    arm_mat_mult_f32.c    
+   9:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * Description:  Floating-point matrix multiplication.    
+  11:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** *
+  27:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * POSSIBILITY OF SUCH DAMAGE.  
+  39:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** * -------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+  41:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+  43:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** /**    
+  44:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  * @ingroup groupMatrix    
+  45:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  */
+  46:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+  47:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** /**    
+  48:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  * @defgroup MatrixMult Matrix Multiplication    
+  49:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  *    
+  50:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  * Multiplies two matrices.    
+  51:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  *    
+  52:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  * \image html MatrixMultiplication.gif "Multiplication of two 3 x 3 matrices"    
+  53:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****     
+  54:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  * Matrix multiplication is only defined if the number of columns of the    
+  55:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  * first matrix equals the number of rows of the second matrix.    
+  56:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  * Multiplying an <code>M x N</code> matrix with an <code>N x P</code> matrix results    
+  57:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  * in an <code>M x P</code> matrix.    
+  58:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  * When matrix size checking is enabled, the functions check: (1) that the inner dimensions of    
+  59:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  * <code>pSrcA</code> and <code>pSrcB</code> are equal; and (2) that the size of the output    
+  60:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  * matrix equals the outer dimensions of <code>pSrcA</code> and <code>pSrcB</code>.    
+  61:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  */
+  62:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+  63:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+  64:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** /**    
+  65:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  * @addtogroup MatrixMult    
+  66:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  * @{    
+  67:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  */
+  68:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+  69:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** /**    
+  70:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  * @brief Floating-point matrix multiplication.    
+  71:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  * @param[in]       *pSrcA points to the first input matrix structure    
+  72:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  * @param[in]       *pSrcB points to the second input matrix structure    
+  73:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  * @param[out]      *pDst points to output matrix structure    
+  74:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  * @return     		The function returns either    
+  75:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of siz
+  76:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****  */
+  77:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+  78:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** arm_status arm_mat_mult_f32(
+  79:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   const arm_matrix_instance_f32 * pSrcA,
+  80:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   const arm_matrix_instance_f32 * pSrcB,
+  81:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   arm_matrix_instance_f32 * pDst)
+  82:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** {
+  28              	 .loc 1 82 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	 
+  33 0000 80B4     	 push {r7}
+  34              	.LCFI0:
+  35              	 .cfi_def_cfa_offset 4
+  36              	 .cfi_offset 7,-4
+  37 0002 95B0     	 sub sp,sp,#84
+  38              	.LCFI1:
+  39              	 .cfi_def_cfa_offset 88
+  40 0004 00AF     	 add r7,sp,#0
+  41              	.LCFI2:
+  42              	 .cfi_def_cfa_register 7
+  43 0006 F860     	 str r0,[r7,#12]
+  44 0008 B960     	 str r1,[r7,#8]
+  45 000a 7A60     	 str r2,[r7,#4]
+  83:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   float32_t *pIn1 = pSrcA->pData;                /* input data matrix pointer A */
+  46              	 .loc 1 83 0
+  47 000c FB68     	 ldr r3,[r7,#12]
+  48 000e 5B68     	 ldr r3,[r3,#4]
+  49 0010 FB64     	 str r3,[r7,#76]
+  84:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   float32_t *pIn2 = pSrcB->pData;                /* input data matrix pointer B */
+  50              	 .loc 1 84 0
+  51 0012 BB68     	 ldr r3,[r7,#8]
+  52 0014 5B68     	 ldr r3,[r3,#4]
+  53 0016 BB64     	 str r3,[r7,#72]
+  85:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   float32_t *pInA = pSrcA->pData;                /* input data matrix pointer A  */
+  54              	 .loc 1 85 0
+  55 0018 FB68     	 ldr r3,[r7,#12]
+  56 001a 5B68     	 ldr r3,[r3,#4]
+  57 001c 7B64     	 str r3,[r7,#68]
+  86:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   float32_t *pOut = pDst->pData;                 /* output data matrix pointer */
+  58              	 .loc 1 86 0
+  59 001e 7B68     	 ldr r3,[r7,#4]
+  60 0020 5B68     	 ldr r3,[r3,#4]
+  61 0022 FB62     	 str r3,[r7,#44]
+  87:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   float32_t *px;                                 /* Temporary output data matrix pointer */
+  88:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   float32_t sum;                                 /* Accumulator */
+  89:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   uint16_t numRowsA = pSrcA->numRows;            /* number of rows of input matrix A */
+  62              	 .loc 1 89 0
+  63 0024 FB68     	 ldr r3,[r7,#12]
+  64 0026 1B88     	 ldrh r3,[r3]
+  65 0028 7B85     	 strh r3,[r7,#42]
+  90:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   uint16_t numColsB = pSrcB->numCols;            /* number of columns of input matrix B */
+  66              	 .loc 1 90 0
+  67 002a BB68     	 ldr r3,[r7,#8]
+  68 002c 5B88     	 ldrh r3,[r3,#2]
+  69 002e 3B85     	 strh r3,[r7,#40]
+  91:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   uint16_t numColsA = pSrcA->numCols;            /* number of columns of input matrix A */
+  70              	 .loc 1 91 0
+  71 0030 FB68     	 ldr r3,[r7,#12]
+  72 0032 5B88     	 ldrh r3,[r3,#2]
+  73 0034 FB84     	 strh r3,[r7,#38]
+  92:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+  93:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** #ifndef ARM_MATH_CM0_FAMILY
+  94:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+  95:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   /* Run the below code for Cortex-M4 and Cortex-M3 */
+  96:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+  97:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   float32_t in1, in2, in3, in4;
+  98:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   uint16_t col, i = 0u, j, row = numRowsA, colCnt;      /* loop counters */
+  74              	 .loc 1 98 0
+  75 0036 0023     	 movs r3,#0
+  76 0038 3B87     	 strh r3,[r7,#56]
+  77 003a 7B8D     	 ldrh r3,[r7,#42]
+  78 003c BB86     	 strh r3,[r7,#52]
+  99:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   arm_status status;                             /* status of matrix multiplication */
+ 100:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 101:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** #ifdef ARM_MATH_MATRIX_CHECK
+ 102:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 103:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 104:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   /* Check for matrix mismatch condition */
+ 105:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   if((pSrcA->numCols != pSrcB->numRows) ||
+  79              	 .loc 1 105 0
+  80 003e FB68     	 ldr r3,[r7,#12]
+  81 0040 5A88     	 ldrh r2,[r3,#2]
+  82 0042 BB68     	 ldr r3,[r7,#8]
+  83 0044 1B88     	 ldrh r3,[r3]
+  84 0046 9A42     	 cmp r2,r3
+  85 0048 0BD1     	 bne .L2
+ 106:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****      (pSrcA->numRows != pDst->numRows) || (pSrcB->numCols != pDst->numCols))
+  86              	 .loc 1 106 0 discriminator 1
+  87 004a FB68     	 ldr r3,[r7,#12]
+  88 004c 1A88     	 ldrh r2,[r3]
+  89 004e 7B68     	 ldr r3,[r7,#4]
+  90 0050 1B88     	 ldrh r3,[r3]
+ 105:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****      (pSrcA->numRows != pDst->numRows) || (pSrcB->numCols != pDst->numCols))
+  91              	 .loc 1 105 0 discriminator 1
+  92 0052 9A42     	 cmp r2,r3
+  93 0054 05D1     	 bne .L2
+  94              	 .loc 1 106 0
+  95 0056 BB68     	 ldr r3,[r7,#8]
+  96 0058 5A88     	 ldrh r2,[r3,#2]
+  97 005a 7B68     	 ldr r3,[r7,#4]
+  98 005c 5B88     	 ldrh r3,[r3,#2]
+  99 005e 9A42     	 cmp r2,r3
+ 100 0060 03D0     	 beq .L3
+ 101              	.L2:
+ 107:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   {
+ 108:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 109:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****     /* Set status as ARM_MATH_SIZE_MISMATCH */
+ 110:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****     status = ARM_MATH_SIZE_MISMATCH;
+ 102              	 .loc 1 110 0
+ 103 0062 FD23     	 movs r3,#253
+ 104 0064 87F83130 	 strb r3,[r7,#49]
+ 105 0068 C1E0     	 b .L4
+ 106              	.L3:
+ 111:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   }
+ 112:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   else
+ 113:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** #endif /*      #ifdef ARM_MATH_MATRIX_CHECK    */
+ 114:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 115:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   {
+ 116:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****     /* The following loop performs the dot-product of each row in pSrcA with each column in pSrcB *
+ 117:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****     /* row loop */
+ 118:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****     do
+ 119:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****     {
+ 120:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       /* Output pointer is set to starting address of the row being processed */
+ 121:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       px = pOut + i;
+ 107              	 .loc 1 121 0
+ 108 006a 3B8F     	 ldrh r3,[r7,#56]
+ 109 006c 9B00     	 lsls r3,r3,#2
+ 110 006e FA6A     	 ldr r2,[r7,#44]
+ 111 0070 1344     	 add r3,r3,r2
+ 112 0072 3B64     	 str r3,[r7,#64]
+ 122:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 123:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       /* For every row wise process, the column loop counter is to be initiated */
+ 124:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       col = numColsB;
+ 113              	 .loc 1 124 0
+ 114 0074 3B8D     	 ldrh r3,[r7,#40]
+ 115 0076 7B87     	 strh r3,[r7,#58]
+ 125:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 126:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       /* For every row wise process, the pIn2 pointer is set    
+ 127:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****        ** to the starting address of the pSrcB data */
+ 128:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       pIn2 = pSrcB->pData;
+ 116              	 .loc 1 128 0
+ 117 0078 BB68     	 ldr r3,[r7,#8]
+ 118 007a 5B68     	 ldr r3,[r3,#4]
+ 119 007c BB64     	 str r3,[r7,#72]
+ 129:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 130:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       j = 0u;
+ 120              	 .loc 1 130 0
+ 121 007e 0023     	 movs r3,#0
+ 122 0080 FB86     	 strh r3,[r7,#54]
+ 123              	.L9:
+ 131:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 132:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       /* column loop */
+ 133:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       do
+ 134:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       {
+ 135:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         /* Set the variable sum, that acts as accumulator, to zero */
+ 136:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         sum = 0.0f;
+ 124              	 .loc 1 136 0
+ 125 0082 4FF00003 	 mov r3,#0
+ 126 0086 FB63     	 str r3,[r7,#60]
+ 137:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 138:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         /* Initiate the pointer pIn1 to point to the starting address of the column being processed
+ 139:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         pIn1 = pInA;
+ 127              	 .loc 1 139 0
+ 128 0088 7B6C     	 ldr r3,[r7,#68]
+ 129 008a FB64     	 str r3,[r7,#76]
+ 140:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 141:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         /* Apply loop unrolling and compute 4 MACs simultaneously. */
+ 142:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         colCnt = numColsA >> 2u;
+ 130              	 .loc 1 142 0
+ 131 008c FB8C     	 ldrh r3,[r7,#38]
+ 132 008e 9B08     	 lsrs r3,r3,#2
+ 133 0090 7B86     	 strh r3,[r7,#50]
+ 143:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 144:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         /* matrix multiplication        */
+ 145:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         while(colCnt > 0u)
+ 134              	 .loc 1 145 0
+ 135 0092 61E0     	 b .L5
+ 136              	.L6:
+ 146:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         {
+ 147:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
+ 148:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           in3 = *pIn2;
+ 137              	 .loc 1 148 0
+ 138 0094 BB6C     	 ldr r3,[r7,#72]
+ 139 0096 1B68     	 ldr r3,[r3]
+ 140 0098 3B62     	 str r3,[r7,#32]
+ 149:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           pIn2 += numColsB;
+ 141              	 .loc 1 149 0
+ 142 009a 3B8D     	 ldrh r3,[r7,#40]
+ 143 009c 9B00     	 lsls r3,r3,#2
+ 144 009e BA6C     	 ldr r2,[r7,#72]
+ 145 00a0 1344     	 add r3,r3,r2
+ 146 00a2 BB64     	 str r3,[r7,#72]
+ 150:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           in1 = pIn1[0];
+ 147              	 .loc 1 150 0
+ 148 00a4 FB6C     	 ldr r3,[r7,#76]
+ 149 00a6 1B68     	 ldr r3,[r3]
+ 150 00a8 FB61     	 str r3,[r7,#28]
+ 151:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           in2 = pIn1[1];
+ 151              	 .loc 1 151 0
+ 152 00aa FB6C     	 ldr r3,[r7,#76]
+ 153 00ac 5B68     	 ldr r3,[r3,#4]
+ 154 00ae BB61     	 str r3,[r7,#24]
+ 152:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           sum += in1 * in3;
+ 155              	 .loc 1 152 0
+ 156 00b0 97ED077A 	 flds s14,[r7,#28]
+ 157 00b4 D7ED087A 	 flds s15,[r7,#32]
+ 158 00b8 67EE277A 	 fmuls s15,s14,s15
+ 159 00bc 97ED0F7A 	 flds s14,[r7,#60]
+ 160 00c0 77EE277A 	 fadds s15,s14,s15
+ 161 00c4 C7ED0F7A 	 fsts s15,[r7,#60]
+ 153:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           in4 = *pIn2;
+ 162              	 .loc 1 153 0
+ 163 00c8 BB6C     	 ldr r3,[r7,#72]
+ 164 00ca 1B68     	 ldr r3,[r3]
+ 165 00cc 7B61     	 str r3,[r7,#20]
+ 154:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           pIn2 += numColsB;
+ 166              	 .loc 1 154 0
+ 167 00ce 3B8D     	 ldrh r3,[r7,#40]
+ 168 00d0 9B00     	 lsls r3,r3,#2
+ 169 00d2 BA6C     	 ldr r2,[r7,#72]
+ 170 00d4 1344     	 add r3,r3,r2
+ 171 00d6 BB64     	 str r3,[r7,#72]
+ 155:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           sum += in2 * in4;
+ 172              	 .loc 1 155 0
+ 173 00d8 97ED067A 	 flds s14,[r7,#24]
+ 174 00dc D7ED057A 	 flds s15,[r7,#20]
+ 175 00e0 67EE277A 	 fmuls s15,s14,s15
+ 176 00e4 97ED0F7A 	 flds s14,[r7,#60]
+ 177 00e8 77EE277A 	 fadds s15,s14,s15
+ 178 00ec C7ED0F7A 	 fsts s15,[r7,#60]
+ 156:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 157:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           in3 = *pIn2;
+ 179              	 .loc 1 157 0
+ 180 00f0 BB6C     	 ldr r3,[r7,#72]
+ 181 00f2 1B68     	 ldr r3,[r3]
+ 182 00f4 3B62     	 str r3,[r7,#32]
+ 158:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           pIn2 += numColsB;
+ 183              	 .loc 1 158 0
+ 184 00f6 3B8D     	 ldrh r3,[r7,#40]
+ 185 00f8 9B00     	 lsls r3,r3,#2
+ 186 00fa BA6C     	 ldr r2,[r7,#72]
+ 187 00fc 1344     	 add r3,r3,r2
+ 188 00fe BB64     	 str r3,[r7,#72]
+ 159:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           in1 = pIn1[2];
+ 189              	 .loc 1 159 0
+ 190 0100 FB6C     	 ldr r3,[r7,#76]
+ 191 0102 9B68     	 ldr r3,[r3,#8]
+ 192 0104 FB61     	 str r3,[r7,#28]
+ 160:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           in2 = pIn1[3];
+ 193              	 .loc 1 160 0
+ 194 0106 FB6C     	 ldr r3,[r7,#76]
+ 195 0108 DB68     	 ldr r3,[r3,#12]
+ 196 010a BB61     	 str r3,[r7,#24]
+ 161:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           sum += in1 * in3;
+ 197              	 .loc 1 161 0
+ 198 010c 97ED077A 	 flds s14,[r7,#28]
+ 199 0110 D7ED087A 	 flds s15,[r7,#32]
+ 200 0114 67EE277A 	 fmuls s15,s14,s15
+ 201 0118 97ED0F7A 	 flds s14,[r7,#60]
+ 202 011c 77EE277A 	 fadds s15,s14,s15
+ 203 0120 C7ED0F7A 	 fsts s15,[r7,#60]
+ 162:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           in4 = *pIn2;
+ 204              	 .loc 1 162 0
+ 205 0124 BB6C     	 ldr r3,[r7,#72]
+ 206 0126 1B68     	 ldr r3,[r3]
+ 207 0128 7B61     	 str r3,[r7,#20]
+ 163:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           pIn2 += numColsB;
+ 208              	 .loc 1 163 0
+ 209 012a 3B8D     	 ldrh r3,[r7,#40]
+ 210 012c 9B00     	 lsls r3,r3,#2
+ 211 012e BA6C     	 ldr r2,[r7,#72]
+ 212 0130 1344     	 add r3,r3,r2
+ 213 0132 BB64     	 str r3,[r7,#72]
+ 164:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           sum += in2 * in4;
+ 214              	 .loc 1 164 0
+ 215 0134 97ED067A 	 flds s14,[r7,#24]
+ 216 0138 D7ED057A 	 flds s15,[r7,#20]
+ 217 013c 67EE277A 	 fmuls s15,s14,s15
+ 218 0140 97ED0F7A 	 flds s14,[r7,#60]
+ 219 0144 77EE277A 	 fadds s15,s14,s15
+ 220 0148 C7ED0F7A 	 fsts s15,[r7,#60]
+ 165:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           pIn1 += 4u;
+ 221              	 .loc 1 165 0
+ 222 014c FB6C     	 ldr r3,[r7,#76]
+ 223 014e 1033     	 adds r3,r3,#16
+ 224 0150 FB64     	 str r3,[r7,#76]
+ 166:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 167:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           /* Decrement the loop count */
+ 168:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           colCnt--;
+ 225              	 .loc 1 168 0
+ 226 0152 7B8E     	 ldrh r3,[r7,#50]
+ 227 0154 013B     	 subs r3,r3,#1
+ 228 0156 7B86     	 strh r3,[r7,#50]
+ 229              	.L5:
+ 145:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         {
+ 230              	 .loc 1 145 0
+ 231 0158 7B8E     	 ldrh r3,[r7,#50]
+ 232 015a 002B     	 cmp r3,#0
+ 233 015c 9AD1     	 bne .L6
+ 169:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         }
+ 170:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 171:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         /* If the columns of pSrcA is not a multiple of 4, compute any remaining MACs here.    
+ 172:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****          ** No loop unrolling is used. */
+ 173:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         colCnt = numColsA % 0x4u;
+ 234              	 .loc 1 173 0
+ 235 015e FB8C     	 ldrh r3,[r7,#38]
+ 236 0160 03F00303 	 and r3,r3,#3
+ 237 0164 7B86     	 strh r3,[r7,#50]
+ 174:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 175:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         while(colCnt > 0u)
+ 238              	 .loc 1 175 0
+ 239 0166 17E0     	 b .L7
+ 240              	.L8:
+ 176:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         {
+ 177:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
+ 178:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           sum += *pIn1++ * (*pIn2);
+ 241              	 .loc 1 178 0
+ 242 0168 FB6C     	 ldr r3,[r7,#76]
+ 243 016a 1A1D     	 adds r2,r3,#4
+ 244 016c FA64     	 str r2,[r7,#76]
+ 245 016e 93ED007A 	 flds s14,[r3]
+ 246 0172 BB6C     	 ldr r3,[r7,#72]
+ 247 0174 D3ED007A 	 flds s15,[r3]
+ 248 0178 67EE277A 	 fmuls s15,s14,s15
+ 249 017c 97ED0F7A 	 flds s14,[r7,#60]
+ 250 0180 77EE277A 	 fadds s15,s14,s15
+ 251 0184 C7ED0F7A 	 fsts s15,[r7,#60]
+ 179:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           pIn2 += numColsB;
+ 252              	 .loc 1 179 0
+ 253 0188 3B8D     	 ldrh r3,[r7,#40]
+ 254 018a 9B00     	 lsls r3,r3,#2
+ 255 018c BA6C     	 ldr r2,[r7,#72]
+ 256 018e 1344     	 add r3,r3,r2
+ 257 0190 BB64     	 str r3,[r7,#72]
+ 180:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 181:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           /* Decrement the loop counter */
+ 182:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           colCnt--;
+ 258              	 .loc 1 182 0
+ 259 0192 7B8E     	 ldrh r3,[r7,#50]
+ 260 0194 013B     	 subs r3,r3,#1
+ 261 0196 7B86     	 strh r3,[r7,#50]
+ 262              	.L7:
+ 175:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         {
+ 263              	 .loc 1 175 0
+ 264 0198 7B8E     	 ldrh r3,[r7,#50]
+ 265 019a 002B     	 cmp r3,#0
+ 266 019c E4D1     	 bne .L8
+ 183:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         }
+ 184:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 185:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         /* Store the result in the destination buffer */
+ 186:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         *px++ = sum;
+ 267              	 .loc 1 186 0
+ 268 019e 3B6C     	 ldr r3,[r7,#64]
+ 269 01a0 1A1D     	 adds r2,r3,#4
+ 270 01a2 3A64     	 str r2,[r7,#64]
+ 271 01a4 FA6B     	 ldr r2,[r7,#60]
+ 272 01a6 1A60     	 str r2,[r3]
+ 187:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 188:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         /* Update the pointer pIn2 to point to the  starting address of the next column */
+ 189:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         j++;
+ 273              	 .loc 1 189 0
+ 274 01a8 FB8E     	 ldrh r3,[r7,#54]
+ 275 01aa 0133     	 adds r3,r3,#1
+ 276 01ac FB86     	 strh r3,[r7,#54]
+ 190:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         pIn2 = pSrcB->pData + j;
+ 277              	 .loc 1 190 0
+ 278 01ae BB68     	 ldr r3,[r7,#8]
+ 279 01b0 5A68     	 ldr r2,[r3,#4]
+ 280 01b2 FB8E     	 ldrh r3,[r7,#54]
+ 281 01b4 9B00     	 lsls r3,r3,#2
+ 282 01b6 1344     	 add r3,r3,r2
+ 283 01b8 BB64     	 str r3,[r7,#72]
+ 191:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 192:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         /* Decrement the column loop counter */
+ 193:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         col--;
+ 284              	 .loc 1 193 0
+ 285 01ba 7B8F     	 ldrh r3,[r7,#58]
+ 286 01bc 013B     	 subs r3,r3,#1
+ 287 01be 7B87     	 strh r3,[r7,#58]
+ 194:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 195:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       } while(col > 0u);
+ 288              	 .loc 1 195 0
+ 289 01c0 7B8F     	 ldrh r3,[r7,#58]
+ 290 01c2 002B     	 cmp r3,#0
+ 291 01c4 7FF45DAF 	 bne .L9
+ 196:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 197:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** #else
+ 198:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 199:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   /* Run the below code for Cortex-M0 */
+ 200:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 201:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   float32_t *pInB = pSrcB->pData;                /* input data matrix pointer B */
+ 202:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   uint16_t col, i = 0u, row = numRowsA, colCnt;  /* loop counters */
+ 203:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   arm_status status;                             /* status of matrix multiplication */
+ 204:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 205:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** #ifdef ARM_MATH_MATRIX_CHECK
+ 206:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 207:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   /* Check for matrix mismatch condition */
+ 208:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   if((pSrcA->numCols != pSrcB->numRows) ||
+ 209:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****      (pSrcA->numRows != pDst->numRows) || (pSrcB->numCols != pDst->numCols))
+ 210:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   {
+ 211:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 212:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****     /* Set status as ARM_MATH_SIZE_MISMATCH */
+ 213:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****     status = ARM_MATH_SIZE_MISMATCH;
+ 214:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   }
+ 215:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   else
+ 216:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** #endif /*      #ifdef ARM_MATH_MATRIX_CHECK    */
+ 217:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 218:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   {
+ 219:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****     /* The following loop performs the dot-product of each row in pInA with each column in pInB */
+ 220:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****     /* row loop */
+ 221:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****     do
+ 222:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****     {
+ 223:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       /* Output pointer is set to starting address of the row being processed */
+ 224:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       px = pOut + i;
+ 225:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 226:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       /* For every row wise process, the column loop counter is to be initiated */
+ 227:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       col = numColsB;
+ 228:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 229:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       /* For every row wise process, the pIn2 pointer is set     
+ 230:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****        ** to the starting address of the pSrcB data */
+ 231:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       pIn2 = pSrcB->pData;
+ 232:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 233:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       /* column loop */
+ 234:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       do
+ 235:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       {
+ 236:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         /* Set the variable sum, that acts as accumulator, to zero */
+ 237:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         sum = 0.0f;
+ 238:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 239:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         /* Initialize the pointer pIn1 to point to the starting address of the row being processed 
+ 240:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         pIn1 = pInA;
+ 241:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 242:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         /* Matrix A columns number of MAC operations are to be performed */
+ 243:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         colCnt = numColsA;
+ 244:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 245:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         while(colCnt > 0u)
+ 246:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         {
+ 247:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
+ 248:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           sum += *pIn1++ * (*pIn2);
+ 249:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           pIn2 += numColsB;
+ 250:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 251:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           /* Decrement the loop counter */
+ 252:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****           colCnt--;
+ 253:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         }
+ 254:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 255:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         /* Store the result in the destination buffer */
+ 256:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         *px++ = sum;
+ 257:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 258:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         /* Decrement the column loop counter */
+ 259:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         col--;
+ 260:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 261:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         /* Update the pointer pIn2 to point to the  starting address of the next column */
+ 262:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****         pIn2 = pInB + (numColsB - col);
+ 263:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 264:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       } while(col > 0u);
+ 265:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 266:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** #endif /* #ifndef ARM_MATH_CM0_FAMILY */
+ 267:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 268:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       /* Update the pointer pInA to point to the  starting address of the next row */
+ 269:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       i = i + numColsB;
+ 292              	 .loc 1 269 0
+ 293 01c8 3A8F     	 ldrh r2,[r7,#56]
+ 294 01ca 3B8D     	 ldrh r3,[r7,#40]
+ 295 01cc 1344     	 add r3,r3,r2
+ 296 01ce 3B87     	 strh r3,[r7,#56]
+ 270:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       pInA = pInA + numColsA;
+ 297              	 .loc 1 270 0
+ 298 01d0 FB8C     	 ldrh r3,[r7,#38]
+ 299 01d2 9B00     	 lsls r3,r3,#2
+ 300 01d4 7A6C     	 ldr r2,[r7,#68]
+ 301 01d6 1344     	 add r3,r3,r2
+ 302 01d8 7B64     	 str r3,[r7,#68]
+ 271:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 272:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       /* Decrement the row loop counter */
+ 273:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****       row--;
+ 303              	 .loc 1 273 0
+ 304 01da BB8E     	 ldrh r3,[r7,#52]
+ 305 01dc 013B     	 subs r3,r3,#1
+ 306 01de BB86     	 strh r3,[r7,#52]
+ 274:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 275:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****     } while(row > 0u);
+ 307              	 .loc 1 275 0
+ 308 01e0 BB8E     	 ldrh r3,[r7,#52]
+ 309 01e2 002B     	 cmp r3,#0
+ 310 01e4 7FF441AF 	 bne .L3
+ 276:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****     /* Set status as ARM_MATH_SUCCESS */
+ 277:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****     status = ARM_MATH_SUCCESS;
+ 311              	 .loc 1 277 0
+ 312 01e8 0023     	 movs r3,#0
+ 313 01ea 87F83130 	 strb r3,[r7,#49]
+ 314              	.L4:
+ 278:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   }
+ 279:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** 
+ 280:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   /* Return to application */
+ 281:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c ****   return (status);
+ 315              	 .loc 1 281 0
+ 316 01ee 97F83130 	 ldrb r3,[r7,#49]
+ 317 01f2 5BB2     	 sxtb r3,r3
+ 282:../Dave/Generated/CMSIS_DSP/MatrixFunctions/arm_mat_mult_f32.c **** }
+ 318              	 .loc 1 282 0
+ 319 01f4 1846     	 mov r0,r3
+ 320 01f6 5437     	 adds r7,r7,#84
+ 321              	.LCFI3:
+ 322              	 .cfi_def_cfa_offset 4
+ 323 01f8 BD46     	 mov sp,r7
+ 324              	.LCFI4:
+ 325              	 .cfi_def_cfa_register 13
+ 326              	 
+ 327 01fa 5DF8047B 	 ldr r7,[sp],#4
+ 328              	.LCFI5:
+ 329              	 .cfi_restore 7
+ 330              	 .cfi_def_cfa_offset 0
+ 331 01fe 7047     	 bx lr
+ 332              	 .cfi_endproc
+ 333              	.LFE139:
+ 335              	 .text
+ 336              	.Letext0:
+ 337              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 338              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 339              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_mat_mult_f32.c
+    {standard input}:20     .text.arm_mat_mult_f32:00000000 $t
+    {standard input}:25     .text.arm_mat_mult_f32:00000000 arm_mat_mult_f32
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

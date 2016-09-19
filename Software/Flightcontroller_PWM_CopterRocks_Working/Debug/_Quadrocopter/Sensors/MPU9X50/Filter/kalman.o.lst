@@ -1,0 +1,812 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu vfp
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "kalman.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.KALMAN_getAngle,"ax",%progbits
+  20              	 .align 2
+  21              	 .global KALMAN_getAngle
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	KALMAN_getAngle:
+  26              	.LFB0:
+  27              	 .file 1 "../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c"
+   1:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** /* *****************************************************************************
+   2:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** **                      Author(s) Identity                                    **
+   3:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** ********************************************************************************
+   4:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** **                                                                            **
+   5:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** ** Initials     Name                                                          **
+   6:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** ** ---------------------------------------------------------------------------**
+   7:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** ** MAAN         ---------------                                               **
+   8:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** **                                                                            **
+   9:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** **                                                                            **
+  10:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** ***************************************************************************** */
+  11:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+  12:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** /* *****************************************************************************
+  13:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** **                      Revision Control History                              **
+  14:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** ***************************************************************************** */
+  15:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** /* 
+  16:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c ****  * V0.0: 07.04.2015,MAAN  :  Initial Version
+  17:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+  18:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c ****   */
+  19:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c ****  
+  20:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c ****  
+  21:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** /* *****************************************************************************
+  22:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** **                      Includes                                              **
+  23:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** ***************************************************************************** */
+  24:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** #include "kalman.h"
+  25:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** /* *****************************************************************************
+  26:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** **                      Private Constant Definitions to be changed            **
+  27:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** ***************************************************************************** */
+  28:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+  29:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** /* *****************************************************************************
+  30:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** **                      Private Macro Definitions                             **
+  31:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** ***************************************************************************** */
+  32:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+  33:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** /* *****************************************************************************
+  34:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** **                      Global Type Definitions                               **
+  35:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** ***************************************************************************** */
+  36:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+  37:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** /* *****************************************************************************
+  38:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** **                      Private Type Definitions                              **
+  39:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** ***************************************************************************** */
+  40:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+  41:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** /* *****************************************************************************
+  42:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** **                      Global Function Declarations                          **
+  43:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** ***************************************************************************** */
+  44:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+  45:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** /* *****************************************************************************
+  46:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** **                      Private Function Declarations                         **
+  47:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** ***************************************************************************** */
+  48:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+  49:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** /* *****************************************************************************
+  50:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** **                      Global Constant Definitions                           **
+  51:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** ***************************************************************************** */
+  52:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+  53:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** /* *****************************************************************************
+  54:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** **                      Private Constant Definitions                          **
+  55:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** ***************************************************************************** */
+  56:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+  57:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** /* *****************************************************************************
+  58:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** **                      Global Variable Definitions                           **
+  59:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** ***************************************************************************** */
+  60:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+  61:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** /* *****************************************************************************
+  62:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** **                      Private Variable Definitions                          **
+  63:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** ***************************************************************************** */
+  64:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+  65:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** /* *****************************************************************************
+  66:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** **                      Global Function Definitions                           **
+  67:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** ***************************************************************************** */
+  68:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** /**
+  69:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c ****  *  \brief Brief
+  70:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c ****  *
+  71:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c ****  *  \return Return_Description
+  72:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c ****  *
+  73:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c ****  *  \details Details
+  74:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c ****  */
+  75:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+  76:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** float KALMAN_getAngle(KALMAN_t *handle, float newAngle, float newRate, float dt)
+  77:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** {
+  28              	 .loc 1 77 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	 
+  33 0000 80B4     	 push {r7}
+  34              	.LCFI0:
+  35              	 .cfi_def_cfa_offset 4
+  36              	 .cfi_offset 7,-4
+  37 0002 8BB0     	 sub sp,sp,#44
+  38              	.LCFI1:
+  39              	 .cfi_def_cfa_offset 48
+  40 0004 00AF     	 add r7,sp,#0
+  41              	.LCFI2:
+  42              	 .cfi_def_cfa_register 7
+  43 0006 F860     	 str r0,[r7,#12]
+  44 0008 B960     	 str r1,[r7,#8]
+  45 000a 7A60     	 str r2,[r7,#4]
+  46 000c 3B60     	 str r3,[r7]
+  78:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	// KasBot V2  -  Kalman filter module - http://www.x-firm.com/?page_id=145
+  79:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	// Modified by Kristian Lauszus
+  80:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	// See my blog post for more information: http://blog.tkjelectronics.dk/2012/09/a-practical-approa
+  81:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+  82:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	// Discrete Kalman filter time update equations - Time Update ("Predict")
+  83:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	// Update xhat - Project the state ahead
+  84:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	/* Step 1 */
+  85:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	handle->rate = newRate - handle->bias;
+  47              	 .loc 1 85 0
+  48 000e FB68     	 ldr r3,[r7,#12]
+  49 0010 D3ED047A 	 flds s15,[r3,#16]
+  50 0014 97ED017A 	 flds s14,[r7,#4]
+  51 0018 77EE677A 	 fsubs s15,s14,s15
+  52 001c FB68     	 ldr r3,[r7,#12]
+  53 001e C3ED057A 	 fsts s15,[r3,#20]
+  86:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	handle->angle += dt * handle->rate;
+  54              	 .loc 1 86 0
+  55 0022 FB68     	 ldr r3,[r7,#12]
+  56 0024 93ED037A 	 flds s14,[r3,#12]
+  57 0028 FB68     	 ldr r3,[r7,#12]
+  58 002a D3ED056A 	 flds s13,[r3,#20]
+  59 002e D7ED007A 	 flds s15,[r7]
+  60 0032 66EEA77A 	 fmuls s15,s13,s15
+  61 0036 77EE277A 	 fadds s15,s14,s15
+  62 003a FB68     	 ldr r3,[r7,#12]
+  63 003c C3ED037A 	 fsts s15,[r3,#12]
+  87:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+  88:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	// Update estimation error covariance - Project the error covariance ahead
+  89:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	/* Step 2 */
+  90:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	handle->P[0][0] += dt * (dt*handle->P[1][1] - handle->P[0][1] - handle->P[1][0] + handle->Q_angle)
+  64              	 .loc 1 90 0
+  65 0040 FB68     	 ldr r3,[r7,#12]
+  66 0042 93ED067A 	 flds s14,[r3,#24]
+  67 0046 FB68     	 ldr r3,[r7,#12]
+  68 0048 D3ED096A 	 flds s13,[r3,#36]
+  69 004c D7ED007A 	 flds s15,[r7]
+  70 0050 66EEA76A 	 fmuls s13,s13,s15
+  71 0054 FB68     	 ldr r3,[r7,#12]
+  72 0056 D3ED077A 	 flds s15,[r3,#28]
+  73 005a 76EEE76A 	 fsubs s13,s13,s15
+  74 005e FB68     	 ldr r3,[r7,#12]
+  75 0060 D3ED087A 	 flds s15,[r3,#32]
+  76 0064 76EEE76A 	 fsubs s13,s13,s15
+  77 0068 FB68     	 ldr r3,[r7,#12]
+  78 006a D3ED007A 	 flds s15,[r3]
+  79 006e 76EEA76A 	 fadds s13,s13,s15
+  80 0072 D7ED007A 	 flds s15,[r7]
+  81 0076 66EEA77A 	 fmuls s15,s13,s15
+  82 007a 77EE277A 	 fadds s15,s14,s15
+  83 007e FB68     	 ldr r3,[r7,#12]
+  84 0080 C3ED067A 	 fsts s15,[r3,#24]
+  91:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	handle->P[0][1] -= dt * handle->P[1][1];
+  85              	 .loc 1 91 0
+  86 0084 FB68     	 ldr r3,[r7,#12]
+  87 0086 93ED077A 	 flds s14,[r3,#28]
+  88 008a FB68     	 ldr r3,[r7,#12]
+  89 008c D3ED096A 	 flds s13,[r3,#36]
+  90 0090 D7ED007A 	 flds s15,[r7]
+  91 0094 66EEA77A 	 fmuls s15,s13,s15
+  92 0098 77EE677A 	 fsubs s15,s14,s15
+  93 009c FB68     	 ldr r3,[r7,#12]
+  94 009e C3ED077A 	 fsts s15,[r3,#28]
+  92:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	handle->P[1][0] -= dt * handle->P[1][1];
+  95              	 .loc 1 92 0
+  96 00a2 FB68     	 ldr r3,[r7,#12]
+  97 00a4 93ED087A 	 flds s14,[r3,#32]
+  98 00a8 FB68     	 ldr r3,[r7,#12]
+  99 00aa D3ED096A 	 flds s13,[r3,#36]
+ 100 00ae D7ED007A 	 flds s15,[r7]
+ 101 00b2 66EEA77A 	 fmuls s15,s13,s15
+ 102 00b6 77EE677A 	 fsubs s15,s14,s15
+ 103 00ba FB68     	 ldr r3,[r7,#12]
+ 104 00bc C3ED087A 	 fsts s15,[r3,#32]
+  93:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	handle->P[1][1] += handle->Q_bias * dt;
+ 105              	 .loc 1 93 0
+ 106 00c0 FB68     	 ldr r3,[r7,#12]
+ 107 00c2 93ED097A 	 flds s14,[r3,#36]
+ 108 00c6 FB68     	 ldr r3,[r7,#12]
+ 109 00c8 D3ED016A 	 flds s13,[r3,#4]
+ 110 00cc D7ED007A 	 flds s15,[r7]
+ 111 00d0 66EEA77A 	 fmuls s15,s13,s15
+ 112 00d4 77EE277A 	 fadds s15,s14,s15
+ 113 00d8 FB68     	 ldr r3,[r7,#12]
+ 114 00da C3ED097A 	 fsts s15,[r3,#36]
+  94:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+  95:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	// Discrete Kalman filter measurement update equations - Measurement Update ("Correct")
+  96:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	// Calculate Kalman gain - Compute the Kalman gain
+  97:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	/* Step 4 */
+  98:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	float S = handle->P[0][0] + handle->R_measure; // Estimate error
+ 115              	 .loc 1 98 0
+ 116 00de FB68     	 ldr r3,[r7,#12]
+ 117 00e0 93ED067A 	 flds s14,[r3,#24]
+ 118 00e4 FB68     	 ldr r3,[r7,#12]
+ 119 00e6 D3ED027A 	 flds s15,[r3,#8]
+ 120 00ea 77EE277A 	 fadds s15,s14,s15
+ 121 00ee C7ED097A 	 fsts s15,[r7,#36]
+  99:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	/* Step 5 */
+ 100:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	float K[2]; // Kalman gain - This is a 2x1 vector
+ 101:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	K[0] = handle->P[0][0] / S;
+ 122              	 .loc 1 101 0
+ 123 00f2 FB68     	 ldr r3,[r7,#12]
+ 124 00f4 93ED067A 	 flds s14,[r3,#24]
+ 125 00f8 D7ED097A 	 flds s15,[r7,#36]
+ 126 00fc C7EE277A 	 fdivs s15,s14,s15
+ 127 0100 C7ED047A 	 fsts s15,[r7,#16]
+ 102:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	K[1] = handle->P[1][0] / S;
+ 128              	 .loc 1 102 0
+ 129 0104 FB68     	 ldr r3,[r7,#12]
+ 130 0106 93ED087A 	 flds s14,[r3,#32]
+ 131 010a D7ED097A 	 flds s15,[r7,#36]
+ 132 010e C7EE277A 	 fdivs s15,s14,s15
+ 133 0112 C7ED057A 	 fsts s15,[r7,#20]
+ 103:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+ 104:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	// Calculate angle and bias - Update estimate with measurement zk (newAngle)
+ 105:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	/* Step 3 */
+ 106:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	float y = newAngle - handle->angle; // Angle difference
+ 134              	 .loc 1 106 0
+ 135 0116 FB68     	 ldr r3,[r7,#12]
+ 136 0118 D3ED037A 	 flds s15,[r3,#12]
+ 137 011c 97ED027A 	 flds s14,[r7,#8]
+ 138 0120 77EE677A 	 fsubs s15,s14,s15
+ 139 0124 C7ED087A 	 fsts s15,[r7,#32]
+ 107:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	/* Step 6 */
+ 108:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	handle->angle += K[0] * y;
+ 140              	 .loc 1 108 0
+ 141 0128 FB68     	 ldr r3,[r7,#12]
+ 142 012a 93ED037A 	 flds s14,[r3,#12]
+ 143 012e D7ED046A 	 flds s13,[r7,#16]
+ 144 0132 D7ED087A 	 flds s15,[r7,#32]
+ 145 0136 66EEA77A 	 fmuls s15,s13,s15
+ 146 013a 77EE277A 	 fadds s15,s14,s15
+ 147 013e FB68     	 ldr r3,[r7,#12]
+ 148 0140 C3ED037A 	 fsts s15,[r3,#12]
+ 109:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	handle->bias += K[1] * y;
+ 149              	 .loc 1 109 0
+ 150 0144 FB68     	 ldr r3,[r7,#12]
+ 151 0146 93ED047A 	 flds s14,[r3,#16]
+ 152 014a D7ED056A 	 flds s13,[r7,#20]
+ 153 014e D7ED087A 	 flds s15,[r7,#32]
+ 154 0152 66EEA77A 	 fmuls s15,s13,s15
+ 155 0156 77EE277A 	 fadds s15,s14,s15
+ 156 015a FB68     	 ldr r3,[r7,#12]
+ 157 015c C3ED047A 	 fsts s15,[r3,#16]
+ 110:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+ 111:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	// Calculate estimation error covariance - Update the error covariance
+ 112:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	/* Step 7 */
+ 113:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	float P00_temp = handle->P[0][0];
+ 158              	 .loc 1 113 0
+ 159 0160 FB68     	 ldr r3,[r7,#12]
+ 160 0162 9B69     	 ldr r3,[r3,#24]
+ 161 0164 FB61     	 str r3,[r7,#28]
+ 114:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	float P01_temp = handle->P[0][1];
+ 162              	 .loc 1 114 0
+ 163 0166 FB68     	 ldr r3,[r7,#12]
+ 164 0168 DB69     	 ldr r3,[r3,#28]
+ 165 016a BB61     	 str r3,[r7,#24]
+ 115:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+ 116:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	handle->P[0][0] -= K[0] * P00_temp;
+ 166              	 .loc 1 116 0
+ 167 016c FB68     	 ldr r3,[r7,#12]
+ 168 016e 93ED067A 	 flds s14,[r3,#24]
+ 169 0172 D7ED046A 	 flds s13,[r7,#16]
+ 170 0176 D7ED077A 	 flds s15,[r7,#28]
+ 171 017a 66EEA77A 	 fmuls s15,s13,s15
+ 172 017e 77EE677A 	 fsubs s15,s14,s15
+ 173 0182 FB68     	 ldr r3,[r7,#12]
+ 174 0184 C3ED067A 	 fsts s15,[r3,#24]
+ 117:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	handle->P[0][1] -= K[0] * P01_temp;
+ 175              	 .loc 1 117 0
+ 176 0188 FB68     	 ldr r3,[r7,#12]
+ 177 018a 93ED077A 	 flds s14,[r3,#28]
+ 178 018e D7ED046A 	 flds s13,[r7,#16]
+ 179 0192 D7ED067A 	 flds s15,[r7,#24]
+ 180 0196 66EEA77A 	 fmuls s15,s13,s15
+ 181 019a 77EE677A 	 fsubs s15,s14,s15
+ 182 019e FB68     	 ldr r3,[r7,#12]
+ 183 01a0 C3ED077A 	 fsts s15,[r3,#28]
+ 118:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	handle->P[1][0] -= K[1] * P00_temp;
+ 184              	 .loc 1 118 0
+ 185 01a4 FB68     	 ldr r3,[r7,#12]
+ 186 01a6 93ED087A 	 flds s14,[r3,#32]
+ 187 01aa D7ED056A 	 flds s13,[r7,#20]
+ 188 01ae D7ED077A 	 flds s15,[r7,#28]
+ 189 01b2 66EEA77A 	 fmuls s15,s13,s15
+ 190 01b6 77EE677A 	 fsubs s15,s14,s15
+ 191 01ba FB68     	 ldr r3,[r7,#12]
+ 192 01bc C3ED087A 	 fsts s15,[r3,#32]
+ 119:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	handle->P[1][1] -= K[1] * P01_temp;
+ 193              	 .loc 1 119 0
+ 194 01c0 FB68     	 ldr r3,[r7,#12]
+ 195 01c2 93ED097A 	 flds s14,[r3,#36]
+ 196 01c6 D7ED056A 	 flds s13,[r7,#20]
+ 197 01ca D7ED067A 	 flds s15,[r7,#24]
+ 198 01ce 66EEA77A 	 fmuls s15,s13,s15
+ 199 01d2 77EE677A 	 fsubs s15,s14,s15
+ 200 01d6 FB68     	 ldr r3,[r7,#12]
+ 201 01d8 C3ED097A 	 fsts s15,[r3,#36]
+ 120:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+ 121:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	return handle->angle;
+ 202              	 .loc 1 121 0
+ 203 01dc FB68     	 ldr r3,[r7,#12]
+ 204 01de DB68     	 ldr r3,[r3,#12]
+ 122:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** }
+ 205              	 .loc 1 122 0
+ 206 01e0 1846     	 mov r0,r3
+ 207 01e2 2C37     	 adds r7,r7,#44
+ 208              	.LCFI3:
+ 209              	 .cfi_def_cfa_offset 4
+ 210 01e4 BD46     	 mov sp,r7
+ 211              	.LCFI4:
+ 212              	 .cfi_def_cfa_register 13
+ 213              	 
+ 214 01e6 5DF8047B 	 ldr r7,[sp],#4
+ 215              	.LCFI5:
+ 216              	 .cfi_restore 7
+ 217              	 .cfi_def_cfa_offset 0
+ 218 01ea 7047     	 bx lr
+ 219              	 .cfi_endproc
+ 220              	.LFE0:
+ 222              	 .section .text.KALMAN_Init,"ax",%progbits
+ 223              	 .align 2
+ 224              	 .global KALMAN_Init
+ 225              	 .thumb
+ 226              	 .thumb_func
+ 228              	KALMAN_Init:
+ 229              	.LFB1:
+ 123:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+ 124:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** /**
+ 125:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c ****  *  \brief Brief
+ 126:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c ****  *
+ 127:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c ****  *  \return Return_Description
+ 128:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c ****  *
+ 129:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c ****  *  \details Details
+ 130:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c ****  */
+ 131:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** void KALMAN_Init(KALMAN_t *handle, float Q_angle, float Q_bias, float R_measure)
+ 132:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** {
+ 230              	 .loc 1 132 0
+ 231              	 .cfi_startproc
+ 232              	 
+ 233              	 
+ 234              	 
+ 235 0000 80B4     	 push {r7}
+ 236              	.LCFI6:
+ 237              	 .cfi_def_cfa_offset 4
+ 238              	 .cfi_offset 7,-4
+ 239 0002 85B0     	 sub sp,sp,#20
+ 240              	.LCFI7:
+ 241              	 .cfi_def_cfa_offset 24
+ 242 0004 00AF     	 add r7,sp,#0
+ 243              	.LCFI8:
+ 244              	 .cfi_def_cfa_register 7
+ 245 0006 F860     	 str r0,[r7,#12]
+ 246 0008 B960     	 str r1,[r7,#8]
+ 247 000a 7A60     	 str r2,[r7,#4]
+ 248 000c 3B60     	 str r3,[r7]
+ 133:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c ****     /* We will set the variables like so, these can also be tuned by the user */
+ 134:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	handle->Q_angle = Q_angle;
+ 249              	 .loc 1 134 0
+ 250 000e FB68     	 ldr r3,[r7,#12]
+ 251 0010 BA68     	 ldr r2,[r7,#8]
+ 252 0012 1A60     	 str r2,[r3]
+ 135:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	handle->Q_bias = Q_bias;
+ 253              	 .loc 1 135 0
+ 254 0014 FB68     	 ldr r3,[r7,#12]
+ 255 0016 7A68     	 ldr r2,[r7,#4]
+ 256 0018 5A60     	 str r2,[r3,#4]
+ 136:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	handle->R_measure = R_measure;
+ 257              	 .loc 1 136 0
+ 258 001a FB68     	 ldr r3,[r7,#12]
+ 259 001c 3A68     	 ldr r2,[r7]
+ 260 001e 9A60     	 str r2,[r3,#8]
+ 137:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+ 138:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	handle->angle = 0.0f; // Reset the angle
+ 261              	 .loc 1 138 0
+ 262 0020 FB68     	 ldr r3,[r7,#12]
+ 263 0022 4FF00002 	 mov r2,#0
+ 264 0026 DA60     	 str r2,[r3,#12]
+ 139:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	handle->bias = 0.0f; // Reset bias
+ 265              	 .loc 1 139 0
+ 266 0028 FB68     	 ldr r3,[r7,#12]
+ 267 002a 4FF00002 	 mov r2,#0
+ 268 002e 1A61     	 str r2,[r3,#16]
+ 140:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+ 141:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	handle->P[0][0] = 0.0f; // Since we assume that the bias is 0 and we know the starting angle (use 
+ 269              	 .loc 1 141 0
+ 270 0030 FB68     	 ldr r3,[r7,#12]
+ 271 0032 4FF00002 	 mov r2,#0
+ 272 0036 9A61     	 str r2,[r3,#24]
+ 142:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	handle->P[0][1] = 0.0f;
+ 273              	 .loc 1 142 0
+ 274 0038 FB68     	 ldr r3,[r7,#12]
+ 275 003a 4FF00002 	 mov r2,#0
+ 276 003e DA61     	 str r2,[r3,#28]
+ 143:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	handle->P[1][0] = 0.0f;
+ 277              	 .loc 1 143 0
+ 278 0040 FB68     	 ldr r3,[r7,#12]
+ 279 0042 4FF00002 	 mov r2,#0
+ 280 0046 1A62     	 str r2,[r3,#32]
+ 144:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 	handle->P[1][1] = 0.0f;
+ 281              	 .loc 1 144 0
+ 282 0048 FB68     	 ldr r3,[r7,#12]
+ 283 004a 4FF00002 	 mov r2,#0
+ 284 004e 5A62     	 str r2,[r3,#36]
+ 145:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** }
+ 285              	 .loc 1 145 0
+ 286 0050 1437     	 adds r7,r7,#20
+ 287              	.LCFI9:
+ 288              	 .cfi_def_cfa_offset 4
+ 289 0052 BD46     	 mov sp,r7
+ 290              	.LCFI10:
+ 291              	 .cfi_def_cfa_register 13
+ 292              	 
+ 293 0054 5DF8047B 	 ldr r7,[sp],#4
+ 294              	.LCFI11:
+ 295              	 .cfi_restore 7
+ 296              	 .cfi_def_cfa_offset 0
+ 297 0058 7047     	 bx lr
+ 298              	 .cfi_endproc
+ 299              	.LFE1:
+ 301 005a 00BF     	 .section .text.KALMAN_setAngle,"ax",%progbits
+ 302              	 .align 2
+ 303              	 .global KALMAN_setAngle
+ 304              	 .thumb
+ 305              	 .thumb_func
+ 307              	KALMAN_setAngle:
+ 308              	.LFB2:
+ 146:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+ 147:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** void KALMAN_setAngle(KALMAN_t *handle, float newAngle) { handle->angle = newAngle; } // Used to set
+ 309              	 .loc 1 147 0
+ 310              	 .cfi_startproc
+ 311              	 
+ 312              	 
+ 313              	 
+ 314 0000 80B4     	 push {r7}
+ 315              	.LCFI12:
+ 316              	 .cfi_def_cfa_offset 4
+ 317              	 .cfi_offset 7,-4
+ 318 0002 83B0     	 sub sp,sp,#12
+ 319              	.LCFI13:
+ 320              	 .cfi_def_cfa_offset 16
+ 321 0004 00AF     	 add r7,sp,#0
+ 322              	.LCFI14:
+ 323              	 .cfi_def_cfa_register 7
+ 324 0006 7860     	 str r0,[r7,#4]
+ 325 0008 3960     	 str r1,[r7]
+ 326              	 .loc 1 147 0
+ 327 000a 7B68     	 ldr r3,[r7,#4]
+ 328 000c 3A68     	 ldr r2,[r7]
+ 329 000e DA60     	 str r2,[r3,#12]
+ 330 0010 0C37     	 adds r7,r7,#12
+ 331              	.LCFI15:
+ 332              	 .cfi_def_cfa_offset 4
+ 333 0012 BD46     	 mov sp,r7
+ 334              	.LCFI16:
+ 335              	 .cfi_def_cfa_register 13
+ 336              	 
+ 337 0014 5DF8047B 	 ldr r7,[sp],#4
+ 338              	.LCFI17:
+ 339              	 .cfi_restore 7
+ 340              	 .cfi_def_cfa_offset 0
+ 341 0018 7047     	 bx lr
+ 342              	 .cfi_endproc
+ 343              	.LFE2:
+ 345 001a 00BF     	 .section .text.KALMAN_getRate,"ax",%progbits
+ 346              	 .align 2
+ 347              	 .global KALMAN_getRate
+ 348              	 .thumb
+ 349              	 .thumb_func
+ 351              	KALMAN_getRate:
+ 352              	.LFB3:
+ 148:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** float KALMAN_getRate(KALMAN_t *handle) { return handle->rate; } // Return the unbiased rate
+ 353              	 .loc 1 148 0
+ 354              	 .cfi_startproc
+ 355              	 
+ 356              	 
+ 357              	 
+ 358 0000 80B4     	 push {r7}
+ 359              	.LCFI18:
+ 360              	 .cfi_def_cfa_offset 4
+ 361              	 .cfi_offset 7,-4
+ 362 0002 83B0     	 sub sp,sp,#12
+ 363              	.LCFI19:
+ 364              	 .cfi_def_cfa_offset 16
+ 365 0004 00AF     	 add r7,sp,#0
+ 366              	.LCFI20:
+ 367              	 .cfi_def_cfa_register 7
+ 368 0006 7860     	 str r0,[r7,#4]
+ 369              	 .loc 1 148 0
+ 370 0008 7B68     	 ldr r3,[r7,#4]
+ 371 000a 5B69     	 ldr r3,[r3,#20]
+ 372 000c 1846     	 mov r0,r3
+ 373 000e 0C37     	 adds r7,r7,#12
+ 374              	.LCFI21:
+ 375              	 .cfi_def_cfa_offset 4
+ 376 0010 BD46     	 mov sp,r7
+ 377              	.LCFI22:
+ 378              	 .cfi_def_cfa_register 13
+ 379              	 
+ 380 0012 5DF8047B 	 ldr r7,[sp],#4
+ 381              	.LCFI23:
+ 382              	 .cfi_restore 7
+ 383              	 .cfi_def_cfa_offset 0
+ 384 0016 7047     	 bx lr
+ 385              	 .cfi_endproc
+ 386              	.LFE3:
+ 388              	 .section .text.KALMAN_setQangle,"ax",%progbits
+ 389              	 .align 2
+ 390              	 .global KALMAN_setQangle
+ 391              	 .thumb
+ 392              	 .thumb_func
+ 394              	KALMAN_setQangle:
+ 395              	.LFB4:
+ 149:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+ 150:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** void KALMAN_setQangle(KALMAN_t *handle, float newQ_angle) { handle->Q_angle = newQ_angle; }
+ 396              	 .loc 1 150 0
+ 397              	 .cfi_startproc
+ 398              	 
+ 399              	 
+ 400              	 
+ 401 0000 80B4     	 push {r7}
+ 402              	.LCFI24:
+ 403              	 .cfi_def_cfa_offset 4
+ 404              	 .cfi_offset 7,-4
+ 405 0002 83B0     	 sub sp,sp,#12
+ 406              	.LCFI25:
+ 407              	 .cfi_def_cfa_offset 16
+ 408 0004 00AF     	 add r7,sp,#0
+ 409              	.LCFI26:
+ 410              	 .cfi_def_cfa_register 7
+ 411 0006 7860     	 str r0,[r7,#4]
+ 412 0008 3960     	 str r1,[r7]
+ 413              	 .loc 1 150 0
+ 414 000a 7B68     	 ldr r3,[r7,#4]
+ 415 000c 3A68     	 ldr r2,[r7]
+ 416 000e 1A60     	 str r2,[r3]
+ 417 0010 0C37     	 adds r7,r7,#12
+ 418              	.LCFI27:
+ 419              	 .cfi_def_cfa_offset 4
+ 420 0012 BD46     	 mov sp,r7
+ 421              	.LCFI28:
+ 422              	 .cfi_def_cfa_register 13
+ 423              	 
+ 424 0014 5DF8047B 	 ldr r7,[sp],#4
+ 425              	.LCFI29:
+ 426              	 .cfi_restore 7
+ 427              	 .cfi_def_cfa_offset 0
+ 428 0018 7047     	 bx lr
+ 429              	 .cfi_endproc
+ 430              	.LFE4:
+ 432 001a 00BF     	 .section .text.KALMAN_setQbias,"ax",%progbits
+ 433              	 .align 2
+ 434              	 .global KALMAN_setQbias
+ 435              	 .thumb
+ 436              	 .thumb_func
+ 438              	KALMAN_setQbias:
+ 439              	.LFB5:
+ 151:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** void KALMAN_setQbias(KALMAN_t *handle, float newQ_bias) { handle->Q_bias = newQ_bias; }
+ 440              	 .loc 1 151 0
+ 441              	 .cfi_startproc
+ 442              	 
+ 443              	 
+ 444              	 
+ 445 0000 80B4     	 push {r7}
+ 446              	.LCFI30:
+ 447              	 .cfi_def_cfa_offset 4
+ 448              	 .cfi_offset 7,-4
+ 449 0002 83B0     	 sub sp,sp,#12
+ 450              	.LCFI31:
+ 451              	 .cfi_def_cfa_offset 16
+ 452 0004 00AF     	 add r7,sp,#0
+ 453              	.LCFI32:
+ 454              	 .cfi_def_cfa_register 7
+ 455 0006 7860     	 str r0,[r7,#4]
+ 456 0008 3960     	 str r1,[r7]
+ 457              	 .loc 1 151 0
+ 458 000a 7B68     	 ldr r3,[r7,#4]
+ 459 000c 3A68     	 ldr r2,[r7]
+ 460 000e 5A60     	 str r2,[r3,#4]
+ 461 0010 0C37     	 adds r7,r7,#12
+ 462              	.LCFI33:
+ 463              	 .cfi_def_cfa_offset 4
+ 464 0012 BD46     	 mov sp,r7
+ 465              	.LCFI34:
+ 466              	 .cfi_def_cfa_register 13
+ 467              	 
+ 468 0014 5DF8047B 	 ldr r7,[sp],#4
+ 469              	.LCFI35:
+ 470              	 .cfi_restore 7
+ 471              	 .cfi_def_cfa_offset 0
+ 472 0018 7047     	 bx lr
+ 473              	 .cfi_endproc
+ 474              	.LFE5:
+ 476 001a 00BF     	 .section .text.KALMAN_setRmeasure,"ax",%progbits
+ 477              	 .align 2
+ 478              	 .global KALMAN_setRmeasure
+ 479              	 .thumb
+ 480              	 .thumb_func
+ 482              	KALMAN_setRmeasure:
+ 483              	.LFB6:
+ 152:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** void KALMAN_setRmeasure(KALMAN_t *handle, float newR_measure) { handle->R_measure = newR_measure; }
+ 484              	 .loc 1 152 0
+ 485              	 .cfi_startproc
+ 486              	 
+ 487              	 
+ 488              	 
+ 489 0000 80B4     	 push {r7}
+ 490              	.LCFI36:
+ 491              	 .cfi_def_cfa_offset 4
+ 492              	 .cfi_offset 7,-4
+ 493 0002 83B0     	 sub sp,sp,#12
+ 494              	.LCFI37:
+ 495              	 .cfi_def_cfa_offset 16
+ 496 0004 00AF     	 add r7,sp,#0
+ 497              	.LCFI38:
+ 498              	 .cfi_def_cfa_register 7
+ 499 0006 7860     	 str r0,[r7,#4]
+ 500 0008 3960     	 str r1,[r7]
+ 501              	 .loc 1 152 0
+ 502 000a 7B68     	 ldr r3,[r7,#4]
+ 503 000c 3A68     	 ldr r2,[r7]
+ 504 000e 9A60     	 str r2,[r3,#8]
+ 505 0010 0C37     	 adds r7,r7,#12
+ 506              	.LCFI39:
+ 507              	 .cfi_def_cfa_offset 4
+ 508 0012 BD46     	 mov sp,r7
+ 509              	.LCFI40:
+ 510              	 .cfi_def_cfa_register 13
+ 511              	 
+ 512 0014 5DF8047B 	 ldr r7,[sp],#4
+ 513              	.LCFI41:
+ 514              	 .cfi_restore 7
+ 515              	 .cfi_def_cfa_offset 0
+ 516 0018 7047     	 bx lr
+ 517              	 .cfi_endproc
+ 518              	.LFE6:
+ 520 001a 00BF     	 .section .text.KALMAN_getQangle,"ax",%progbits
+ 521              	 .align 2
+ 522              	 .global KALMAN_getQangle
+ 523              	 .thumb
+ 524              	 .thumb_func
+ 526              	KALMAN_getQangle:
+ 527              	.LFB7:
+ 153:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** 
+ 154:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** float KALMAN_getQangle(KALMAN_t *handle) { return handle->Q_angle; }
+ 528              	 .loc 1 154 0
+ 529              	 .cfi_startproc
+ 530              	 
+ 531              	 
+ 532              	 
+ 533 0000 80B4     	 push {r7}
+ 534              	.LCFI42:
+ 535              	 .cfi_def_cfa_offset 4
+ 536              	 .cfi_offset 7,-4
+ 537 0002 83B0     	 sub sp,sp,#12
+ 538              	.LCFI43:
+ 539              	 .cfi_def_cfa_offset 16
+ 540 0004 00AF     	 add r7,sp,#0
+ 541              	.LCFI44:
+ 542              	 .cfi_def_cfa_register 7
+ 543 0006 7860     	 str r0,[r7,#4]
+ 544              	 .loc 1 154 0
+ 545 0008 7B68     	 ldr r3,[r7,#4]
+ 546 000a 1B68     	 ldr r3,[r3]
+ 547 000c 1846     	 mov r0,r3
+ 548 000e 0C37     	 adds r7,r7,#12
+ 549              	.LCFI45:
+ 550              	 .cfi_def_cfa_offset 4
+ 551 0010 BD46     	 mov sp,r7
+ 552              	.LCFI46:
+ 553              	 .cfi_def_cfa_register 13
+ 554              	 
+ 555 0012 5DF8047B 	 ldr r7,[sp],#4
+ 556              	.LCFI47:
+ 557              	 .cfi_restore 7
+ 558              	 .cfi_def_cfa_offset 0
+ 559 0016 7047     	 bx lr
+ 560              	 .cfi_endproc
+ 561              	.LFE7:
+ 563              	 .section .text.KALMAN_getQbias,"ax",%progbits
+ 564              	 .align 2
+ 565              	 .global KALMAN_getQbias
+ 566              	 .thumb
+ 567              	 .thumb_func
+ 569              	KALMAN_getQbias:
+ 570              	.LFB8:
+ 155:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** float KALMAN_getQbias(KALMAN_t *handle) { return handle->Q_bias; }
+ 571              	 .loc 1 155 0
+ 572              	 .cfi_startproc
+ 573              	 
+ 574              	 
+ 575              	 
+ 576 0000 80B4     	 push {r7}
+ 577              	.LCFI48:
+ 578              	 .cfi_def_cfa_offset 4
+ 579              	 .cfi_offset 7,-4
+ 580 0002 83B0     	 sub sp,sp,#12
+ 581              	.LCFI49:
+ 582              	 .cfi_def_cfa_offset 16
+ 583 0004 00AF     	 add r7,sp,#0
+ 584              	.LCFI50:
+ 585              	 .cfi_def_cfa_register 7
+ 586 0006 7860     	 str r0,[r7,#4]
+ 587              	 .loc 1 155 0
+ 588 0008 7B68     	 ldr r3,[r7,#4]
+ 589 000a 5B68     	 ldr r3,[r3,#4]
+ 590 000c 1846     	 mov r0,r3
+ 591 000e 0C37     	 adds r7,r7,#12
+ 592              	.LCFI51:
+ 593              	 .cfi_def_cfa_offset 4
+ 594 0010 BD46     	 mov sp,r7
+ 595              	.LCFI52:
+ 596              	 .cfi_def_cfa_register 13
+ 597              	 
+ 598 0012 5DF8047B 	 ldr r7,[sp],#4
+ 599              	.LCFI53:
+ 600              	 .cfi_restore 7
+ 601              	 .cfi_def_cfa_offset 0
+ 602 0016 7047     	 bx lr
+ 603              	 .cfi_endproc
+ 604              	.LFE8:
+ 606              	 .section .text.KALMAN_getRmeasure,"ax",%progbits
+ 607              	 .align 2
+ 608              	 .global KALMAN_getRmeasure
+ 609              	 .thumb
+ 610              	 .thumb_func
+ 612              	KALMAN_getRmeasure:
+ 613              	.LFB9:
+ 156:../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.c **** float KALMAN_getRmeasure(KALMAN_t *handle) { return handle->R_measure; }
+ 614              	 .loc 1 156 0
+ 615              	 .cfi_startproc
+ 616              	 
+ 617              	 
+ 618              	 
+ 619 0000 80B4     	 push {r7}
+ 620              	.LCFI54:
+ 621              	 .cfi_def_cfa_offset 4
+ 622              	 .cfi_offset 7,-4
+ 623 0002 83B0     	 sub sp,sp,#12
+ 624              	.LCFI55:
+ 625              	 .cfi_def_cfa_offset 16
+ 626 0004 00AF     	 add r7,sp,#0
+ 627              	.LCFI56:
+ 628              	 .cfi_def_cfa_register 7
+ 629 0006 7860     	 str r0,[r7,#4]
+ 630              	 .loc 1 156 0
+ 631 0008 7B68     	 ldr r3,[r7,#4]
+ 632 000a 9B68     	 ldr r3,[r3,#8]
+ 633 000c 1846     	 mov r0,r3
+ 634 000e 0C37     	 adds r7,r7,#12
+ 635              	.LCFI57:
+ 636              	 .cfi_def_cfa_offset 4
+ 637 0010 BD46     	 mov sp,r7
+ 638              	.LCFI58:
+ 639              	 .cfi_def_cfa_register 13
+ 640              	 
+ 641 0012 5DF8047B 	 ldr r7,[sp],#4
+ 642              	.LCFI59:
+ 643              	 .cfi_restore 7
+ 644              	 .cfi_def_cfa_offset 0
+ 645 0016 7047     	 bx lr
+ 646              	 .cfi_endproc
+ 647              	.LFE9:
+ 649              	 .text
+ 650              	.Letext0:
+ 651              	 .file 2 "../_Quadrocopter/Sensors/MPU9X50/Filter/kalman.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 kalman.c
+    {standard input}:20     .text.KALMAN_getAngle:00000000 $t
+    {standard input}:25     .text.KALMAN_getAngle:00000000 KALMAN_getAngle
+    {standard input}:223    .text.KALMAN_Init:00000000 $t
+    {standard input}:228    .text.KALMAN_Init:00000000 KALMAN_Init
+    {standard input}:302    .text.KALMAN_setAngle:00000000 $t
+    {standard input}:307    .text.KALMAN_setAngle:00000000 KALMAN_setAngle
+    {standard input}:346    .text.KALMAN_getRate:00000000 $t
+    {standard input}:351    .text.KALMAN_getRate:00000000 KALMAN_getRate
+    {standard input}:389    .text.KALMAN_setQangle:00000000 $t
+    {standard input}:394    .text.KALMAN_setQangle:00000000 KALMAN_setQangle
+    {standard input}:433    .text.KALMAN_setQbias:00000000 $t
+    {standard input}:438    .text.KALMAN_setQbias:00000000 KALMAN_setQbias
+    {standard input}:477    .text.KALMAN_setRmeasure:00000000 $t
+    {standard input}:482    .text.KALMAN_setRmeasure:00000000 KALMAN_setRmeasure
+    {standard input}:521    .text.KALMAN_getQangle:00000000 $t
+    {standard input}:526    .text.KALMAN_getQangle:00000000 KALMAN_getQangle
+    {standard input}:564    .text.KALMAN_getQbias:00000000 $t
+    {standard input}:569    .text.KALMAN_getQbias:00000000 KALMAN_getQbias
+    {standard input}:607    .text.KALMAN_getRmeasure:00000000 $t
+    {standard input}:612    .text.KALMAN_getRmeasure:00000000 KALMAN_getRmeasure
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

@@ -1,0 +1,202 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_lms_init_q15.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.arm_lms_init_q15,"ax",%progbits
+  20              	 .align 2
+  21              	 .global arm_lms_init_q15
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	arm_lms_init_q15:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c"
+   1:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** /*-----------------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * $Date:        12. March 2014
+   5:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * $Revision: 	V1.4.4
+   6:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * Title:        arm_lms_init_q15.c    
+   9:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * Description:  Q15 LMS filter initialization function.    
+  11:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** *
+  27:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * POSSIBILITY OF SUCH DAMAGE.   
+  39:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * ---------------------------------------------------------------------------*/
+  40:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** 
+  41:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** 
+  43:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** /**    
+  44:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****  * @ingroup groupFilters    
+  45:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****  */
+  46:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** 
+  47:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** /**    
+  48:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****  * @addtogroup LMS    
+  49:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****  * @{    
+  50:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****  */
+  51:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** 
+  52:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** /**    
+  53:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * @brief Initialization function for the Q15 LMS filter.    
+  54:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * @param[in] *S points to an instance of the Q15 LMS filter structure.    
+  55:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * @param[in] numTaps  number of filter coefficients.    
+  56:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * @param[in] *pCoeffs points to the coefficient buffer.    
+  57:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * @param[in] *pState points to the state buffer.    
+  58:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * @param[in] mu step size that controls filter coefficient updates.    
+  59:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * @param[in] blockSize number of samples to process.    
+  60:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * @param[in] postShift bit shift applied to coefficients.    
+  61:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * @return    none.    
+  62:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** *    
+  63:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * \par Description:    
+  64:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * <code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order:   
+  65:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * <pre>    
+  66:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** *    {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}    
+  67:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * </pre>    
+  68:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * The initial filter coefficients serve as a starting point for the adaptive filter.    
+  69:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * <code>pState</code> points to the array of state variables and size of array is    
+  70:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * <code>numTaps+blockSize-1</code> samples, where <code>blockSize</code> is the number of    
+  71:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** * input samples processed by each call to <code>arm_lms_q15()</code>.    
+  72:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** */
+  73:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** 
+  74:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** void arm_lms_init_q15(
+  75:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****   arm_lms_instance_q15 * S,
+  76:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****   uint16_t numTaps,
+  77:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****   q15_t * pCoeffs,
+  78:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****   q15_t * pState,
+  79:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****   q15_t mu,
+  80:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****   uint32_t blockSize,
+  81:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****   uint32_t postShift)
+  82:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** {
+  28              	 .loc 1 82 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32 0000 80B5     	 push {r7,lr}
+  33              	.LCFI0:
+  34              	 .cfi_def_cfa_offset 8
+  35              	 .cfi_offset 7,-8
+  36              	 .cfi_offset 14,-4
+  37 0002 84B0     	 sub sp,sp,#16
+  38              	.LCFI1:
+  39              	 .cfi_def_cfa_offset 24
+  40 0004 00AF     	 add r7,sp,#0
+  41              	.LCFI2:
+  42              	 .cfi_def_cfa_register 7
+  43 0006 F860     	 str r0,[r7,#12]
+  44 0008 7A60     	 str r2,[r7,#4]
+  45 000a 3B60     	 str r3,[r7]
+  46 000c 0B46     	 mov r3,r1
+  47 000e 7B81     	 strh r3,[r7,#10]
+  83:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****   /* Assign filter taps */
+  84:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****   S->numTaps = numTaps;
+  48              	 .loc 1 84 0
+  49 0010 FB68     	 ldr r3,[r7,#12]
+  50 0012 7A89     	 ldrh r2,[r7,#10]
+  51 0014 1A80     	 strh r2,[r3]
+  85:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** 
+  86:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****   /* Assign coefficient pointer */
+  87:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****   S->pCoeffs = pCoeffs;
+  52              	 .loc 1 87 0
+  53 0016 FB68     	 ldr r3,[r7,#12]
+  54 0018 7A68     	 ldr r2,[r7,#4]
+  55 001a 9A60     	 str r2,[r3,#8]
+  88:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** 
+  89:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****   /* Clear state buffer and size is always blockSize + numTaps - 1 */
+  90:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****   memset(pState, 0, (numTaps + (blockSize - 1u)) * sizeof(q15_t));
+  56              	 .loc 1 90 0
+  57 001c 7A89     	 ldrh r2,[r7,#10]
+  58 001e FB69     	 ldr r3,[r7,#28]
+  59 0020 1344     	 add r3,r3,r2
+  60 0022 03F10043 	 add r3,r3,#-2147483648
+  61 0026 013B     	 subs r3,r3,#1
+  62 0028 5B00     	 lsls r3,r3,#1
+  63 002a 3868     	 ldr r0,[r7]
+  64 002c 0021     	 movs r1,#0
+  65 002e 1A46     	 mov r2,r3
+  66 0030 FFF7FEFF 	 bl memset
+  91:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** 
+  92:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****   /* Assign state pointer */
+  93:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****   S->pState = pState;
+  67              	 .loc 1 93 0
+  68 0034 FB68     	 ldr r3,[r7,#12]
+  69 0036 3A68     	 ldr r2,[r7]
+  70 0038 5A60     	 str r2,[r3,#4]
+  94:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** 
+  95:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****   /* Assign Step size value */
+  96:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****   S->mu = mu;
+  71              	 .loc 1 96 0
+  72 003a FB68     	 ldr r3,[r7,#12]
+  73 003c 3A8B     	 ldrh r2,[r7,#24]
+  74 003e 9A81     	 strh r2,[r3,#12]
+  97:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** 
+  98:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****   /* Assign postShift value to be applied */
+  99:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c ****   S->postShift = postShift;
+  75              	 .loc 1 99 0
+  76 0040 FB68     	 ldr r3,[r7,#12]
+  77 0042 3A6A     	 ldr r2,[r7,#32]
+  78 0044 1A61     	 str r2,[r3,#16]
+ 100:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** 
+ 101:../Dave/Generated/CMSIS_DSP/FilteringFunctions/arm_lms_init_q15.c **** }
+  79              	 .loc 1 101 0
+  80 0046 1037     	 adds r7,r7,#16
+  81              	.LCFI3:
+  82              	 .cfi_def_cfa_offset 8
+  83 0048 BD46     	 mov sp,r7
+  84              	.LCFI4:
+  85              	 .cfi_def_cfa_register 13
+  86              	 
+  87 004a 80BD     	 pop {r7,pc}
+  88              	 .cfi_endproc
+  89              	.LFE139:
+  91              	 .text
+  92              	.Letext0:
+  93              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+  94              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+  95              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_lms_init_q15.c
+    {standard input}:20     .text.arm_lms_init_q15:00000000 $t
+    {standard input}:25     .text.arm_lms_init_q15:00000000 arm_lms_init_q15
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+memset

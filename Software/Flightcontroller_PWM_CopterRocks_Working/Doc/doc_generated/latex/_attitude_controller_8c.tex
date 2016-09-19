@@ -1,0 +1,239 @@
+\hypertarget{_attitude_controller_8c}{}\section{Attitude\+Controller.\+c File Reference}
+\label{_attitude_controller_8c}\index{Attitude\+Controller.\+c@{Attitude\+Controller.\+c}}
+{\ttfamily \#include \char`\"{}Attitude\+Controller.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_attitude_controller_8c_ab96e14da836dafe04a4924f5945c9198}{Control\+\_\+\+Timer\+\_\+\+I\+SR} (void)
+\begin{DoxyCompactList}\small\item\em Interrupt-\/\+Service-\/\+Routine of the Control\+\_\+\+Timer. \end{DoxyCompactList}\item 
+void \hyperlink{_attitude_controller_8c_a3545efe7f7a1e08c72e8c45ddc47dbe8}{Angle\+Controller} (float $\ast$r, float $\ast$y, int n, const float $\ast$a, const float $\ast$b, float $\ast$x, float $\ast$u)
+\begin{DoxyCompactList}\small\item\em P\+ID controller for angle based quadcopter stabilization. \end{DoxyCompactList}\item 
+void \hyperlink{_attitude_controller_8c_aebb4bacbb3530830a3ce2c215792eec6}{Angle\+Rate\+Controller} (float $\ast$r, float $\ast$y, const float $\ast$P, float $\ast$u)
+\begin{DoxyCompactList}\small\item\em This function represents the proportional controller for yaw-\/movement of the quadcopter. \end{DoxyCompactList}\item 
+void \hyperlink{_attitude_controller_8c_a02e8a22fcd41ffe0ed5e4e637029d1c5}{Create\+Pulse\+Width} (float $\ast$u\+\_\+phi, float $\ast$u\+\_\+theta, float $\ast$u\+\_\+psi\+\_\+dot, float $\ast$u\+\_\+hover, float $\ast$P\+W\+M\+\_\+width)
+\begin{DoxyCompactList}\small\item\em This function calculates and limits the P\+WM signals of the 4 motors, based on the 3 controller outputs. \end{DoxyCompactList}\item 
+void \hyperlink{_attitude_controller_8c_a7dfd9b79bc5a37d7df40207afbc5431f}{setup} (void)
+\begin{DoxyCompactList}\small\item\em This function initializes the hardware. \end{DoxyCompactList}\item 
+void \hyperlink{_attitude_controller_8c_aed3c6de0942428ca094e3f38a7bda325}{setup\+\_\+\+S\+T\+A\+T\+E\+\_\+\+L\+E\+Ds} (void)
+\begin{DoxyCompactList}\small\item\em Function for setup of the pins for the Battery-\/\+L\+E\+Ds on the L\+A\+R\+I\+X-\/\+Board. \end{DoxyCompactList}\item 
+void \hyperlink{_attitude_controller_8c_a9541bda1905e424c0f065c83b2110b31}{setup\+\_\+\+U\+A\+R\+T\+\_\+\+Trigger\+\_\+limits} (void)
+\begin{DoxyCompactList}\small\item\em Function for setting the trigger limits. \end{DoxyCompactList}\item 
+void \hyperlink{_attitude_controller_8c_a91504a3995a876deeb541b09e082608e}{disable\+I\+RQ} (void)
+\begin{DoxyCompactList}\small\item\em Function for disabling all Interrupt-\/\+Service-\/\+Routines $\ast$. \end{DoxyCompactList}\item 
+void \hyperlink{_attitude_controller_8c_aec47a7f00f83cb244fae572be694645a}{enable\+I\+RQ} (void)
+\begin{DoxyCompactList}\small\item\em Function for enabling all Interrupt-\/\+Service-\/\+Routines. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const A\+D\+C\+\_\+\+M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+I\+S\+R\+\_\+t \hyperlink{_attitude_controller_8c_ac321f527eab689af6d134aa5abe5c07d}{backgnd\+\_\+rs\+\_\+intr\+\_\+handle}
+\item 
+\hyperlink{struct_c_o_n_t_r_o_l_l_e_r_p_o_l_y_n_o_m_i_a_l_s}{C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+P\+O\+L\+Y\+N\+O\+M\+I\+A\+LS} \hyperlink{_attitude_controller_8c_a853c1674a18625b997903bb2ade040e9}{polynoms}
+\item 
+float \hyperlink{_attitude_controller_8c_ac870e1249bab4a2a68cc4126761d24ef}{pressure} = 0
+\item 
+float \hyperlink{_attitude_controller_8c_afc1d28cfbce795d6ea954ebe725241f5}{temperature} = 0
+\item 
+struct \hyperlink{structstruct_f_i_r}{struct\+F\+IR} \hyperlink{_attitude_controller_8c_a1df4073e627c5a30405e714b6186ee5a}{Pressure\+F\+IR}
+\item 
+\hyperlink{struct_c_o_n_t_r_o_l_l_e_r_p_a_r_a_m_e_t_e_r}{C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+P\+A\+R\+A\+M\+E\+T\+ER} \hyperlink{_attitude_controller_8c_aa187fd818665f08c34ebbec002ebf454}{parameter}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{Attitude\+Controller.\+c@{Attitude\+Controller.\+c}!Angle\+Controller@{Angle\+Controller}}
+\index{Angle\+Controller@{Angle\+Controller}!Attitude\+Controller.\+c@{Attitude\+Controller.\+c}}
+\subsubsection[{\texorpdfstring{Angle\+Controller(float $\ast$r, float $\ast$y, int n, const float $\ast$a, const float $\ast$b, float $\ast$x, float $\ast$u)}{AngleController(float *r, float *y, int n, const float *a, const float *b, float *x, float *u)}}]{\setlength{\rightskip}{0pt plus 5cm}void Angle\+Controller (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{r, }
+\item[{float $\ast$}]{y, }
+\item[{int}]{n, }
+\item[{const float $\ast$}]{a, }
+\item[{const float $\ast$}]{b, }
+\item[{float $\ast$}]{x, }
+\item[{float $\ast$}]{u}
+\end{DoxyParamCaption}
+)}\hypertarget{_attitude_controller_8c_a3545efe7f7a1e08c72e8c45ddc47dbe8}{}\label{_attitude_controller_8c_a3545efe7f7a1e08c72e8c45ddc47dbe8}
+
+
+P\+ID controller for angle based quadcopter stabilization. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em r} & Reference inputs (RC) \\
+\hline
+\mbox{\tt in}  & {\em y} & Current output value of the sensor \\
+\hline
+\mbox{\tt in}  & {\em n} & Degree of control polynomial \\
+\hline
+\mbox{\tt in}  & {\em a} & Coefficient of the numerator and denominator polynomials of the controller \\
+\hline
+\mbox{\tt in}  & {\em b} & Coefficient of the numerator and denominator polynomials of the controller \\
+\hline
+\mbox{\tt in}  & {\em x} & \\
+\hline
+\mbox{\tt in}  & {\em u} & Controller output \\
+\hline
+\end{DoxyParams}
+\index{Attitude\+Controller.\+c@{Attitude\+Controller.\+c}!Angle\+Rate\+Controller@{Angle\+Rate\+Controller}}
+\index{Angle\+Rate\+Controller@{Angle\+Rate\+Controller}!Attitude\+Controller.\+c@{Attitude\+Controller.\+c}}
+\subsubsection[{\texorpdfstring{Angle\+Rate\+Controller(float $\ast$r, float $\ast$y, const float $\ast$\+P, float $\ast$u)}{AngleRateController(float *r, float *y, const float *P, float *u)}}]{\setlength{\rightskip}{0pt plus 5cm}void Angle\+Rate\+Controller (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{r, }
+\item[{float $\ast$}]{y, }
+\item[{const float $\ast$}]{P, }
+\item[{float $\ast$}]{u}
+\end{DoxyParamCaption}
+)}\hypertarget{_attitude_controller_8c_aebb4bacbb3530830a3ce2c215792eec6}{}\label{_attitude_controller_8c_aebb4bacbb3530830a3ce2c215792eec6}
+
+
+This function represents the proportional controller for yaw-\/movement of the quadcopter. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em r} & Reference inputs (RC) \\
+\hline
+\mbox{\tt in}  & {\em y} & Current output value of the sensor \\
+\hline
+\mbox{\tt in}  & {\em P} & Value of P\+\_\+yaw \\
+\hline
+\mbox{\tt in}  & {\em u} & Controller output \\
+\hline
+\end{DoxyParams}
+\index{Attitude\+Controller.\+c@{Attitude\+Controller.\+c}!Control\+\_\+\+Timer\+\_\+\+I\+SR@{Control\+\_\+\+Timer\+\_\+\+I\+SR}}
+\index{Control\+\_\+\+Timer\+\_\+\+I\+SR@{Control\+\_\+\+Timer\+\_\+\+I\+SR}!Attitude\+Controller.\+c@{Attitude\+Controller.\+c}}
+\subsubsection[{\texorpdfstring{Control\+\_\+\+Timer\+\_\+\+I\+S\+R(void)}{Control_Timer_ISR(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void Control\+\_\+\+Timer\+\_\+\+I\+SR (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_attitude_controller_8c_ab96e14da836dafe04a4924f5945c9198}{}\label{_attitude_controller_8c_ab96e14da836dafe04a4924f5945c9198}
+
+
+Interrupt-\/\+Service-\/\+Routine of the Control\+\_\+\+Timer. 
+
+Central Control Routine for Quadcopter~\newline
+This routine gets the momentary position and the desired position ~\newline
+and calculates new output for motors and transmits it via Daisy\+Chain to the ~\newline
+Electric Speed Controller \index{Attitude\+Controller.\+c@{Attitude\+Controller.\+c}!Create\+Pulse\+Width@{Create\+Pulse\+Width}}
+\index{Create\+Pulse\+Width@{Create\+Pulse\+Width}!Attitude\+Controller.\+c@{Attitude\+Controller.\+c}}
+\subsubsection[{\texorpdfstring{Create\+Pulse\+Width(float $\ast$u\+\_\+phi, float $\ast$u\+\_\+theta, float $\ast$u\+\_\+psi\+\_\+dot, float $\ast$u\+\_\+hover, float $\ast$\+P\+W\+M\+\_\+width)}{CreatePulseWidth(float *u_phi, float *u_theta, float *u_psi_dot, float *u_hover, float *PWM_width)}}]{\setlength{\rightskip}{0pt plus 5cm}void Create\+Pulse\+Width (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{u\+\_\+phi, }
+\item[{float $\ast$}]{u\+\_\+theta, }
+\item[{float $\ast$}]{u\+\_\+psi\+\_\+dot, }
+\item[{float $\ast$}]{u\+\_\+hover, }
+\item[{float $\ast$}]{P\+W\+M\+\_\+width}
+\end{DoxyParamCaption}
+)}\hypertarget{_attitude_controller_8c_a02e8a22fcd41ffe0ed5e4e637029d1c5}{}\label{_attitude_controller_8c_a02e8a22fcd41ffe0ed5e4e637029d1c5}
+
+
+This function calculates and limits the P\+WM signals of the 4 motors, based on the 3 controller outputs. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em u\+\_\+phi} & Output of third controller (u\+\_\+roll) \\
+\hline
+\mbox{\tt in}  & {\em u\+\_\+theta} & Output of second controller (u\+\_\+pitch) \\
+\hline
+\mbox{\tt in}  & {\em u\+\_\+psi\+\_\+dot} & Output of third controller (u\+\_\+yaw\+\_\+dot) \\
+\hline
+\mbox{\tt in}  & {\em u\+\_\+hover} & Power \\
+\hline
+\mbox{\tt in}  & {\em P\+W\+M\+\_\+width} & Desired width of the P\+WM\\
+\hline
+\end{DoxyParams}
+Roll, pitch and yaw movements are are based on the linearized mathematical model of the system \index{Attitude\+Controller.\+c@{Attitude\+Controller.\+c}!disable\+I\+RQ@{disable\+I\+RQ}}
+\index{disable\+I\+RQ@{disable\+I\+RQ}!Attitude\+Controller.\+c@{Attitude\+Controller.\+c}}
+\subsubsection[{\texorpdfstring{disable\+I\+R\+Q(void)}{disableIRQ(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void disable\+I\+RQ (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_attitude_controller_8c_a91504a3995a876deeb541b09e082608e}{}\label{_attitude_controller_8c_a91504a3995a876deeb541b09e082608e}
+
+
+Function for disabling all Interrupt-\/\+Service-\/\+Routines $\ast$. 
+
+This function disables all Interrupt-\/\+Service-\/\+Routines~\newline
+except the Util\+\_\+\+Timer\+\_\+\+I\+SR \index{Attitude\+Controller.\+c@{Attitude\+Controller.\+c}!enable\+I\+RQ@{enable\+I\+RQ}}
+\index{enable\+I\+RQ@{enable\+I\+RQ}!Attitude\+Controller.\+c@{Attitude\+Controller.\+c}}
+\subsubsection[{\texorpdfstring{enable\+I\+R\+Q(void)}{enableIRQ(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void enable\+I\+RQ (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_attitude_controller_8c_aec47a7f00f83cb244fae572be694645a}{}\label{_attitude_controller_8c_aec47a7f00f83cb244fae572be694645a}
+
+
+Function for enabling all Interrupt-\/\+Service-\/\+Routines. 
+
+This function enables all Interrupt-\/\+Service-\/\+Routines \index{Attitude\+Controller.\+c@{Attitude\+Controller.\+c}!setup@{setup}}
+\index{setup@{setup}!Attitude\+Controller.\+c@{Attitude\+Controller.\+c}}
+\subsubsection[{\texorpdfstring{setup(void)}{setup(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void setup (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_attitude_controller_8c_a7dfd9b79bc5a37d7df40207afbc5431f}{}\label{_attitude_controller_8c_a7dfd9b79bc5a37d7df40207afbc5431f}
+
+
+This function initializes the hardware. 
+
+Sensors are set up, polynomials are calculated and other general preparations are made \index{Attitude\+Controller.\+c@{Attitude\+Controller.\+c}!setup\+\_\+\+S\+T\+A\+T\+E\+\_\+\+L\+E\+Ds@{setup\+\_\+\+S\+T\+A\+T\+E\+\_\+\+L\+E\+Ds}}
+\index{setup\+\_\+\+S\+T\+A\+T\+E\+\_\+\+L\+E\+Ds@{setup\+\_\+\+S\+T\+A\+T\+E\+\_\+\+L\+E\+Ds}!Attitude\+Controller.\+c@{Attitude\+Controller.\+c}}
+\subsubsection[{\texorpdfstring{setup\+\_\+\+S\+T\+A\+T\+E\+\_\+\+L\+E\+Ds(void)}{setup_STATE_LEDs(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void setup\+\_\+\+S\+T\+A\+T\+E\+\_\+\+L\+E\+Ds (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_attitude_controller_8c_aed3c6de0942428ca094e3f38a7bda325}{}\label{_attitude_controller_8c_aed3c6de0942428ca094e3f38a7bda325}
+
+
+Function for setup of the pins for the Battery-\/\+L\+E\+Ds on the L\+A\+R\+I\+X-\/\+Board. 
+
+\index{Attitude\+Controller.\+c@{Attitude\+Controller.\+c}!setup\+\_\+\+U\+A\+R\+T\+\_\+\+Trigger\+\_\+limits@{setup\+\_\+\+U\+A\+R\+T\+\_\+\+Trigger\+\_\+limits}}
+\index{setup\+\_\+\+U\+A\+R\+T\+\_\+\+Trigger\+\_\+limits@{setup\+\_\+\+U\+A\+R\+T\+\_\+\+Trigger\+\_\+limits}!Attitude\+Controller.\+c@{Attitude\+Controller.\+c}}
+\subsubsection[{\texorpdfstring{setup\+\_\+\+U\+A\+R\+T\+\_\+\+Trigger\+\_\+limits(void)}{setup_UART_Trigger_limits(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void setup\+\_\+\+U\+A\+R\+T\+\_\+\+Trigger\+\_\+limits (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_attitude_controller_8c_a9541bda1905e424c0f065c83b2110b31}{}\label{_attitude_controller_8c_a9541bda1905e424c0f065c83b2110b31}
+
+
+Function for setting the trigger limits. 
+
+Receive F\+I\+FO trigger limit is configured for Bluetooth \& the Remote Control
+
+When the F\+I\+FO filling level rises above the trigger limit -\/$>$ Interrupt will be generated 
+
+\subsection{Variable Documentation}
+\index{Attitude\+Controller.\+c@{Attitude\+Controller.\+c}!backgnd\+\_\+rs\+\_\+intr\+\_\+handle@{backgnd\+\_\+rs\+\_\+intr\+\_\+handle}}
+\index{backgnd\+\_\+rs\+\_\+intr\+\_\+handle@{backgnd\+\_\+rs\+\_\+intr\+\_\+handle}!Attitude\+Controller.\+c@{Attitude\+Controller.\+c}}
+\subsubsection[{\texorpdfstring{backgnd\+\_\+rs\+\_\+intr\+\_\+handle}{backgnd_rs_intr_handle}}]{\setlength{\rightskip}{0pt plus 5cm}const A\+D\+C\+\_\+\+M\+E\+A\+S\+U\+R\+E\+M\+E\+N\+T\+\_\+\+I\+S\+R\+\_\+t backgnd\+\_\+rs\+\_\+intr\+\_\+handle}\hypertarget{_attitude_controller_8c_ac321f527eab689af6d134aa5abe5c07d}{}\label{_attitude_controller_8c_ac321f527eab689af6d134aa5abe5c07d}
+global A\+D\+C-\/\+N\+V\+IC struct \index{Attitude\+Controller.\+c@{Attitude\+Controller.\+c}!parameter@{parameter}}
+\index{parameter@{parameter}!Attitude\+Controller.\+c@{Attitude\+Controller.\+c}}
+\subsubsection[{\texorpdfstring{parameter}{parameter}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+P\+A\+R\+A\+M\+E\+T\+ER} parameter}\hypertarget{_attitude_controller_8c_aa187fd818665f08c34ebbec002ebf454}{}\label{_attitude_controller_8c_aa187fd818665f08c34ebbec002ebf454}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=
+\{
+        .T=0.002f,
+        .P\_roll=70.0f,
+        .I\_roll=0.2f,
+        .D\_roll=1.7f,
+        .N\_roll=400.0f,
+        .P\_pitch=70.0f,
+        .I\_pitch=0.2f,
+        .D\_pitch=1.7f,
+        .N\_pitch=400.0f,
+        .P\_yaw=200.0f
+\}
+\end{DoxyCode}
+\index{Attitude\+Controller.\+c@{Attitude\+Controller.\+c}!polynoms@{polynoms}}
+\index{polynoms@{polynoms}!Attitude\+Controller.\+c@{Attitude\+Controller.\+c}}
+\subsubsection[{\texorpdfstring{polynoms}{polynoms}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf C\+O\+N\+T\+R\+O\+L\+L\+E\+R\+P\+O\+L\+Y\+N\+O\+M\+I\+A\+LS} polynoms}\hypertarget{_attitude_controller_8c_a853c1674a18625b997903bb2ade040e9}{}\label{_attitude_controller_8c_a853c1674a18625b997903bb2ade040e9}
+global structure for controler polynomials \index{Attitude\+Controller.\+c@{Attitude\+Controller.\+c}!pressure@{pressure}}
+\index{pressure@{pressure}!Attitude\+Controller.\+c@{Attitude\+Controller.\+c}}
+\subsubsection[{\texorpdfstring{pressure}{pressure}}]{\setlength{\rightskip}{0pt plus 5cm}float pressure = 0}\hypertarget{_attitude_controller_8c_ac870e1249bab4a2a68cc4126761d24ef}{}\label{_attitude_controller_8c_ac870e1249bab4a2a68cc4126761d24ef}
+global variable for storing current pressure value \index{Attitude\+Controller.\+c@{Attitude\+Controller.\+c}!Pressure\+F\+IR@{Pressure\+F\+IR}}
+\index{Pressure\+F\+IR@{Pressure\+F\+IR}!Attitude\+Controller.\+c@{Attitude\+Controller.\+c}}
+\subsubsection[{\texorpdfstring{Pressure\+F\+IR}{PressureFIR}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf struct\+F\+IR} Pressure\+F\+IR}\hypertarget{_attitude_controller_8c_a1df4073e627c5a30405e714b6186ee5a}{}\label{_attitude_controller_8c_a1df4073e627c5a30405e714b6186ee5a}
+global struct for filtering pressure values \index{Attitude\+Controller.\+c@{Attitude\+Controller.\+c}!temperature@{temperature}}
+\index{temperature@{temperature}!Attitude\+Controller.\+c@{Attitude\+Controller.\+c}}
+\subsubsection[{\texorpdfstring{temperature}{temperature}}]{\setlength{\rightskip}{0pt plus 5cm}float temperature = 0}\hypertarget{_attitude_controller_8c_afc1d28cfbce795d6ea954ebe725241f5}{}\label{_attitude_controller_8c_afc1d28cfbce795d6ea954ebe725241f5}
+global variable for storing current temperature value 

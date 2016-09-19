@@ -1,0 +1,74 @@
+\hypertarget{_daisy_chain_8h}{}\section{Daisy\+Chain.\+h File Reference}
+\label{_daisy_chain_8h}\index{Daisy\+Chain.\+h@{Daisy\+Chain.\+h}}
+{\ttfamily \#include $<$D\+A\+V\+E.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}\+\_\+\+Quadrocopter/\+\_\+\+H\+A\+L/\+U\+A\+R\+T/\+U\+A\+R\+Tdev.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Daisy\+Codes.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_daisy_chain_8h_af29e6f3ccd89a4574ae31a971d38cddc}{Send\+Daisy\+Data} (uint8\+\_\+t command, uint16\+\_\+t data1, uint16\+\_\+t data2, uint16\+\_\+t data3, uint16\+\_\+t data4)
+\begin{DoxyCompactList}\small\item\em Sends command plus data via Daisy\+Chain to E\+S\+Cs. \end{DoxyCompactList}\item 
+void \hyperlink{_daisy_chain_8h_a24c704e8bea36d5667b1ad422187f119}{Send\+Daisy\+Stop\+Command} ()
+\begin{DoxyCompactList}\small\item\em Daisy\+Chain Stop command. \end{DoxyCompactList}\item 
+void \hyperlink{_daisy_chain_8h_aa49427f20f8a5c154fc2df228dcd10a4}{Send\+Daisy\+P\+W\+M\+Percentages} (float $\ast$P\+W\+M\+\_\+percentages)
+\begin{DoxyCompactList}\small\item\em Daisy\+Chain sends motor speeds. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\index{Daisy\+Chain.\+h@{Daisy\+Chain.\+h}!Send\+Daisy\+Data@{Send\+Daisy\+Data}}
+\index{Send\+Daisy\+Data@{Send\+Daisy\+Data}!Daisy\+Chain.\+h@{Daisy\+Chain.\+h}}
+\subsubsection[{\texorpdfstring{Send\+Daisy\+Data(uint8\+\_\+t command, uint16\+\_\+t data1, uint16\+\_\+t data2, uint16\+\_\+t data3, uint16\+\_\+t data4)}{SendDaisyData(uint8_t command, uint16_t data1, uint16_t data2, uint16_t data3, uint16_t data4)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+Daisy\+Data (
+\begin{DoxyParamCaption}
+\item[{uint8\+\_\+t}]{command, }
+\item[{uint16\+\_\+t}]{data1, }
+\item[{uint16\+\_\+t}]{data2, }
+\item[{uint16\+\_\+t}]{data3, }
+\item[{uint16\+\_\+t}]{data4}
+\end{DoxyParamCaption}
+)}\hypertarget{_daisy_chain_8h_af29e6f3ccd89a4574ae31a971d38cddc}{}\label{_daisy_chain_8h_af29e6f3ccd89a4574ae31a971d38cddc}
+
+
+Sends command plus data via Daisy\+Chain to E\+S\+Cs. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em command} & Command to Transmit \\
+\hline
+\mbox{\tt in}  & {\em data1} & Motor 1 Data \\
+\hline
+\mbox{\tt in}  & {\em data2} & Motor 2 Data \\
+\hline
+\mbox{\tt in}  & {\em data3} & Motor 3 Data \\
+\hline
+\mbox{\tt in}  & {\em data4} & Motor 4 Data\\
+\hline
+\end{DoxyParams}
+Fills the internal buffer Daisy\+Transmit and sends the data inside the buffer via U\+A\+RT to the E\+S\+Cs. \index{Daisy\+Chain.\+h@{Daisy\+Chain.\+h}!Send\+Daisy\+P\+W\+M\+Percentages@{Send\+Daisy\+P\+W\+M\+Percentages}}
+\index{Send\+Daisy\+P\+W\+M\+Percentages@{Send\+Daisy\+P\+W\+M\+Percentages}!Daisy\+Chain.\+h@{Daisy\+Chain.\+h}}
+\subsubsection[{\texorpdfstring{Send\+Daisy\+P\+W\+M\+Percentages(float $\ast$\+P\+W\+M\+\_\+percentages)}{SendDaisyPWMPercentages(float *PWM_percentages)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+Daisy\+P\+W\+M\+Percentages (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{P\+W\+M\+\_\+percentages}
+\end{DoxyParamCaption}
+)}\hypertarget{_daisy_chain_8h_aa49427f20f8a5c154fc2df228dcd10a4}{}\label{_daisy_chain_8h_aa49427f20f8a5c154fc2df228dcd10a4}
+
+
+Daisy\+Chain sends motor speeds. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em P\+W\+M\+\_\+percentages} & pointer to an Array including the desired motor-\/speed in percent\\
+\hline
+\end{DoxyParams}
+Calculates the values that need to be transmitted to the E\+SC out of the desired motorspeed stored in P\+WM percentages array.~\newline
+Starts\+: Send\+Daisy\+Data function with set speed command. \index{Daisy\+Chain.\+h@{Daisy\+Chain.\+h}!Send\+Daisy\+Stop\+Command@{Send\+Daisy\+Stop\+Command}}
+\index{Send\+Daisy\+Stop\+Command@{Send\+Daisy\+Stop\+Command}!Daisy\+Chain.\+h@{Daisy\+Chain.\+h}}
+\subsubsection[{\texorpdfstring{Send\+Daisy\+Stop\+Command()}{SendDaisyStopCommand()}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+Daisy\+Stop\+Command (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{_daisy_chain_8h_a24c704e8bea36d5667b1ad422187f119}{}\label{_daisy_chain_8h_a24c704e8bea36d5667b1ad422187f119}
+
+
+Daisy\+Chain Stop command. 
+
+Sends Stop Motor Command plus Data=0 to each Motor 

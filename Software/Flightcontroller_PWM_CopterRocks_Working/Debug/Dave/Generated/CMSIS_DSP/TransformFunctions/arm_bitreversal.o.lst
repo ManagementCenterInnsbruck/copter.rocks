@@ -1,0 +1,1021 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_bitreversal.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.arm_bitreversal_f32,"ax",%progbits
+  20              	 .align 2
+  21              	 .global arm_bitreversal_f32
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	arm_bitreversal_f32:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c"
+   1:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** /* ----------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * $Date:        31. July 2014 
+   5:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * $Revision: 	V1.4.4  
+   6:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * Title:	    arm_bitreversal.c    
+   9:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * Description:	This file has common tables like Bitreverse, reciprocal etc which are used across di
+  11:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** *
+  27:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * POSSIBILITY OF SUCH DAMAGE.  
+  39:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * -------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+  41:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** #include "CMSIS_DSP/arm_common_tables.h"
+  43:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+  44:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** /*    
+  45:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * @brief  In-place bit reversal function.   
+  46:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * @param[in, out] *pSrc        points to the in-place buffer of floating-point data type.   
+  47:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * @param[in]      fftSize      length of the FFT.   
+  48:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * @param[in]      bitRevFactor bit reversal modifier that supports different size FFTs with the sam
+  49:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * @param[in]      *pBitRevTab  points to the bit reversal table.   
+  50:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * @return none.   
+  51:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** */
+  52:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+  53:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** void arm_bitreversal_f32(
+  54:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** float32_t * pSrc,
+  55:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** uint16_t fftSize,
+  56:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** uint16_t bitRevFactor,
+  57:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** uint16_t * pBitRevTab)
+  58:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** {
+  28              	 .loc 1 58 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	 
+  33 0000 80B4     	 push {r7}
+  34              	.LCFI0:
+  35              	 .cfi_def_cfa_offset 4
+  36              	 .cfi_offset 7,-4
+  37 0002 89B0     	 sub sp,sp,#36
+  38              	.LCFI1:
+  39              	 .cfi_def_cfa_offset 40
+  40 0004 00AF     	 add r7,sp,#0
+  41              	.LCFI2:
+  42              	 .cfi_def_cfa_register 7
+  43 0006 F860     	 str r0,[r7,#12]
+  44 0008 7B60     	 str r3,[r7,#4]
+  45 000a 0B46     	 mov r3,r1
+  46 000c 7B81     	 strh r3,[r7,#10]
+  47 000e 1346     	 mov r3,r2
+  48 0010 3B81     	 strh r3,[r7,#8]
+  59:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    uint16_t fftLenBy2, fftLenBy2p1;
+  60:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    uint16_t i, j;
+  61:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    float32_t in;
+  62:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+  63:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    /*  Initializations */
+  64:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    j = 0u;
+  49              	 .loc 1 64 0
+  50 0012 0023     	 movs r3,#0
+  51 0014 BB83     	 strh r3,[r7,#28]
+  65:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    fftLenBy2 = fftSize >> 1u;
+  52              	 .loc 1 65 0
+  53 0016 7B89     	 ldrh r3,[r7,#10]
+  54 0018 5B08     	 lsrs r3,r3,#1
+  55 001a 7B83     	 strh r3,[r7,#26]
+  66:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    fftLenBy2p1 = (fftSize >> 1u) + 1u;
+  56              	 .loc 1 66 0
+  57 001c 7B89     	 ldrh r3,[r7,#10]
+  58 001e 5B08     	 lsrs r3,r3,#1
+  59 0020 9BB2     	 uxth r3,r3
+  60 0022 0133     	 adds r3,r3,#1
+  61 0024 3B83     	 strh r3,[r7,#24]
+  67:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+  68:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    /* Bit Reversal Implementation */
+  69:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    for (i = 0u; i <= (fftLenBy2 - 2u); i += 2u)
+  62              	 .loc 1 69 0
+  63 0026 0023     	 movs r3,#0
+  64 0028 FB83     	 strh r3,[r7,#30]
+  65 002a BAE0     	 b .L2
+  66              	.L4:
+  70:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    {
+  71:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       if(i < j)
+  67              	 .loc 1 71 0
+  68 002c FA8B     	 ldrh r2,[r7,#30]
+  69 002e BB8B     	 ldrh r3,[r7,#28]
+  70 0030 9A42     	 cmp r2,r3
+  71 0032 6FD2     	 bcs .L3
+  72:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       {
+  73:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          /*  pSrc[i] <-> pSrc[j]; */
+  74:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          in = pSrc[2u * i];
+  72              	 .loc 1 74 0
+  73 0034 FB8B     	 ldrh r3,[r7,#30]
+  74 0036 DB00     	 lsls r3,r3,#3
+  75 0038 FA68     	 ldr r2,[r7,#12]
+  76 003a 1344     	 add r3,r3,r2
+  77 003c 1B68     	 ldr r3,[r3]
+  78 003e 7B61     	 str r3,[r7,#20]
+  75:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[2u * i] = pSrc[2u * j];
+  79              	 .loc 1 75 0
+  80 0040 FB8B     	 ldrh r3,[r7,#30]
+  81 0042 DB00     	 lsls r3,r3,#3
+  82 0044 FA68     	 ldr r2,[r7,#12]
+  83 0046 1344     	 add r3,r3,r2
+  84 0048 BA8B     	 ldrh r2,[r7,#28]
+  85 004a D200     	 lsls r2,r2,#3
+  86 004c F968     	 ldr r1,[r7,#12]
+  87 004e 0A44     	 add r2,r2,r1
+  88 0050 1268     	 ldr r2,[r2]
+  89 0052 1A60     	 str r2,[r3]
+  76:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[2u * j] = in;
+  90              	 .loc 1 76 0
+  91 0054 BB8B     	 ldrh r3,[r7,#28]
+  92 0056 DB00     	 lsls r3,r3,#3
+  93 0058 FA68     	 ldr r2,[r7,#12]
+  94 005a 1344     	 add r3,r3,r2
+  95 005c 7A69     	 ldr r2,[r7,#20]
+  96 005e 1A60     	 str r2,[r3]
+  77:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+  78:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          /*  pSrc[i+1u] <-> pSrc[j+1u] */
+  79:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          in = pSrc[(2u * i) + 1u];
+  97              	 .loc 1 79 0
+  98 0060 FB8B     	 ldrh r3,[r7,#30]
+  99 0062 DB00     	 lsls r3,r3,#3
+ 100 0064 0433     	 adds r3,r3,#4
+ 101 0066 FA68     	 ldr r2,[r7,#12]
+ 102 0068 1344     	 add r3,r3,r2
+ 103 006a 1B68     	 ldr r3,[r3]
+ 104 006c 7B61     	 str r3,[r7,#20]
+  80:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[(2u * i) + 1u] = pSrc[(2u * j) + 1u];
+ 105              	 .loc 1 80 0
+ 106 006e FB8B     	 ldrh r3,[r7,#30]
+ 107 0070 DB00     	 lsls r3,r3,#3
+ 108 0072 0433     	 adds r3,r3,#4
+ 109 0074 FA68     	 ldr r2,[r7,#12]
+ 110 0076 1344     	 add r3,r3,r2
+ 111 0078 BA8B     	 ldrh r2,[r7,#28]
+ 112 007a D200     	 lsls r2,r2,#3
+ 113 007c 0432     	 adds r2,r2,#4
+ 114 007e F968     	 ldr r1,[r7,#12]
+ 115 0080 0A44     	 add r2,r2,r1
+ 116 0082 1268     	 ldr r2,[r2]
+ 117 0084 1A60     	 str r2,[r3]
+  81:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[(2u * j) + 1u] = in;
+ 118              	 .loc 1 81 0
+ 119 0086 BB8B     	 ldrh r3,[r7,#28]
+ 120 0088 DB00     	 lsls r3,r3,#3
+ 121 008a 0433     	 adds r3,r3,#4
+ 122 008c FA68     	 ldr r2,[r7,#12]
+ 123 008e 1344     	 add r3,r3,r2
+ 124 0090 7A69     	 ldr r2,[r7,#20]
+ 125 0092 1A60     	 str r2,[r3]
+  82:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+  83:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          /*  pSrc[i+fftLenBy2p1] <-> pSrc[j+fftLenBy2p1] */
+  84:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          in = pSrc[2u * (i + fftLenBy2p1)];
+ 126              	 .loc 1 84 0
+ 127 0094 FA8B     	 ldrh r2,[r7,#30]
+ 128 0096 3B8B     	 ldrh r3,[r7,#24]
+ 129 0098 1344     	 add r3,r3,r2
+ 130 009a DB00     	 lsls r3,r3,#3
+ 131 009c FA68     	 ldr r2,[r7,#12]
+ 132 009e 1344     	 add r3,r3,r2
+ 133 00a0 1B68     	 ldr r3,[r3]
+ 134 00a2 7B61     	 str r3,[r7,#20]
+  85:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[2u * (i + fftLenBy2p1)] = pSrc[2u * (j + fftLenBy2p1)];
+ 135              	 .loc 1 85 0
+ 136 00a4 FA8B     	 ldrh r2,[r7,#30]
+ 137 00a6 3B8B     	 ldrh r3,[r7,#24]
+ 138 00a8 1344     	 add r3,r3,r2
+ 139 00aa DB00     	 lsls r3,r3,#3
+ 140 00ac FA68     	 ldr r2,[r7,#12]
+ 141 00ae 1344     	 add r3,r3,r2
+ 142 00b0 B98B     	 ldrh r1,[r7,#28]
+ 143 00b2 3A8B     	 ldrh r2,[r7,#24]
+ 144 00b4 0A44     	 add r2,r2,r1
+ 145 00b6 D200     	 lsls r2,r2,#3
+ 146 00b8 F968     	 ldr r1,[r7,#12]
+ 147 00ba 0A44     	 add r2,r2,r1
+ 148 00bc 1268     	 ldr r2,[r2]
+ 149 00be 1A60     	 str r2,[r3]
+  86:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[2u * (j + fftLenBy2p1)] = in;
+ 150              	 .loc 1 86 0
+ 151 00c0 BA8B     	 ldrh r2,[r7,#28]
+ 152 00c2 3B8B     	 ldrh r3,[r7,#24]
+ 153 00c4 1344     	 add r3,r3,r2
+ 154 00c6 DB00     	 lsls r3,r3,#3
+ 155 00c8 FA68     	 ldr r2,[r7,#12]
+ 156 00ca 1344     	 add r3,r3,r2
+ 157 00cc 7A69     	 ldr r2,[r7,#20]
+ 158 00ce 1A60     	 str r2,[r3]
+  87:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+  88:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          /*  pSrc[i+fftLenBy2p1+1u] <-> pSrc[j+fftLenBy2p1+1u] */
+  89:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          in = pSrc[(2u * (i + fftLenBy2p1)) + 1u];
+ 159              	 .loc 1 89 0
+ 160 00d0 FA8B     	 ldrh r2,[r7,#30]
+ 161 00d2 3B8B     	 ldrh r3,[r7,#24]
+ 162 00d4 1344     	 add r3,r3,r2
+ 163 00d6 DB00     	 lsls r3,r3,#3
+ 164 00d8 0433     	 adds r3,r3,#4
+ 165 00da FA68     	 ldr r2,[r7,#12]
+ 166 00dc 1344     	 add r3,r3,r2
+ 167 00de 1B68     	 ldr r3,[r3]
+ 168 00e0 7B61     	 str r3,[r7,#20]
+  90:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[(2u * (i + fftLenBy2p1)) + 1u] =
+ 169              	 .loc 1 90 0
+ 170 00e2 FA8B     	 ldrh r2,[r7,#30]
+ 171 00e4 3B8B     	 ldrh r3,[r7,#24]
+ 172 00e6 1344     	 add r3,r3,r2
+ 173 00e8 DB00     	 lsls r3,r3,#3
+ 174 00ea 0433     	 adds r3,r3,#4
+ 175 00ec FA68     	 ldr r2,[r7,#12]
+ 176 00ee 1344     	 add r3,r3,r2
+  91:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[(2u * (j + fftLenBy2p1)) + 1u];
+ 177              	 .loc 1 91 0
+ 178 00f0 B98B     	 ldrh r1,[r7,#28]
+ 179 00f2 3A8B     	 ldrh r2,[r7,#24]
+ 180 00f4 0A44     	 add r2,r2,r1
+ 181 00f6 D200     	 lsls r2,r2,#3
+ 182 00f8 0432     	 adds r2,r2,#4
+ 183 00fa F968     	 ldr r1,[r7,#12]
+ 184 00fc 0A44     	 add r2,r2,r1
+ 185 00fe 1268     	 ldr r2,[r2]
+  90:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[(2u * (i + fftLenBy2p1)) + 1u] =
+ 186              	 .loc 1 90 0
+ 187 0100 1A60     	 str r2,[r3]
+  92:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[(2u * (j + fftLenBy2p1)) + 1u] = in;
+ 188              	 .loc 1 92 0
+ 189 0102 BA8B     	 ldrh r2,[r7,#28]
+ 190 0104 3B8B     	 ldrh r3,[r7,#24]
+ 191 0106 1344     	 add r3,r3,r2
+ 192 0108 DB00     	 lsls r3,r3,#3
+ 193 010a 0433     	 adds r3,r3,#4
+ 194 010c FA68     	 ldr r2,[r7,#12]
+ 195 010e 1344     	 add r3,r3,r2
+ 196 0110 7A69     	 ldr r2,[r7,#20]
+ 197 0112 1A60     	 str r2,[r3]
+ 198              	.L3:
+  93:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+  94:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       }
+  95:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+  96:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       /*  pSrc[i+1u] <-> pSrc[j+1u] */
+  97:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       in = pSrc[2u * (i + 1u)];
+ 199              	 .loc 1 97 0 discriminator 2
+ 200 0114 FB8B     	 ldrh r3,[r7,#30]
+ 201 0116 0133     	 adds r3,r3,#1
+ 202 0118 DB00     	 lsls r3,r3,#3
+ 203 011a FA68     	 ldr r2,[r7,#12]
+ 204 011c 1344     	 add r3,r3,r2
+ 205 011e 1B68     	 ldr r3,[r3]
+ 206 0120 7B61     	 str r3,[r7,#20]
+  98:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       pSrc[2u * (i + 1u)] = pSrc[2u * (j + fftLenBy2)];
+ 207              	 .loc 1 98 0 discriminator 2
+ 208 0122 FB8B     	 ldrh r3,[r7,#30]
+ 209 0124 0133     	 adds r3,r3,#1
+ 210 0126 DB00     	 lsls r3,r3,#3
+ 211 0128 FA68     	 ldr r2,[r7,#12]
+ 212 012a 1344     	 add r3,r3,r2
+ 213 012c B98B     	 ldrh r1,[r7,#28]
+ 214 012e 7A8B     	 ldrh r2,[r7,#26]
+ 215 0130 0A44     	 add r2,r2,r1
+ 216 0132 D200     	 lsls r2,r2,#3
+ 217 0134 F968     	 ldr r1,[r7,#12]
+ 218 0136 0A44     	 add r2,r2,r1
+ 219 0138 1268     	 ldr r2,[r2]
+ 220 013a 1A60     	 str r2,[r3]
+  99:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       pSrc[2u * (j + fftLenBy2)] = in;
+ 221              	 .loc 1 99 0 discriminator 2
+ 222 013c BA8B     	 ldrh r2,[r7,#28]
+ 223 013e 7B8B     	 ldrh r3,[r7,#26]
+ 224 0140 1344     	 add r3,r3,r2
+ 225 0142 DB00     	 lsls r3,r3,#3
+ 226 0144 FA68     	 ldr r2,[r7,#12]
+ 227 0146 1344     	 add r3,r3,r2
+ 228 0148 7A69     	 ldr r2,[r7,#20]
+ 229 014a 1A60     	 str r2,[r3]
+ 100:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 101:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       /*  pSrc[i+2u] <-> pSrc[j+2u] */
+ 102:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       in = pSrc[(2u * (i + 1u)) + 1u];
+ 230              	 .loc 1 102 0 discriminator 2
+ 231 014c FB8B     	 ldrh r3,[r7,#30]
+ 232 014e 0133     	 adds r3,r3,#1
+ 233 0150 DB00     	 lsls r3,r3,#3
+ 234 0152 0433     	 adds r3,r3,#4
+ 235 0154 FA68     	 ldr r2,[r7,#12]
+ 236 0156 1344     	 add r3,r3,r2
+ 237 0158 1B68     	 ldr r3,[r3]
+ 238 015a 7B61     	 str r3,[r7,#20]
+ 103:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       pSrc[(2u * (i + 1u)) + 1u] = pSrc[(2u * (j + fftLenBy2)) + 1u];
+ 239              	 .loc 1 103 0 discriminator 2
+ 240 015c FB8B     	 ldrh r3,[r7,#30]
+ 241 015e 0133     	 adds r3,r3,#1
+ 242 0160 DB00     	 lsls r3,r3,#3
+ 243 0162 0433     	 adds r3,r3,#4
+ 244 0164 FA68     	 ldr r2,[r7,#12]
+ 245 0166 1344     	 add r3,r3,r2
+ 246 0168 B98B     	 ldrh r1,[r7,#28]
+ 247 016a 7A8B     	 ldrh r2,[r7,#26]
+ 248 016c 0A44     	 add r2,r2,r1
+ 249 016e D200     	 lsls r2,r2,#3
+ 250 0170 0432     	 adds r2,r2,#4
+ 251 0172 F968     	 ldr r1,[r7,#12]
+ 252 0174 0A44     	 add r2,r2,r1
+ 253 0176 1268     	 ldr r2,[r2]
+ 254 0178 1A60     	 str r2,[r3]
+ 104:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       pSrc[(2u * (j + fftLenBy2)) + 1u] = in;
+ 255              	 .loc 1 104 0 discriminator 2
+ 256 017a BA8B     	 ldrh r2,[r7,#28]
+ 257 017c 7B8B     	 ldrh r3,[r7,#26]
+ 258 017e 1344     	 add r3,r3,r2
+ 259 0180 DB00     	 lsls r3,r3,#3
+ 260 0182 0433     	 adds r3,r3,#4
+ 261 0184 FA68     	 ldr r2,[r7,#12]
+ 262 0186 1344     	 add r3,r3,r2
+ 263 0188 7A69     	 ldr r2,[r7,#20]
+ 264 018a 1A60     	 str r2,[r3]
+ 105:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 106:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       /*  Reading the index for the bit reversal */
+ 107:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       j = *pBitRevTab;
+ 265              	 .loc 1 107 0 discriminator 2
+ 266 018c 7B68     	 ldr r3,[r7,#4]
+ 267 018e 1B88     	 ldrh r3,[r3]
+ 268 0190 BB83     	 strh r3,[r7,#28]
+ 108:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 109:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       /*  Updating the bit reversal index depending on the fft length  */
+ 110:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       pBitRevTab += bitRevFactor;
+ 269              	 .loc 1 110 0 discriminator 2
+ 270 0192 3B89     	 ldrh r3,[r7,#8]
+ 271 0194 5B00     	 lsls r3,r3,#1
+ 272 0196 7A68     	 ldr r2,[r7,#4]
+ 273 0198 1344     	 add r3,r3,r2
+ 274 019a 7B60     	 str r3,[r7,#4]
+  69:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    {
+ 275              	 .loc 1 69 0 discriminator 2
+ 276 019c FB8B     	 ldrh r3,[r7,#30]
+ 277 019e 0233     	 adds r3,r3,#2
+ 278 01a0 FB83     	 strh r3,[r7,#30]
+ 279              	.L2:
+  69:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    {
+ 280              	 .loc 1 69 0 is_stmt 0 discriminator 1
+ 281 01a2 FA8B     	 ldrh r2,[r7,#30]
+ 282 01a4 7B8B     	 ldrh r3,[r7,#26]
+ 283 01a6 023B     	 subs r3,r3,#2
+ 284 01a8 9A42     	 cmp r2,r3
+ 285 01aa 7FF63FAF 	 bls .L4
+ 111:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    }
+ 112:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** }
+ 286              	 .loc 1 112 0 is_stmt 1
+ 287 01ae 2437     	 adds r7,r7,#36
+ 288              	.LCFI3:
+ 289              	 .cfi_def_cfa_offset 4
+ 290 01b0 BD46     	 mov sp,r7
+ 291              	.LCFI4:
+ 292              	 .cfi_def_cfa_register 13
+ 293              	 
+ 294 01b2 5DF8047B 	 ldr r7,[sp],#4
+ 295              	.LCFI5:
+ 296              	 .cfi_restore 7
+ 297              	 .cfi_def_cfa_offset 0
+ 298 01b6 7047     	 bx lr
+ 299              	 .cfi_endproc
+ 300              	.LFE139:
+ 302              	 .section .text.arm_bitreversal_q31,"ax",%progbits
+ 303              	 .align 2
+ 304              	 .global arm_bitreversal_q31
+ 305              	 .thumb
+ 306              	 .thumb_func
+ 308              	arm_bitreversal_q31:
+ 309              	.LFB140:
+ 113:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 114:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 115:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 116:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** /*    
+ 117:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * @brief  In-place bit reversal function.   
+ 118:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * @param[in, out] *pSrc        points to the in-place buffer of Q31 data type.   
+ 119:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * @param[in]      fftLen       length of the FFT.   
+ 120:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * @param[in]      bitRevFactor bit reversal modifier that supports different size FFTs with the sam
+ 121:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * @param[in]      *pBitRevTab  points to bit reversal table.   
+ 122:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** * @return none.   
+ 123:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** */
+ 124:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 125:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** void arm_bitreversal_q31(
+ 126:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** q31_t * pSrc,
+ 127:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** uint32_t fftLen,
+ 128:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** uint16_t bitRevFactor,
+ 129:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** uint16_t * pBitRevTable)
+ 130:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** {
+ 310              	 .loc 1 130 0
+ 311              	 .cfi_startproc
+ 312              	 
+ 313              	 
+ 314              	 
+ 315 0000 80B4     	 push {r7}
+ 316              	.LCFI6:
+ 317              	 .cfi_def_cfa_offset 4
+ 318              	 .cfi_offset 7,-4
+ 319 0002 8BB0     	 sub sp,sp,#44
+ 320              	.LCFI7:
+ 321              	 .cfi_def_cfa_offset 48
+ 322 0004 00AF     	 add r7,sp,#0
+ 323              	.LCFI8:
+ 324              	 .cfi_def_cfa_register 7
+ 325 0006 F860     	 str r0,[r7,#12]
+ 326 0008 B960     	 str r1,[r7,#8]
+ 327 000a 3B60     	 str r3,[r7]
+ 328 000c 1346     	 mov r3,r2
+ 329 000e FB80     	 strh r3,[r7,#6]
+ 131:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    uint32_t fftLenBy2, fftLenBy2p1, i, j;
+ 132:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    q31_t in;
+ 133:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 134:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    /*  Initializations      */
+ 135:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    j = 0u;
+ 330              	 .loc 1 135 0
+ 331 0010 0023     	 movs r3,#0
+ 332 0012 3B62     	 str r3,[r7,#32]
+ 136:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    fftLenBy2 = fftLen / 2u;
+ 333              	 .loc 1 136 0
+ 334 0014 BB68     	 ldr r3,[r7,#8]
+ 335 0016 5B08     	 lsrs r3,r3,#1
+ 336 0018 FB61     	 str r3,[r7,#28]
+ 137:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    fftLenBy2p1 = (fftLen / 2u) + 1u;
+ 337              	 .loc 1 137 0
+ 338 001a BB68     	 ldr r3,[r7,#8]
+ 339 001c 5B08     	 lsrs r3,r3,#1
+ 340 001e 0133     	 adds r3,r3,#1
+ 341 0020 BB61     	 str r3,[r7,#24]
+ 138:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 139:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    /* Bit Reversal Implementation */
+ 140:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    for (i = 0u; i <= (fftLenBy2 - 2u); i += 2u)
+ 342              	 .loc 1 140 0
+ 343 0022 0023     	 movs r3,#0
+ 344 0024 7B62     	 str r3,[r7,#36]
+ 345 0026 BAE0     	 b .L6
+ 346              	.L8:
+ 141:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    {
+ 142:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       if(i < j)
+ 347              	 .loc 1 142 0
+ 348 0028 7A6A     	 ldr r2,[r7,#36]
+ 349 002a 3B6A     	 ldr r3,[r7,#32]
+ 350 002c 9A42     	 cmp r2,r3
+ 351 002e 6FD2     	 bcs .L7
+ 143:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       {
+ 144:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          /*  pSrc[i] <-> pSrc[j]; */
+ 145:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          in = pSrc[2u * i];
+ 352              	 .loc 1 145 0
+ 353 0030 7B6A     	 ldr r3,[r7,#36]
+ 354 0032 DB00     	 lsls r3,r3,#3
+ 355 0034 FA68     	 ldr r2,[r7,#12]
+ 356 0036 1344     	 add r3,r3,r2
+ 357 0038 1B68     	 ldr r3,[r3]
+ 358 003a 7B61     	 str r3,[r7,#20]
+ 146:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[2u * i] = pSrc[2u * j];
+ 359              	 .loc 1 146 0
+ 360 003c 7B6A     	 ldr r3,[r7,#36]
+ 361 003e DB00     	 lsls r3,r3,#3
+ 362 0040 FA68     	 ldr r2,[r7,#12]
+ 363 0042 1344     	 add r3,r3,r2
+ 364 0044 3A6A     	 ldr r2,[r7,#32]
+ 365 0046 D200     	 lsls r2,r2,#3
+ 366 0048 F968     	 ldr r1,[r7,#12]
+ 367 004a 0A44     	 add r2,r2,r1
+ 368 004c 1268     	 ldr r2,[r2]
+ 369 004e 1A60     	 str r2,[r3]
+ 147:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[2u * j] = in;
+ 370              	 .loc 1 147 0
+ 371 0050 3B6A     	 ldr r3,[r7,#32]
+ 372 0052 DB00     	 lsls r3,r3,#3
+ 373 0054 FA68     	 ldr r2,[r7,#12]
+ 374 0056 1344     	 add r3,r3,r2
+ 375 0058 7A69     	 ldr r2,[r7,#20]
+ 376 005a 1A60     	 str r2,[r3]
+ 148:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 149:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          /*  pSrc[i+1u] <-> pSrc[j+1u] */
+ 150:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          in = pSrc[(2u * i) + 1u];
+ 377              	 .loc 1 150 0
+ 378 005c 7B6A     	 ldr r3,[r7,#36]
+ 379 005e DB00     	 lsls r3,r3,#3
+ 380 0060 0433     	 adds r3,r3,#4
+ 381 0062 FA68     	 ldr r2,[r7,#12]
+ 382 0064 1344     	 add r3,r3,r2
+ 383 0066 1B68     	 ldr r3,[r3]
+ 384 0068 7B61     	 str r3,[r7,#20]
+ 151:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[(2u * i) + 1u] = pSrc[(2u * j) + 1u];
+ 385              	 .loc 1 151 0
+ 386 006a 7B6A     	 ldr r3,[r7,#36]
+ 387 006c DB00     	 lsls r3,r3,#3
+ 388 006e 0433     	 adds r3,r3,#4
+ 389 0070 FA68     	 ldr r2,[r7,#12]
+ 390 0072 1344     	 add r3,r3,r2
+ 391 0074 3A6A     	 ldr r2,[r7,#32]
+ 392 0076 D200     	 lsls r2,r2,#3
+ 393 0078 0432     	 adds r2,r2,#4
+ 394 007a F968     	 ldr r1,[r7,#12]
+ 395 007c 0A44     	 add r2,r2,r1
+ 396 007e 1268     	 ldr r2,[r2]
+ 397 0080 1A60     	 str r2,[r3]
+ 152:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[(2u * j) + 1u] = in;
+ 398              	 .loc 1 152 0
+ 399 0082 3B6A     	 ldr r3,[r7,#32]
+ 400 0084 DB00     	 lsls r3,r3,#3
+ 401 0086 0433     	 adds r3,r3,#4
+ 402 0088 FA68     	 ldr r2,[r7,#12]
+ 403 008a 1344     	 add r3,r3,r2
+ 404 008c 7A69     	 ldr r2,[r7,#20]
+ 405 008e 1A60     	 str r2,[r3]
+ 153:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 154:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          /*  pSrc[i+fftLenBy2p1] <-> pSrc[j+fftLenBy2p1] */
+ 155:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          in = pSrc[2u * (i + fftLenBy2p1)];
+ 406              	 .loc 1 155 0
+ 407 0090 7A6A     	 ldr r2,[r7,#36]
+ 408 0092 BB69     	 ldr r3,[r7,#24]
+ 409 0094 1344     	 add r3,r3,r2
+ 410 0096 DB00     	 lsls r3,r3,#3
+ 411 0098 FA68     	 ldr r2,[r7,#12]
+ 412 009a 1344     	 add r3,r3,r2
+ 413 009c 1B68     	 ldr r3,[r3]
+ 414 009e 7B61     	 str r3,[r7,#20]
+ 156:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[2u * (i + fftLenBy2p1)] = pSrc[2u * (j + fftLenBy2p1)];
+ 415              	 .loc 1 156 0
+ 416 00a0 7A6A     	 ldr r2,[r7,#36]
+ 417 00a2 BB69     	 ldr r3,[r7,#24]
+ 418 00a4 1344     	 add r3,r3,r2
+ 419 00a6 DB00     	 lsls r3,r3,#3
+ 420 00a8 FA68     	 ldr r2,[r7,#12]
+ 421 00aa 1344     	 add r3,r3,r2
+ 422 00ac 396A     	 ldr r1,[r7,#32]
+ 423 00ae BA69     	 ldr r2,[r7,#24]
+ 424 00b0 0A44     	 add r2,r2,r1
+ 425 00b2 D200     	 lsls r2,r2,#3
+ 426 00b4 F968     	 ldr r1,[r7,#12]
+ 427 00b6 0A44     	 add r2,r2,r1
+ 428 00b8 1268     	 ldr r2,[r2]
+ 429 00ba 1A60     	 str r2,[r3]
+ 157:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[2u * (j + fftLenBy2p1)] = in;
+ 430              	 .loc 1 157 0
+ 431 00bc 3A6A     	 ldr r2,[r7,#32]
+ 432 00be BB69     	 ldr r3,[r7,#24]
+ 433 00c0 1344     	 add r3,r3,r2
+ 434 00c2 DB00     	 lsls r3,r3,#3
+ 435 00c4 FA68     	 ldr r2,[r7,#12]
+ 436 00c6 1344     	 add r3,r3,r2
+ 437 00c8 7A69     	 ldr r2,[r7,#20]
+ 438 00ca 1A60     	 str r2,[r3]
+ 158:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 159:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          /*  pSrc[i+fftLenBy2p1+1u] <-> pSrc[j+fftLenBy2p1+1u] */
+ 160:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          in = pSrc[(2u * (i + fftLenBy2p1)) + 1u];
+ 439              	 .loc 1 160 0
+ 440 00cc 7A6A     	 ldr r2,[r7,#36]
+ 441 00ce BB69     	 ldr r3,[r7,#24]
+ 442 00d0 1344     	 add r3,r3,r2
+ 443 00d2 DB00     	 lsls r3,r3,#3
+ 444 00d4 0433     	 adds r3,r3,#4
+ 445 00d6 FA68     	 ldr r2,[r7,#12]
+ 446 00d8 1344     	 add r3,r3,r2
+ 447 00da 1B68     	 ldr r3,[r3]
+ 448 00dc 7B61     	 str r3,[r7,#20]
+ 161:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[(2u * (i + fftLenBy2p1)) + 1u] =
+ 449              	 .loc 1 161 0
+ 450 00de 7A6A     	 ldr r2,[r7,#36]
+ 451 00e0 BB69     	 ldr r3,[r7,#24]
+ 452 00e2 1344     	 add r3,r3,r2
+ 453 00e4 DB00     	 lsls r3,r3,#3
+ 454 00e6 0433     	 adds r3,r3,#4
+ 455 00e8 FA68     	 ldr r2,[r7,#12]
+ 456 00ea 1344     	 add r3,r3,r2
+ 162:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[(2u * (j + fftLenBy2p1)) + 1u];
+ 457              	 .loc 1 162 0
+ 458 00ec 396A     	 ldr r1,[r7,#32]
+ 459 00ee BA69     	 ldr r2,[r7,#24]
+ 460 00f0 0A44     	 add r2,r2,r1
+ 461 00f2 D200     	 lsls r2,r2,#3
+ 462 00f4 0432     	 adds r2,r2,#4
+ 463 00f6 F968     	 ldr r1,[r7,#12]
+ 464 00f8 0A44     	 add r2,r2,r1
+ 465 00fa 1268     	 ldr r2,[r2]
+ 161:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[(2u * (i + fftLenBy2p1)) + 1u] =
+ 466              	 .loc 1 161 0
+ 467 00fc 1A60     	 str r2,[r3]
+ 163:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[(2u * (j + fftLenBy2p1)) + 1u] = in;
+ 468              	 .loc 1 163 0
+ 469 00fe 3A6A     	 ldr r2,[r7,#32]
+ 470 0100 BB69     	 ldr r3,[r7,#24]
+ 471 0102 1344     	 add r3,r3,r2
+ 472 0104 DB00     	 lsls r3,r3,#3
+ 473 0106 0433     	 adds r3,r3,#4
+ 474 0108 FA68     	 ldr r2,[r7,#12]
+ 475 010a 1344     	 add r3,r3,r2
+ 476 010c 7A69     	 ldr r2,[r7,#20]
+ 477 010e 1A60     	 str r2,[r3]
+ 478              	.L7:
+ 164:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 165:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       }
+ 166:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 167:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       /*  pSrc[i+1u] <-> pSrc[j+1u] */
+ 168:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       in = pSrc[2u * (i + 1u)];
+ 479              	 .loc 1 168 0 discriminator 2
+ 480 0110 7B6A     	 ldr r3,[r7,#36]
+ 481 0112 0133     	 adds r3,r3,#1
+ 482 0114 DB00     	 lsls r3,r3,#3
+ 483 0116 FA68     	 ldr r2,[r7,#12]
+ 484 0118 1344     	 add r3,r3,r2
+ 485 011a 1B68     	 ldr r3,[r3]
+ 486 011c 7B61     	 str r3,[r7,#20]
+ 169:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       pSrc[2u * (i + 1u)] = pSrc[2u * (j + fftLenBy2)];
+ 487              	 .loc 1 169 0 discriminator 2
+ 488 011e 7B6A     	 ldr r3,[r7,#36]
+ 489 0120 0133     	 adds r3,r3,#1
+ 490 0122 DB00     	 lsls r3,r3,#3
+ 491 0124 FA68     	 ldr r2,[r7,#12]
+ 492 0126 1344     	 add r3,r3,r2
+ 493 0128 396A     	 ldr r1,[r7,#32]
+ 494 012a FA69     	 ldr r2,[r7,#28]
+ 495 012c 0A44     	 add r2,r2,r1
+ 496 012e D200     	 lsls r2,r2,#3
+ 497 0130 F968     	 ldr r1,[r7,#12]
+ 498 0132 0A44     	 add r2,r2,r1
+ 499 0134 1268     	 ldr r2,[r2]
+ 500 0136 1A60     	 str r2,[r3]
+ 170:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       pSrc[2u * (j + fftLenBy2)] = in;
+ 501              	 .loc 1 170 0 discriminator 2
+ 502 0138 3A6A     	 ldr r2,[r7,#32]
+ 503 013a FB69     	 ldr r3,[r7,#28]
+ 504 013c 1344     	 add r3,r3,r2
+ 505 013e DB00     	 lsls r3,r3,#3
+ 506 0140 FA68     	 ldr r2,[r7,#12]
+ 507 0142 1344     	 add r3,r3,r2
+ 508 0144 7A69     	 ldr r2,[r7,#20]
+ 509 0146 1A60     	 str r2,[r3]
+ 171:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 172:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       /*  pSrc[i+2u] <-> pSrc[j+2u] */
+ 173:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       in = pSrc[(2u * (i + 1u)) + 1u];
+ 510              	 .loc 1 173 0 discriminator 2
+ 511 0148 7B6A     	 ldr r3,[r7,#36]
+ 512 014a 0133     	 adds r3,r3,#1
+ 513 014c DB00     	 lsls r3,r3,#3
+ 514 014e 0433     	 adds r3,r3,#4
+ 515 0150 FA68     	 ldr r2,[r7,#12]
+ 516 0152 1344     	 add r3,r3,r2
+ 517 0154 1B68     	 ldr r3,[r3]
+ 518 0156 7B61     	 str r3,[r7,#20]
+ 174:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       pSrc[(2u * (i + 1u)) + 1u] = pSrc[(2u * (j + fftLenBy2)) + 1u];
+ 519              	 .loc 1 174 0 discriminator 2
+ 520 0158 7B6A     	 ldr r3,[r7,#36]
+ 521 015a 0133     	 adds r3,r3,#1
+ 522 015c DB00     	 lsls r3,r3,#3
+ 523 015e 0433     	 adds r3,r3,#4
+ 524 0160 FA68     	 ldr r2,[r7,#12]
+ 525 0162 1344     	 add r3,r3,r2
+ 526 0164 396A     	 ldr r1,[r7,#32]
+ 527 0166 FA69     	 ldr r2,[r7,#28]
+ 528 0168 0A44     	 add r2,r2,r1
+ 529 016a D200     	 lsls r2,r2,#3
+ 530 016c 0432     	 adds r2,r2,#4
+ 531 016e F968     	 ldr r1,[r7,#12]
+ 532 0170 0A44     	 add r2,r2,r1
+ 533 0172 1268     	 ldr r2,[r2]
+ 534 0174 1A60     	 str r2,[r3]
+ 175:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       pSrc[(2u * (j + fftLenBy2)) + 1u] = in;
+ 535              	 .loc 1 175 0 discriminator 2
+ 536 0176 3A6A     	 ldr r2,[r7,#32]
+ 537 0178 FB69     	 ldr r3,[r7,#28]
+ 538 017a 1344     	 add r3,r3,r2
+ 539 017c DB00     	 lsls r3,r3,#3
+ 540 017e 0433     	 adds r3,r3,#4
+ 541 0180 FA68     	 ldr r2,[r7,#12]
+ 542 0182 1344     	 add r3,r3,r2
+ 543 0184 7A69     	 ldr r2,[r7,#20]
+ 544 0186 1A60     	 str r2,[r3]
+ 176:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 177:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       /*  Reading the index for the bit reversal */
+ 178:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       j = *pBitRevTable;
+ 545              	 .loc 1 178 0 discriminator 2
+ 546 0188 3B68     	 ldr r3,[r7]
+ 547 018a 1B88     	 ldrh r3,[r3]
+ 548 018c 3B62     	 str r3,[r7,#32]
+ 179:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 180:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       /*  Updating the bit reversal index depending on the fft length */
+ 181:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       pBitRevTable += bitRevFactor;
+ 549              	 .loc 1 181 0 discriminator 2
+ 550 018e FB88     	 ldrh r3,[r7,#6]
+ 551 0190 5B00     	 lsls r3,r3,#1
+ 552 0192 3A68     	 ldr r2,[r7]
+ 553 0194 1344     	 add r3,r3,r2
+ 554 0196 3B60     	 str r3,[r7]
+ 140:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    {
+ 555              	 .loc 1 140 0 discriminator 2
+ 556 0198 7B6A     	 ldr r3,[r7,#36]
+ 557 019a 0233     	 adds r3,r3,#2
+ 558 019c 7B62     	 str r3,[r7,#36]
+ 559              	.L6:
+ 140:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    {
+ 560              	 .loc 1 140 0 is_stmt 0 discriminator 1
+ 561 019e FB69     	 ldr r3,[r7,#28]
+ 562 01a0 9A1E     	 subs r2,r3,#2
+ 563 01a2 7B6A     	 ldr r3,[r7,#36]
+ 564 01a4 9A42     	 cmp r2,r3
+ 565 01a6 BFF43FAF 	 bcs .L8
+ 182:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    }
+ 183:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** }
+ 566              	 .loc 1 183 0 is_stmt 1
+ 567 01aa 2C37     	 adds r7,r7,#44
+ 568              	.LCFI9:
+ 569              	 .cfi_def_cfa_offset 4
+ 570 01ac BD46     	 mov sp,r7
+ 571              	.LCFI10:
+ 572              	 .cfi_def_cfa_register 13
+ 573              	 
+ 574 01ae 5DF8047B 	 ldr r7,[sp],#4
+ 575              	.LCFI11:
+ 576              	 .cfi_restore 7
+ 577              	 .cfi_def_cfa_offset 0
+ 578 01b2 7047     	 bx lr
+ 579              	 .cfi_endproc
+ 580              	.LFE140:
+ 582              	 .section .text.arm_bitreversal_q15,"ax",%progbits
+ 583              	 .align 2
+ 584              	 .global arm_bitreversal_q15
+ 585              	 .thumb
+ 586              	 .thumb_func
+ 588              	arm_bitreversal_q15:
+ 589              	.LFB141:
+ 184:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 185:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 186:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 187:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** /*    
+ 188:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    * @brief  In-place bit reversal function.   
+ 189:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    * @param[in, out] *pSrc        points to the in-place buffer of Q15 data type.   
+ 190:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    * @param[in]      fftLen       length of the FFT.   
+ 191:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    * @param[in]      bitRevFactor bit reversal modifier that supports different size FFTs with the 
+ 192:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    * @param[in]      *pBitRevTab  points to bit reversal table.   
+ 193:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    * @return none.   
+ 194:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** */
+ 195:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 196:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** void arm_bitreversal_q15(
+ 197:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** q15_t * pSrc16,
+ 198:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** uint32_t fftLen,
+ 199:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** uint16_t bitRevFactor,
+ 200:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** uint16_t * pBitRevTab)
+ 201:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** {
+ 590              	 .loc 1 201 0
+ 591              	 .cfi_startproc
+ 592              	 
+ 593              	 
+ 594              	 
+ 595 0000 80B4     	 push {r7}
+ 596              	.LCFI12:
+ 597              	 .cfi_def_cfa_offset 4
+ 598              	 .cfi_offset 7,-4
+ 599 0002 8BB0     	 sub sp,sp,#44
+ 600              	.LCFI13:
+ 601              	 .cfi_def_cfa_offset 48
+ 602 0004 00AF     	 add r7,sp,#0
+ 603              	.LCFI14:
+ 604              	 .cfi_def_cfa_register 7
+ 605 0006 F860     	 str r0,[r7,#12]
+ 606 0008 B960     	 str r1,[r7,#8]
+ 607 000a 3B60     	 str r3,[r7]
+ 608 000c 1346     	 mov r3,r2
+ 609 000e FB80     	 strh r3,[r7,#6]
+ 202:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    q31_t *pSrc = (q31_t *) pSrc16;
+ 610              	 .loc 1 202 0
+ 611 0010 FB68     	 ldr r3,[r7,#12]
+ 612 0012 FB61     	 str r3,[r7,#28]
+ 203:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    q31_t in;
+ 204:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    uint32_t fftLenBy2, fftLenBy2p1;
+ 205:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    uint32_t i, j;
+ 206:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 207:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    /*  Initializations */
+ 208:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    j = 0u;
+ 613              	 .loc 1 208 0
+ 614 0014 0023     	 movs r3,#0
+ 615 0016 3B62     	 str r3,[r7,#32]
+ 209:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    fftLenBy2 = fftLen / 2u;
+ 616              	 .loc 1 209 0
+ 617 0018 BB68     	 ldr r3,[r7,#8]
+ 618 001a 5B08     	 lsrs r3,r3,#1
+ 619 001c BB61     	 str r3,[r7,#24]
+ 210:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    fftLenBy2p1 = (fftLen / 2u) + 1u;
+ 620              	 .loc 1 210 0
+ 621 001e BB68     	 ldr r3,[r7,#8]
+ 622 0020 5B08     	 lsrs r3,r3,#1
+ 623 0022 0133     	 adds r3,r3,#1
+ 624 0024 7B61     	 str r3,[r7,#20]
+ 211:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 212:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    /* Bit Reversal Implementation */
+ 213:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    for (i = 0u; i <= (fftLenBy2 - 2u); i += 2u)
+ 625              	 .loc 1 213 0
+ 626 0026 0023     	 movs r3,#0
+ 627 0028 7B62     	 str r3,[r7,#36]
+ 628 002a 5EE0     	 b .L10
+ 629              	.L12:
+ 214:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    {
+ 215:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       if(i < j)
+ 630              	 .loc 1 215 0
+ 631 002c 7A6A     	 ldr r2,[r7,#36]
+ 632 002e 3B6A     	 ldr r3,[r7,#32]
+ 633 0030 9A42     	 cmp r2,r3
+ 634 0032 33D2     	 bcs .L11
+ 216:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       {
+ 217:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          /*  pSrc[i] <-> pSrc[j]; */
+ 218:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          /*  pSrc[i+1u] <-> pSrc[j+1u] */
+ 219:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          in = pSrc[i];
+ 635              	 .loc 1 219 0
+ 636 0034 7B6A     	 ldr r3,[r7,#36]
+ 637 0036 9B00     	 lsls r3,r3,#2
+ 638 0038 FA69     	 ldr r2,[r7,#28]
+ 639 003a 1344     	 add r3,r3,r2
+ 640 003c 1B68     	 ldr r3,[r3]
+ 641 003e 3B61     	 str r3,[r7,#16]
+ 220:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[i] = pSrc[j];
+ 642              	 .loc 1 220 0
+ 643 0040 7B6A     	 ldr r3,[r7,#36]
+ 644 0042 9B00     	 lsls r3,r3,#2
+ 645 0044 FA69     	 ldr r2,[r7,#28]
+ 646 0046 1344     	 add r3,r3,r2
+ 647 0048 3A6A     	 ldr r2,[r7,#32]
+ 648 004a 9200     	 lsls r2,r2,#2
+ 649 004c F969     	 ldr r1,[r7,#28]
+ 650 004e 0A44     	 add r2,r2,r1
+ 651 0050 1268     	 ldr r2,[r2]
+ 652 0052 1A60     	 str r2,[r3]
+ 221:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[j] = in;
+ 653              	 .loc 1 221 0
+ 654 0054 3B6A     	 ldr r3,[r7,#32]
+ 655 0056 9B00     	 lsls r3,r3,#2
+ 656 0058 FA69     	 ldr r2,[r7,#28]
+ 657 005a 1344     	 add r3,r3,r2
+ 658 005c 3A69     	 ldr r2,[r7,#16]
+ 659 005e 1A60     	 str r2,[r3]
+ 222:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 223:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          /*  pSrc[i + fftLenBy2p1] <-> pSrc[j + fftLenBy2p1];  */
+ 224:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          /*  pSrc[i + fftLenBy2p1+1u] <-> pSrc[j + fftLenBy2p1+1u] */
+ 225:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          in = pSrc[i + fftLenBy2p1];
+ 660              	 .loc 1 225 0
+ 661 0060 7A6A     	 ldr r2,[r7,#36]
+ 662 0062 7B69     	 ldr r3,[r7,#20]
+ 663 0064 1344     	 add r3,r3,r2
+ 664 0066 9B00     	 lsls r3,r3,#2
+ 665 0068 FA69     	 ldr r2,[r7,#28]
+ 666 006a 1344     	 add r3,r3,r2
+ 667 006c 1B68     	 ldr r3,[r3]
+ 668 006e 3B61     	 str r3,[r7,#16]
+ 226:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[i + fftLenBy2p1] = pSrc[j + fftLenBy2p1];
+ 669              	 .loc 1 226 0
+ 670 0070 7A6A     	 ldr r2,[r7,#36]
+ 671 0072 7B69     	 ldr r3,[r7,#20]
+ 672 0074 1344     	 add r3,r3,r2
+ 673 0076 9B00     	 lsls r3,r3,#2
+ 674 0078 FA69     	 ldr r2,[r7,#28]
+ 675 007a 1344     	 add r3,r3,r2
+ 676 007c 396A     	 ldr r1,[r7,#32]
+ 677 007e 7A69     	 ldr r2,[r7,#20]
+ 678 0080 0A44     	 add r2,r2,r1
+ 679 0082 9200     	 lsls r2,r2,#2
+ 680 0084 F969     	 ldr r1,[r7,#28]
+ 681 0086 0A44     	 add r2,r2,r1
+ 682 0088 1268     	 ldr r2,[r2]
+ 683 008a 1A60     	 str r2,[r3]
+ 227:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****          pSrc[j + fftLenBy2p1] = in;
+ 684              	 .loc 1 227 0
+ 685 008c 3A6A     	 ldr r2,[r7,#32]
+ 686 008e 7B69     	 ldr r3,[r7,#20]
+ 687 0090 1344     	 add r3,r3,r2
+ 688 0092 9B00     	 lsls r3,r3,#2
+ 689 0094 FA69     	 ldr r2,[r7,#28]
+ 690 0096 1344     	 add r3,r3,r2
+ 691 0098 3A69     	 ldr r2,[r7,#16]
+ 692 009a 1A60     	 str r2,[r3]
+ 693              	.L11:
+ 228:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       }
+ 229:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 230:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       /*  pSrc[i+1u] <-> pSrc[j+fftLenBy2];         */
+ 231:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       /*  pSrc[i+2] <-> pSrc[j+fftLenBy2+1u]  */
+ 232:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       in = pSrc[i + 1u];
+ 694              	 .loc 1 232 0 discriminator 2
+ 695 009c 7B6A     	 ldr r3,[r7,#36]
+ 696 009e 0133     	 adds r3,r3,#1
+ 697 00a0 9B00     	 lsls r3,r3,#2
+ 698 00a2 FA69     	 ldr r2,[r7,#28]
+ 699 00a4 1344     	 add r3,r3,r2
+ 700 00a6 1B68     	 ldr r3,[r3]
+ 701 00a8 3B61     	 str r3,[r7,#16]
+ 233:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       pSrc[i + 1u] = pSrc[j + fftLenBy2];
+ 702              	 .loc 1 233 0 discriminator 2
+ 703 00aa 7B6A     	 ldr r3,[r7,#36]
+ 704 00ac 0133     	 adds r3,r3,#1
+ 705 00ae 9B00     	 lsls r3,r3,#2
+ 706 00b0 FA69     	 ldr r2,[r7,#28]
+ 707 00b2 1344     	 add r3,r3,r2
+ 708 00b4 396A     	 ldr r1,[r7,#32]
+ 709 00b6 BA69     	 ldr r2,[r7,#24]
+ 710 00b8 0A44     	 add r2,r2,r1
+ 711 00ba 9200     	 lsls r2,r2,#2
+ 712 00bc F969     	 ldr r1,[r7,#28]
+ 713 00be 0A44     	 add r2,r2,r1
+ 714 00c0 1268     	 ldr r2,[r2]
+ 715 00c2 1A60     	 str r2,[r3]
+ 234:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       pSrc[j + fftLenBy2] = in;
+ 716              	 .loc 1 234 0 discriminator 2
+ 717 00c4 3A6A     	 ldr r2,[r7,#32]
+ 718 00c6 BB69     	 ldr r3,[r7,#24]
+ 719 00c8 1344     	 add r3,r3,r2
+ 720 00ca 9B00     	 lsls r3,r3,#2
+ 721 00cc FA69     	 ldr r2,[r7,#28]
+ 722 00ce 1344     	 add r3,r3,r2
+ 723 00d0 3A69     	 ldr r2,[r7,#16]
+ 724 00d2 1A60     	 str r2,[r3]
+ 235:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 236:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       /*  Reading the index for the bit reversal */
+ 237:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       j = *pBitRevTab;
+ 725              	 .loc 1 237 0 discriminator 2
+ 726 00d4 3B68     	 ldr r3,[r7]
+ 727 00d6 1B88     	 ldrh r3,[r3]
+ 728 00d8 3B62     	 str r3,[r7,#32]
+ 238:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** 
+ 239:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       /*  Updating the bit reversal index depending on the fft length  */
+ 240:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****       pBitRevTab += bitRevFactor;
+ 729              	 .loc 1 240 0 discriminator 2
+ 730 00da FB88     	 ldrh r3,[r7,#6]
+ 731 00dc 5B00     	 lsls r3,r3,#1
+ 732 00de 3A68     	 ldr r2,[r7]
+ 733 00e0 1344     	 add r3,r3,r2
+ 734 00e2 3B60     	 str r3,[r7]
+ 213:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    {
+ 735              	 .loc 1 213 0 discriminator 2
+ 736 00e4 7B6A     	 ldr r3,[r7,#36]
+ 737 00e6 0233     	 adds r3,r3,#2
+ 738 00e8 7B62     	 str r3,[r7,#36]
+ 739              	.L10:
+ 213:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    {
+ 740              	 .loc 1 213 0 is_stmt 0 discriminator 1
+ 741 00ea BB69     	 ldr r3,[r7,#24]
+ 742 00ec 9A1E     	 subs r2,r3,#2
+ 743 00ee 7B6A     	 ldr r3,[r7,#36]
+ 744 00f0 9A42     	 cmp r2,r3
+ 745 00f2 9BD2     	 bcs .L12
+ 241:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c ****    }
+ 242:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_bitreversal.c **** }
+ 746              	 .loc 1 242 0 is_stmt 1
+ 747 00f4 2C37     	 adds r7,r7,#44
+ 748              	.LCFI15:
+ 749              	 .cfi_def_cfa_offset 4
+ 750 00f6 BD46     	 mov sp,r7
+ 751              	.LCFI16:
+ 752              	 .cfi_def_cfa_register 13
+ 753              	 
+ 754 00f8 5DF8047B 	 ldr r7,[sp],#4
+ 755              	.LCFI17:
+ 756              	 .cfi_restore 7
+ 757              	 .cfi_def_cfa_offset 0
+ 758 00fc 7047     	 bx lr
+ 759              	 .cfi_endproc
+ 760              	.LFE141:
+ 762 00fe 00BF     	 .text
+ 763              	.Letext0:
+ 764              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 765              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 766              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_bitreversal.c
+    {standard input}:20     .text.arm_bitreversal_f32:00000000 $t
+    {standard input}:25     .text.arm_bitreversal_f32:00000000 arm_bitreversal_f32
+    {standard input}:303    .text.arm_bitreversal_q31:00000000 $t
+    {standard input}:308    .text.arm_bitreversal_q31:00000000 arm_bitreversal_q31
+    {standard input}:583    .text.arm_bitreversal_q15:00000000 $t
+    {standard input}:588    .text.arm_bitreversal_q15:00000000 arm_bitreversal_q15
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

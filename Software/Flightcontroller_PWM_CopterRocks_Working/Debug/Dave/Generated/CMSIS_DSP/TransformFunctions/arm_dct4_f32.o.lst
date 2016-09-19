@@ -1,0 +1,941 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_dct4_f32.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.arm_dct4_f32,"ax",%progbits
+  20              	 .align 2
+  21              	 .global arm_dct4_f32
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	arm_dct4_f32:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c"
+   1:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** /* ----------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * $Date:        31. July 2014 
+   5:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * $Revision: 	V1.4.4  
+   6:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * Title:	    arm_dct4_f32.c    
+   9:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * Description:	Processing function of DCT4 & IDCT4 F32.    
+  11:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** *
+  27:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * POSSIBILITY OF SUCH DAMAGE.      
+  39:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** * -------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+  41:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+  43:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** /**    
+  44:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * @ingroup groupTransforms    
+  45:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  */
+  46:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+  47:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** /**    
+  48:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * @defgroup DCT4_IDCT4 DCT Type IV Functions    
+  49:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * Representation of signals by minimum number of values is important for storage and transmission.
+  50:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * The possibility of large discontinuity between the beginning and end of a period of a signal    
+  51:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * in DFT can be avoided by extending the signal so that it is even-symmetric.    
+  52:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * Discrete Cosine Transform (DCT) is constructed such that its energy is heavily concentrated in t
+  53:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * spectrum and is very widely used in signal and image coding applications.    
+  54:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * The family of DCTs (DCT type- 1,2,3,4) is the outcome of different combinations of homogeneous b
+  55:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * DCT has an excellent energy-packing capability, hence has many applications and in data compress
+  56:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  *    
+  57:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * DCT is essentially the Discrete Fourier Transform(DFT) of an even-extended real signal.    
+  58:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * Reordering of the input data makes the computation of DCT just a problem of    
+  59:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * computing the DFT of a real signal with a few additional operations.    
+  60:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * This approach provides regular, simple, and very efficient DCT algorithms for practical hardware
+  61:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  *     
+  62:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * DCT type-II can be implemented using Fast fourier transform (FFT) internally, as the transform i
+  63:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * DCT4 is implemented using DCT2 as their implementations are similar except with some added pre-p
+  64:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * DCT2 implementation can be described in the following steps:    
+  65:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * - Re-ordering input    
+  66:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * - Calculating Real FFT    
+  67:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * - Multiplication of weights and Real FFT output and getting real part from the product.    
+  68:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  *    
+  69:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * This process is explained by the block diagram below:    
+  70:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * \image html DCT4.gif "Discrete Cosine Transform - type-IV"    
+  71:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  *    
+  72:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * \par Algorithm:    
+  73:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * The N-point type-IV DCT is defined as a real, linear transformation by the formula:    
+  74:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * \image html DCT4Equation.gif    
+  75:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * where <code>k = 0,1,2,.....N-1</code>    
+  76:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  *\par    
+  77:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * Its inverse is defined as follows:    
+  78:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * \image html IDCT4Equation.gif    
+  79:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * where <code>n = 0,1,2,.....N-1</code>    
+  80:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  *\par    
+  81:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * The DCT4 matrices become involutory (i.e. they are self-inverse) by multiplying with an overall 
+  82:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * The symmetry of the transform matrix indicates that the fast algorithms for the forward    
+  83:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * and inverse transform computation are identical.    
+  84:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * Note that the implementation of Inverse DCT4 and DCT4 is same, hence same process function can b
+  85:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  *    
+  86:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * \par Lengths supported by the transform:    
+  87:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  *  As DCT4 internally uses Real FFT, it supports all the lengths supported by arm_rfft_f32().    
+  88:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * The library provides separate functions for Q15, Q31, and floating-point data types.    
+  89:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * \par Instance Structure    
+  90:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * The instances for Real FFT and FFT, cosine values table and twiddle factor table are stored in a
+  91:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * A separate instance structure must be defined for each transform.    
+  92:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * There are separate instance structure declarations for each of the 3 supported data types.    
+  93:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  *    
+  94:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * \par Initialization Functions    
+  95:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * There is also an associated initialization function for each data type.    
+  96:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * The initialization function performs the following operations:    
+  97:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * - Sets the values of the internal structure fields.    
+  98:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * - Initializes Real FFT as its process function is used internally in DCT4, by calling arm_rfft_i
+  99:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * \par    
+ 100:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * Use of the initialization function is optional.    
+ 101:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * However, if the initialization function is used, then the instance structure cannot be placed in
+ 102:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * To place an instance structure into a const data section, the instance structure must be manuall
+ 103:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * Manually initialize the instance structure as follows:    
+ 104:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * <pre>    
+ 105:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  *arm_dct4_instance_f32 S = {N, Nby2, normalize, pTwiddle, pCosFactor, pRfft, pCfft};    
+ 106:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  *arm_dct4_instance_q31 S = {N, Nby2, normalize, pTwiddle, pCosFactor, pRfft, pCfft};   
+ 107:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  *arm_dct4_instance_q15 S = {N, Nby2, normalize, pTwiddle, pCosFactor, pRfft, pCfft};   
+ 108:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * </pre>   
+ 109:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * where \c N is the length of the DCT4; \c Nby2 is half of the length of the DCT4;   
+ 110:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * \c normalize is normalizing factor used and is equal to <code>sqrt(2/N)</code>;    
+ 111:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * \c pTwiddle points to the twiddle factor table;   
+ 112:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * \c pCosFactor points to the cosFactor table;   
+ 113:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * \c pRfft points to the real FFT instance;   
+ 114:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * \c pCfft points to the complex FFT instance;   
+ 115:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * The CFFT and RFFT structures also needs to be initialized, refer to arm_cfft_radix4_f32()   
+ 116:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * and arm_rfft_f32() respectively for details regarding static initialization.   
+ 117:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  *   
+ 118:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * \par Fixed-Point Behavior    
+ 119:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * Care must be taken when using the fixed-point versions of the DCT4 transform functions.    
+ 120:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * In particular, the overflow and saturation behavior of the accumulator used in each function mus
+ 121:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * Refer to the function specific documentation below for usage guidelines.    
+ 122:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  */
+ 123:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 124:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  /**    
+ 125:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * @addtogroup DCT4_IDCT4    
+ 126:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * @{    
+ 127:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  */
+ 128:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 129:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** /**    
+ 130:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * @brief Processing function for the floating-point DCT4/IDCT4.   
+ 131:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * @param[in]       *S             points to an instance of the floating-point DCT4/IDCT4 structure
+ 132:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * @param[in]       *pState        points to state buffer.   
+ 133:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * @param[in,out]   *pInlineBuffer points to the in-place input and output buffer.   
+ 134:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  * @return none.   
+ 135:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****  */
+ 136:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 137:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** void arm_dct4_f32(
+ 138:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   const arm_dct4_instance_f32 * S,
+ 139:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   float32_t * pState,
+ 140:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   float32_t * pInlineBuffer)
+ 141:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** {
+  28              	 .loc 1 141 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32 0000 80B5     	 push {r7,lr}
+  33              	.LCFI0:
+  34              	 .cfi_def_cfa_offset 8
+  35              	 .cfi_offset 7,-8
+  36              	 .cfi_offset 14,-4
+  37 0002 8CB0     	 sub sp,sp,#48
+  38              	.LCFI1:
+  39              	 .cfi_def_cfa_offset 56
+  40 0004 00AF     	 add r7,sp,#0
+  41              	.LCFI2:
+  42              	 .cfi_def_cfa_register 7
+  43 0006 F860     	 str r0,[r7,#12]
+  44 0008 B960     	 str r1,[r7,#8]
+  45 000a 7A60     	 str r2,[r7,#4]
+ 142:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   uint32_t i;                                    /* Loop counter */
+ 143:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   float32_t *weights = S->pTwiddle;              /* Pointer to the Weights table */
+  46              	 .loc 1 143 0
+  47 000c FB68     	 ldr r3,[r7,#12]
+  48 000e 9B68     	 ldr r3,[r3,#8]
+  49 0010 BB61     	 str r3,[r7,#24]
+ 144:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   float32_t *cosFact = S->pCosFactor;            /* Pointer to the cos factors table */
+  50              	 .loc 1 144 0
+  51 0012 FB68     	 ldr r3,[r7,#12]
+  52 0014 DB68     	 ldr r3,[r3,#12]
+  53 0016 7B61     	 str r3,[r7,#20]
+ 145:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   float32_t *pS1, *pS2, *pbuff;                  /* Temporary pointers for input buffer and pState 
+ 146:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   float32_t in;                                  /* Temporary variable */
+ 147:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 148:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 149:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* DCT4 computation involves DCT2 (which is calculated using RFFT)    
+ 150:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    * along with some pre-processing and post-processing.    
+ 151:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    * Computational procedure is explained as follows:    
+ 152:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    * (a) Pre-processing involves multiplying input with cos factor,    
+ 153:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    *     r(n) = 2 * u(n) * cos(pi*(2*n+1)/(4*n))    
+ 154:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    *              where,    
+ 155:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    *                 r(n) -- output of preprocessing    
+ 156:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    *                 u(n) -- input to preprocessing(actual Source buffer)    
+ 157:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    * (b) Calculation of DCT2 using FFT is divided into three steps:    
+ 158:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    *                  Step1: Re-ordering of even and odd elements of input.    
+ 159:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    *                  Step2: Calculating FFT of the re-ordered input.    
+ 160:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    *                  Step3: Taking the real part of the product of FFT output and weights.    
+ 161:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    * (c) Post-processing - DCT4 can be obtained from DCT2 output using the following equation:    
+ 162:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    *                   Y4(k) = Y2(k) - Y4(k-1) and Y4(-1) = Y4(0)    
+ 163:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    *                        where,    
+ 164:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    *                           Y4 -- DCT4 output,   Y2 -- DCT2 output    
+ 165:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    * (d) Multiplying the output with the normalizing factor sqrt(2/N).    
+ 166:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    */
+ 167:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 168:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****         /*-------- Pre-processing ------------*/
+ 169:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* Multiplying input with cos factor i.e. r(n) = 2 * x(n) * cos(pi*(2*n+1)/(4*n)) */
+ 170:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   arm_scale_f32(pInlineBuffer, 2.0f, pInlineBuffer, S->N);
+  54              	 .loc 1 170 0
+  55 0018 FB68     	 ldr r3,[r7,#12]
+  56 001a 1B88     	 ldrh r3,[r3]
+  57 001c 7868     	 ldr r0,[r7,#4]
+  58 001e 4FF08041 	 mov r1,#1073741824
+  59 0022 7A68     	 ldr r2,[r7,#4]
+  60 0024 FFF7FEFF 	 bl arm_scale_f32
+ 171:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   arm_mult_f32(pInlineBuffer, cosFact, pInlineBuffer, S->N);
+  61              	 .loc 1 171 0
+  62 0028 FB68     	 ldr r3,[r7,#12]
+  63 002a 1B88     	 ldrh r3,[r3]
+  64 002c 7868     	 ldr r0,[r7,#4]
+  65 002e 7969     	 ldr r1,[r7,#20]
+  66 0030 7A68     	 ldr r2,[r7,#4]
+  67 0032 FFF7FEFF 	 bl arm_mult_f32
+ 172:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 173:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* ----------------------------------------------------------------    
+ 174:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    * Step1: Re-ordering of even and odd elements as,    
+ 175:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    *             pState[i] =  pInlineBuffer[2*i] and    
+ 176:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    *             pState[N-i-1] = pInlineBuffer[2*i+1] where i = 0 to N/2    
+ 177:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    ---------------------------------------------------------------------*/
+ 178:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 179:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* pS1 initialized to pState */
+ 180:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   pS1 = pState;
+  68              	 .loc 1 180 0
+  69 0036 BB68     	 ldr r3,[r7,#8]
+  70 0038 BB62     	 str r3,[r7,#40]
+ 181:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 182:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* pS2 initialized to pState+N-1, so that it points to the end of the state buffer */
+ 183:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   pS2 = pState + (S->N - 1u);
+  71              	 .loc 1 183 0
+  72 003a FB68     	 ldr r3,[r7,#12]
+  73 003c 1B88     	 ldrh r3,[r3]
+  74 003e 03F18043 	 add r3,r3,#1073741824
+  75 0042 013B     	 subs r3,r3,#1
+  76 0044 9B00     	 lsls r3,r3,#2
+  77 0046 BA68     	 ldr r2,[r7,#8]
+  78 0048 1344     	 add r3,r3,r2
+  79 004a 7B62     	 str r3,[r7,#36]
+ 184:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 185:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* pbuff initialized to input buffer */
+ 186:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   pbuff = pInlineBuffer;
+  80              	 .loc 1 186 0
+  81 004c 7B68     	 ldr r3,[r7,#4]
+  82 004e 3B62     	 str r3,[r7,#32]
+ 187:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 188:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** #ifndef ARM_MATH_CM0_FAMILY
+ 189:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 190:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* Run the below code for Cortex-M4 and Cortex-M3 */
+ 191:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 192:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* Initializing the loop counter to N/2 >> 2 for loop unrolling by 4 */
+ 193:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   i = (uint32_t) S->Nby2 >> 2u;
+  83              	 .loc 1 193 0
+  84 0050 FB68     	 ldr r3,[r7,#12]
+  85 0052 5B88     	 ldrh r3,[r3,#2]
+  86 0054 9B08     	 lsrs r3,r3,#2
+  87 0056 9BB2     	 uxth r3,r3
+  88 0058 FB62     	 str r3,[r7,#44]
+  89              	.L2:
+ 194:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 195:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
+ 196:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    ** a second loop below computes the remaining 1 to 3 samples. */
+ 197:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   do
+ 198:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   {
+ 199:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* Re-ordering of even and odd elements */
+ 200:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* pState[i] =  pInlineBuffer[2*i] */
+ 201:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pS1++ = *pbuff++;
+  90              	 .loc 1 201 0 discriminator 1
+  91 005a BB6A     	 ldr r3,[r7,#40]
+  92 005c 1A1D     	 adds r2,r3,#4
+  93 005e BA62     	 str r2,[r7,#40]
+  94 0060 3A6A     	 ldr r2,[r7,#32]
+  95 0062 111D     	 adds r1,r2,#4
+  96 0064 3962     	 str r1,[r7,#32]
+  97 0066 1268     	 ldr r2,[r2]
+  98 0068 1A60     	 str r2,[r3]
+ 202:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* pState[N-i-1] = pInlineBuffer[2*i+1] */
+ 203:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pS2-- = *pbuff++;
+  99              	 .loc 1 203 0 discriminator 1
+ 100 006a 7B6A     	 ldr r3,[r7,#36]
+ 101 006c 1A1F     	 subs r2,r3,#4
+ 102 006e 7A62     	 str r2,[r7,#36]
+ 103 0070 3A6A     	 ldr r2,[r7,#32]
+ 104 0072 111D     	 adds r1,r2,#4
+ 105 0074 3962     	 str r1,[r7,#32]
+ 106 0076 1268     	 ldr r2,[r2]
+ 107 0078 1A60     	 str r2,[r3]
+ 204:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 205:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pS1++ = *pbuff++;
+ 108              	 .loc 1 205 0 discriminator 1
+ 109 007a BB6A     	 ldr r3,[r7,#40]
+ 110 007c 1A1D     	 adds r2,r3,#4
+ 111 007e BA62     	 str r2,[r7,#40]
+ 112 0080 3A6A     	 ldr r2,[r7,#32]
+ 113 0082 111D     	 adds r1,r2,#4
+ 114 0084 3962     	 str r1,[r7,#32]
+ 115 0086 1268     	 ldr r2,[r2]
+ 116 0088 1A60     	 str r2,[r3]
+ 206:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pS2-- = *pbuff++;
+ 117              	 .loc 1 206 0 discriminator 1
+ 118 008a 7B6A     	 ldr r3,[r7,#36]
+ 119 008c 1A1F     	 subs r2,r3,#4
+ 120 008e 7A62     	 str r2,[r7,#36]
+ 121 0090 3A6A     	 ldr r2,[r7,#32]
+ 122 0092 111D     	 adds r1,r2,#4
+ 123 0094 3962     	 str r1,[r7,#32]
+ 124 0096 1268     	 ldr r2,[r2]
+ 125 0098 1A60     	 str r2,[r3]
+ 207:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 208:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pS1++ = *pbuff++;
+ 126              	 .loc 1 208 0 discriminator 1
+ 127 009a BB6A     	 ldr r3,[r7,#40]
+ 128 009c 1A1D     	 adds r2,r3,#4
+ 129 009e BA62     	 str r2,[r7,#40]
+ 130 00a0 3A6A     	 ldr r2,[r7,#32]
+ 131 00a2 111D     	 adds r1,r2,#4
+ 132 00a4 3962     	 str r1,[r7,#32]
+ 133 00a6 1268     	 ldr r2,[r2]
+ 134 00a8 1A60     	 str r2,[r3]
+ 209:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pS2-- = *pbuff++;
+ 135              	 .loc 1 209 0 discriminator 1
+ 136 00aa 7B6A     	 ldr r3,[r7,#36]
+ 137 00ac 1A1F     	 subs r2,r3,#4
+ 138 00ae 7A62     	 str r2,[r7,#36]
+ 139 00b0 3A6A     	 ldr r2,[r7,#32]
+ 140 00b2 111D     	 adds r1,r2,#4
+ 141 00b4 3962     	 str r1,[r7,#32]
+ 142 00b6 1268     	 ldr r2,[r2]
+ 143 00b8 1A60     	 str r2,[r3]
+ 210:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 211:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pS1++ = *pbuff++;
+ 144              	 .loc 1 211 0 discriminator 1
+ 145 00ba BB6A     	 ldr r3,[r7,#40]
+ 146 00bc 1A1D     	 adds r2,r3,#4
+ 147 00be BA62     	 str r2,[r7,#40]
+ 148 00c0 3A6A     	 ldr r2,[r7,#32]
+ 149 00c2 111D     	 adds r1,r2,#4
+ 150 00c4 3962     	 str r1,[r7,#32]
+ 151 00c6 1268     	 ldr r2,[r2]
+ 152 00c8 1A60     	 str r2,[r3]
+ 212:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pS2-- = *pbuff++;
+ 153              	 .loc 1 212 0 discriminator 1
+ 154 00ca 7B6A     	 ldr r3,[r7,#36]
+ 155 00cc 1A1F     	 subs r2,r3,#4
+ 156 00ce 7A62     	 str r2,[r7,#36]
+ 157 00d0 3A6A     	 ldr r2,[r7,#32]
+ 158 00d2 111D     	 adds r1,r2,#4
+ 159 00d4 3962     	 str r1,[r7,#32]
+ 160 00d6 1268     	 ldr r2,[r2]
+ 161 00d8 1A60     	 str r2,[r3]
+ 213:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 214:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* Decrement the loop counter */
+ 215:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     i--;
+ 162              	 .loc 1 215 0 discriminator 1
+ 163 00da FB6A     	 ldr r3,[r7,#44]
+ 164 00dc 013B     	 subs r3,r3,#1
+ 165 00de FB62     	 str r3,[r7,#44]
+ 216:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   } while(i > 0u);
+ 166              	 .loc 1 216 0 discriminator 1
+ 167 00e0 FB6A     	 ldr r3,[r7,#44]
+ 168 00e2 002B     	 cmp r3,#0
+ 169 00e4 B9D1     	 bne .L2
+ 217:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 218:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* pbuff initialized to input buffer */
+ 219:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   pbuff = pInlineBuffer;
+ 170              	 .loc 1 219 0
+ 171 00e6 7B68     	 ldr r3,[r7,#4]
+ 172 00e8 3B62     	 str r3,[r7,#32]
+ 220:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 221:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* pS1 initialized to pState */
+ 222:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   pS1 = pState;
+ 173              	 .loc 1 222 0
+ 174 00ea BB68     	 ldr r3,[r7,#8]
+ 175 00ec BB62     	 str r3,[r7,#40]
+ 223:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 224:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* Initializing the loop counter to N/4 instead of N for loop unrolling */
+ 225:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   i = (uint32_t) S->N >> 2u;
+ 176              	 .loc 1 225 0
+ 177 00ee FB68     	 ldr r3,[r7,#12]
+ 178 00f0 1B88     	 ldrh r3,[r3]
+ 179 00f2 9B08     	 lsrs r3,r3,#2
+ 180 00f4 9BB2     	 uxth r3,r3
+ 181 00f6 FB62     	 str r3,[r7,#44]
+ 182              	.L3:
+ 226:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 227:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* Processing with loop unrolling 4 times as N is always multiple of 4.    
+ 228:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    * Compute 4 outputs at a time */
+ 229:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   do
+ 230:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   {
+ 231:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* Writing the re-ordered output back to inplace input buffer */
+ 232:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pbuff++ = *pS1++;
+ 183              	 .loc 1 232 0 discriminator 1
+ 184 00f8 3B6A     	 ldr r3,[r7,#32]
+ 185 00fa 1A1D     	 adds r2,r3,#4
+ 186 00fc 3A62     	 str r2,[r7,#32]
+ 187 00fe BA6A     	 ldr r2,[r7,#40]
+ 188 0100 111D     	 adds r1,r2,#4
+ 189 0102 B962     	 str r1,[r7,#40]
+ 190 0104 1268     	 ldr r2,[r2]
+ 191 0106 1A60     	 str r2,[r3]
+ 233:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pbuff++ = *pS1++;
+ 192              	 .loc 1 233 0 discriminator 1
+ 193 0108 3B6A     	 ldr r3,[r7,#32]
+ 194 010a 1A1D     	 adds r2,r3,#4
+ 195 010c 3A62     	 str r2,[r7,#32]
+ 196 010e BA6A     	 ldr r2,[r7,#40]
+ 197 0110 111D     	 adds r1,r2,#4
+ 198 0112 B962     	 str r1,[r7,#40]
+ 199 0114 1268     	 ldr r2,[r2]
+ 200 0116 1A60     	 str r2,[r3]
+ 234:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pbuff++ = *pS1++;
+ 201              	 .loc 1 234 0 discriminator 1
+ 202 0118 3B6A     	 ldr r3,[r7,#32]
+ 203 011a 1A1D     	 adds r2,r3,#4
+ 204 011c 3A62     	 str r2,[r7,#32]
+ 205 011e BA6A     	 ldr r2,[r7,#40]
+ 206 0120 111D     	 adds r1,r2,#4
+ 207 0122 B962     	 str r1,[r7,#40]
+ 208 0124 1268     	 ldr r2,[r2]
+ 209 0126 1A60     	 str r2,[r3]
+ 235:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pbuff++ = *pS1++;
+ 210              	 .loc 1 235 0 discriminator 1
+ 211 0128 3B6A     	 ldr r3,[r7,#32]
+ 212 012a 1A1D     	 adds r2,r3,#4
+ 213 012c 3A62     	 str r2,[r7,#32]
+ 214 012e BA6A     	 ldr r2,[r7,#40]
+ 215 0130 111D     	 adds r1,r2,#4
+ 216 0132 B962     	 str r1,[r7,#40]
+ 217 0134 1268     	 ldr r2,[r2]
+ 218 0136 1A60     	 str r2,[r3]
+ 236:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 237:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* Decrement the loop counter */
+ 238:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     i--;
+ 219              	 .loc 1 238 0 discriminator 1
+ 220 0138 FB6A     	 ldr r3,[r7,#44]
+ 221 013a 013B     	 subs r3,r3,#1
+ 222 013c FB62     	 str r3,[r7,#44]
+ 239:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   } while(i > 0u);
+ 223              	 .loc 1 239 0 discriminator 1
+ 224 013e FB6A     	 ldr r3,[r7,#44]
+ 225 0140 002B     	 cmp r3,#0
+ 226 0142 D9D1     	 bne .L3
+ 240:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 241:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 242:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* ---------------------------------------------------------    
+ 243:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    *     Step2: Calculate RFFT for N-point input    
+ 244:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    * ---------------------------------------------------------- */
+ 245:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* pInlineBuffer is real input of length N , pState is the complex output of length 2N */
+ 246:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   arm_rfft_f32(S->pRfft, pInlineBuffer, pState);
+ 227              	 .loc 1 246 0
+ 228 0144 FB68     	 ldr r3,[r7,#12]
+ 229 0146 1B69     	 ldr r3,[r3,#16]
+ 230 0148 1846     	 mov r0,r3
+ 231 014a 7968     	 ldr r1,[r7,#4]
+ 232 014c BA68     	 ldr r2,[r7,#8]
+ 233 014e FFF7FEFF 	 bl arm_rfft_f32
+ 247:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 248:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****         /*----------------------------------------------------------------------    
+ 249:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 	 *  Step3: Multiply the FFT output with the weights.    
+ 250:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 	 *----------------------------------------------------------------------*/
+ 251:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   arm_cmplx_mult_cmplx_f32(pState, weights, pState, S->N);
+ 234              	 .loc 1 251 0
+ 235 0152 FB68     	 ldr r3,[r7,#12]
+ 236 0154 1B88     	 ldrh r3,[r3]
+ 237 0156 B868     	 ldr r0,[r7,#8]
+ 238 0158 B969     	 ldr r1,[r7,#24]
+ 239 015a BA68     	 ldr r2,[r7,#8]
+ 240 015c FFF7FEFF 	 bl arm_cmplx_mult_cmplx_f32
+ 252:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 253:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* ----------- Post-processing ---------- */
+ 254:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* DCT-IV can be obtained from DCT-II by the equation,    
+ 255:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    *       Y4(k) = Y2(k) - Y4(k-1) and Y4(-1) = Y4(0)    
+ 256:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    *       Hence, Y4(0) = Y2(0)/2  */
+ 257:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* Getting only real part from the output and Converting to DCT-IV */
+ 258:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 259:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* Initializing the loop counter to N >> 2 for loop unrolling by 4 */
+ 260:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   i = ((uint32_t) S->N - 1u) >> 2u;
+ 241              	 .loc 1 260 0
+ 242 0160 FB68     	 ldr r3,[r7,#12]
+ 243 0162 1B88     	 ldrh r3,[r3]
+ 244 0164 013B     	 subs r3,r3,#1
+ 245 0166 9B08     	 lsrs r3,r3,#2
+ 246 0168 FB62     	 str r3,[r7,#44]
+ 261:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 262:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* pbuff initialized to input buffer. */
+ 263:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   pbuff = pInlineBuffer;
+ 247              	 .loc 1 263 0
+ 248 016a 7B68     	 ldr r3,[r7,#4]
+ 249 016c 3B62     	 str r3,[r7,#32]
+ 264:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 265:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* pS1 initialized to pState */
+ 266:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   pS1 = pState;
+ 250              	 .loc 1 266 0
+ 251 016e BB68     	 ldr r3,[r7,#8]
+ 252 0170 BB62     	 str r3,[r7,#40]
+ 267:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 268:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* Calculating Y4(0) from Y2(0) using Y4(0) = Y2(0)/2 */
+ 269:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   in = *pS1++ * (float32_t) 0.5;
+ 253              	 .loc 1 269 0
+ 254 0172 BB6A     	 ldr r3,[r7,#40]
+ 255 0174 1A1D     	 adds r2,r3,#4
+ 256 0176 BA62     	 str r2,[r7,#40]
+ 257 0178 D3ED007A 	 flds s15,[r3]
+ 258 017c B6EE007A 	 fconsts s14,#96
+ 259 0180 67EE877A 	 fmuls s15,s15,s14
+ 260 0184 C7ED077A 	 fsts s15,[r7,#28]
+ 270:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* input buffer acts as inplace, so output values are stored in the input itself. */
+ 271:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   *pbuff++ = in;
+ 261              	 .loc 1 271 0
+ 262 0188 3B6A     	 ldr r3,[r7,#32]
+ 263 018a 1A1D     	 adds r2,r3,#4
+ 264 018c 3A62     	 str r2,[r7,#32]
+ 265 018e FA69     	 ldr r2,[r7,#28]
+ 266 0190 1A60     	 str r2,[r3]
+ 272:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 273:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* pState pointer is incremented twice as the real values are located alternatively in the array 
+ 274:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   pS1++;
+ 267              	 .loc 1 274 0
+ 268 0192 BB6A     	 ldr r3,[r7,#40]
+ 269 0194 0433     	 adds r3,r3,#4
+ 270 0196 BB62     	 str r3,[r7,#40]
+ 271              	.L4:
+ 275:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 276:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
+ 277:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    ** a second loop below computes the remaining 1 to 3 samples. */
+ 278:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   do
+ 279:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   {
+ 280:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* Calculating Y4(1) to Y4(N-1) from Y2 using equation Y4(k) = Y2(k) - Y4(k-1) */
+ 281:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* pState pointer (pS1) is incremented twice as the real values are located alternatively in th
+ 282:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     in = *pS1++ - in;
+ 272              	 .loc 1 282 0 discriminator 1
+ 273 0198 BB6A     	 ldr r3,[r7,#40]
+ 274 019a 1A1D     	 adds r2,r3,#4
+ 275 019c BA62     	 str r2,[r7,#40]
+ 276 019e 93ED007A 	 flds s14,[r3]
+ 277 01a2 D7ED077A 	 flds s15,[r7,#28]
+ 278 01a6 77EE677A 	 fsubs s15,s14,s15
+ 279 01aa C7ED077A 	 fsts s15,[r7,#28]
+ 283:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pbuff++ = in;
+ 280              	 .loc 1 283 0 discriminator 1
+ 281 01ae 3B6A     	 ldr r3,[r7,#32]
+ 282 01b0 1A1D     	 adds r2,r3,#4
+ 283 01b2 3A62     	 str r2,[r7,#32]
+ 284 01b4 FA69     	 ldr r2,[r7,#28]
+ 285 01b6 1A60     	 str r2,[r3]
+ 284:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* points to the next real value */
+ 285:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     pS1++;
+ 286              	 .loc 1 285 0 discriminator 1
+ 287 01b8 BB6A     	 ldr r3,[r7,#40]
+ 288 01ba 0433     	 adds r3,r3,#4
+ 289 01bc BB62     	 str r3,[r7,#40]
+ 286:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 287:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     in = *pS1++ - in;
+ 290              	 .loc 1 287 0 discriminator 1
+ 291 01be BB6A     	 ldr r3,[r7,#40]
+ 292 01c0 1A1D     	 adds r2,r3,#4
+ 293 01c2 BA62     	 str r2,[r7,#40]
+ 294 01c4 93ED007A 	 flds s14,[r3]
+ 295 01c8 D7ED077A 	 flds s15,[r7,#28]
+ 296 01cc 77EE677A 	 fsubs s15,s14,s15
+ 297 01d0 C7ED077A 	 fsts s15,[r7,#28]
+ 288:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pbuff++ = in;
+ 298              	 .loc 1 288 0 discriminator 1
+ 299 01d4 3B6A     	 ldr r3,[r7,#32]
+ 300 01d6 1A1D     	 adds r2,r3,#4
+ 301 01d8 3A62     	 str r2,[r7,#32]
+ 302 01da FA69     	 ldr r2,[r7,#28]
+ 303 01dc 1A60     	 str r2,[r3]
+ 289:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     pS1++;
+ 304              	 .loc 1 289 0 discriminator 1
+ 305 01de BB6A     	 ldr r3,[r7,#40]
+ 306 01e0 0433     	 adds r3,r3,#4
+ 307 01e2 BB62     	 str r3,[r7,#40]
+ 290:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 291:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     in = *pS1++ - in;
+ 308              	 .loc 1 291 0 discriminator 1
+ 309 01e4 BB6A     	 ldr r3,[r7,#40]
+ 310 01e6 1A1D     	 adds r2,r3,#4
+ 311 01e8 BA62     	 str r2,[r7,#40]
+ 312 01ea 93ED007A 	 flds s14,[r3]
+ 313 01ee D7ED077A 	 flds s15,[r7,#28]
+ 314 01f2 77EE677A 	 fsubs s15,s14,s15
+ 315 01f6 C7ED077A 	 fsts s15,[r7,#28]
+ 292:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pbuff++ = in;
+ 316              	 .loc 1 292 0 discriminator 1
+ 317 01fa 3B6A     	 ldr r3,[r7,#32]
+ 318 01fc 1A1D     	 adds r2,r3,#4
+ 319 01fe 3A62     	 str r2,[r7,#32]
+ 320 0200 FA69     	 ldr r2,[r7,#28]
+ 321 0202 1A60     	 str r2,[r3]
+ 293:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     pS1++;
+ 322              	 .loc 1 293 0 discriminator 1
+ 323 0204 BB6A     	 ldr r3,[r7,#40]
+ 324 0206 0433     	 adds r3,r3,#4
+ 325 0208 BB62     	 str r3,[r7,#40]
+ 294:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 295:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     in = *pS1++ - in;
+ 326              	 .loc 1 295 0 discriminator 1
+ 327 020a BB6A     	 ldr r3,[r7,#40]
+ 328 020c 1A1D     	 adds r2,r3,#4
+ 329 020e BA62     	 str r2,[r7,#40]
+ 330 0210 93ED007A 	 flds s14,[r3]
+ 331 0214 D7ED077A 	 flds s15,[r7,#28]
+ 332 0218 77EE677A 	 fsubs s15,s14,s15
+ 333 021c C7ED077A 	 fsts s15,[r7,#28]
+ 296:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pbuff++ = in;
+ 334              	 .loc 1 296 0 discriminator 1
+ 335 0220 3B6A     	 ldr r3,[r7,#32]
+ 336 0222 1A1D     	 adds r2,r3,#4
+ 337 0224 3A62     	 str r2,[r7,#32]
+ 338 0226 FA69     	 ldr r2,[r7,#28]
+ 339 0228 1A60     	 str r2,[r3]
+ 297:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     pS1++;
+ 340              	 .loc 1 297 0 discriminator 1
+ 341 022a BB6A     	 ldr r3,[r7,#40]
+ 342 022c 0433     	 adds r3,r3,#4
+ 343 022e BB62     	 str r3,[r7,#40]
+ 298:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 299:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* Decrement the loop counter */
+ 300:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     i--;
+ 344              	 .loc 1 300 0 discriminator 1
+ 345 0230 FB6A     	 ldr r3,[r7,#44]
+ 346 0232 013B     	 subs r3,r3,#1
+ 347 0234 FB62     	 str r3,[r7,#44]
+ 301:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   } while(i > 0u);
+ 348              	 .loc 1 301 0 discriminator 1
+ 349 0236 FB6A     	 ldr r3,[r7,#44]
+ 350 0238 002B     	 cmp r3,#0
+ 351 023a ADD1     	 bne .L4
+ 302:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 303:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.    
+ 304:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    ** No loop unrolling is used. */
+ 305:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   i = ((uint32_t) S->N - 1u) % 0x4u;
+ 352              	 .loc 1 305 0
+ 353 023c FB68     	 ldr r3,[r7,#12]
+ 354 023e 1B88     	 ldrh r3,[r3]
+ 355 0240 013B     	 subs r3,r3,#1
+ 356 0242 03F00303 	 and r3,r3,#3
+ 357 0246 FB62     	 str r3,[r7,#44]
+ 306:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 307:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   while(i > 0u)
+ 358              	 .loc 1 307 0
+ 359 0248 15E0     	 b .L5
+ 360              	.L6:
+ 308:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   {
+ 309:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* Calculating Y4(1) to Y4(N-1) from Y2 using equation Y4(k) = Y2(k) - Y4(k-1) */
+ 310:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* pState pointer (pS1) is incremented twice as the real values are located alternatively in th
+ 311:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     in = *pS1++ - in;
+ 361              	 .loc 1 311 0
+ 362 024a BB6A     	 ldr r3,[r7,#40]
+ 363 024c 1A1D     	 adds r2,r3,#4
+ 364 024e BA62     	 str r2,[r7,#40]
+ 365 0250 93ED007A 	 flds s14,[r3]
+ 366 0254 D7ED077A 	 flds s15,[r7,#28]
+ 367 0258 77EE677A 	 fsubs s15,s14,s15
+ 368 025c C7ED077A 	 fsts s15,[r7,#28]
+ 312:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pbuff++ = in;
+ 369              	 .loc 1 312 0
+ 370 0260 3B6A     	 ldr r3,[r7,#32]
+ 371 0262 1A1D     	 adds r2,r3,#4
+ 372 0264 3A62     	 str r2,[r7,#32]
+ 373 0266 FA69     	 ldr r2,[r7,#28]
+ 374 0268 1A60     	 str r2,[r3]
+ 313:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* points to the next real value */
+ 314:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     pS1++;
+ 375              	 .loc 1 314 0
+ 376 026a BB6A     	 ldr r3,[r7,#40]
+ 377 026c 0433     	 adds r3,r3,#4
+ 378 026e BB62     	 str r3,[r7,#40]
+ 315:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 316:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* Decrement the loop counter */
+ 317:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     i--;
+ 379              	 .loc 1 317 0
+ 380 0270 FB6A     	 ldr r3,[r7,#44]
+ 381 0272 013B     	 subs r3,r3,#1
+ 382 0274 FB62     	 str r3,[r7,#44]
+ 383              	.L5:
+ 307:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   {
+ 384              	 .loc 1 307 0
+ 385 0276 FB6A     	 ldr r3,[r7,#44]
+ 386 0278 002B     	 cmp r3,#0
+ 387 027a E6D1     	 bne .L6
+ 318:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   }
+ 319:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 320:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 321:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****         /*------------ Normalizing the output by multiplying with the normalizing factor ----------
+ 322:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 323:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* Initializing the loop counter to N/4 instead of N for loop unrolling */
+ 324:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   i = (uint32_t) S->N >> 2u;
+ 388              	 .loc 1 324 0
+ 389 027c FB68     	 ldr r3,[r7,#12]
+ 390 027e 1B88     	 ldrh r3,[r3]
+ 391 0280 9B08     	 lsrs r3,r3,#2
+ 392 0282 9BB2     	 uxth r3,r3
+ 393 0284 FB62     	 str r3,[r7,#44]
+ 325:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 326:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* pbuff initialized to the pInlineBuffer(now contains the output values) */
+ 327:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   pbuff = pInlineBuffer;
+ 394              	 .loc 1 327 0
+ 395 0286 7B68     	 ldr r3,[r7,#4]
+ 396 0288 3B62     	 str r3,[r7,#32]
+ 397              	.L7:
+ 328:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 329:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* Processing with loop unrolling 4 times as N is always multiple of 4.  Compute 4 outputs at a t
+ 330:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   do
+ 331:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   {
+ 332:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* Multiplying pInlineBuffer with the normalizing factor sqrt(2/N) */
+ 333:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     in = *pbuff;
+ 398              	 .loc 1 333 0 discriminator 1
+ 399 028a 3B6A     	 ldr r3,[r7,#32]
+ 400 028c 1B68     	 ldr r3,[r3]
+ 401 028e FB61     	 str r3,[r7,#28]
+ 334:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pbuff++ = in * S->normalize;
+ 402              	 .loc 1 334 0 discriminator 1
+ 403 0290 3B6A     	 ldr r3,[r7,#32]
+ 404 0292 1A1D     	 adds r2,r3,#4
+ 405 0294 3A62     	 str r2,[r7,#32]
+ 406 0296 FA68     	 ldr r2,[r7,#12]
+ 407 0298 92ED017A 	 flds s14,[r2,#4]
+ 408 029c D7ED077A 	 flds s15,[r7,#28]
+ 409 02a0 67EE277A 	 fmuls s15,s14,s15
+ 410 02a4 C3ED007A 	 fsts s15,[r3]
+ 335:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 336:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     in = *pbuff;
+ 411              	 .loc 1 336 0 discriminator 1
+ 412 02a8 3B6A     	 ldr r3,[r7,#32]
+ 413 02aa 1B68     	 ldr r3,[r3]
+ 414 02ac FB61     	 str r3,[r7,#28]
+ 337:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pbuff++ = in * S->normalize;
+ 415              	 .loc 1 337 0 discriminator 1
+ 416 02ae 3B6A     	 ldr r3,[r7,#32]
+ 417 02b0 1A1D     	 adds r2,r3,#4
+ 418 02b2 3A62     	 str r2,[r7,#32]
+ 419 02b4 FA68     	 ldr r2,[r7,#12]
+ 420 02b6 92ED017A 	 flds s14,[r2,#4]
+ 421 02ba D7ED077A 	 flds s15,[r7,#28]
+ 422 02be 67EE277A 	 fmuls s15,s14,s15
+ 423 02c2 C3ED007A 	 fsts s15,[r3]
+ 338:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 339:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     in = *pbuff;
+ 424              	 .loc 1 339 0 discriminator 1
+ 425 02c6 3B6A     	 ldr r3,[r7,#32]
+ 426 02c8 1B68     	 ldr r3,[r3]
+ 427 02ca FB61     	 str r3,[r7,#28]
+ 340:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pbuff++ = in * S->normalize;
+ 428              	 .loc 1 340 0 discriminator 1
+ 429 02cc 3B6A     	 ldr r3,[r7,#32]
+ 430 02ce 1A1D     	 adds r2,r3,#4
+ 431 02d0 3A62     	 str r2,[r7,#32]
+ 432 02d2 FA68     	 ldr r2,[r7,#12]
+ 433 02d4 92ED017A 	 flds s14,[r2,#4]
+ 434 02d8 D7ED077A 	 flds s15,[r7,#28]
+ 435 02dc 67EE277A 	 fmuls s15,s14,s15
+ 436 02e0 C3ED007A 	 fsts s15,[r3]
+ 341:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 342:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     in = *pbuff;
+ 437              	 .loc 1 342 0 discriminator 1
+ 438 02e4 3B6A     	 ldr r3,[r7,#32]
+ 439 02e6 1B68     	 ldr r3,[r3]
+ 440 02e8 FB61     	 str r3,[r7,#28]
+ 343:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pbuff++ = in * S->normalize;
+ 441              	 .loc 1 343 0 discriminator 1
+ 442 02ea 3B6A     	 ldr r3,[r7,#32]
+ 443 02ec 1A1D     	 adds r2,r3,#4
+ 444 02ee 3A62     	 str r2,[r7,#32]
+ 445 02f0 FA68     	 ldr r2,[r7,#12]
+ 446 02f2 92ED017A 	 flds s14,[r2,#4]
+ 447 02f6 D7ED077A 	 flds s15,[r7,#28]
+ 448 02fa 67EE277A 	 fmuls s15,s14,s15
+ 449 02fe C3ED007A 	 fsts s15,[r3]
+ 344:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 345:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* Decrement the loop counter */
+ 346:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     i--;
+ 450              	 .loc 1 346 0 discriminator 1
+ 451 0302 FB6A     	 ldr r3,[r7,#44]
+ 452 0304 013B     	 subs r3,r3,#1
+ 453 0306 FB62     	 str r3,[r7,#44]
+ 347:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   } while(i > 0u);
+ 454              	 .loc 1 347 0 discriminator 1
+ 455 0308 FB6A     	 ldr r3,[r7,#44]
+ 456 030a 002B     	 cmp r3,#0
+ 457 030c BDD1     	 bne .L7
+ 348:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 349:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 350:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** #else
+ 351:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 352:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* Run the below code for Cortex-M0 */
+ 353:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 354:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* Initializing the loop counter to N/2 */
+ 355:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   i = (uint32_t) S->Nby2;
+ 356:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 357:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   do
+ 358:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   {
+ 359:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* Re-ordering of even and odd elements */
+ 360:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* pState[i] =  pInlineBuffer[2*i] */
+ 361:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pS1++ = *pbuff++;
+ 362:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* pState[N-i-1] = pInlineBuffer[2*i+1] */
+ 363:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pS2-- = *pbuff++;
+ 364:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 365:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* Decrement the loop counter */
+ 366:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     i--;
+ 367:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   } while(i > 0u);
+ 368:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 369:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* pbuff initialized to input buffer */
+ 370:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   pbuff = pInlineBuffer;
+ 371:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 372:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* pS1 initialized to pState */
+ 373:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   pS1 = pState;
+ 374:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 375:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* Initializing the loop counter */
+ 376:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   i = (uint32_t) S->N;
+ 377:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 378:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   do
+ 379:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   {
+ 380:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* Writing the re-ordered output back to inplace input buffer */
+ 381:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pbuff++ = *pS1++;
+ 382:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 383:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* Decrement the loop counter */
+ 384:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     i--;
+ 385:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   } while(i > 0u);
+ 386:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 387:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 388:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* ---------------------------------------------------------    
+ 389:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    *     Step2: Calculate RFFT for N-point input    
+ 390:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    * ---------------------------------------------------------- */
+ 391:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* pInlineBuffer is real input of length N , pState is the complex output of length 2N */
+ 392:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   arm_rfft_f32(S->pRfft, pInlineBuffer, pState);
+ 393:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 394:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****         /*----------------------------------------------------------------------    
+ 395:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 	 *  Step3: Multiply the FFT output with the weights.    
+ 396:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 	 *----------------------------------------------------------------------*/
+ 397:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   arm_cmplx_mult_cmplx_f32(pState, weights, pState, S->N);
+ 398:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 399:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* ----------- Post-processing ---------- */
+ 400:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* DCT-IV can be obtained from DCT-II by the equation,    
+ 401:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    *       Y4(k) = Y2(k) - Y4(k-1) and Y4(-1) = Y4(0)    
+ 402:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****    *       Hence, Y4(0) = Y2(0)/2  */
+ 403:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* Getting only real part from the output and Converting to DCT-IV */
+ 404:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 405:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* pbuff initialized to input buffer. */
+ 406:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   pbuff = pInlineBuffer;
+ 407:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 408:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* pS1 initialized to pState */
+ 409:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   pS1 = pState;
+ 410:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 411:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* Calculating Y4(0) from Y2(0) using Y4(0) = Y2(0)/2 */
+ 412:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   in = *pS1++ * (float32_t) 0.5;
+ 413:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* input buffer acts as inplace, so output values are stored in the input itself. */
+ 414:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   *pbuff++ = in;
+ 415:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 416:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* pState pointer is incremented twice as the real values are located alternatively in the array 
+ 417:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   pS1++;
+ 418:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 419:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* Initializing the loop counter */
+ 420:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   i = ((uint32_t) S->N - 1u);
+ 421:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 422:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   do
+ 423:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   {
+ 424:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* Calculating Y4(1) to Y4(N-1) from Y2 using equation Y4(k) = Y2(k) - Y4(k-1) */
+ 425:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* pState pointer (pS1) is incremented twice as the real values are located alternatively in th
+ 426:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     in = *pS1++ - in;
+ 427:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pbuff++ = in;
+ 428:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* points to the next real value */
+ 429:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     pS1++;
+ 430:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 431:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 432:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* Decrement the loop counter */
+ 433:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     i--;
+ 434:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   } while(i > 0u);
+ 435:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 436:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 437:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****         /*------------ Normalizing the output by multiplying with the normalizing factor ----------
+ 438:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 439:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* Initializing the loop counter */
+ 440:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   i = (uint32_t) S->N;
+ 441:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 442:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   /* pbuff initialized to the pInlineBuffer(now contains the output values) */
+ 443:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   pbuff = pInlineBuffer;
+ 444:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 445:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   do
+ 446:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   {
+ 447:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* Multiplying pInlineBuffer with the normalizing factor sqrt(2/N) */
+ 448:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     in = *pbuff;
+ 449:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     *pbuff++ = in * S->normalize;
+ 450:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 451:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     /* Decrement the loop counter */
+ 452:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****     i--;
+ 453:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c ****   } while(i > 0u);
+ 454:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 455:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** #endif /* #ifndef ARM_MATH_CM0_FAMILY */
+ 456:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** 
+ 457:../Dave/Generated/CMSIS_DSP/TransformFunctions/arm_dct4_f32.c **** }
+ 458              	 .loc 1 457 0
+ 459 030e 3037     	 adds r7,r7,#48
+ 460              	.LCFI3:
+ 461              	 .cfi_def_cfa_offset 8
+ 462 0310 BD46     	 mov sp,r7
+ 463              	.LCFI4:
+ 464              	 .cfi_def_cfa_register 13
+ 465              	 
+ 466 0312 80BD     	 pop {r7,pc}
+ 467              	 .cfi_endproc
+ 468              	.LFE139:
+ 470              	 .text
+ 471              	.Letext0:
+ 472              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 473              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 474              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_dct4_f32.c
+    {standard input}:20     .text.arm_dct4_f32:00000000 $t
+    {standard input}:25     .text.arm_dct4_f32:00000000 arm_dct4_f32
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+arm_scale_f32
+arm_mult_f32
+arm_rfft_f32
+arm_cmplx_mult_cmplx_f32

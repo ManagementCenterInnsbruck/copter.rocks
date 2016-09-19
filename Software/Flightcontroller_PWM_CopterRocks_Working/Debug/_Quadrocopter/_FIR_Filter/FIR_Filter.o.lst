@@ -1,0 +1,425 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "FIR_Filter.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.FIR_FILTER,"ax",%progbits
+  20              	 .align 2
+  21              	 .global FIR_FILTER
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	FIR_FILTER:
+  26              	.LFB0:
+  27              	 .file 1 "../_Quadrocopter/_FIR_Filter/FIR_Filter.c"
+   1:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** /*******************************************************************************
+   2:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** **                      Author(s) Identity                                    **
+   3:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** ********************************************************************************
+   4:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** **                                                                            **
+   5:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** ** Initials     Name                                                          **
+   6:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** ** ---------------------------------------------------------------------------**
+   7:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** ** HPL          Heinz-Peter	Liechtenecker                                     **
+   8:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** ** DW           Dominik 	Wieland                                           **
+   9:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** **                                                                            **
+  10:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** **                                                                            **
+  11:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** *******************************************************************************/
+  12:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 
+  13:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** /*******************************************************************************
+  14:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** **                      Revision Control History                              **
+  15:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** *******************************************************************************/
+  16:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** /*
+  17:../_Quadrocopter/_FIR_Filter/FIR_Filter.c ****  * V0.0: 30-01-2016, HPL: Initial Version
+  18:../_Quadrocopter/_FIR_Filter/FIR_Filter.c ****  * V0.1: 21-07-2016, DW:  Port of SW from DAVE3 to DAVE4
+  19:../_Quadrocopter/_FIR_Filter/FIR_Filter.c ****  */
+  20:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 
+  21:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 
+  22:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** /*******************************************************************************
+  23:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** **                      Includes                                              **
+  24:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** *******************************************************************************/
+  25:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** #include "FIR_Filter.h"
+  26:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 
+  27:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 
+  28:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** /*******************************************************************************
+  29:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** **                      Private Constant Definitions to be changed            **
+  30:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** *******************************************************************************/
+  31:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 
+  32:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** /*******************************************************************************
+  33:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** **                      Private Macro Definitions                             **
+  34:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** *******************************************************************************/
+  35:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 
+  36:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** /*******************************************************************************
+  37:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** **                      Global Type Definitions                               **
+  38:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** *******************************************************************************/
+  39:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 
+  40:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** /*******************************************************************************
+  41:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** **                      Private Type Definitions                              **
+  42:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** *******************************************************************************/
+  43:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 
+  44:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** /*******************************************************************************
+  45:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** **                      Global Function Declarations                          **
+  46:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** *******************************************************************************/
+  47:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 
+  48:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** /*******************************************************************************
+  49:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** **                      Private Function Declarations                         **
+  50:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** *******************************************************************************/
+  51:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 
+  52:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** /*******************************************************************************
+  53:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** **                      Global Constant Definitions                           **
+  54:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** *******************************************************************************/
+  55:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 
+  56:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** /*******************************************************************************
+  57:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** **                      Private Constant Definitions                          **
+  58:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** *******************************************************************************/
+  59:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 
+  60:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** /*******************************************************************************
+  61:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** **                      Global Variable Definitions                           **
+  62:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** *******************************************************************************/
+  63:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 
+  64:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** /*******************************************************************************
+  65:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** **                      Private Variable Definitions                          **
+  66:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** *******************************************************************************/
+  67:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 
+  68:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** /*******************************************************************************
+  69:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** **                      Global Function Definitions                           **
+  70:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** *******************************************************************************/
+  71:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** /**
+  72:../_Quadrocopter/_FIR_Filter/FIR_Filter.c ****  *  \brief adds new value in buffer and applies FIR-Filter
+  73:../_Quadrocopter/_FIR_Filter/FIR_Filter.c ****  *  
+  74:../_Quadrocopter/_FIR_Filter/FIR_Filter.c ****  *  \param [in] temp current FIR struct
+  75:../_Quadrocopter/_FIR_Filter/FIR_Filter.c ****  *  \param [in] NewValue value to add
+  76:../_Quadrocopter/_FIR_Filter/FIR_Filter.c ****  *  \return renewed FIR struct
+  77:../_Quadrocopter/_FIR_Filter/FIR_Filter.c ****  *  
+  78:../_Quadrocopter/_FIR_Filter/FIR_Filter.c ****  */
+  79:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** struct structFIR FIR_FILTER(struct structFIR temp, float NewValue)
+  80:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** {
+  28              	 .loc 1 80 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	 
+  33 0000 84B0     	 sub sp,sp,#16
+  34              	.LCFI0:
+  35              	 .cfi_def_cfa_offset 16
+  36 0002 B0B4     	 push {r4,r5,r7}
+  37              	.LCFI1:
+  38              	 .cfi_def_cfa_offset 28
+  39              	 .cfi_offset 4,-28
+  40              	 .cfi_offset 5,-24
+  41              	 .cfi_offset 7,-20
+  42 0004 85B0     	 sub sp,sp,#20
+  43              	.LCFI2:
+  44              	 .cfi_def_cfa_offset 48
+  45 0006 00AF     	 add r7,sp,#0
+  46              	.LCFI3:
+  47              	 .cfi_def_cfa_register 7
+  48 0008 7860     	 str r0,[r7,#4]
+  49 000a 07F12400 	 add r0,r7,#36
+  50 000e 80E80E00 	 stmia r0,{r1,r2,r3}
+  81:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	//Neuen Wert in den Ringbuffer schreiben
+  82:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	temp.CIRC_BUFF[temp.POS] = NewValue;
+  51              	 .loc 1 82 0
+  52 0012 BB6D     	 ldr r3,[r7,#88]
+  53 0014 9B00     	 lsls r3,r3,#2
+  54 0016 07F12002 	 add r2,r7,#32
+  55 001a 1344     	 add r3,r3,r2
+  56 001c 0433     	 adds r3,r3,#4
+  57 001e FA6D     	 ldr r2,[r7,#92]
+  58 0020 1A60     	 str r2,[r3]
+  83:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 
+  84:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	//Neuen Zeiger auf das Array berrechnen
+  85:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	temp.POS = ((temp.POS + 1) % FIR_SIZE);
+  59              	 .loc 1 85 0
+  60 0022 BB6D     	 ldr r3,[r7,#88]
+  61 0024 591C     	 adds r1,r3,#1
+  62 0026 284B     	 ldr r3,.L5
+  63 0028 83FB0132 	 smull r3,r2,r3,r1
+  64 002c CB17     	 asrs r3,r1,#31
+  65 002e D21A     	 subs r2,r2,r3
+  66 0030 1346     	 mov r3,r2
+  67 0032 5B00     	 lsls r3,r3,#1
+  68 0034 1344     	 add r3,r3,r2
+  69 0036 5B00     	 lsls r3,r3,#1
+  70 0038 CA1A     	 subs r2,r1,r3
+  71 003a BA65     	 str r2,[r7,#88]
+  86:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 
+  87:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	//Rückgabewert erstmal resetten
+  88:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	temp.VALUE = 0;
+  72              	 .loc 1 88 0
+  73 003c 4FF00003 	 mov r3,#0
+  74 0040 7B65     	 str r3,[r7,#84]
+  75              	.LBB2:
+  89:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 
+  90:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	//Eigentliches Werteberechnung durch Faltungsintegral
+  91:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	for (int i = 0; i < FIR_SIZE; i++)
+  76              	 .loc 1 91 0
+  77 0042 0023     	 movs r3,#0
+  78 0044 FB60     	 str r3,[r7,#12]
+  79 0046 27E0     	 b .L2
+  80              	.L3:
+  92:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	{
+  93:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 		temp.VALUE += (temp.FIR_COEFF[i]
+  81              	 .loc 1 93 0 discriminator 3
+  82 0048 97ED157A 	 flds s14,[r7,#84]
+  83 004c FB68     	 ldr r3,[r7,#12]
+  84 004e 0633     	 adds r3,r3,#6
+  85 0050 9B00     	 lsls r3,r3,#2
+  86 0052 07F12002 	 add r2,r7,#32
+  87 0056 1344     	 add r3,r3,r2
+  88 0058 0433     	 adds r3,r3,#4
+  89 005a D3ED006A 	 flds s13,[r3]
+  94:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 				* temp.CIRC_BUFF[(temp.POS + i) % FIR_SIZE]);
+  90              	 .loc 1 94 0 discriminator 3
+  91 005e BA6D     	 ldr r2,[r7,#88]
+  92 0060 FB68     	 ldr r3,[r7,#12]
+  93 0062 D118     	 adds r1,r2,r3
+  94 0064 184B     	 ldr r3,.L5
+  95 0066 83FB0132 	 smull r3,r2,r3,r1
+  96 006a CB17     	 asrs r3,r1,#31
+  97 006c D21A     	 subs r2,r2,r3
+  98 006e 1346     	 mov r3,r2
+  99 0070 5B00     	 lsls r3,r3,#1
+ 100 0072 1344     	 add r3,r3,r2
+ 101 0074 5B00     	 lsls r3,r3,#1
+ 102 0076 CA1A     	 subs r2,r1,r3
+ 103 0078 9300     	 lsls r3,r2,#2
+ 104 007a 07F12002 	 add r2,r7,#32
+ 105 007e 1344     	 add r3,r3,r2
+ 106 0080 0433     	 adds r3,r3,#4
+ 107 0082 D3ED007A 	 flds s15,[r3]
+ 108 0086 66EEA77A 	 fmuls s15,s13,s15
+  93:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 				* temp.CIRC_BUFF[(temp.POS + i) % FIR_SIZE]);
+ 109              	 .loc 1 93 0 discriminator 3
+ 110 008a 77EE277A 	 fadds s15,s14,s15
+ 111 008e C7ED157A 	 fsts s15,[r7,#84]
+  91:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	{
+ 112              	 .loc 1 91 0 discriminator 3
+ 113 0092 FB68     	 ldr r3,[r7,#12]
+ 114 0094 0133     	 adds r3,r3,#1
+ 115 0096 FB60     	 str r3,[r7,#12]
+ 116              	.L2:
+  91:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	{
+ 117              	 .loc 1 91 0 is_stmt 0 discriminator 1
+ 118 0098 FB68     	 ldr r3,[r7,#12]
+ 119 009a 052B     	 cmp r3,#5
+ 120 009c D4DD     	 ble .L3
+ 121              	.LBE2:
+  95:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	}
+  96:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	//Rueckgabewert des neuen Buffers
+  97:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	return temp;
+ 122              	 .loc 1 97 0 is_stmt 1
+ 123 009e 7B68     	 ldr r3,[r7,#4]
+ 124 00a0 1D46     	 mov r5,r3
+ 125 00a2 07F12404 	 add r4,r7,#36
+ 126 00a6 0FCC     	 ldmia r4!,{r0,r1,r2,r3}
+ 127 00a8 0FC5     	 stmia r5!,{r0,r1,r2,r3}
+ 128 00aa 0FCC     	 ldmia r4!,{r0,r1,r2,r3}
+ 129 00ac 0FC5     	 stmia r5!,{r0,r1,r2,r3}
+ 130 00ae 0FCC     	 ldmia r4!,{r0,r1,r2,r3}
+ 131 00b0 0FC5     	 stmia r5!,{r0,r1,r2,r3}
+ 132 00b2 94E80300 	 ldmia r4,{r0,r1}
+ 133 00b6 85E80300 	 stmia r5,{r0,r1}
+  98:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** }
+ 134              	 .loc 1 98 0
+ 135 00ba 7868     	 ldr r0,[r7,#4]
+ 136 00bc 1437     	 adds r7,r7,#20
+ 137              	.LCFI4:
+ 138              	 .cfi_def_cfa_offset 28
+ 139 00be BD46     	 mov sp,r7
+ 140              	.LCFI5:
+ 141              	 .cfi_def_cfa_register 13
+ 142              	 
+ 143 00c0 B0BC     	 pop {r4,r5,r7}
+ 144              	.LCFI6:
+ 145              	 .cfi_restore 7
+ 146              	 .cfi_restore 5
+ 147              	 .cfi_restore 4
+ 148              	 .cfi_def_cfa_offset 16
+ 149 00c2 04B0     	 add sp,sp,#16
+ 150              	.LCFI7:
+ 151              	 .cfi_def_cfa_offset 0
+ 152 00c4 7047     	 bx lr
+ 153              	.L6:
+ 154 00c6 00BF     	 .align 2
+ 155              	.L5:
+ 156 00c8 ABAAAA2A 	 .word 715827883
+ 157              	 .cfi_endproc
+ 158              	.LFE0:
+ 160              	 .section .text.Initialize_FIR_Filter,"ax",%progbits
+ 161              	 .align 2
+ 162              	 .global Initialize_FIR_Filter
+ 163              	 .thumb
+ 164              	 .thumb_func
+ 166              	Initialize_FIR_Filter:
+ 167              	.LFB1:
+  99:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** /**
+ 100:../_Quadrocopter/_FIR_Filter/FIR_Filter.c ****  *  \brief Initializes FIR Filter
+ 101:../_Quadrocopter/_FIR_Filter/FIR_Filter.c ****  *  
+ 102:../_Quadrocopter/_FIR_Filter/FIR_Filter.c ****  *  \param [in] temp structFir to initialize
+ 103:../_Quadrocopter/_FIR_Filter/FIR_Filter.c ****  *  \param [in] type type of filter coefficients used  
+ 104:../_Quadrocopter/_FIR_Filter/FIR_Filter.c ****  *  \return initialized structFir
+ 105:../_Quadrocopter/_FIR_Filter/FIR_Filter.c ****  *  
+ 106:../_Quadrocopter/_FIR_Filter/FIR_Filter.c ****  */
+ 107:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** struct structFIR Initialize_FIR_Filter(struct structFIR temp, int type)
+ 108:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** {
+ 168              	 .loc 1 108 0
+ 169              	 .cfi_startproc
+ 170              	 
+ 171              	 
+ 172              	 
+ 173 0000 84B0     	 sub sp,sp,#16
+ 174              	.LCFI8:
+ 175              	 .cfi_def_cfa_offset 16
+ 176 0002 B0B4     	 push {r4,r5,r7}
+ 177              	.LCFI9:
+ 178              	 .cfi_def_cfa_offset 28
+ 179              	 .cfi_offset 4,-28
+ 180              	 .cfi_offset 5,-24
+ 181              	 .cfi_offset 7,-20
+ 182 0004 85B0     	 sub sp,sp,#20
+ 183              	.LCFI10:
+ 184              	 .cfi_def_cfa_offset 48
+ 185 0006 00AF     	 add r7,sp,#0
+ 186              	.LCFI11:
+ 187              	 .cfi_def_cfa_register 7
+ 188 0008 7860     	 str r0,[r7,#4]
+ 189 000a 07F12400 	 add r0,r7,#36
+ 190 000e 80E80E00 	 stmia r0,{r1,r2,r3}
+ 191              	.LBB3:
+ 109:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	//Alle Werte im Ringbuffer auf 0 setzen
+ 110:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	for (int i = 0; i < FIR_SIZE; i++)
+ 192              	 .loc 1 110 0
+ 193 0012 0023     	 movs r3,#0
+ 194 0014 FB60     	 str r3,[r7,#12]
+ 195 0016 0BE0     	 b .L8
+ 196              	.L9:
+ 111:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 		temp.CIRC_BUFF[i] = 0.0f;
+ 197              	 .loc 1 111 0 discriminator 3
+ 198 0018 FB68     	 ldr r3,[r7,#12]
+ 199 001a 9B00     	 lsls r3,r3,#2
+ 200 001c 07F12002 	 add r2,r7,#32
+ 201 0020 1344     	 add r3,r3,r2
+ 202 0022 0433     	 adds r3,r3,#4
+ 203 0024 4FF00002 	 mov r2,#0
+ 204 0028 1A60     	 str r2,[r3]
+ 110:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 		temp.CIRC_BUFF[i] = 0.0f;
+ 205              	 .loc 1 110 0 discriminator 3
+ 206 002a FB68     	 ldr r3,[r7,#12]
+ 207 002c 0133     	 adds r3,r3,#1
+ 208 002e FB60     	 str r3,[r7,#12]
+ 209              	.L8:
+ 110:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 		temp.CIRC_BUFF[i] = 0.0f;
+ 210              	 .loc 1 110 0 is_stmt 0 discriminator 1
+ 211 0030 FB68     	 ldr r3,[r7,#12]
+ 212 0032 052B     	 cmp r3,#5
+ 213 0034 F0DD     	 ble .L9
+ 214              	.LBE3:
+ 112:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 
+ 113:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	//Pointer im Circ-Buffer auf 0 setzen
+ 114:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	temp.POS = 0;
+ 215              	 .loc 1 114 0 is_stmt 1
+ 216 0036 0023     	 movs r3,#0
+ 217 0038 BB65     	 str r3,[r7,#88]
+ 218              	.LBB4:
+ 115:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 
+ 116:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	//Filter-Koeffizienten erstellen und im Array befuellen
+ 117:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	switch (type)
+ 118:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	{
+ 119:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	case MOVING_AVERAGE:
+ 120:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	default:
+ 121:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 		for (int i = 0; i < FIR_SIZE; i++)
+ 219              	 .loc 1 121 0
+ 220 003a 0023     	 movs r3,#0
+ 221 003c BB60     	 str r3,[r7,#8]
+ 222 003e 0BE0     	 b .L10
+ 223              	.L11:
+ 122:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 			temp.FIR_COEFF[i] = 1.0f / FIR_SIZE;
+ 224              	 .loc 1 122 0 discriminator 3
+ 225 0040 BB68     	 ldr r3,[r7,#8]
+ 226 0042 0633     	 adds r3,r3,#6
+ 227 0044 9B00     	 lsls r3,r3,#2
+ 228 0046 07F12002 	 add r2,r7,#32
+ 229 004a 1344     	 add r3,r3,r2
+ 230 004c 0433     	 adds r3,r3,#4
+ 231 004e 0E4A     	 ldr r2,.L13
+ 232 0050 1A60     	 str r2,[r3]
+ 121:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 			temp.FIR_COEFF[i] = 1.0f / FIR_SIZE;
+ 233              	 .loc 1 121 0 discriminator 3
+ 234 0052 BB68     	 ldr r3,[r7,#8]
+ 235 0054 0133     	 adds r3,r3,#1
+ 236 0056 BB60     	 str r3,[r7,#8]
+ 237              	.L10:
+ 121:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 			temp.FIR_COEFF[i] = 1.0f / FIR_SIZE;
+ 238              	 .loc 1 121 0 is_stmt 0 discriminator 1
+ 239 0058 BB68     	 ldr r3,[r7,#8]
+ 240 005a 052B     	 cmp r3,#5
+ 241 005c F0DD     	 ble .L11
+ 242              	.LBE4:
+ 123:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 		break;
+ 243              	 .loc 1 123 0 is_stmt 1
+ 244 005e 00BF     	 nop
+ 124:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	}
+ 125:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** 	return temp;
+ 245              	 .loc 1 125 0
+ 246 0060 7B68     	 ldr r3,[r7,#4]
+ 247 0062 1D46     	 mov r5,r3
+ 248 0064 07F12404 	 add r4,r7,#36
+ 249 0068 0FCC     	 ldmia r4!,{r0,r1,r2,r3}
+ 250 006a 0FC5     	 stmia r5!,{r0,r1,r2,r3}
+ 251 006c 0FCC     	 ldmia r4!,{r0,r1,r2,r3}
+ 252 006e 0FC5     	 stmia r5!,{r0,r1,r2,r3}
+ 253 0070 0FCC     	 ldmia r4!,{r0,r1,r2,r3}
+ 254 0072 0FC5     	 stmia r5!,{r0,r1,r2,r3}
+ 255 0074 94E80300 	 ldmia r4,{r0,r1}
+ 256 0078 85E80300 	 stmia r5,{r0,r1}
+ 126:../_Quadrocopter/_FIR_Filter/FIR_Filter.c **** }
+ 257              	 .loc 1 126 0
+ 258 007c 7868     	 ldr r0,[r7,#4]
+ 259 007e 1437     	 adds r7,r7,#20
+ 260              	.LCFI12:
+ 261              	 .cfi_def_cfa_offset 28
+ 262 0080 BD46     	 mov sp,r7
+ 263              	.LCFI13:
+ 264              	 .cfi_def_cfa_register 13
+ 265              	 
+ 266 0082 B0BC     	 pop {r4,r5,r7}
+ 267              	.LCFI14:
+ 268              	 .cfi_restore 7
+ 269              	 .cfi_restore 5
+ 270              	 .cfi_restore 4
+ 271              	 .cfi_def_cfa_offset 16
+ 272 0084 04B0     	 add sp,sp,#16
+ 273              	.LCFI15:
+ 274              	 .cfi_def_cfa_offset 0
+ 275 0086 7047     	 bx lr
+ 276              	.L14:
+ 277              	 .align 2
+ 278              	.L13:
+ 279 0088 ABAA2A3E 	 .word 1042983595
+ 280              	 .cfi_endproc
+ 281              	.LFE1:
+ 283              	 .text
+ 284              	.Letext0:
+ 285              	 .file 2 "../_Quadrocopter/_FIR_Filter/FIR_Filter.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 FIR_Filter.c
+    {standard input}:20     .text.FIR_FILTER:00000000 $t
+    {standard input}:25     .text.FIR_FILTER:00000000 FIR_FILTER
+    {standard input}:156    .text.FIR_FILTER:000000c8 $d
+    {standard input}:161    .text.Initialize_FIR_Filter:00000000 $t
+    {standard input}:166    .text.Initialize_FIR_Filter:00000000 Initialize_FIR_Filter
+    {standard input}:279    .text.Initialize_FIR_Filter:00000088 $d
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

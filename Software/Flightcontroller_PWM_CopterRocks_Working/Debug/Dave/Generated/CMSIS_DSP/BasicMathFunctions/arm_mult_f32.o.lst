@@ -1,0 +1,373 @@
+   1              	 .syntax unified
+   2              	 .cpu cortex-m4
+   3              	 .eabi_attribute 27,3
+   4              	 .fpu fpv4-sp-d16
+   5              	 .eabi_attribute 20,1
+   6              	 .eabi_attribute 21,1
+   7              	 .eabi_attribute 23,3
+   8              	 .eabi_attribute 24,1
+   9              	 .eabi_attribute 25,1
+  10              	 .eabi_attribute 26,1
+  11              	 .eabi_attribute 30,6
+  12              	 .eabi_attribute 34,1
+  13              	 .eabi_attribute 18,4
+  14              	 .thumb
+  15              	 .file "arm_mult_f32.c"
+  16              	 .text
+  17              	.Ltext0:
+  18              	 .cfi_sections .debug_frame
+  19              	 .section .text.arm_mult_f32,"ax",%progbits
+  20              	 .align 2
+  21              	 .global arm_mult_f32
+  22              	 .thumb
+  23              	 .thumb_func
+  25              	arm_mult_f32:
+  26              	.LFB139:
+  27              	 .file 1 "../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c"
+   1:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** /* ----------------------------------------------------------------------    
+   2:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * Copyright (C) 2010-2014 ARM Limited. All rights reserved.    
+   3:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** *    
+   4:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * $Date:        12. March 2014
+   5:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * $Revision: 	V1.4.4
+   6:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** *    
+   7:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * Project: 	    CMSIS DSP Library    
+   8:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * Title:	    arm_mult_f32.c    
+   9:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** *    
+  10:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * Description:	Floating-point vector multiplication.    
+  11:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** *    
+  12:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * Target Processor: Cortex-M4/Cortex-M3/Cortex-M0
+  13:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** *  
+  14:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * Redistribution and use in source and binary forms, with or without 
+  15:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * modification, are permitted provided that the following conditions
+  16:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * are met:
+  17:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** *   - Redistributions of source code must retain the above copyright
+  18:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** *     notice, this list of conditions and the following disclaimer.
+  19:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** *   - Redistributions in binary form must reproduce the above copyright
+  20:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** *     notice, this list of conditions and the following disclaimer in
+  21:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** *     the documentation and/or other materials provided with the 
+  22:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** *     distribution.
+  23:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** *   - Neither the name of ARM LIMITED nor the names of its contributors
+  24:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** *     may be used to endorse or promote products derived from this
+  25:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** *     software without specific prior written permission.
+  26:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** *
+  27:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  28:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  29:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+  30:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE 
+  31:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  32:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+  33:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+  34:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  35:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  36:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+  37:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  38:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * POSSIBILITY OF SUCH DAMAGE.  
+  39:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** * -------------------------------------------------------------------- */
+  40:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+  41:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** #include "CMSIS_DSP/cmsis_dsp.h"
+  42:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+  43:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** /**        
+  44:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  * @ingroup groupMath        
+  45:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  */
+  46:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+  47:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** /**        
+  48:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  * @defgroup BasicMult Vector Multiplication        
+  49:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  *        
+  50:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  * Element-by-element multiplication of two vectors.        
+  51:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  *        
+  52:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  * <pre>        
+  53:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  *     pDst[n] = pSrcA[n] * pSrcB[n],   0 <= n < blockSize.        
+  54:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  * </pre>        
+  55:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  *        
+  56:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  * There are separate functions for floating-point, Q7, Q15, and Q31 data types.        
+  57:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  */
+  58:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+  59:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** /**        
+  60:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  * @addtogroup BasicMult        
+  61:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  * @{        
+  62:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  */
+  63:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+  64:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** /**        
+  65:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  * @brief Floating-point vector multiplication.        
+  66:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  * @param[in]       *pSrcA points to the first input vector        
+  67:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  * @param[in]       *pSrcB points to the second input vector        
+  68:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  * @param[out]      *pDst points to the output vector        
+  69:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  * @param[in]       blockSize number of samples in each vector        
+  70:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  * @return none.        
+  71:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****  */
+  72:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+  73:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** void arm_mult_f32(
+  74:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   float32_t * pSrcA,
+  75:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   float32_t * pSrcB,
+  76:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   float32_t * pDst,
+  77:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   uint32_t blockSize)
+  78:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** {
+  28              	 .loc 1 78 0
+  29              	 .cfi_startproc
+  30              	 
+  31              	 
+  32              	 
+  33 0000 80B4     	 push {r7}
+  34              	.LCFI0:
+  35              	 .cfi_def_cfa_offset 4
+  36              	 .cfi_offset 7,-4
+  37 0002 93B0     	 sub sp,sp,#76
+  38              	.LCFI1:
+  39              	 .cfi_def_cfa_offset 80
+  40 0004 00AF     	 add r7,sp,#0
+  41              	.LCFI2:
+  42              	 .cfi_def_cfa_register 7
+  43 0006 F860     	 str r0,[r7,#12]
+  44 0008 B960     	 str r1,[r7,#8]
+  45 000a 7A60     	 str r2,[r7,#4]
+  46 000c 3B60     	 str r3,[r7]
+  79:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   uint32_t blkCnt;                               /* loop counters */
+  80:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** #ifndef ARM_MATH_CM0_FAMILY
+  81:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+  82:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   /* Run the below code for Cortex-M4 and Cortex-M3 */
+  83:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   float32_t inA1, inA2, inA3, inA4;              /* temporary input variables */
+  84:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   float32_t inB1, inB2, inB3, inB4;              /* temporary input variables */
+  85:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   float32_t out1, out2, out3, out4;              /* temporary output variables */
+  86:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+  87:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   /* loop Unrolling */
+  88:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   blkCnt = blockSize >> 2u;
+  47              	 .loc 1 88 0
+  48 000e 3B68     	 ldr r3,[r7]
+  49 0010 9B08     	 lsrs r3,r3,#2
+  50 0012 7B64     	 str r3,[r7,#68]
+  89:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+  90:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.        
+  91:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****    ** a second loop below computes the remaining 1 to 3 samples. */
+  92:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   while(blkCnt > 0u)
+  51              	 .loc 1 92 0
+  52 0014 52E0     	 b .L2
+  53              	.L3:
+  93:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   {
+  94:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* C = A * B */
+  95:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* Multiply the inputs and store the results in output buffer */
+  96:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* read sample from sourceA */
+  97:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     inA1 = *pSrcA;
+  54              	 .loc 1 97 0
+  55 0016 FB68     	 ldr r3,[r7,#12]
+  56 0018 1B68     	 ldr r3,[r3]
+  57 001a 3B64     	 str r3,[r7,#64]
+  98:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* read sample from sourceB */
+  99:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     inB1 = *pSrcB;
+  58              	 .loc 1 99 0
+  59 001c BB68     	 ldr r3,[r7,#8]
+  60 001e 1B68     	 ldr r3,[r3]
+  61 0020 FB63     	 str r3,[r7,#60]
+ 100:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* read sample from sourceA */
+ 101:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     inA2 = *(pSrcA + 1);
+  62              	 .loc 1 101 0
+  63 0022 FB68     	 ldr r3,[r7,#12]
+  64 0024 5B68     	 ldr r3,[r3,#4]
+  65 0026 BB63     	 str r3,[r7,#56]
+ 102:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* read sample from sourceB */
+ 103:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     inB2 = *(pSrcB + 1);
+  66              	 .loc 1 103 0
+  67 0028 BB68     	 ldr r3,[r7,#8]
+  68 002a 5B68     	 ldr r3,[r3,#4]
+  69 002c 7B63     	 str r3,[r7,#52]
+ 104:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+ 105:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* out = sourceA * sourceB */
+ 106:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     out1 = inA1 * inB1;
+  70              	 .loc 1 106 0
+  71 002e 97ED107A 	 flds s14,[r7,#64]
+  72 0032 D7ED0F7A 	 flds s15,[r7,#60]
+  73 0036 67EE277A 	 fmuls s15,s14,s15
+  74 003a C7ED0C7A 	 fsts s15,[r7,#48]
+ 107:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+ 108:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* read sample from sourceA */
+ 109:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     inA3 = *(pSrcA + 2);
+  75              	 .loc 1 109 0
+  76 003e FB68     	 ldr r3,[r7,#12]
+  77 0040 9B68     	 ldr r3,[r3,#8]
+  78 0042 FB62     	 str r3,[r7,#44]
+ 110:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* read sample from sourceB */
+ 111:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     inB3 = *(pSrcB + 2);
+  79              	 .loc 1 111 0
+  80 0044 BB68     	 ldr r3,[r7,#8]
+  81 0046 9B68     	 ldr r3,[r3,#8]
+  82 0048 BB62     	 str r3,[r7,#40]
+ 112:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+ 113:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* out = sourceA * sourceB */
+ 114:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     out2 = inA2 * inB2;
+  83              	 .loc 1 114 0
+  84 004a 97ED0E7A 	 flds s14,[r7,#56]
+  85 004e D7ED0D7A 	 flds s15,[r7,#52]
+  86 0052 67EE277A 	 fmuls s15,s14,s15
+  87 0056 C7ED097A 	 fsts s15,[r7,#36]
+ 115:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+ 116:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* read sample from sourceA */
+ 117:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     inA4 = *(pSrcA + 3);
+  88              	 .loc 1 117 0
+  89 005a FB68     	 ldr r3,[r7,#12]
+  90 005c DB68     	 ldr r3,[r3,#12]
+  91 005e 3B62     	 str r3,[r7,#32]
+ 118:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+ 119:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* store result to destination buffer */
+ 120:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     *pDst = out1;
+  92              	 .loc 1 120 0
+  93 0060 7B68     	 ldr r3,[r7,#4]
+  94 0062 3A6B     	 ldr r2,[r7,#48]
+  95 0064 1A60     	 str r2,[r3]
+ 121:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+ 122:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* read sample from sourceB */
+ 123:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     inB4 = *(pSrcB + 3);
+  96              	 .loc 1 123 0
+  97 0066 BB68     	 ldr r3,[r7,#8]
+  98 0068 DB68     	 ldr r3,[r3,#12]
+  99 006a FB61     	 str r3,[r7,#28]
+ 124:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+ 125:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* out = sourceA * sourceB */
+ 126:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     out3 = inA3 * inB3;
+ 100              	 .loc 1 126 0
+ 101 006c 97ED0B7A 	 flds s14,[r7,#44]
+ 102 0070 D7ED0A7A 	 flds s15,[r7,#40]
+ 103 0074 67EE277A 	 fmuls s15,s14,s15
+ 104 0078 C7ED067A 	 fsts s15,[r7,#24]
+ 127:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+ 128:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* store result to destination buffer */
+ 129:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     *(pDst + 1) = out2;
+ 105              	 .loc 1 129 0
+ 106 007c 7B68     	 ldr r3,[r7,#4]
+ 107 007e 0433     	 adds r3,r3,#4
+ 108 0080 7A6A     	 ldr r2,[r7,#36]
+ 109 0082 1A60     	 str r2,[r3]
+ 130:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+ 131:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* out = sourceA * sourceB */
+ 132:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     out4 = inA4 * inB4;
+ 110              	 .loc 1 132 0
+ 111 0084 97ED087A 	 flds s14,[r7,#32]
+ 112 0088 D7ED077A 	 flds s15,[r7,#28]
+ 113 008c 67EE277A 	 fmuls s15,s14,s15
+ 114 0090 C7ED057A 	 fsts s15,[r7,#20]
+ 133:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* store result to destination buffer */
+ 134:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     *(pDst + 2) = out3;
+ 115              	 .loc 1 134 0
+ 116 0094 7B68     	 ldr r3,[r7,#4]
+ 117 0096 0833     	 adds r3,r3,#8
+ 118 0098 BA69     	 ldr r2,[r7,#24]
+ 119 009a 1A60     	 str r2,[r3]
+ 135:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* store result to destination buffer */
+ 136:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     *(pDst + 3) = out4;
+ 120              	 .loc 1 136 0
+ 121 009c 7B68     	 ldr r3,[r7,#4]
+ 122 009e 0C33     	 adds r3,r3,#12
+ 123 00a0 7A69     	 ldr r2,[r7,#20]
+ 124 00a2 1A60     	 str r2,[r3]
+ 137:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+ 138:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+ 139:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* update pointers to process next samples */
+ 140:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     pSrcA += 4u;
+ 125              	 .loc 1 140 0
+ 126 00a4 FB68     	 ldr r3,[r7,#12]
+ 127 00a6 1033     	 adds r3,r3,#16
+ 128 00a8 FB60     	 str r3,[r7,#12]
+ 141:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     pSrcB += 4u;
+ 129              	 .loc 1 141 0
+ 130 00aa BB68     	 ldr r3,[r7,#8]
+ 131 00ac 1033     	 adds r3,r3,#16
+ 132 00ae BB60     	 str r3,[r7,#8]
+ 142:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     pDst += 4u;
+ 133              	 .loc 1 142 0
+ 134 00b0 7B68     	 ldr r3,[r7,#4]
+ 135 00b2 1033     	 adds r3,r3,#16
+ 136 00b4 7B60     	 str r3,[r7,#4]
+ 143:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+ 144:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* Decrement the blockSize loop counter */
+ 145:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     blkCnt--;
+ 137              	 .loc 1 145 0
+ 138 00b6 7B6C     	 ldr r3,[r7,#68]
+ 139 00b8 013B     	 subs r3,r3,#1
+ 140 00ba 7B64     	 str r3,[r7,#68]
+ 141              	.L2:
+  92:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   {
+ 142              	 .loc 1 92 0
+ 143 00bc 7B6C     	 ldr r3,[r7,#68]
+ 144 00be 002B     	 cmp r3,#0
+ 145 00c0 A9D1     	 bne .L3
+ 146:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   }
+ 147:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+ 148:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.        
+ 149:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****    ** No loop unrolling is used. */
+ 150:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   blkCnt = blockSize % 0x4u;
+ 146              	 .loc 1 150 0
+ 147 00c2 3B68     	 ldr r3,[r7]
+ 148 00c4 03F00303 	 and r3,r3,#3
+ 149 00c8 7B64     	 str r3,[r7,#68]
+ 151:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+ 152:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** #else
+ 153:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+ 154:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   /* Run the below code for Cortex-M0 */
+ 155:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+ 156:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   /* Initialize blkCnt with number of samples */
+ 157:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   blkCnt = blockSize;
+ 158:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+ 159:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** #endif /* #ifndef ARM_MATH_CM0_FAMILY */
+ 160:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+ 161:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   while(blkCnt > 0u)
+ 150              	 .loc 1 161 0
+ 151 00ca 13E0     	 b .L4
+ 152              	.L5:
+ 162:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   {
+ 163:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* C = A * B */
+ 164:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* Multiply the inputs and store the results in output buffer */
+ 165:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     *pDst++ = (*pSrcA++) * (*pSrcB++);
+ 153              	 .loc 1 165 0
+ 154 00cc 7B68     	 ldr r3,[r7,#4]
+ 155 00ce 1A1D     	 adds r2,r3,#4
+ 156 00d0 7A60     	 str r2,[r7,#4]
+ 157 00d2 FA68     	 ldr r2,[r7,#12]
+ 158 00d4 111D     	 adds r1,r2,#4
+ 159 00d6 F960     	 str r1,[r7,#12]
+ 160 00d8 92ED007A 	 flds s14,[r2]
+ 161 00dc BA68     	 ldr r2,[r7,#8]
+ 162 00de 111D     	 adds r1,r2,#4
+ 163 00e0 B960     	 str r1,[r7,#8]
+ 164 00e2 D2ED007A 	 flds s15,[r2]
+ 165 00e6 67EE277A 	 fmuls s15,s14,s15
+ 166 00ea C3ED007A 	 fsts s15,[r3]
+ 166:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** 
+ 167:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     /* Decrement the blockSize loop counter */
+ 168:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****     blkCnt--;
+ 167              	 .loc 1 168 0
+ 168 00ee 7B6C     	 ldr r3,[r7,#68]
+ 169 00f0 013B     	 subs r3,r3,#1
+ 170 00f2 7B64     	 str r3,[r7,#68]
+ 171              	.L4:
+ 161:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   {
+ 172              	 .loc 1 161 0
+ 173 00f4 7B6C     	 ldr r3,[r7,#68]
+ 174 00f6 002B     	 cmp r3,#0
+ 175 00f8 E8D1     	 bne .L5
+ 169:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c ****   }
+ 170:../Dave/Generated/CMSIS_DSP/BasicMathFunctions/arm_mult_f32.c **** }
+ 176              	 .loc 1 170 0
+ 177 00fa 4C37     	 adds r7,r7,#76
+ 178              	.LCFI3:
+ 179              	 .cfi_def_cfa_offset 4
+ 180 00fc BD46     	 mov sp,r7
+ 181              	.LCFI4:
+ 182              	 .cfi_def_cfa_register 13
+ 183              	 
+ 184 00fe 5DF8047B 	 ldr r7,[sp],#4
+ 185              	.LCFI5:
+ 186              	 .cfi_restore 7
+ 187              	 .cfi_def_cfa_offset 0
+ 188 0102 7047     	 bx lr
+ 189              	 .cfi_endproc
+ 190              	.LFE139:
+ 192              	 .text
+ 193              	.Letext0:
+ 194              	 .file 2 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 195              	 .file 3 "c:\\davev4\\dave-4.1.2\\eclipse\\arm-gcc-49\\arm-none-eabi\\include\\stdint.h"
+ 196              	 .file 4 "C:\\Workspaces\\DAVE-4.1\\Flightcontroller_PWM_CopterRocks_Working\\Dave\\Generated/CMSIS_DSP/arm_math.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 arm_mult_f32.c
+    {standard input}:20     .text.arm_mult_f32:00000000 $t
+    {standard input}:25     .text.arm_mult_f32:00000000 arm_mult_f32
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS
