@@ -515,7 +515,7 @@ uint16_t GetSensorCount(void)
 }
 
 /**
- *  \brief calculates angles
+ *  \brief calculates roll and pitch angles and angular velocity of yaw axis
  *
  *  \param [in] angles pointer to the output
  *
@@ -525,18 +525,19 @@ void GetAngles(float* angles)
 {
 
 #if ATTITUDEALGORITHM == 1
-	if (YAW_OFFSET == 0.0f)
+	/*if (YAW_OFFSET == 0.0f)
 		YAW_OFFSET = kalAngleZ;
-	angles[0]=kalAngleZ-YAW_OFFSET;
-	angles[1]=kalAngleY;
-	angles[2]=kalAngleX;
+	angles[0]=kalAngleZ-YAW_OFFSET;*/
+	angles[0] = gyro[2]*RAD_TO_DEG;
+	angles[1] = kalAngleY;
+	angles[2] = kalAngleX;
 #elif ATTITUDEALGORITHM == 2
 	/*if (YAW_OFFSET == 0.0)
 		YAW_OFFSET = atan2(2.0f * (q[1] * q[2] + q[0] * q[3]), q[0] * q[0] + q[1] * q[1] - q[2] * q[2] - q[3] * q[3]) * RAD_TO_DEG;
 	angles[0]=atan2(2.0f * (q[1] * q[2] + q[0] * q[3]), q[0] * q[0] + q[1] * q[1] - q[2] * q[2] - q[3] * q[3]) * RAD_TO_DEG - YAW_OFFSET;*/
-	angles[0]=gyro[2]*RAD_TO_DEG;
-	angles[1]= asinf(2.0f * (q[1] * q[3] - q[0] * q[2])) * RAD_TO_DEG;
-	angles[2]= -atan2f(2.0f * (q[0] * q[1] + q[2] * q[3]), q[0] * q[0] - q[1] * q[1] - q[2] * q[2] + q[3] * q[3]) * RAD_TO_DEG;
+	angles[0] = gyro[2]*RAD_TO_DEG;
+	angles[1] = asinf(2.0f * (q[1] * q[3] - q[0] * q[2])) * RAD_TO_DEG;
+	angles[2] = -atan2f(2.0f * (q[0] * q[1] + q[2] * q[3]), q[0] * q[0] - q[1] * q[1] - q[2] * q[2] + q[3] * q[3]) * RAD_TO_DEG;
 #endif
 }
 
